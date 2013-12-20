@@ -56,8 +56,11 @@
   <ItemGroup>
     <Compile Include="CaseFiles\ApplicationStarter.cs" />
     <Compile Include="CaseFiles\Codecs\CaseFileCodec.cs" />
+    <Compile Include="CaseFiles\Codecs\CaseFilesCodec.cs" />
     <Compile Include="CaseFiles\Handlers\CaseFileHandler.cs" />
+    <Compile Include="CaseFiles\Handlers\CaseFilesHandler.cs" />
     <Compile Include="CaseFiles\Resources\CaseFileResource.cs" />
+    <Compile Include="CaseFiles\Resources\CaseFilesResource.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Origin\ApplicationStarter.cs" />
     <Compile Include="Origin\Codecs\OriginCodec.cs" />

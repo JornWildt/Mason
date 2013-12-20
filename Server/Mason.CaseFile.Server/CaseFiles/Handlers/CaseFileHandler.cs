@@ -3,11 +3,11 @@ namespace Mason.CaseFile.Server.CaseFiles.Handlers
 {
   public class CaseFileHandler
   {
-    public object Get()
+    public object Get(string id)
     {
-      return new CaseFiles.Resources.CaseFileResource
+      return new Resources.CaseFileResource
       {
-        ID = "10",
+        ID = id,
         Description = "My case file"
       };
     }

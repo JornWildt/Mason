@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaseFile.cs" />
+    <Compile Include="CaseFileCollection.cs" />
     <Compile Include="Origin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

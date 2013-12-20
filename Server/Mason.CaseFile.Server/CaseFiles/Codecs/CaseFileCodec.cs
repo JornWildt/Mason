@@ -9,8 +9,6 @@ using System;
 
 namespace Mason.CaseFile.Server.CaseFiles.Codecs
 {
-  [MediaType("application/vnd.mason;q=1", "ms")]
-  [MediaType("application/json;q=0.5", "json")]
   public class CaseFileCodec : MasonCodec<CaseFileResource>
   {
     protected override Resource ConvertToMason(CaseFileResource casefile)
@@ -19,9 +17,7 @@ namespace Mason.CaseFile.Server.CaseFiles.Codecs
 
       c.ID = casefile.ID;
 
-      //c.Links.Add(new Link("self", "/casefiles"));
-
-      Uri selfUri = typeof(CaseFileResource).CreateUri();//new { id = casefile.ID });
+      Uri selfUri = typeof(CaseFileResource).CreateUri(new { id = casefile.ID });
       Link selfLink = new Link("self", selfUri);
       c.Links.Add(selfLink);
 

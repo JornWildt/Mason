@@ -13,17 +13,6 @@ namespace Mason.Net
   {
     private Dictionary<string, object> Dictionary = new Dictionary<string, object>();
 
-    // This property returns the number of elements 
-    // in the inner dictionary. 
-    [JsonIgnore]
-    public int Count
-    {
-      get
-      {
-        return Dictionary.Count;
-      }
-    }
-
 
     public override IEnumerable<string> GetDynamicMemberNames()
     {
