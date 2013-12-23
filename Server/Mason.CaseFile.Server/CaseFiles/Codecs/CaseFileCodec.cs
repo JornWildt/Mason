@@ -1,14 +1,14 @@
 ﻿using Mason.CaseFile.Server.CaseFiles.Resources;
-using Mason.CaseFile.Server.Origin.Resources;
 using Mason.CaseFile.Server.Utility;
 using Mason.Net;
-using OpenRasta.Codecs;
+using Newtonsoft.Json;
 using OpenRasta.Web;
 using System;
 
 
 namespace Mason.CaseFile.Server.CaseFiles.Codecs
 {
+  [JsonObject(MemberSerialization.OptOut)]
   public class CaseFileCodec : MasonCodec<CaseFileResource>
   {
     protected override Resource ConvertToMason(CaseFileResource casefile)

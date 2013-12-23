@@ -18,7 +18,8 @@ namespace Mason.CaseFile.Server
       {
         ResourceSpace.Uses.UriDecorator<ContentTypeExtensionUriDecorator>();
         CaseFiles.ApplicationStarter.Start();
-        //Origin.ApplicationStarter.Start();
+        Origin.ApplicationStarter.Start();
+        ServiceIndex.ApplicationStarter.Start();
       }
     }
 

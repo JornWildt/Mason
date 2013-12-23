@@ -9,6 +9,6 @@ namespace Mason.CaseFile.Contract
   {
     public string Title { get; set; }
 
-    public string Introduction { get; set; }
+    public string Description { get; set; }
   }
 }

@@ -4,10 +4,11 @@ using Newtonsoft.Json;
 
 namespace Mason.CaseFile.Contract
 {
-  public class CaseFile : Resource
+  [JsonObject(MemberSerialization.OptOut)]
+  public class ServiceIndex : Resource
   {
-    public string ID { get; set; }
-
     public string Title { get; set; }
+
+    public string Description { get; set; }
   }
 }

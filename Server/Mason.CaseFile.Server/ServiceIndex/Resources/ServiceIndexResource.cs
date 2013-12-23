@@ -1,6 +1,6 @@
-﻿namespace Mason.CaseFile.Server.Origin.Resources
+﻿namespace Mason.CaseFile.Server.ServiceIndex.Resources
 {
-  public class OriginResource
+  public class ServiceIndexResource
   {
     public string Title { get; set; }
 

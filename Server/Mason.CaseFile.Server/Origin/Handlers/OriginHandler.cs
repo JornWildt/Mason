@@ -10,7 +10,7 @@ namespace Mason.CaseFile.Server.Origin.Handlers
       return new OriginResource
       {
         Title = "Case file server v0.0",
-        Introduction = "This is the origin of case files for Acme inc."
+        Description = "This is the origin of case files for Acme inc."
       };
     }
   }

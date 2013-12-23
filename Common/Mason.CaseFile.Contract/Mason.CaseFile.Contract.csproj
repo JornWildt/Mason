@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="CaseFile.cs" />
     <Compile Include="CaseFileCollection.cs" />
+    <Compile Include="ServiceIndex.cs" />
     <Compile Include="Origin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
