@@ -49,6 +49,7 @@
     <Compile Include="Namespace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />
+    <Compile Include="SubResource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -15,6 +15,11 @@ namespace Mason.CaseFile.Server.Origin
         .AtUri("/origin")
         .HandledBy<OriginHandler>()
         .TranscodedBy<OriginCodec>();
+
+      ResourceSpace.Has.ResourcesOfType<Resources.OriginContactResource>()
+        .AtUri("/origin-contact")
+        .HandledBy<OriginContactHandler>()
+        .TranscodedBy<OriginContactCodec_jCard>();
     }
   }
 }

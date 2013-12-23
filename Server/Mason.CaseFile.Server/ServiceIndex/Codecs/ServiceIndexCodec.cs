@@ -1,8 +1,5 @@
-﻿using Mason.CaseFile.Server.ServiceIndex.Resources;
-using Mason.CaseFile.Server.Utility;
-using Mason.Net;
-using OpenRasta.Web;
-using System;
+﻿using Mason.CaseFile.Server.Codecs;
+using Mason.CaseFile.Server.ServiceIndex.Resources;
 
 
 namespace Mason.CaseFile.Server.ServiceIndex.Codecs

@@ -1,9 +1,11 @@
-﻿namespace Mason.CaseFile.Server.Origin.Resources
-{
-  public class OriginResource
-  {
-    public string Title { get; set; }
+﻿using Mason.CaseFile.Server.Utility;
 
-    public string Description { get; set; }
+
+namespace Mason.CaseFile.Server.Origin.Resources
+{
+  public class OriginResource : Mason.Net.Resource
+  {
+    // This is such a simple resource that we cheat and create the interface representation directly.
+    public Contract.Origin Value { get; set; }
   }
 }

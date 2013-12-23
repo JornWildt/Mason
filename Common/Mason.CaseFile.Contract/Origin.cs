@@ -10,5 +10,7 @@ namespace Mason.CaseFile.Contract
     public string Title { get; set; }
 
     public string Description { get; set; }
+
+    public Mason.Net.SubResource Contact { get; set; }
   }
 }

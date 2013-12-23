@@ -1,5 +1,5 @@
 ﻿using Mason.CaseFile.Server.CaseFiles.Resources;
-using Mason.CaseFile.Server.Utility;
+using Mason.CaseFile.Server.Codecs;
 using Mason.Net;
 using OpenRasta.Web;
 using System;

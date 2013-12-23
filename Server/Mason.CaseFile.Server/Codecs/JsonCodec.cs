@@ -4,11 +4,10 @@ using OpenRasta.Web;
 using System.IO;
 
 
-namespace Mason.CaseFile.Server.Utility
+namespace Mason.CaseFile.Server.Codecs
 {
-  [MediaType("application/vnd.mason;q=1", "ms")]
   [MediaType("application/json;q=0.5", "json")]
-  public abstract class MasonCodec<T> : IMediaTypeWriter
+  public abstract class JsonCodec<T> : IMediaTypeWriter
   {
     public object Configuration { get; set; }
 
@@ -18,7 +17,7 @@ namespace Mason.CaseFile.Server.Utility
       if (resource == null)
         return;
 
-      Mason.Net.Resource representation = ConvertToMason((T)resource);
+      object representation = ConvertToJson((T)resource);
 
       JsonSerializer serializer = new JsonSerializer();
       using (StreamWriter sw = new StreamWriter(response.Stream))
@@ -29,6 +28,6 @@ namespace Mason.CaseFile.Server.Utility
     }
 
 
-    protected abstract Mason.Net.Resource ConvertToMason(T resource);
+    protected abstract object ConvertToJson(T resource);
   }
 }

@@ -1,5 +1,5 @@
-﻿using Mason.CaseFile.Server.Origin.Resources;
-using Mason.CaseFile.Server.Utility;
+﻿using Mason.CaseFile.Server.Codecs;
+using Mason.CaseFile.Server.Origin.Resources;
 using Mason.Net;
 using OpenRasta.Web;
 using System;
@@ -7,14 +7,11 @@ using System;
 
 namespace Mason.CaseFile.Server.Origin.Codecs
 {
-  public class OriginCodec : MasonCodec<OriginResource>
+  public class OriginCodec : CaseFileMasonCodec<OriginResource>
   {
-    protected override Net.Resource ConvertToMason(OriginResource origin)
+    protected override Net.Resource ConvertToCaseFile(OriginResource resource)
     {
-      Contract.Origin o = new Contract.Origin();
-
-      o.Title = origin.Title;
-      o.Description = origin.Description;
+      Contract.Origin o = resource.Value;
 
       Uri selfUri = typeof(OriginResource).CreateUri();
       Link selfLink = new Link("self", selfUri);
