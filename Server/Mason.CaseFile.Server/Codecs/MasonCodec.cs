@@ -6,8 +6,8 @@ using System.IO;
 
 namespace Mason.CaseFile.Server.Codecs
 {
-  [MediaType("application/vnd.mason;q=1", "ms")]
-  [MediaType("application/json;q=0.5", "json")]
+  [MediaType("application/vnd.mason;q=0.1", "ms")]
+  [MediaType("application/json;q=1", "json")]
   public abstract class MasonCodec<T> : IMediaTypeWriter
   {
     public object Configuration { get; set; }
