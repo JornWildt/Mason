@@ -14,6 +14,7 @@ namespace Mason.CaseFile.Server.Origin.Handlers
         PostalCode = "1234",
         City = "Comediac",
         Phone = "+45 12345678",
+        EMail = "info@ministryoffun.org",
         Country = "Denmark"
       };
     }

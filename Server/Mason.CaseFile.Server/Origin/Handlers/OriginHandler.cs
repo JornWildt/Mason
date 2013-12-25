@@ -36,7 +36,7 @@ namespace Mason.CaseFile.Server.Origin.Handlers
       contact.Country = c.Country;
 
       Uri contactSelfUri = typeof(OriginContactResource).CreateUri();
-      Link contactSelfLink = new Link("self", contactSelfUri);
+      Link contactSelfLink = new Link("self", contactSelfUri, "Complete contact information in standard formats such as vCard and jCard");
       contact.Links.Add(contactSelfLink);
 
       Uri logoUri = new Uri(Context.ApplicationBaseUri.EnsureHasTrailingSlash(), "Origins/MinistryOfFun/logo.png");

@@ -67,6 +67,7 @@
     <Compile Include="Origin\ApplicationStarter.cs" />
     <Compile Include="Origin\Codecs\OriginCodec.cs" />
     <Compile Include="Origin\Codecs\OriginContactCodec_jCard.cs" />
+    <Compile Include="Origin\Codecs\OriginContactCodec_Mason.cs" />
     <Compile Include="Origin\Codecs\OriginContactCodec_vCard.cs" />
     <Compile Include="Origin\Handlers\OriginContactHandler.cs" />
     <Compile Include="Origin\Handlers\OriginHandler.cs" />

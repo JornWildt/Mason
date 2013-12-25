@@ -13,7 +13,7 @@ namespace Mason.CaseFile.Server.Origin.Codecs
     {
       Contract.Origin o = resource.Value;
 
-      Uri selfUri = typeof(OriginResource).CreateUri();
+      Uri selfUri = typeof(OriginContactResource).CreateUri();
       Link selfLink = new Link("self", selfUri);
       o.Links.Add(selfLink);
 

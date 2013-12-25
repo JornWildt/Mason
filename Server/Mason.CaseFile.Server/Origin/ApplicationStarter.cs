@@ -20,7 +20,8 @@ namespace Mason.CaseFile.Server.Origin
         .AtUri("/origin-contact")
         .HandledBy<OriginContactHandler>()
         .TranscodedBy<OriginContactCodec_jCard>()
-        .And.TranscodedBy<OriginContactCodec_vCard>();
+        .And.TranscodedBy<OriginContactCodec_vCard>()
+        .And.TranscodedBy<OriginContactCodec_Mason>();
     }
   }
 }

@@ -6,7 +6,6 @@ using System.IO;
 
 namespace Mason.CaseFile.Server.Codecs
 {
-  [MediaType("application/json;q=1", "json")]
   public abstract class JsonCodec<T> : IMediaTypeWriter
   {
     public object Configuration { get; set; }

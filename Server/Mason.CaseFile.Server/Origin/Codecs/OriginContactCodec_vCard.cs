@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Mason.CaseFile.Server.Origin.Codecs
 {
-  [MediaType("text/vcard;q=1", "vcard")]
+  [MediaType("text/vcard;q=0.5", "vcard")]
   public class OriginContactCodec_vCard : IMediaTypeWriter
   {
     public object Configuration { get; set; }
@@ -24,7 +24,8 @@ namespace Mason.CaseFile.Server.Origin.Codecs
         sw.WriteLine("BEGIN:VCARD");
         sw.WriteLine("VERSION:4.0");
         sw.WriteLine("FN:" + c.FullName);
-        //sw.WriteLine("");
+        sw.WriteLine("EMAIL;TYPE=work:" + c.EMail);
+        sw.WriteLine("TEL;TYPE=work;VALUE=text:" + c.Phone);
         sw.WriteLine("END:VCARD");
       }
     }
