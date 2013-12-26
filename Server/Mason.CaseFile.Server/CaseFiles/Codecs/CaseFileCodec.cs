@@ -9,9 +9,9 @@ using System;
 namespace Mason.CaseFile.Server.CaseFiles.Codecs
 {
   [JsonObject(MemberSerialization.OptOut)]
-  public class CaseFileCodec : MasonCodec<CaseFileResource>
+  public class CaseFileCodec : CaseFileMasonCodec<CaseFileResource>
   {
-    protected override Resource ConvertToMason(CaseFileResource casefile)
+    protected override Resource ConvertToCaseFile(CaseFileResource casefile)
     {
       Contract.CaseFile c = new Contract.CaseFile();
 
@@ -20,10 +20,6 @@ namespace Mason.CaseFile.Server.CaseFiles.Codecs
       Uri selfUri = typeof(CaseFileResource).CreateUri(new { id = casefile.ID });
       Link selfLink = new Link("self", selfUri);
       c.Links.Add(selfLink);
-
-      //Uri originUri = typeof(OriginResource).CreateUri();
-      //Link originLink = new Link("cf:origin", originUri);
-      //c.Links.Add(originLink);
 
       return c;
     }

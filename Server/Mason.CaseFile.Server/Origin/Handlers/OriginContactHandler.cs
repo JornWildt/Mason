@@ -10,7 +10,7 @@ namespace Mason.CaseFile.Server.Origin.Handlers
       return new Resources.OriginContactResource
       {
         FullName = "Ministry of Fun",
-        Address1 = "33 Laughter Road",
+        Address1 = "33 Smiley Road",
         PostalCode = "1234",
         City = "Comediac",
         Phone = "+45 12345678",

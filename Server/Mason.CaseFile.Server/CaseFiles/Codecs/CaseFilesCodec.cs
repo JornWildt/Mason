@@ -7,9 +7,9 @@ using System;
 
 namespace Mason.CaseFile.Server.CaseFiles.Codecs
 {
-  public class CaseFilesCodec : MasonCodec<CaseFilesResource>
+  public class CaseFilesCodec : CaseFileMasonCodec<CaseFilesResource>
   {
-    protected override Net.Resource ConvertToMason(CaseFilesResource resource)
+    protected override Net.Resource ConvertToCaseFile(CaseFilesResource resource)
     {
       Contract.CaseFileCollection cc = new Contract.CaseFileCollection();
 
