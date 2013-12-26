@@ -9,8 +9,8 @@ namespace Mason.CaseFile.Server.ServiceIndex.Handlers
     {
       return new ServiceIndexResource
       {
-        Title = "Service index for Case File",
-        Description = "This is the ServiceIndex for interacting with Acme inc."
+        Title = "Case file API service index",
+        Description = "This is the API service index for case files at the Ministry of Fun"
       };
     }
   }
