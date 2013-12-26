@@ -1,14 +1,21 @@
-﻿
+﻿using Mason.CaseFile.Server.CaseFiles.Resources;
+using Mason.CaseFile.Server.Domain.CaseFiles;
+using System;
+
+
 namespace Mason.CaseFile.Server.CaseFiles.Handlers
 {
   public class CaseFileHandler
   {
-    public object Get(string id)
+    public ICaseFileRepository CaseFileRepository { get; set; }
+
+
+    public object Get(string number)
     {
-      return new Resources.CaseFileResource
+      Domain.CaseFiles.CaseFile cf = CaseFileRepository.GetByCaseNumber(number);
+      return new CaseFileResource
       {
-        ID = id,
-        Description = "My case file"
+        CaseFile = cf
       };
     }
   }

@@ -16,10 +16,10 @@ namespace Mason.CaseFile.Server.CaseFiles.Codecs
       foreach (CaseFileResource c in resource.CaseFiles)
       {
         Contract.CaseFileCollectionItem item = new Contract.CaseFileCollectionItem();
-        item.ID = c.ID;
-        item.Title = c.Title;
+        item.ID = c.CaseFile.Id.ToString();
+        item.Title = c.CaseFile.Title;
 
-        Uri itemSelfUri = typeof(CaseFileResource).CreateUri(new { id = c.ID });
+        Uri itemSelfUri = typeof(CaseFileResource).CreateUri(new { id = c.CaseFile.Id });
         Link itemSelfLink = new Link("self", itemSelfUri);
         item.Links.Add(itemSelfLink);
 

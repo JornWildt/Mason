@@ -8,18 +8,18 @@ using System;
 
 namespace Mason.CaseFile.Server.CaseFiles.Codecs
 {
-  [JsonObject(MemberSerialization.OptOut)]
   public class CaseFileCodec : CaseFileMasonCodec<CaseFileResource>
   {
     protected override Resource ConvertToCaseFile(CaseFileResource casefile)
     {
       Contract.CaseFile c = new Contract.CaseFile();
 
-      c.ID = casefile.ID;
+      c.ID = casefile.CaseFile.Id.ToString();
+      c.Title = casefile.CaseFile.Title;
 
-      Uri selfUri = typeof(CaseFileResource).CreateUri(new { id = casefile.ID });
-      Link selfLink = new Link("self", selfUri);
-      c.Links.Add(selfLink);
+      //Uri selfUri = typeof(CaseFileResource).CreateUri(new { id = casefile.CaseFile.Id });
+      //Link selfLink = new Link("self", selfUri);
+      //c.Links.Add(selfLink);
 
       return c;
     }

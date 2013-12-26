@@ -32,6 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Castle.Core.3.2.2\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Castle.Windsor.3.2.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
@@ -40,6 +48,9 @@
     </Reference>
     <Reference Include="OpenRasta">
       <HintPath>..\Libraries\OpenRasta.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenRasta.DI.Windsor">
+      <HintPath>..\Libraries\OpenRasta.DI.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="OpenRasta.Hosting.AspNet">
       <HintPath>..\Libraries\OpenRasta.Hosting.AspNet.dll</HintPath>
@@ -79,6 +90,7 @@
     <Compile Include="ServiceIndex\Handlers\ServiceIndexHandler.cs" />
     <Compile Include="ServiceIndex\Resources\ServiceIndexResource.cs" />
     <Compile Include="Utility\ContactInformation.cs" />
+    <Compile Include="Utility\DependencyResolverAccessor.cs" />
     <Compile Include="Utility\Log4NetTraceListener.cs" />
     <Compile Include="Codecs\MasonCodec.cs" />
   </ItemGroup>
@@ -93,6 +105,10 @@
     <ProjectReference Include="..\..\Mason.Net\Mason.Net.csproj">
       <Project>{942bf912-7d72-40e6-af86-1f28b240a0c8}</Project>
       <Name>Mason.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mason.CaseFile.Server.Domain\Mason.CaseFile.Server.Domain.csproj">
+      <Project>{7982ad31-0de8-481f-b1bb-fe3b906b8dde}</Project>
+      <Name>Mason.CaseFile.Server.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

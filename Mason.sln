@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mason.CaseFile.Contract", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mason.Net", "Mason.Net\Mason.Net.csproj", "{942BF912-7D72-40E6-AF86-1F28B240A0C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mason.CaseFile.Server.Domain", "Server\Mason.CaseFile.Server.Domain\Mason.CaseFile.Server.Domain.csproj", "{7982AD31-0DE8-481F-B1BB-FE3B906B8DDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7982AD31-0DE8-481F-B1BB-FE3B906B8DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7982AD31-0DE8-481F-B1BB-FE3B906B8DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7982AD31-0DE8-481F-B1BB-FE3B906B8DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7982AD31-0DE8-481F-B1BB-FE3B906B8DDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{65C2C002-8973-48D9-86D3-C688BD2F5C5B} = {305705AD-BBCA-42F1-B607-DA1158D0B042}
 		{E91EAD7E-6ADC-42D2-8D19-EA144174EA78} = {305705AD-BBCA-42F1-B607-DA1158D0B042}
+		{7982AD31-0DE8-481F-B1BB-FE3B906B8DDE} = {305705AD-BBCA-42F1-B607-DA1158D0B042}
 		{F29C02DC-6BC0-4F85-9ACD-436159C911B2} = {291C76F3-A0A5-4515-A4F8-F11CFEC955DE}
 		{942BF912-7D72-40E6-AF86-1F28B240A0C8} = {291C76F3-A0A5-4515-A4F8-F11CFEC955DE}
 	EndGlobalSection
