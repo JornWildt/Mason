@@ -28,6 +28,17 @@ namespace Mason.CaseFile.Server.Domain.CaseFiles
     }
 
 
+    public List<CaseFileListItem> FindCaseFiles(CaseFileSearchArgs args)
+    {
+      var q = CaseFiles.Where(c =>
+        (args.Id == null || c.Id == args.Id)
+        && (args.CaseNumber == null || c.CaseNumber == args.CaseNumber)
+        && (args.TextQuery == null || CaseFileContainsText(c, args.TextQuery)));
+
+      return q.Select(c => new CaseFileListItem { Id = c.Id, CaseNumber = c.CaseNumber, Title = c.Title, Description = c.Description }).ToList();
+    }
+
+
     public void Add(CaseFile c)
     {
       ++Key;
@@ -54,6 +65,14 @@ namespace Mason.CaseFile.Server.Domain.CaseFiles
     {
       CaseFile cf = CaseFiles.Where(c => c.Id == id).FirstOrDefault();
       return cf;
+    }
+
+
+    private bool CaseFileContainsText(CaseFile c, string text)
+    {
+      return c != null && text != null &&
+        (!string.IsNullOrEmpty(c.Title) && c.Title.ToLower().Contains(text.ToLower()) 
+        || !string.IsNullOrEmpty(c.Description) && c.Description.ToLower().Contains(text.ToLower()));
     }
   }
 }

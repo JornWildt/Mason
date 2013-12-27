@@ -8,7 +8,7 @@ namespace Mason.CaseFile.Contract
   [JsonObject(MemberSerialization.OptOut)]
   public class CaseFileCollection : Resource
   {
-    public IList<CaseFileCollectionItem> CaseFiles { get; set; }
+    public List<CaseFileCollectionItem> CaseFiles { get; set; }
 
     public CaseFileCollection()
     {
@@ -18,7 +18,7 @@ namespace Mason.CaseFile.Contract
 
   
   [JsonObject(MemberSerialization.OptOut)]
-  public class CaseFileCollectionItem : Resource
+  public class CaseFileCollectionItem : SubResource
   {
     public string ID { get; set; }
     public string Title { get; set; }

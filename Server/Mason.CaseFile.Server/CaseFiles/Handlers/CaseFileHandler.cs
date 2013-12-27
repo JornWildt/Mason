@@ -10,9 +10,9 @@ namespace Mason.CaseFile.Server.CaseFiles.Handlers
     public ICaseFileRepository CaseFileRepository { get; set; }
 
 
-    public object Get(string number)
+    public object Get(string id)
     {
-      Domain.CaseFiles.CaseFile cf = CaseFileRepository.GetByCaseNumber(number);
+      Domain.CaseFiles.CaseFile cf = CaseFileRepository.Get(new Guid(id));
       return new CaseFileResource
       {
         CaseFile = cf

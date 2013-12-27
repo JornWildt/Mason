@@ -1,5 +1,6 @@
 ﻿using Mason.CaseFile.Server.CaseFiles.Resources;
 using Mason.CaseFile.Server.Codecs;
+using Mason.CaseFile.Server.Domain.CaseFiles;
 using Mason.Net;
 using OpenRasta.Web;
 using System;
@@ -13,13 +14,13 @@ namespace Mason.CaseFile.Server.CaseFiles.Codecs
     {
       Contract.CaseFileCollection cc = new Contract.CaseFileCollection();
 
-      foreach (CaseFileResource c in resource.CaseFiles)
+      foreach (CaseFileListItem c in resource.CaseFiles)
       {
         Contract.CaseFileCollectionItem item = new Contract.CaseFileCollectionItem();
-        item.ID = c.CaseFile.Id.ToString();
-        item.Title = c.CaseFile.Title;
+        item.ID = c.Id.ToString();
+        item.Title = c.Title;
 
-        Uri itemSelfUri = typeof(CaseFileResource).CreateUri(new { id = c.CaseFile.Id });
+        Uri itemSelfUri = typeof(CaseFileResource).CreateUri(new { id = c.Id });
         Link itemSelfLink = new Link("self", itemSelfUri);
         item.Links.Add(itemSelfLink);
 

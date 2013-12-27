@@ -30,7 +30,7 @@ namespace Mason.CaseFile.Server.CaseFiles
         .TranscodedBy<CaseFilesQueryCodec>();
 
       ResourceSpace.Has.ResourcesOfType<Resources.CaseFileResource>()
-        .AtUri("/casefiles/{number}")
+        .AtUri("/casefiles/{id}")
         .HandledBy<CaseFileHandler>()
         .TranscodedBy<CaseFileCodec>();
 
@@ -41,8 +41,8 @@ namespace Mason.CaseFile.Server.CaseFiles
     private static void LoadDemoData()
     {
       ICaseFileRepository repo = new CaseFileInMemoryRepository();
-      
-      Domain.CaseFiles.CaseFile cf = new Domain.CaseFiles.CaseFile("Case file 1", "Blah blah ....");
+
+      Domain.CaseFiles.CaseFile cf = new Domain.CaseFiles.CaseFile("Application for comedy fonds", "Dear Ministry of fun. I write to you because we have too little fun in our family. We therefore apply for $10.000 worth of funny entertainment over the next three years. Thanks. Yours cincerly, Jonathan");
       repo.Add(cf);
     }
   }

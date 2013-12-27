@@ -9,7 +9,7 @@ namespace Mason.CaseFile.Server.CaseFiles.Handlers
     {
       return new Resources.CaseFilesResource
       {
-        CaseFiles = new List<Resources.CaseFileResource>()
+        CaseFiles = new List<Domain.CaseFiles.CaseFileListItem>()
         {
         }
       };

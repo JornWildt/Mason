@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="CaseFiles\CaseFile.cs" />
     <Compile Include="CaseFiles\CaseFileInMemoryRepository.cs" />
+    <Compile Include="CaseFiles\CaseFileListItem.cs" />
     <Compile Include="CaseFiles\ICaseFileRepository.cs" />
     <Compile Include="Exceptions\DuplicateKeyException.cs" />
     <Compile Include="Exceptions\MissingResourceException.cs" />

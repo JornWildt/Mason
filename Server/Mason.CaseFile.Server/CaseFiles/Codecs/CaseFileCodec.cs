@@ -16,6 +16,7 @@ namespace Mason.CaseFile.Server.CaseFiles.Codecs
 
       c.ID = casefile.CaseFile.Id.ToString();
       c.Title = casefile.CaseFile.Title;
+      c.Description = casefile.CaseFile.Description;
 
       //Uri selfUri = typeof(CaseFileResource).CreateUri(new { id = casefile.CaseFile.Id });
       //Link selfLink = new Link("self", selfUri);
