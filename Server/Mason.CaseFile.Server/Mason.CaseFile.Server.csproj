@@ -68,9 +68,12 @@
     <Compile Include="CaseFiles\ApplicationStarter.cs" />
     <Compile Include="CaseFiles\Codecs\CaseFileCodec.cs" />
     <Compile Include="CaseFiles\Codecs\CaseFilesCodec.cs" />
+    <Compile Include="CaseFiles\Codecs\CaseFilesQueryCodec.cs" />
     <Compile Include="CaseFiles\Handlers\CaseFileHandler.cs" />
     <Compile Include="CaseFiles\Handlers\CaseFilesHandler.cs" />
+    <Compile Include="CaseFiles\Handlers\CaseFilesQueryHandler.cs" />
     <Compile Include="CaseFiles\Resources\CaseFileResource.cs" />
+    <Compile Include="CaseFiles\Resources\CaseFilesQueryResource.cs" />
     <Compile Include="CaseFiles\Resources\CaseFilesResource.cs" />
     <Compile Include="Codecs\CaseFileMasonCodec.cs" />
     <Compile Include="Codecs\JsonCodec.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="ServiceIndex\Codecs\ServiceIndexCodec.cs" />
     <Compile Include="ServiceIndex\Handlers\ServiceIndexHandler.cs" />
     <Compile Include="ServiceIndex\Resources\ServiceIndexResource.cs" />
+    <Compile Include="UrlPaths.cs" />
     <Compile Include="Utility\ContactInformation.cs" />
     <Compile Include="Utility\DependencyResolverAccessor.cs" />
     <Compile Include="Utility\Log4NetTraceListener.cs" />

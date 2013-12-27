@@ -10,15 +10,21 @@ namespace Mason.Net
     [JsonProperty("mason:namespaces")]
     public IList<Namespace> Namespaces { get; private set; }
 
+    [JsonProperty("mason:meta")]
+    public DynamicDictionary Meta { get; set; }
 
     [JsonProperty("mason:links")]
-    public IList<Link> Links { get; private set; }
+    public List<Link> Links { get; private set; }
 
+    [JsonProperty("mason:link-templates")]
+    public List<LinkTemplate> LinkTemplates { get; private set; }
 
     public Resource()
     {
       Namespaces = new List<Namespace>();
       Links = new List<Link>();
+      LinkTemplates = new List<LinkTemplate>();
+      Meta = new DynamicDictionary();
     }
   }
 }

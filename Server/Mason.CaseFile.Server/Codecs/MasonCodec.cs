@@ -21,6 +21,7 @@ namespace Mason.CaseFile.Server.Codecs
       Mason.Net.Resource representation = ConvertToMason((T)resource);
 
       JsonSerializer serializer = new JsonSerializer();
+      serializer.NullValueHandling = NullValueHandling.Ignore;
       using (StreamWriter sw = new StreamWriter(response.Stream))
       using (JsonWriter jw = new JsonTextWriter(sw))
       {

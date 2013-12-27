@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="DynamicDictionary.cs" />
     <Compile Include="Link.cs" />
+    <Compile Include="LinkTemplate.cs" />
     <Compile Include="Namespace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />

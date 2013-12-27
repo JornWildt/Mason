@@ -23,7 +23,12 @@ namespace Mason.CaseFile.Server.CaseFiles
         .AtUri("/casefiles")
         .HandledBy<CaseFilesHandler>()
         .TranscodedBy<CaseFilesCodec>();
-      
+
+      ResourceSpace.Has.ResourcesOfType<Resources.CaseFilesQueryResource>()
+        .AtUri(UrlPaths.CaseFileQuery)
+        .HandledBy<CaseFilesQueryHandler>()
+        .TranscodedBy<CaseFilesQueryCodec>();
+
       ResourceSpace.Has.ResourcesOfType<Resources.CaseFileResource>()
         .AtUri("/casefiles/{number}")
         .HandledBy<CaseFileHandler>()

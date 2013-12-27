@@ -49,5 +49,21 @@ namespace Mason.Net
       // so this method always returns true. 
       return true;
     }
+
+
+    public object this[string key]
+    {
+      get
+      {
+        object value;
+        if (Dictionary.TryGetValue(key, out value))
+          return value;
+        return null;
+      }
+      set
+      {
+        Dictionary[key] = value;
+      }
+    }
   }
 }

@@ -44,7 +44,7 @@ namespace Mason.CaseFile.Server.Origin.Handlers
       result.Value.Links.Add(logoLink);
 
       Uri serviceIndexUri = typeof(ServiceIndexResource).CreateUri();
-      Link serviceIndexLink = new Link("cf:service-index", serviceIndexUri);
+      Link serviceIndexLink = new Link("service", serviceIndexUri); // "service" is registered
       result.Value.Links.Add(serviceIndexLink);
 
       return result;
