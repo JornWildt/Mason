@@ -5,26 +5,28 @@ using System.Dynamic;
 
 namespace Mason.Net
 {
-  public class Resource : DynamicDictionary
+  public class Resource : SubResource
   {
     [JsonProperty("mason:namespaces")]
-    public IList<Namespace> Namespaces { get; private set; }
+    public List<Namespace> Namespaces { get; set; }
 
     [JsonProperty("mason:meta")]
     public DynamicDictionary Meta { get; set; }
 
-    [JsonProperty("mason:links")]
-    public List<Link> Links { get; private set; }
 
-    [JsonProperty("mason:link-templates")]
-    public List<LinkTemplate> LinkTemplates { get; private set; }
-
-    public Resource()
+    public void SetMeta(string key, object value)
     {
-      Namespaces = new List<Namespace>();
-      Links = new List<Link>();
-      LinkTemplates = new List<LinkTemplate>();
-      Meta = new DynamicDictionary();
+      if (Meta == null)
+        Meta = new DynamicDictionary();
+      Meta[key] = value;
+    }
+
+
+    public void AddNamespace(Namespace ns)
+    {
+      if (Namespaces == null)
+        Namespaces = new List<Namespace>();
+      Namespaces.Add(ns);
     }
   }
 }

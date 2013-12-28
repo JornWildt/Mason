@@ -6,16 +6,26 @@ namespace Mason.Net
 {
   public class SubResource : DynamicDictionary
   {
-    [JsonProperty("mason:meta")]
-    public DynamicDictionary Meta { get; set; }
-
     [JsonProperty("mason:links")]
-    public IList<Link> Links { get; private set; }
+    public List<Link> Links { get; set; }
+
+    [JsonProperty("mason:link-templates")]
+    public List<LinkTemplate> LinkTemplates { get; set; }
 
 
-    public SubResource()
+    public void AddLink(Link l)
     {
-      Links = new List<Link>();
+      if (Links == null)
+        Links = new List<Link>();
+      Links.Add(l);
+    }
+
+
+    public void AddLinkTemplate(LinkTemplate t)
+    {
+      if (LinkTemplates == null)
+        LinkTemplates = new List<LinkTemplate>();
+      LinkTemplates.Add(t);
     }
   }
 }

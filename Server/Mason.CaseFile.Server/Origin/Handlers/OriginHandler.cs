@@ -37,15 +37,15 @@ namespace Mason.CaseFile.Server.Origin.Handlers
 
       Uri contactSelfUri = typeof(OriginContactResource).CreateUri();
       Link contactSelfLink = new Link("self", contactSelfUri, "Complete contact information in standard formats such as vCard and jCard");
-      contact.Links.Add(contactSelfLink);
+      contact.AddLink(contactSelfLink);
 
       Uri logoUri = new Uri(Context.ApplicationBaseUri.EnsureHasTrailingSlash(), "Origins/MinistryOfFun/logo.png");
-      Link logoLink = new Link("cf:logo", logoUri);
-      result.Value.Links.Add(logoLink);
+      Link logoLink = new Link(RelTypes.Logo, logoUri);
+      result.Value.AddLink(logoLink);
 
       Uri serviceIndexUri = typeof(ServiceIndexResource).CreateUri();
       Link serviceIndexLink = new Link("service", serviceIndexUri); // "service" is registered
-      result.Value.Links.Add(serviceIndexLink);
+      result.Value.AddLink(serviceIndexLink);
 
       return result;
     }

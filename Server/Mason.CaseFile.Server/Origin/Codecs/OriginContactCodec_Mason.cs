@@ -27,11 +27,11 @@ namespace Mason.CaseFile.Server.Origin.Codecs
 
       Uri jCardUri = new Uri(cardBaseUrl + ".jcard");
       Link jCardLink = new Link("alternate", jCardUri, "Contact information as jCard", "application/json");
-      c.Links.Add(jCardLink);
+      c.AddLink(jCardLink);
 
       Uri vCardUri = new Uri(cardBaseUrl + ".vcard");
       Link vCardLink = new Link("alternate", vCardUri, "Contact information as vCard", "text/vcard");
-      c.Links.Add(vCardLink);
+      c.AddLink(vCardLink);
 
       return c;
     }

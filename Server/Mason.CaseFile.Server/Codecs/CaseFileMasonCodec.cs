@@ -14,9 +14,10 @@ namespace Mason.CaseFile.Server.Codecs
 
       Uri originUri = typeof(OriginResource).CreateUri();
       Link originLink = new Link("cf:origin", originUri);
-      r.Links.Add(originLink);
+      r.AddLink(originLink);
 
-      r.Namespaces.Add(new Net.Namespace("cf", "http://mason-casefile.dk/rels/"));
+      r.AddNamespace(new Net.Namespace(RelTypes.NamespaceAlias, RelTypes.Namespace));
+      r["mason:profile"] = Profiles.CaseFile;
 
       return r;
     }

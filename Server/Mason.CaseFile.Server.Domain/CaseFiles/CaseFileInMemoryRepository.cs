@@ -32,8 +32,8 @@ namespace Mason.CaseFile.Server.Domain.CaseFiles
     {
       var q = CaseFiles.Where(c =>
         (args.Id == null || c.Id == args.Id)
-        && (args.CaseNumber == null || c.CaseNumber == args.CaseNumber)
-        && (args.TextQuery == null || CaseFileContainsText(c, args.TextQuery)));
+        && (string.IsNullOrEmpty(args.CaseNumber) || c.CaseNumber == args.CaseNumber)
+        && (string.IsNullOrEmpty(args.TextQuery) || CaseFileContainsText(c, args.TextQuery)));
 
       return q.Select(c => new CaseFileListItem { Id = c.Id, CaseNumber = c.CaseNumber, Title = c.Title, Description = c.Description }).ToList();
     }

@@ -16,14 +16,15 @@ namespace Mason.CaseFile.Server.ServiceIndex.Codecs
     {
       Resource s = new Resource();
 
-      s.Meta["mason:title"] = ServiceIndex.Title;
-      s.Meta["mason:description"] = ServiceIndex.Description;
+      s.SetMeta("mason:title", ServiceIndex.Title);
+      s.SetMeta("mason:description", ServiceIndex.Description);
 
       string caseFileQueryUrl = CommunicationContext.ApplicationBaseUri.AbsoluteUri +"/" + UrlPaths.CaseFileQuery;
-      LinkTemplate caseFileQueryTemplate = new LinkTemplate("cf:case-file-query", caseFileQueryUrl, "Search for case files");
-      caseFileQueryTemplate.parameters.Add(new LinkTemplateParameter("id"));
-      caseFileQueryTemplate.parameters.Add(new LinkTemplateParameter("number"));
-      s.LinkTemplates.Add(caseFileQueryTemplate);
+      LinkTemplate caseFileQueryTemplate = new LinkTemplate(RelTypes.CaseFileQuery, caseFileQueryUrl, "Search for case files");
+      caseFileQueryTemplate.parameters.Add(new LinkTemplateParameter("id", description: "Case file ID"));
+      caseFileQueryTemplate.parameters.Add(new LinkTemplateParameter("number", description: "Case file number"));
+      caseFileQueryTemplate.parameters.Add(new LinkTemplateParameter("text", description: "Text query searching all relevante case file properties"));
+      s.AddLinkTemplate(caseFileQueryTemplate);
 
       return s;
     }

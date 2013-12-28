@@ -15,7 +15,7 @@ namespace Mason.CaseFile.Server.Origin.Codecs
 
       Uri selfUri = typeof(OriginResource).CreateUri();
       Link selfLink = new Link("self", selfUri);
-      o.Links.Add(selfLink);
+      o.AddLink(selfLink);
 
       return o;
     }

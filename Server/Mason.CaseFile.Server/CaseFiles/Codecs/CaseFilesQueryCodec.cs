@@ -22,13 +22,13 @@ namespace Mason.CaseFile.Server.CaseFiles.Codecs
 
         Uri itemSelfUri = typeof(CaseFileResource).CreateUri(new { id = c.Id });
         Link itemSelfLink = new Link("self", itemSelfUri);
-        item.Links.Add(itemSelfLink);
+        item.AddLink(itemSelfLink);
 
         cc.CaseFiles.Add(item);
       }
 
       Link selfLink = new Link("self", resource.SelfUri);
-      cc.Links.Add(selfLink);
+      cc.AddLink(selfLink);
 
       return cc;
     }
