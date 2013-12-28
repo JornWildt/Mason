@@ -88,6 +88,7 @@
     <Compile Include="Origin\Handlers\OriginHandler.cs" />
     <Compile Include="Origin\Resources\OriginContactResource.cs" />
     <Compile Include="Origin\Resources\OriginResource.cs" />
+    <Compile Include="MasonProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelTypes.cs" />
     <Compile Include="ServiceIndex\ApplicationStarter.cs" />
