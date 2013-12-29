@@ -7,6 +7,7 @@ namespace Mason.CaseFile.Server.ServiceIndex.Handlers
   {
     public object Get()
     {
+      System.Threading.Thread.Sleep(1000);
       return new ServiceIndexResource
       {
         Title = "Case file API service index",
