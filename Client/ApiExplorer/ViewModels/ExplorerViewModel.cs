@@ -9,6 +9,12 @@ using System.Windows.Threading;
 
 namespace ApiExplorer.ViewModels
 {
+  public class ExecuteWebRequestEventArgs
+  {
+    public Request Request { get; set; }
+  }
+
+
   public class ExplorerViewModel : ViewModel
   {
     #region UI properties
@@ -86,6 +92,7 @@ namespace ApiExplorer.ViewModels
       : base(parent)
     {
       RegisterCommand(GoCommand = new DelegateCommand<object>(Go));
+      Subscribe<ExecuteWebRequestEventArgs>(e => ExecuteWebRequest(e));
       Url = "http://localhost/mason-demo/service-index";
     }
 
@@ -94,15 +101,24 @@ namespace ApiExplorer.ViewModels
 
     private void Go(object obj)
     {
-      IsExecutingRequest = true;
-
       ISession session = RamoneServiceManager.Service.NewSession();
       
-      session.Bind(Url)
-             .Accept("application/vnd.mason;q=1, */*;q=0.5")
-             .Async()
-             .OnError(HandleResponseError)
-             .Get(HandleResponse);
+      Request req = 
+        session.Bind(Url)
+               .Accept("application/vnd.mason;q=1, */*;q=0.5");
+
+      ExecuteWebRequest(new ExecuteWebRequestEventArgs { Request = req });
+    }
+
+
+    protected void ExecuteWebRequest(ExecuteWebRequestEventArgs args)
+    {
+      IsExecutingRequest = true;
+
+      args.Request
+          .Async()
+          .OnError(HandleResponseError)
+          .Get(HandleResponse);
     }
 
 
@@ -118,6 +134,7 @@ namespace ApiExplorer.ViewModels
 
           IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
           ContentRender = handler.GetRender(this, r);
+          Url = r.BaseUri.AbsoluteUri;
         });
     }
 

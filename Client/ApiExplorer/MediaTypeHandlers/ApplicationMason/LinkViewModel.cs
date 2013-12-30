@@ -1,6 +1,8 @@
-﻿using ApiExplorer.ViewModels;
+﻿using ApiExplorer.Utilities;
+using ApiExplorer.ViewModels;
 using Mason.Net;
 using Microsoft.Practices.Composite.Presentation.Commands;
+using Ramone;
 
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
@@ -40,6 +42,13 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 
     private void FollowLink(object obj)
     {
+      ISession session = RamoneServiceManager.Service.NewSession();
+
+      Request req =
+        session.Bind(HRef)
+               .Accept("application/vnd.mason;q=1, */*;q=0.5");
+
+      Publish(new ExecuteWebRequestEventArgs { Request = req });
     }
 
     #endregion

@@ -21,7 +21,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
     {
       SourceText = "Not here";
       RootResource = new ResourceViewModel(parent, resource);
-      if (resource.Meta != null && resource.Meta["mason:title"] is string)
+      if (resource.Meta != null && resource.Meta[MasonProperties.Title] is string)
         Publish(new TitleChangedEventArgs { Title = (string)resource.Meta["mason:title"] });
     }
   }

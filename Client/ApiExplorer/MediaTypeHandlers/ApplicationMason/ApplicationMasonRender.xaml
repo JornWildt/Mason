@@ -10,7 +10,7 @@
       <ListView.ItemTemplate>
         <DataTemplate>
           <TextBlock>
-            <Hyperlink>
+            <Hyperlink Command="{Binding FollowLinkCommand}">
               <TextBlock Text="{Binding Title}"/>
             </Hyperlink>
           </TextBlock>

@@ -13,6 +13,9 @@ namespace Mason.CaseFile.Server.Origin.Codecs
     {
       Contract.Origin o = resource.Value;
 
+      o.SetMeta(MasonProperties.Title, resource.Value.Title);
+      o.SetMeta(MasonProperties.Description, resource.Value.Description);
+
       Uri selfUri = typeof(OriginResource).CreateUri();
       Link selfLink = new Link("self", selfUri);
       o.AddLink(selfLink);

@@ -1,4 +1,4 @@
-﻿namespace Mason.CaseFile.Server
+﻿namespace Mason.Net
 {
   public static class MasonProperties
   {
