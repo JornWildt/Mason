@@ -80,6 +80,7 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\LinkViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\MasonCodec.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\MasonViewModel.cs" />
+    <Compile Include="MediaTypeHandlers\ApplicationMason\PropertyViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ResourceViewModel.cs" />
     <Compile Include="MediaTypeHandlers\Unknown\UnknownMediaTypeHandler.cs" />
     <Compile Include="MediaTypeHandlers\Unknown\UnknownMediaTypeRender.xaml.cs">

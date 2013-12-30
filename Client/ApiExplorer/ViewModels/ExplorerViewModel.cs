@@ -93,7 +93,8 @@ namespace ApiExplorer.ViewModels
     {
       RegisterCommand(GoCommand = new DelegateCommand<object>(Go));
       Subscribe<ExecuteWebRequestEventArgs>(e => ExecuteWebRequest(e));
-      Url = "http://localhost/mason-demo/service-index";
+      //Url = "http://localhost/mason-demo/service-index";
+      Url = "http://localhost/mason-demo/origin";
     }
 
 

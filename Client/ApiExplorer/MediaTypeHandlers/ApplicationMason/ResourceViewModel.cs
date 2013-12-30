@@ -12,6 +12,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 
     public ObservableCollection<LinkViewModel> Links { get; private set; }
 
+    public ObservableCollection<PropertyViewModel> Properties { get; private set; }
+
     #endregion
 
 
@@ -22,6 +24,9 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
         resource.Links == null
           ? Enumerable.Empty<LinkViewModel>()
           : resource.Links.Select(l => new LinkViewModel(this, l)));
+
+      Properties = new ObservableCollection<PropertyViewModel>(
+        resource.GetDynamicMemberNames().Select(name => new PropertyViewModel(this) { Name = name, Value = (resource[name] != null ? resource[name].ToString() : null)  }));
     }
   }
 }

@@ -6,7 +6,19 @@
       <RowDefinition/>
       <RowDefinition/>
     </Grid.RowDefinitions>
-    <ListView Grid.Row="0" ItemsSource="{Binding Links}">
+    <ListView Grid.Row="0" ItemsSource="{Binding Properties}">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Name}"/>
+            <TextBlock Text=": "/>
+            <TextBlock Text="{Binding Value}"/>
+          </StackPanel>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+    <ListView Grid.Row="1" ItemsSource="{Binding Links}">
       <ListView.ItemTemplate>
         <DataTemplate>
           <TextBlock>
