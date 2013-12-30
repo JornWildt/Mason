@@ -90,11 +90,13 @@
       <DependentUpon>Explorer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\IHandleMediaType.cs" />
+    <Compile Include="Utilities\JsonNetCodec.cs" />
     <Compile Include="Utilities\MediaTypeDispatcher.cs" />
     <Compile Include="Utilities\RamoneServiceManager.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ValueConverterBase.cs" />
     <Compile Include="ViewModels\ExplorerViewModel.cs" />
+    <Compile Include="ViewModels\JsonViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="MainWindow.xaml">

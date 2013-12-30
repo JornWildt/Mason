@@ -1,6 +1,7 @@
 ﻿using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
 using Mason.Net;
+using Newtonsoft.Json.Linq;
 using Ramone;
 using System.Windows.Controls;
 
@@ -13,7 +14,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 
     public UserControl GetRender(ViewModel parent, Response r)
     {
-      Resource resource = r.Decode<Resource>();
+      JObject resource = r.Decode<JObject>();
 
       MasonViewModel vm = new MasonViewModel(parent, resource);
       return new ApplicationMasonRender(vm);

@@ -2,23 +2,24 @@
 using ApiExplorer.ViewModels;
 using Mason.Net;
 using Microsoft.Practices.Composite.Presentation.Commands;
+using Newtonsoft.Json.Linq;
 using Ramone;
 
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 {
-  public class LinkViewModel : ViewModel
+  public class LinkViewModel : JsonViewModel
   {
-    private Link Source { get; set; }
+    private JObject Source { get; set; }
 
     
     #region UI properties
 
-    public string Rel { get { return Source.rel; } }
+    public string Rel { get { return GetValue<string>(Source, "rel"); } }
 
-    public string HRef { get { return Source.href; } }
+    public string HRef { get { return GetValue<string>(Source, "href"); } }
 
-    public string Title { get { return Source.title ?? Source.rel; } }
+    public string Title { get { return GetValue<string>(Source, "title") ?? Rel; } }
 
     #endregion
 
@@ -30,7 +31,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
     #endregion
 
 
-    public LinkViewModel(ViewModel parent, Link link)
+    public LinkViewModel(ViewModel parent, JObject link)
       : base(parent)
     {
       Source = link;

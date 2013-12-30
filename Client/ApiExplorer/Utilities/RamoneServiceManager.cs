@@ -12,7 +12,8 @@ namespace ApiExplorer.Utilities
     static RamoneServiceManager()
     {
       Service = RamoneConfiguration.NewService();
-      Service.CodecManager.AddCodec<MasonCodec>(new MediaType("application/vnd.mason"));
+      //Service.CodecManager.AddCodec<MasonCodec>(new MediaType("application/vnd.mason"));
+      Service.CodecManager.AddCodec<JsonNetCodec>(new MediaType("application/vnd.mason"));
     }
   }
 }
