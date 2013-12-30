@@ -1,4 +1,5 @@
 ﻿using ApiExplorer.ViewModels;
+using Mason.Net;
 
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
@@ -7,11 +8,21 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
   {
     public string SourceText { get; set; }
 
-    
-    public MasonViewModel(ViewModel parent, string source)
+
+    #region Sub-viewmodels
+
+    public ResourceViewModel RootResource { get; set; }
+
+    #endregion
+
+
+    public MasonViewModel(ViewModel parent, Resource resource)
       : base(parent)
     {
-      SourceText = source;
+      SourceText = "Not here";
+      RootResource = new ResourceViewModel(parent, resource);
+      if (resource.Meta != null && resource.Meta["mason:title"] is string)
+        Publish(new TitleChangedEventArgs { Title = (string)resource.Meta["mason:title"] });
     }
   }
 }

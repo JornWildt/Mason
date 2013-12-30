@@ -1,4 +1,6 @@
 ﻿using ApiExplorer.Utilities;
+using ApiExplorer.ViewModels;
+using Mason.Net;
 using Ramone;
 using System.Windows.Controls;
 
@@ -9,9 +11,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
   {
     #region IHandleMediaType Members
 
-    public UserControl GetRender(Response r)
+    public UserControl GetRender(ViewModel parent, Response r)
     {
-      MasonViewModel vm = new MasonViewModel(null, "SOURCE ...");
+      Resource resource = r.Decode<Resource>();
+
+      MasonViewModel vm = new MasonViewModel(parent, resource);
       return new ApplicationMasonRender(vm);
     }
 

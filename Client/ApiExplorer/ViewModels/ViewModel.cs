@@ -1,7 +1,10 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Composite.Presentation.Events;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Input;
-using ApiExplorer.Utilities;
 
 
 namespace ApiExplorer.ViewModels
@@ -13,6 +16,7 @@ namespace ApiExplorer.ViewModels
       Parent = parent;
       if (Parent != null)
         Parent.RegisterChildViewModel(this);
+      Events = new EventAggregator();
     }
 
 
@@ -57,6 +61,27 @@ namespace ApiExplorer.ViewModels
     public void RegisterCommand<T>(DelegateCommand<T> command)
     {
       Commands.Add(command);
+    }
+
+    #endregion
+
+
+    #region Event bubling
+
+    protected EventAggregator Events { get; private set; }
+
+
+    protected void Publish<TPayload>(TPayload p)
+    {
+      Events.GetEvent<CompositePresentationEvent<TPayload>>().Publish(p);
+      if (Parent != null)
+        Parent.Publish(p);
+    }
+
+    
+    protected void Subscribe<TPayload>(Action<TPayload> action)
+    {
+      Events.GetEvent<CompositePresentationEvent<TPayload>>().Subscribe(action);
     }
 
     #endregion

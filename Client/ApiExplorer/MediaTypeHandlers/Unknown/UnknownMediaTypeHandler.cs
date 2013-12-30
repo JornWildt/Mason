@@ -1,4 +1,5 @@
 ﻿using ApiExplorer.Utilities;
+using ApiExplorer.ViewModels;
 using Ramone;
 using System.Windows.Controls;
 
@@ -9,7 +10,7 @@ namespace ApiExplorer.MediaTypeHandlers.Unknown
   {
     #region IHandleMediaType Members
 
-    public UserControl GetRender(Response r)
+    public UserControl GetRender(ViewModel parent, Response r)
     {
       return new UnknownMediaTypeRender();
     }

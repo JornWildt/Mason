@@ -1,5 +1,7 @@
 ﻿using ApiExplorer.Utilities;
+using Microsoft.Practices.Composite.Presentation.Commands;
 using Ramone;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -94,7 +96,7 @@ namespace ApiExplorer.ViewModels
     {
       IsExecutingRequest = true;
 
-      ISession session = RamoneConfiguration.NewSession();
+      ISession session = RamoneServiceManager.Service.NewSession();
       
       session.Bind(Url)
              .Accept("application/vnd.mason;q=1, */*;q=0.5")
@@ -111,8 +113,11 @@ namespace ApiExplorer.ViewModels
           IsExecutingRequest = false;
           ResponseStatus = string.Format("{0} {1}", (int)r.StatusCode, r.StatusCode.ToString());
 
+          if (ContentRender is IDisposable)
+            ((IDisposable)ContentRender).Dispose();
+
           IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
-          ContentRender = handler.GetRender(r);
+          ContentRender = handler.GetRender(this, r);
         });
     }
 
