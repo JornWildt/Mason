@@ -13,7 +13,9 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 
     public ObservableCollection<LinkViewModel> Links { get; private set; }
 
-    public ObservableCollection<PropertyViewModel> Properties { get; private set; }
+    public ObservableCollection<ViewModel> Properties { get; private set; }
+
+    public bool HasLinks { get { return Links != null && Links.Count > 0; } }
 
     #endregion
 
@@ -21,7 +23,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
     public ResourceViewModel(ViewModel parent, JObject resource)
       : base(parent)
     {
-      Properties = new ObservableCollection<PropertyViewModel>();
+      Properties = new ObservableCollection<ViewModel>();
 
       foreach (var pair in resource)
       {
@@ -30,9 +32,19 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
           Links = new ObservableCollection<LinkViewModel>(
             pair.Value.Children().OfType<JObject>().Select(l => new LinkViewModel(this, l)));
         }
+        else if (pair.Key == MasonProperties.Namespaces && pair.Value is JArray)
+        {
+        }
         else
         {
-          if (!(pair.Value is JObject))
+          if (pair.Value is JArray)
+          {
+          }
+          else if (pair.Value is JObject)
+          {
+            Properties.Add(new ResourcePropertyViewModel(this) { Name = pair.Key, Value = new ResourceViewModel(this, (JObject)pair.Value) });
+          }
+          else
             Properties.Add(new PropertyViewModel(this) { Name = pair.Key, Value = (pair.Value != null ? pair.Value.ToString() : "") });
         }
       }

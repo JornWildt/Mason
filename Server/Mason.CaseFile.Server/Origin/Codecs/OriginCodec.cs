@@ -13,8 +13,8 @@ namespace Mason.CaseFile.Server.Origin.Codecs
     {
       Contract.Origin o = resource.Value;
 
-      o.SetMeta(MasonProperties.Title, resource.Value.Title);
-      o.SetMeta(MasonProperties.Description, resource.Value.Description);
+      o.SetMeta(MasonProperties.MetaProperties.Title, "Origin data for " + resource.Value.Title);
+      o.SetMeta(MasonProperties.MetaProperties.Description, "This resource contains origin information for case files in " + resource.Value.Title);
 
       Uri selfUri = typeof(OriginResource).CreateUri();
       Link selfLink = new Link("self", selfUri);

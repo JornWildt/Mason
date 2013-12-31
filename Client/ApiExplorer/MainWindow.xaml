@@ -2,6 +2,6 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ax="clr-namespace:ApiExplorer.UserControls"
-        Title="{Binding Title}" Height="350" Width="525">
+        Title="{Binding Title}" Height="500" Width="700">
   <ax:Explorer DataContext="{Binding Explorer}"/>
 </Window>

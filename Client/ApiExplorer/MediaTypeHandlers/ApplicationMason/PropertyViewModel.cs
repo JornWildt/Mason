@@ -1,8 +1,4 @@
-﻿using ApiExplorer.Utilities;
-using ApiExplorer.ViewModels;
-using Mason.Net;
-using Microsoft.Practices.Composite.Presentation.Commands;
-using Ramone;
+﻿using ApiExplorer.ViewModels;
 
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
@@ -13,12 +9,30 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 
     public string Name { get; set; }
 
-    public string Value { get; set; }
+    public object Value { get; set; }
 
     #endregion
 
 
     public PropertyViewModel(ViewModel parent)
+      : base(parent)
+    {
+    }
+  }
+
+
+  public class ResourcePropertyViewModel : ViewModel
+  {
+    #region UI properties
+
+    public string Name { get; set; }
+
+    public ResourceViewModel Value { get; set; }
+
+    #endregion
+
+
+    public ResourcePropertyViewModel(ViewModel parent)
       : base(parent)
     {
     }

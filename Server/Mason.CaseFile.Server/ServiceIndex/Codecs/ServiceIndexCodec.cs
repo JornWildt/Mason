@@ -16,8 +16,8 @@ namespace Mason.CaseFile.Server.ServiceIndex.Codecs
     {
       Resource s = new Resource();
 
-      s.SetMeta(MasonProperties.Title, ServiceIndex.Title);
-      s.SetMeta(MasonProperties.Description, ServiceIndex.Description);
+      s.SetMeta(MasonProperties.MetaProperties.Title, ServiceIndex.Title);
+      s.SetMeta(MasonProperties.MetaProperties.Description, ServiceIndex.Description);
 
       string caseFileQueryUrl = CommunicationContext.ApplicationBaseUri.AbsoluteUri +"/" + UrlPaths.CaseFileQuery;
       LinkTemplate caseFileQueryTemplate = new LinkTemplate(RelTypes.CaseFileQuery, caseFileQueryUrl, "Search for case files");

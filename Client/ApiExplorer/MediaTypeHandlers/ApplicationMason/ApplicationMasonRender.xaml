@@ -1,12 +1,88 @@
 ﻿<UserControl x:Class="ApiExplorer.MediaTypeHandlers.ApplicationMason.ApplicationMasonRender"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Grid DataContext="{Binding RootResource}">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:axv="clr-namespace:ApiExplorer.ValueConverters"
+             xmlns:mavm="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason">
+  <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition/>
-      <RowDefinition/>
+      <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
-    <ListView Grid.Row="0" ItemsSource="{Binding Properties}">
+    
+    <TreeView ItemsSource="{Binding RootProperty}">
+      <TreeView.Resources>
+
+        <HierarchicalDataTemplate DataType="{x:Type mavm:ResourcePropertyViewModel}" ItemsSource="{Binding Value.Properties}">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <!-- Name -->
+            <TextBlock Grid.Row="0" Text="{Binding Name}" FontWeight="Bold"/>
+            <!-- Links -->
+            <StackPanel Grid.Row="1" Visibility="{Binding Value.HasLinks, Converter={axv:BoolToVisibilityConverter}}">
+              <TextBlock Text="Links"/>
+              <ListView ItemsSource="{Binding Value.Links}">
+                <ListView.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock>
+                    <Hyperlink Command="{Binding FollowLinkCommand}">
+                      <TextBlock Text="{Binding Title}"/>
+                    </Hyperlink>
+                  </TextBlock>
+                  </DataTemplate>
+                </ListView.ItemTemplate>
+              </ListView>
+            </StackPanel>
+          </Grid>
+        </HierarchicalDataTemplate>
+
+        <DataTemplate DataType="{x:Type mavm:PropertyViewModel}">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Name}"/>
+            <TextBlock Text=": "/>
+            <TextBlock Text="{Binding Value}"/>
+          </StackPanel>
+        </DataTemplate>
+
+      </TreeView.Resources>
+    </TreeView>
+
+    <!--<TreeView ItemsSource="{Binding RootResource}">
+      <TreeView.Resources>
+        <HierarchicalDataTemplate DataType="{x:Type mavm:ResourceViewModel}" ItemsSource="{Binding Properties}">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition/>
+              <RowDefinition/>
+              <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="RESOURCE"/>
+            
+            <ListView Grid.Row="1" ItemsSource="{Binding Links}">
+              <ListView.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock>
+                    <Hyperlink Command="{Binding FollowLinkCommand}">
+                      <TextBlock Text="{Binding Title}"/>
+                    </Hyperlink>
+                  </TextBlock>
+                </DataTemplate>
+              </ListView.ItemTemplate>
+            </ListView>
+          </Grid>
+        </HierarchicalDataTemplate>
+        
+        <DataTemplate DataType="{x:Type mavm:PropertyViewModel}">
+          <TextBlock Text="{Binding Name}"/>
+        </DataTemplate>
+
+      </TreeView.Resources>
+    </TreeView>-->
+    
+    <!--<ListView Grid.Row="0" ItemsSource="{Binding Properties}">
       <ListView.ItemTemplate>
         <DataTemplate>
           <StackPanel Orientation="Horizontal">
@@ -28,6 +104,6 @@
           </TextBlock>
         </DataTemplate>
       </ListView.ItemTemplate>
-    </ListView>
+    </ListView>-->
   </Grid>
 </UserControl>
