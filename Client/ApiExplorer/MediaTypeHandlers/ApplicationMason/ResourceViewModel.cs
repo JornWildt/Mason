@@ -17,6 +17,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 
     public bool HasLinks { get { return Links != null && Links.Count > 0; } }
 
+    public string Description { get; set; }
+
+    public bool HasDescription { get { return !string.IsNullOrEmpty(Description); } }
+
     #endregion
 
 
@@ -34,6 +38,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
         }
         else if (pair.Key == MasonProperties.Namespaces && pair.Value is JArray)
         {
+        }
+        else if (pair.Key == MasonProperties.Meta && pair.Value is JObject)
+        {
+          Description = GetValue<string>(pair.Value, MasonProperties.MetaProperties.Description);
         }
         else
         {

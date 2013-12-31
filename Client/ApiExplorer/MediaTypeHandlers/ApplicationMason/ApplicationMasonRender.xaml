@@ -20,8 +20,11 @@
             </Grid.RowDefinitions>
             <!-- Name -->
             <TextBlock Grid.Row="0" Text="{Binding Name}" FontWeight="Bold"/>
+            <!-- Description -->
+            <TextBlock Grid.Row="1" Text="{Binding Value.Description}" FontStyle="Italic" Foreground="Gray"
+                       Visibility="{Binding Value.HasDescription, Converter={axv:BoolToVisibilityConverter}}"/>
             <!-- Links -->
-            <StackPanel Grid.Row="1" Visibility="{Binding Value.HasLinks, Converter={axv:BoolToVisibilityConverter}}">
+            <StackPanel Grid.Row="2" Visibility="{Binding Value.HasLinks, Converter={axv:BoolToVisibilityConverter}}">
               <TextBlock Text="Links"/>
               <ListView ItemsSource="{Binding Value.Links}">
                 <ListView.ItemTemplate>
@@ -48,62 +51,5 @@
 
       </TreeView.Resources>
     </TreeView>
-
-    <!--<TreeView ItemsSource="{Binding RootResource}">
-      <TreeView.Resources>
-        <HierarchicalDataTemplate DataType="{x:Type mavm:ResourceViewModel}" ItemsSource="{Binding Properties}">
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition/>
-              <RowDefinition/>
-              <RowDefinition/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" Text="RESOURCE"/>
-            
-            <ListView Grid.Row="1" ItemsSource="{Binding Links}">
-              <ListView.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock>
-                    <Hyperlink Command="{Binding FollowLinkCommand}">
-                      <TextBlock Text="{Binding Title}"/>
-                    </Hyperlink>
-                  </TextBlock>
-                </DataTemplate>
-              </ListView.ItemTemplate>
-            </ListView>
-          </Grid>
-        </HierarchicalDataTemplate>
-        
-        <DataTemplate DataType="{x:Type mavm:PropertyViewModel}">
-          <TextBlock Text="{Binding Name}"/>
-        </DataTemplate>
-
-      </TreeView.Resources>
-    </TreeView>-->
-    
-    <!--<ListView Grid.Row="0" ItemsSource="{Binding Properties}">
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Name}"/>
-            <TextBlock Text=": "/>
-            <TextBlock Text="{Binding Value}"/>
-          </StackPanel>
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>
-
-    <ListView Grid.Row="1" ItemsSource="{Binding Links}">
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <TextBlock>
-            <Hyperlink Command="{Binding FollowLinkCommand}">
-              <TextBlock Text="{Binding Title}"/>
-            </Hyperlink>
-          </TextBlock>
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>-->
   </Grid>
 </UserControl>
