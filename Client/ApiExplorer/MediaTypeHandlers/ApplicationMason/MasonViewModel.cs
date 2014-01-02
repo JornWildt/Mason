@@ -10,7 +10,21 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
   {
     #region Sub-viewmodels
 
-    public ObservableCollection<ResourcePropertyViewModel> RootProperty { get; set; }
+    private string _source;
+    public string Source
+    {
+      get { return _source; }
+      set
+      {
+        if (value != _source)
+        {
+          _source = value;
+          OnPropertyChanged("Source");
+        }
+      }
+    }
+
+    public ResourcePropertyViewModel MainProperty { get; set; }
 
     #endregion
 
@@ -18,18 +32,20 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
     public MasonViewModel(ViewModel parent, JObject resource)
       : base(parent)
     {
-      // Wrap resource in collection for easier binding in TreeView
-      RootProperty = new ObservableCollection<ResourcePropertyViewModel> { new ResourcePropertyViewModel(this) { Name = "ROOT RESOURCE", Value = new ResourceViewModel(this, resource) } };
+      MainProperty = new ResourcePropertyViewModel(this) { Name = "ROOT RESOURCE", Value = new ResourceViewModel(this, resource) };
 
+      // Extract meta title for window title and top-level property name
       if (resource[MasonProperties.Meta] != null && resource[MasonProperties.Meta][MasonProperties.MetaProperties.Title] != null)
       {
         string title = resource[MasonProperties.Meta][MasonProperties.MetaProperties.Title].Value<string>();
         if (!string.IsNullOrEmpty(title))
         {
-          RootProperty[0].Name = title;
+          MainProperty.Name = title;
           Publish(new TitleChangedEventArgs { Title = title });
         }
       }
+
+      Source = resource.ToString();
     }
   }
 }

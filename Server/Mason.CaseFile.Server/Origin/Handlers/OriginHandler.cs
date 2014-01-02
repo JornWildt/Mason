@@ -35,6 +35,10 @@ namespace Mason.CaseFile.Server.Origin.Handlers
       contact.Phone = c.Phone;
       contact.Country = c.Country;
 
+      contact.More = new SubResource();
+      contact.More.aName = "Nissen";
+      contact.More.Alignment = "To the left";
+
       Uri contactSelfUri = typeof(OriginContactResource).CreateUri();
       Link contactSelfLink = new Link("self", contactSelfUri, "Complete contact information in standard formats such as vCard and jCard");
       contact.AddLink(contactSelfLink);

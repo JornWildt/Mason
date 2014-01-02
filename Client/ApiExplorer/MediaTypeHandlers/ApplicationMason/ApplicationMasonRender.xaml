@@ -3,53 +3,165 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:axv="clr-namespace:ApiExplorer.ValueConverters"
              xmlns:mavm="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason">
+  <UserControl.Resources>
+    <!-- Expander button (http://www.codeproject.com/Articles/248112/Templating-WPF-Expander-Control) -->
+    <ControlTemplate x:Key="SimpleExpanderButtonTemp" TargetType="{x:Type ToggleButton}">
+      <Border x:Name="ExpanderButtonBorder"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            Padding="{TemplateBinding Padding}">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Rectangle Fill="Transparent" Grid.ColumnSpan="2"/>
+          <Ellipse Name="Circle"
+                 Grid.Column="0"
+                 Stroke="DarkGray"
+                 Width="12"
+                 Height="12"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"/>
+          <Path x:Name="Sign"
+              Grid.Column="0"
+              Data="M 0,3 H 6 M 3,0 V 6 Z"
+              Stroke="#FF666666"
+              Width="6"
+              Height="6"
+              StrokeThickness="2"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              RenderTransformOrigin="0.5,0.5">
+            <Path.RenderTransform>
+              <RotateTransform Angle="0"/>
+            </Path.RenderTransform>
+          </Path>
+          <ContentPresenter x:Name="HeaderContent"
+                            Grid.Column="1"
+                            Margin="4,0,0,0"
+                            ContentSource="Content"/>
+        </Grid>
+      </Border>
+      <ControlTemplate.Triggers>
+        <!--Change the sign to minus when toggled-->
+        <Trigger Property="IsChecked" Value="True">
+          <Setter Property="Data" TargetName="Sign" Value="M 0,3 H 6 Z"/>
+        </Trigger>
+
+        <!-- MouseOver, Pressed behaviours-->
+        <Trigger Property="IsMouseOver" Value="true">
+          <Setter Property="Stroke" Value="#FF3C7FB1" TargetName="Circle"/>
+          <Setter Property="Stroke" Value="#222" TargetName="Sign"/>
+        </Trigger>
+        <Trigger Property="IsPressed" Value="true">
+          <Setter Property="Stroke" Value="#FF526C7B" TargetName="Circle"/>
+          <Setter Property="StrokeThickness" Value="1.5" TargetName="Circle"/>
+          <Setter Property="Stroke" Value="#FF003366" TargetName="Sign"/>
+        </Trigger>
+      </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="Expander">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Expander">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" Name="ContentRow"/>
+              </Grid.RowDefinitions>
+              <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <ContentPresenter ContentSource="Header"/>
+                <ToggleButton IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                              OverridesDefaultStyle="True"
+                              Margin="4 0 0 0"
+                              Template="{StaticResource SimpleExpanderButtonTemp}">
+                </ToggleButton>
+              </StackPanel>
+              <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1,0,0,0" Padding="8 0 0 0" Margin="8 2 0 2"
+                      Name="Content"
+                      Visibility="Collapsed">
+                <ContentPresenter/>
+              </Border>
+            </Grid>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsExpanded" Value="True">
+                <Setter TargetName="Content" Property="Visibility" Value="Visible"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    
+    <DataTemplate DataType="{x:Type mavm:ResourcePropertyViewModel}">
+      <Expander IsExpanded="{Binding IsExpanded}">
+        <Expander.Header>
+          <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+        </Expander.Header>
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <!-- Description -->
+          <TextBlock Grid.Row="0" Text="{Binding Value.Description}" FontStyle="Italic" Foreground="Gray"
+                           Visibility="{Binding Value.HasDescription, Converter={axv:BoolToVisibilityConverter}}"/>
+          <!-- Links -->
+          <StackPanel Grid.Row="1" Visibility="{Binding Value.HasLinks, Converter={axv:BoolToVisibilityConverter}}">
+            <TextBlock Text="Links" FontStyle="Italic" FontWeight="Bold"/>
+            <ItemsControl ItemsSource="{Binding Value.Links}" Margin="10 0 0 0">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock>
+                      <Hyperlink Command="{Binding FollowLinkCommand}">
+                        <TextBlock Text="{Binding Title}"/>
+                      </Hyperlink>
+                    </TextBlock>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+          <!-- Properties -->
+          <ItemsControl Grid.Row="2" DockPanel.Dock="Top" ItemsSource="{Binding Value.Properties}"/>
+        </Grid>
+      </Expander>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type mavm:PropertyViewModel}">
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+        <TextBlock Text=": "/>
+        <TextBlock Text="{Binding Value}"/>
+      </StackPanel>
+    </DataTemplate>
+  </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <!-- UI (left side) -->
+    <DockPanel Grid.Column="0" LastChildFill="True">
+      <TextBlock DockPanel.Dock="Top" FontWeight="Bold" FontSize="14" Margin="0 0 0 10" Text="Resource"/>
+      <ContentPresenter Content="{Binding MainProperty}"/>
+    </DockPanel>
     
-    <TreeView ItemsSource="{Binding RootProperty}">
-      <TreeView.Resources>
-
-        <HierarchicalDataTemplate DataType="{x:Type mavm:ResourcePropertyViewModel}" ItemsSource="{Binding Value.Properties}">
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <!-- Name -->
-            <TextBlock Grid.Row="0" Text="{Binding Name}" FontWeight="Bold"/>
-            <!-- Description -->
-            <TextBlock Grid.Row="1" Text="{Binding Value.Description}" FontStyle="Italic" Foreground="Gray"
-                       Visibility="{Binding Value.HasDescription, Converter={axv:BoolToVisibilityConverter}}"/>
-            <!-- Links -->
-            <StackPanel Grid.Row="2" Visibility="{Binding Value.HasLinks, Converter={axv:BoolToVisibilityConverter}}">
-              <TextBlock Text="Links"/>
-              <ListView ItemsSource="{Binding Value.Links}">
-                <ListView.ItemTemplate>
-                  <DataTemplate>
-                    <TextBlock>
-                    <Hyperlink Command="{Binding FollowLinkCommand}">
-                      <TextBlock Text="{Binding Title}"/>
-                    </Hyperlink>
-                  </TextBlock>
-                  </DataTemplate>
-                </ListView.ItemTemplate>
-              </ListView>
-            </StackPanel>
-          </Grid>
-        </HierarchicalDataTemplate>
-
-        <DataTemplate DataType="{x:Type mavm:PropertyViewModel}">
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Name}"/>
-            <TextBlock Text=": "/>
-            <TextBlock Text="{Binding Value}"/>
-          </StackPanel>
-        </DataTemplate>
-
-      </TreeView.Resources>
-    </TreeView>
+    <!-- Source (right column) -->
+    <DockPanel Grid.Column="1" LastChildFill="True">
+      <TextBlock DockPanel.Dock="Top" FontWeight="Bold" FontSize="14" Margin="0 0 0 10" Text="Source"/>
+      <TextBox DockPanel.Dock="Top" Text="{Binding Source}"
+             IsReadOnly="True" AcceptsReturn="True" TextWrapping="NoWrap" Width="Auto" 
+             HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+             FontFamily="Courier New"/>
+    </DockPanel>
   </Grid>
 </UserControl>
