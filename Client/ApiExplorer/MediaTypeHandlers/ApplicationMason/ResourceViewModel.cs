@@ -22,12 +22,14 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 
     public bool HasDescription { get { return !string.IsNullOrEmpty(Description); } }
 
+    public JToken LinksJsonValue { get; private set; }
+
+    public JToken MetaJsonValue { get; private set; }
+
     #endregion
 
 
     #region Commands
-
-    public DelegateCommand<object> ToggleCommand { get; private set; }
 
     #endregion
 
@@ -35,13 +37,13 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
     public ResourceViewModel(ViewModel parent, JObject resource)
       : base(parent, resource)
     {
-      RegisterCommand(ToggleCommand = new DelegateCommand<object>(Toggle));
       Properties = new ObservableCollection<ViewModel>();
 
       foreach (var pair in resource)
       {
         if (pair.Key == MasonProperties.Links && pair.Value is JArray)
         {
+          LinksJsonValue = pair.Value;
           Links = new ObservableCollection<LinkViewModel>(
             pair.Value.Children().OfType<JObject>().Select(l => new LinkViewModel(this, l)));
         }
@@ -50,6 +52,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
         }
         else if (pair.Key == MasonProperties.Meta && pair.Value is JObject)
         {
+          MetaJsonValue = pair.Value;
           Description = GetValue<string>(pair.Value, MasonProperties.MetaProperties.Description);
         }
         else
@@ -59,30 +62,15 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
           }
           else if (pair.Value is JObject)
           {
-            Properties.Add(new ResourcePropertyViewModel(this) { Name = pair.Key, Value = new ResourceViewModel(this, (JObject)pair.Value) });
+            Properties.Add(new ResourcePropertyViewModel(this, pair.Value) { Name = pair.Key, Value = new ResourceViewModel(this, (JObject)pair.Value) });
           }
           else
-            Properties.Add(new PropertyViewModel(this) { Name = pair.Key, Value = (pair.Value != null ? pair.Value.ToString() : "") });
+            Properties.Add(new PropertyViewModel(this, pair.Value) { Name = pair.Key, Value = (pair.Value != null ? pair.Value.ToString() : "") });
         }
       }
 
       if (Links == null)
         Links = new ObservableCollection<LinkViewModel>();
-
-
-      //  resource.Links == null
-      //    ? Enumerable.Empty<LinkViewModel>()
-      //    : resource.Links.Select(l => new LinkViewModel(this, l)));
-
-      //Properties = new ObservableCollection<PropertyViewModel>(
-      //  resource.GetDynamicMemberNames().Select(name => new PropertyViewModel(this) { Name = name, Value = (resource[name] != null ? resource[name].ToString() : null)  }));
-    }
-
-    
-    private void Toggle(object obj)
-    {
-      // Not ready for use yet
-      //Publish(new MasonViewModel.SourceChangedEventArgs { Source = JsonValue.ToString() });
     }
   }
 }

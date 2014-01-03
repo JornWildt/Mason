@@ -71,7 +71,7 @@ namespace ApiExplorer.ViewModels
     protected EventAggregator Events { get; private set; }
 
 
-    protected void Publish<TPayload>(TPayload p)
+    public void Publish<TPayload>(TPayload p)
     {
       Events.GetEvent<CompositePresentationEvent<TPayload>>().Publish(p);
       if (Parent != null)
@@ -79,7 +79,7 @@ namespace ApiExplorer.ViewModels
     }
 
     
-    protected void Subscribe<TPayload>(Action<TPayload> action)
+    public void Subscribe<TPayload>(Action<TPayload> action)
     {
       Events.GetEvent<CompositePresentationEvent<TPayload>>().Subscribe(action);
     }

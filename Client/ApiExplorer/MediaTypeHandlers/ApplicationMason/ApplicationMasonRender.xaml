@@ -4,6 +4,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:mcmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
              xmlns:axv="clr-namespace:ApiExplorer.ValueConverters"
+             xmlns:axu="clr-namespace:ApiExplorer.Utilities"
              xmlns:mavm="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason">
   <UserControl.Resources>
     <!-- Expander button (http://www.codeproject.com/Articles/248112/Templating-WPF-Expander-Control) -->
@@ -79,8 +80,7 @@
                 <ToggleButton IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                               OverridesDefaultStyle="True"
                               Margin="4 0 0 0"
-                              Template="{StaticResource SimpleExpanderButtonTemp}"
-                              Command="{Binding Value.ToggleCommand}">
+                              Template="{StaticResource SimpleExpanderButtonTemp}">
                 </ToggleButton>
               </StackPanel>
               <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1,0,0,0" Padding="8 0 0 0" Margin="8 2 0 2"
@@ -103,7 +103,11 @@
     <DataTemplate DataType="{x:Type mavm:ResourcePropertyViewModel}">
       <Expander IsExpanded="{Binding IsExpanded}">
         <Expander.Header>
-          <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+          <TextBlock Text="{Binding Name}" FontWeight="Bold">
+            <i:Interaction.Behaviors>
+              <axu:ShowSourceBehavior Prefix="{Binding Name, StringFormat='{}{0}: '}"/>
+            </i:Interaction.Behaviors>
+          </TextBlock>
         </Expander.Header>
         <Grid>
           <Grid.RowDefinitions>
@@ -115,10 +119,19 @@
           </Grid.RowDefinitions>
           <!-- Description -->
           <TextBlock Grid.Row="0" Text="{Binding Value.Description}" FontStyle="Italic" Foreground="Gray"
-                           Visibility="{Binding Value.HasDescription, Converter={axv:BoolToVisibilityConverter}}"/>
+                     Visibility="{Binding Value.HasDescription, Converter={axv:BoolToVisibilityConverter}}">
+            <i:Interaction.Behaviors>
+              <axu:ShowSourceBehavior Source="{Binding Value.MetaJsonValue}" Prefix="mason:meta: "/>
+            </i:Interaction.Behaviors>
+          </TextBlock>
           <!-- Links -->
           <StackPanel Grid.Row="1" Visibility="{Binding Value.HasLinks, Converter={axv:BoolToVisibilityConverter}}">
-            <TextBlock Text="Links" FontStyle="Italic" FontWeight="Bold"/>
+            <TextBlock Text="Links" FontStyle="Italic" FontWeight="Bold">
+              <!-- Show source for links -->
+              <i:Interaction.Behaviors>
+                <axu:ShowSourceBehavior Source="{Binding Value.LinksJsonValue}" Prefix="mason:links: "/>
+              </i:Interaction.Behaviors>
+            </TextBlock>
             <ItemsControl ItemsSource="{Binding Value.Links}" Margin="10 0 0 0">
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -150,12 +163,17 @@
     <!-- Template for displaying simple property -->
     <DataTemplate DataType="{x:Type mavm:PropertyViewModel}">
       <StackPanel Orientation="Horizontal">
-        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-        <TextBlock Text=": "/>
+        <TextBlock Text="{Binding Name, StringFormat='{}{0}: '}" FontWeight="Bold">
+            <i:Interaction.Behaviors>
+              <axu:ShowSourceBehavior Prefix="{Binding Name, StringFormat='{}{0}: '}"/>
+            </i:Interaction.Behaviors>
+        </TextBlock>
         <TextBlock Text="{Binding Value}"/>
       </StackPanel>
     </DataTemplate>
+  
   </UserControl.Resources>
+  
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>

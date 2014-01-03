@@ -1,9 +1,10 @@
 ﻿using ApiExplorer.ViewModels;
+using Newtonsoft.Json.Linq;
 
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 {
-  public class PropertyViewModel : ViewModel
+  public class PropertyViewModel : JsonViewModel
   {
     #region UI properties
 
@@ -28,8 +29,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
     #endregion
 
 
-    public PropertyViewModel(ViewModel parent)
-      : base(parent)
+    public PropertyViewModel(ViewModel parent, JToken json)
+      : base(parent, json)
     {
       IsExpanded = true;
     }
@@ -38,18 +39,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 
   public class ResourcePropertyViewModel : PropertyViewModel
   {
-    /*
-    #region UI properties
-
-    public string Name { get; set; }
-
-    public ResourceViewModel Value { get; set; }
-
-    #endregion
-*/
-
-    public ResourcePropertyViewModel(ViewModel parent)
-      : base(parent)
+    public ResourcePropertyViewModel(ViewModel parent, JToken json)
+      : base(parent, json)
     {
     }
   }
