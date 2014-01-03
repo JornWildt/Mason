@@ -28,9 +28,9 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 
     public DelegateCommand<object> FollowLinkCommand { get; private set; }
 
-    public DelegateCommand<object> MouseEnterCommand { get; private set; }
+    public DelegateCommand<object> SetStatusCommand { get; private set; }
 
-    public DelegateCommand<object> MouseLeaveCommand { get; private set; }
+    public DelegateCommand<object> ResetStatusCommand { get; private set; }
 
     #endregion
 
@@ -40,8 +40,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
     {
       Source = link;
       RegisterCommand(FollowLinkCommand = new DelegateCommand<object>(FollowLink));
-      RegisterCommand(MouseEnterCommand = new DelegateCommand<object>(MouseEnter));
-      RegisterCommand(MouseLeaveCommand = new DelegateCommand<object>(MouseLeave));
+      RegisterCommand(SetStatusCommand = new DelegateCommand<object>(SetStatus));
+      RegisterCommand(ResetStatusCommand = new DelegateCommand<object>(ResetStatus));
     }
 
     
@@ -59,13 +59,13 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
     }
 
 
-    private void MouseEnter(object arg)
+    private void SetStatus(object arg)
     {
       Publish(new SetStatusLineTextEventArgs { Text = HRef });
     }
 
 
-    private void MouseLeave(object arg)
+    private void ResetStatus(object arg)
     {
       Publish(new ResetStatusLineTextEventArgs());
     }

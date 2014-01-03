@@ -125,12 +125,13 @@
                   <TextBlock>
                       <Hyperlink Command="{Binding FollowLinkCommand}"
                                  ToolTip="{Binding Title}">
+                        <!-- Updates status line -->
                         <i:Interaction.Triggers>
                           <i:EventTrigger EventName="MouseEnter">
-                            <mcmd:EventToCommand Command="{Binding MouseEnterCommand}"/>
+                            <mcmd:EventToCommand Command="{Binding SetStatusCommand}"/>
                           </i:EventTrigger>
                           <i:EventTrigger EventName="MouseLeave">
-                            <mcmd:EventToCommand Command="{Binding MouseLeaveCommand}"/>
+                            <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
                           </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <TextBlock Text="{Binding Rel}"/>
