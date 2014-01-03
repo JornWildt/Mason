@@ -19,7 +19,16 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 
     public string HRef { get { return GetValue<string>(Source, "href"); } }
 
-    public string Title { get { return GetValue<string>(Source, "title") ?? Rel; } }
+    public string Title 
+    { 
+      get 
+      { 
+        string type = GetValue<string>(Source, "type");
+        if (!string.IsNullOrEmpty(type))
+          type = " (" + type + ")";
+        return (GetValue<string>(Source, "title") ?? Rel) + type;
+      } 
+    }
 
     #endregion
 

@@ -99,6 +99,7 @@
     <Compile Include="Utility\DependencyResolverAccessor.cs" />
     <Compile Include="Utility\Log4NetTraceListener.cs" />
     <Compile Include="Codecs\MasonCodec.cs" />
+    <Compile Include="Utility\Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

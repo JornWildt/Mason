@@ -20,8 +20,8 @@ namespace Mason.CaseFile.Server.Origin.Handlers
       {
         Value = new Contract.Origin
         {
-          Title = "Ministry of Fun",
-          Description = "This is the external case file API for the Ministry of Fun",
+          Title = Settings.OriginName,
+          Description = Settings.OriginDescription,
           Contact = new SubResource()
         }
       };

@@ -23,12 +23,14 @@
     <ContentControl Grid.Row="1" Content="{Binding ContentRender}"/>
     
     <!-- Status bar -->
-    <Grid Grid.Row="2">
-      <TextBlock Text="{Binding StatusLine}"
-                 Visibility="{Binding IsExecutingRequest, Converter={axv:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>
-      <ProgressBar Width="100" Height="10" HorizontalAlignment="Left" Margin="4"
-                   IsIndeterminate="true"
-                   Visibility="{Binding IsExecutingRequest, Converter={axv:BoolToVisibilityConverter}}"/>
-    </Grid>
+    <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1" Padding="4" Height="30">
+      <Grid>
+        <TextBlock Text="{Binding StatusLine}" VerticalAlignment="Center"
+                   Visibility="{Binding IsExecutingRequest, Converter={axv:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>
+        <ProgressBar Width="100" Height="10" HorizontalAlignment="Left" VerticalAlignment="Center"
+                     IsIndeterminate="true"
+                     Visibility="{Binding IsExecutingRequest, Converter={axv:BoolToVisibilityConverter}}"/>
+      </Grid>
+    </Border>
   </Grid>
 </UserControl>

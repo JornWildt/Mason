@@ -1,5 +1,6 @@
 ﻿using Mason.CaseFile.Server.Codecs;
 using Mason.CaseFile.Server.Origin.Resources;
+using Mason.CaseFile.Server.Utility;
 using Mason.Net;
 using OpenRasta.Codecs;
 using OpenRasta.Web;
@@ -13,6 +14,9 @@ namespace Mason.CaseFile.Server.Origin.Codecs
     protected override Net.Resource ConvertToCaseFile(OriginContactResource resource)
     {
       Net.Resource representation = new Net.Resource();
+
+      representation.SetMeta(MasonProperties.MetaProperties.Title, "Contact information for " + Settings.OriginName);
+      representation.SetMeta(MasonProperties.MetaProperties.Description, "This resource contains the contact information for " + Settings.OriginName + ". Use either content negotiation or links for different versions");
 
       dynamic c = representation;
       c.Address1 = resource.Address1;
