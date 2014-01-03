@@ -1,6 +1,7 @@
 ﻿using ApiExplorer.ViewModels;
 using Mason.Net;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.ObjectModel;
 
 
@@ -8,7 +9,13 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 {
   public class MasonViewModel : ViewModel
   {
-    #region Sub-viewmodels
+    public class SourceChangedEventArgs : EventArgs
+    {
+      public string Source { get; set; }
+    }
+
+
+    #region UI properties and Sub-viewmodels
 
     private string _source;
     public string Source
@@ -33,6 +40,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
       : base(parent)
     {
       MainProperty = new ResourcePropertyViewModel(this) { Name = "ROOT RESOURCE", Value = new ResourceViewModel(this, resource) };
+
+      Subscribe<SourceChangedEventArgs>(e => Source = e.Source);
 
       // Extract meta title for window title and top-level property name
       if (resource[MasonProperties.Meta] != null && resource[MasonProperties.Meta][MasonProperties.MetaProperties.Title] != null)

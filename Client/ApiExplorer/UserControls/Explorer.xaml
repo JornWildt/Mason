@@ -24,13 +24,9 @@
     
     <!-- Status bar -->
     <Grid Grid.Row="2">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <TextBox Grid.Column="0" Text="{Binding ResponseStatus}" IsReadOnly="True" Width="200"
-               Visibility="{Binding IsExecutingRequest, Converter={axv:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>
-      <ProgressBar Grid.Column="1" Width="100" Height="10" HorizontalAlignment="Right" Margin="0 0 10 0"
+      <TextBlock Text="{Binding StatusLine}"
+                 Visibility="{Binding IsExecutingRequest, Converter={axv:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>
+      <ProgressBar Width="100" Height="10" HorizontalAlignment="Left" Margin="4"
                    IsIndeterminate="true"
                    Visibility="{Binding IsExecutingRequest, Converter={axv:BoolToVisibilityConverter}}"/>
     </Grid>

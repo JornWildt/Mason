@@ -28,20 +28,26 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
 
     public DelegateCommand<object> FollowLinkCommand { get; private set; }
 
+    public DelegateCommand<object> MouseEnterCommand { get; private set; }
+
+    public DelegateCommand<object> MouseLeaveCommand { get; private set; }
+
     #endregion
 
 
     public LinkViewModel(ViewModel parent, JObject link)
-      : base(parent)
+      : base(parent, link)
     {
       Source = link;
       RegisterCommand(FollowLinkCommand = new DelegateCommand<object>(FollowLink));
+      RegisterCommand(MouseEnterCommand = new DelegateCommand<object>(MouseEnter));
+      RegisterCommand(MouseLeaveCommand = new DelegateCommand<object>(MouseLeave));
     }
 
     
-    #region Follow link
+    #region Commands
 
-    private void FollowLink(object obj)
+    private void FollowLink(object arg)
     {
       ISession session = RamoneServiceManager.Service.NewSession();
 
@@ -50,6 +56,18 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
                .Accept("application/vnd.mason;q=1, */*;q=0.5");
 
       Publish(new ExecuteWebRequestEventArgs { Request = req });
+    }
+
+
+    private void MouseEnter(object arg)
+    {
+      Publish(new SetStatusLineTextEventArgs { Text = HRef });
+    }
+
+
+    private void MouseLeave(object arg)
+    {
+      Publish(new ResetStatusLineTextEventArgs());
     }
 
     #endregion

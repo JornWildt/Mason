@@ -15,6 +15,17 @@ namespace ApiExplorer.ViewModels
   }
 
 
+  public class SetStatusLineTextEventArgs
+  {
+    public string Text { get; set; }
+  }
+
+
+  public class ResetStatusLineTextEventArgs
+  {
+  }
+
+
   public class ExplorerViewModel : ViewModel
   {
     #region UI properties
@@ -49,16 +60,16 @@ namespace ApiExplorer.ViewModels
     }
 
 
-    private string _responseStatus;
-    public string ResponseStatus
+    private string _statusLine;
+    public string StatusLine
     {
-      get { return _responseStatus; }
+      get { return _statusLine; }
       set
       {
-        if (value != _responseStatus)
+        if (value != _statusLine)
         {
-          _responseStatus = value;
-          OnPropertyChanged("ResponseStatus");
+          _statusLine = value;
+          OnPropertyChanged("StatusLine");
         }
       }
     }
@@ -93,6 +104,9 @@ namespace ApiExplorer.ViewModels
     {
       RegisterCommand(GoCommand = new DelegateCommand<object>(Go));
       Subscribe<ExecuteWebRequestEventArgs>(e => ExecuteWebRequest(e));
+      Subscribe<SetStatusLineTextEventArgs>(e => SetUpdateStatusLine(e.Text));
+      Subscribe<ResetStatusLineTextEventArgs>(e => ResetUpdateStatusLine());
+      
       //Url = "http://localhost/mason-demo/service-index";
       Url = "http://localhost/mason-demo/origin";
     }
@@ -128,7 +142,7 @@ namespace ApiExplorer.ViewModels
       Application.Current.Dispatcher.Invoke(() =>
         {
           IsExecutingRequest = false;
-          ResponseStatus = string.Format("{0} {1}", (int)r.StatusCode, r.StatusCode.ToString());
+          StatusLine = string.Format("{0} {1}", (int)r.StatusCode, r.StatusCode.ToString());
 
           if (ContentRender is IDisposable)
             ((IDisposable)ContentRender).Dispose();
@@ -145,11 +159,30 @@ namespace ApiExplorer.ViewModels
       Application.Current.Dispatcher.Invoke(() =>
         {
           IsExecutingRequest = false;
-          ResponseStatus = string.Format("{0} {1}", (int)err.Response.StatusCode, err.Response.StatusCode.ToString());
+          StatusLine = string.Format("{0} {1}", (int)err.Response.StatusCode, err.Response.StatusCode.ToString());
 
           ContentRender = null;
           MessageBox.Show(err.Exception.Message);
         });
+    }
+
+    #endregion
+
+
+    #region Status line
+
+    private string PreviousStatusLine;
+
+    private void SetUpdateStatusLine(string text)
+    {
+      PreviousStatusLine = StatusLine;
+      StatusLine = text;
+    }
+
+
+    private void ResetUpdateStatusLine()
+    {
+      StatusLine = PreviousStatusLine;
     }
 
     #endregion

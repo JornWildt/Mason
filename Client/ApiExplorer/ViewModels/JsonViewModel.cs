@@ -5,9 +5,13 @@ namespace ApiExplorer.ViewModels
 {
   public class JsonViewModel : ViewModel
   {
-    public JsonViewModel(ViewModel parent)
+    protected JToken JsonValue { get; set; }
+
+
+    public JsonViewModel(ViewModel parent, JToken jsonValue)
       : base(parent)
     {
+      JsonValue = jsonValue;
     }
 
 
