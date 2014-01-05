@@ -90,6 +90,8 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\UserControls\ApplicationMasonRender.xaml.cs">
       <DependentUpon>ApplicationMasonRender.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\KeyValueParameterViewModel.cs" />
+    <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\LinkTemplateViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\LinkViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\MasonCodec.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\MasonViewModel.cs" />
@@ -98,8 +100,8 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\UserControls\UrlTemplateRender.xaml.cs">
       <DependentUpon>UrlTemplateRender.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MediaTypeHandlers\ApplicationMason\Windows\UrlTemplatePopup.xaml.cs">
-      <DependentUpon>UrlTemplatePopup.xaml</DependentUpon>
+    <Compile Include="MediaTypeHandlers\ApplicationMason\Windows\UrlTemplatePopupWindow.xaml.cs">
+      <DependentUpon>UrlTemplatePopupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MediaTypeHandlers\Unknown\UnknownMediaTypeHandler.cs" />
     <Compile Include="MediaTypeHandlers\Unknown\UnknownMediaTypeRender.xaml.cs">
@@ -140,7 +142,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MediaTypeHandlers\ApplicationMason\Windows\UrlTemplatePopup.xaml">
+    <Page Include="MediaTypeHandlers\ApplicationMason\Windows\UrlTemplatePopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

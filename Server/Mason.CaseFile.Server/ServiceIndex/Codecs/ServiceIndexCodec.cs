@@ -21,7 +21,7 @@ namespace Mason.CaseFile.Server.ServiceIndex.Codecs
 
       string caseFileQueryUrl = CommunicationContext.ApplicationBaseUri.AbsoluteUri +"/" + UrlPaths.CaseFileQuery;
       LinkTemplate caseFileQueryTemplate = new LinkTemplate(RelTypes.CaseFileQuery, caseFileQueryUrl, "Search for case files");
-      caseFileQueryTemplate.parameters.Add(new LinkTemplateParameter("id", description: "Case file ID"));
+      caseFileQueryTemplate.parameters.Add(new LinkTemplateParameter("id", description: "Case file ID (GUID)"));
       caseFileQueryTemplate.parameters.Add(new LinkTemplateParameter("number", description: "Case file number"));
       caseFileQueryTemplate.parameters.Add(new LinkTemplateParameter("text", description: "Text query searching all relevante case file properties"));
       s.AddLinkTemplate(caseFileQueryTemplate);

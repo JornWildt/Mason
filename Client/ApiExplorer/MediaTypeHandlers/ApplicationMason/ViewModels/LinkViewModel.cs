@@ -10,23 +10,22 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class LinkViewModel : JsonViewModel
   {
-    private JObject Source { get; set; }
-
-    
     #region UI properties
 
-    public string Rel { get { return GetValue<string>(Source, "rel"); } }
+    public string Rel { get { return GetValue<string>("rel"); } }
 
-    public string HRef { get { return GetValue<string>(Source, "href"); } }
+    public string HRef { get { return GetValue<string>("href"); } }
 
-    public string Title 
+    public string Title { get { return GetValue<string>("title"); } }
+
+    public string DisplayTitle
     { 
       get 
       { 
-        string type = GetValue<string>(Source, "type");
+        string type = GetValue<string>("type");
         if (!string.IsNullOrEmpty(type))
           type = " (" + type + ")";
-        return (GetValue<string>(Source, "title") ?? Rel) + type;
+        return (GetValue<string>("title") ?? Rel) + type;
       } 
     }
 
@@ -47,7 +46,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     public LinkViewModel(ViewModel parent, JObject link)
       : base(parent, link)
     {
-      Source = link;
       RegisterCommand(FollowLinkCommand = new DelegateCommand<object>(FollowLink));
       RegisterCommand(SetStatusCommand = new DelegateCommand<object>(SetStatus));
       RegisterCommand(ResetStatusCommand = new DelegateCommand<object>(ResetStatus));

@@ -15,6 +15,13 @@ namespace ApiExplorer.ViewModels
     }
 
 
+    protected T GetValue<T>(string name)
+      where T : class
+    {
+      return GetValue<T>(JsonValue, name);
+    }
+
+
     protected T GetValue<T>(JToken t, string name)
       where T : class
     {

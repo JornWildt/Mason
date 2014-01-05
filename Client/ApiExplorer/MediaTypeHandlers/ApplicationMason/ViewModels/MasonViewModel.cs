@@ -53,6 +53,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
           Publish(new TitleChangedEventArgs { Title = title });
         }
       }
+      else
+      {
+        Publish(new TitleChangedEventArgs { Title = "Unnamed resource" });
+      }
 
       Source = resource.ToString();
     }

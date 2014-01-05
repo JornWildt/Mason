@@ -14,15 +14,21 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public ObservableCollection<LinkViewModel> Links { get; private set; }
 
-    public ObservableCollection<ViewModel> Properties { get; private set; }
-
     public bool HasLinks { get { return Links != null && Links.Count > 0; } }
+
+    public JToken LinksJsonValue { get; private set; }
+
+    public ObservableCollection<LinkTemplateViewModel> LinkTemplates { get; private set; }
+
+    public bool HasLinkTemplates { get { return LinkTemplates != null && LinkTemplates.Count > 0; } }
+
+    public JToken LinkTemplatesJsonValue { get; private set; }
+
+    public ObservableCollection<ViewModel> Properties { get; private set; }
 
     public string Description { get; set; }
 
     public bool HasDescription { get { return !string.IsNullOrEmpty(Description); } }
-
-    public JToken LinksJsonValue { get; private set; }
 
     public JToken MetaJsonValue { get; private set; }
 
@@ -46,6 +52,12 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
           LinksJsonValue = pair.Value;
           Links = new ObservableCollection<LinkViewModel>(
             pair.Value.Children().OfType<JObject>().Select(l => new LinkViewModel(this, l)));
+        }
+        else if (pair.Key == MasonProperties.LinkTemplates && pair.Value is JArray)
+        {
+          LinkTemplatesJsonValue = pair.Value;
+          LinkTemplates = new ObservableCollection<LinkTemplateViewModel>(
+            pair.Value.Children().OfType<JObject>().Select(l => new LinkTemplateViewModel(this, l)));
         }
         else if (pair.Key == MasonProperties.Namespaces && pair.Value is JArray)
         {

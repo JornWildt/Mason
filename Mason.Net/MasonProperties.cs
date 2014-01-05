@@ -4,6 +4,7 @@
   {
     public const string Namespaces = "mason:namespaces";
     public const string Links = "mason:links";
+    public const string LinkTemplates = "mason:link-templates";
     public const string Meta = "mason:meta";
 
     public static class MetaProperties

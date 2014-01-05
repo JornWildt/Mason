@@ -137,7 +137,7 @@
                 <DataTemplate>
                   <TextBlock>
                       <Hyperlink Command="{Binding FollowLinkCommand}"
-                                 ToolTip="{Binding Title}">
+                                 ToolTip="{Binding DisplayTitle}">
                         <!-- Updates status line -->
                         <i:Interaction.Triggers>
                           <i:EventTrigger EventName="MouseEnter">
@@ -154,8 +154,39 @@
               </ItemsControl.ItemTemplate>
             </ItemsControl>
           </StackPanel>
+          <!-- Link templates -->
+          <StackPanel Grid.Row="2" Visibility="{Binding Value.HasLinkTemplates, Converter={axv:BoolToVisibilityConverter}}">
+            <TextBlock Text="Link templates" FontStyle="Italic" FontWeight="Bold">
+              <!-- Show source for link templates -->
+              <i:Interaction.Behaviors>
+                <axu:ShowSourceBehavior Source="{Binding Value.LinkTemplatesJsonValue}" Prefix="mason:link-templates: "/>
+              </i:Interaction.Behaviors>
+            </TextBlock>
+            <ItemsControl ItemsSource="{Binding Value.LinkTemplates}" Margin="10 0 0 0">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock>
+                      <Hyperlink Command="{Binding OpenLinkTemplateCommand}"
+                                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                 ToolTip="{Binding DisplayTitle}">
+                        <!-- Updates status line -->
+                        <i:Interaction.Triggers>
+                          <i:EventTrigger EventName="MouseEnter">
+                            <mcmd:EventToCommand Command="{Binding SetStatusCommand}"/>
+                          </i:EventTrigger>
+                          <i:EventTrigger EventName="MouseLeave">
+                            <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
+                          </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="{Binding Name}"/>
+                      </Hyperlink>
+                    </TextBlock>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
           <!-- Properties (recursion) -->
-          <ItemsControl Grid.Row="2" DockPanel.Dock="Top" ItemsSource="{Binding Value.Properties}"/>
+          <ItemsControl Grid.Row="3" DockPanel.Dock="Top" ItemsSource="{Binding Value.Properties}"/>
         </Grid>
       </Expander>
     </DataTemplate>
