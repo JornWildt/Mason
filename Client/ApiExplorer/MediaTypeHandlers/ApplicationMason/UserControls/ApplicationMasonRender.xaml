@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="ApiExplorer.MediaTypeHandlers.ApplicationMason.ApplicationMasonRender"
+﻿<UserControl x:Class="ApiExplorer.MediaTypeHandlers.ApplicationMason.UserControls.ApplicationMasonRender"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:mcmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
              xmlns:axv="clr-namespace:ApiExplorer.ValueConverters"
              xmlns:axu="clr-namespace:ApiExplorer.Utilities"
-             xmlns:mavm="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason">
+             xmlns:mavm="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels">
   <UserControl.Resources>
     <!-- Expander button (http://www.codeproject.com/Articles/248112/Templating-WPF-Expander-Control) -->
     <ControlTemplate x:Key="SimpleExpanderButtonTemp" TargetType="{x:Type ToggleButton}">

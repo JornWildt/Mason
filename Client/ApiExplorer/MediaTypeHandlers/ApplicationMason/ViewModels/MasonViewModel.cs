@@ -5,7 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 
 
-namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
+namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class MasonViewModel : ViewModel
   {

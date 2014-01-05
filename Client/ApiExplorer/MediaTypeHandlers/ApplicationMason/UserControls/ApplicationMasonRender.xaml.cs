@@ -1,8 +1,8 @@
-﻿using Ramone;
+﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels;
 using System.Windows.Controls;
 
 
-namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
+namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.UserControls
 {
   /// <summary>
   /// Interaction logic for ApplicationMasonRender.xaml

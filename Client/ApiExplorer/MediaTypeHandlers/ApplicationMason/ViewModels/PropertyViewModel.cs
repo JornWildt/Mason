@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 
 
-namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
+namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class PropertyViewModel : JsonViewModel
   {

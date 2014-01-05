@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 
 
-namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
+namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class ResourceViewModel : JsonViewModel
   {

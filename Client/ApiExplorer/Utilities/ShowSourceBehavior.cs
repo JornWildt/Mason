@@ -1,4 +1,4 @@
-﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason;
+﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels;
 using ApiExplorer.ViewModels;
 using Newtonsoft.Json.Linq;
 using System.Windows;

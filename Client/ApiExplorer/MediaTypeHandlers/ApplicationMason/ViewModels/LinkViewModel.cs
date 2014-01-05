@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 using Ramone;
 
 
-namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
+namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class LinkViewModel : JsonViewModel
   {
