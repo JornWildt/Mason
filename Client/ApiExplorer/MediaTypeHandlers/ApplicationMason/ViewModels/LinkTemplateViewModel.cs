@@ -137,8 +137,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     }
 
 
-    private void Cancel(object arg)
+    private void Cancel(object sender)
     {
+      Window w = Window.GetWindow(sender as DependencyObject);
+      w.Close();
     }
 
     #endregion

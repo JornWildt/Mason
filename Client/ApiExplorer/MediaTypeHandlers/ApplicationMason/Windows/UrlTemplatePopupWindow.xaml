@@ -4,7 +4,7 @@
         xmlns:axuc="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason.UserControls"
         Title="URL template editor" Height="500" Width="600"
         WindowStartupLocation="CenterOwner">
-  <Grid>
-    <axuc:UrlTemplateRender Margin="10"/>
+  <Grid Margin="10">
+    <axuc:UrlTemplateRender/>
   </Grid>
 </Window>

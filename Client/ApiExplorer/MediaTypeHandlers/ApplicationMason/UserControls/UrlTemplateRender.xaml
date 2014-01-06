@@ -12,7 +12,7 @@
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto"/>
-      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
 
     <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" Style="{StaticResource ResourceKey=Label}"/>
@@ -36,11 +36,9 @@
       </ItemsControl.ItemTemplate>
     </ItemsControl>
 
-    <Border Grid.Row="4" BorderBrush="Gray" BorderThickness="0 1 0 0" Padding="4">
-      <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-        <Button Content="Submit" Command="{Binding SubmitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
-        <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="10 0 0 0"/>
-      </StackPanel>
-    </Border>
+    <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal">
+      <Button Content="Submit" IsDefault="True" Command="{Binding SubmitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+      <Button Content="Cancel" IsCancel="True" Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}" Margin="10 0 0 0"/>
+    </StackPanel>
   </Grid>
 </UserControl>
