@@ -110,6 +110,7 @@
     <Compile Include="UserControls\Explorer.xaml.cs">
       <DependentUpon>Explorer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\FocusBehavior.cs" />
     <Compile Include="Utilities\IHandleMediaType.cs" />
     <Compile Include="Utilities\JsonNetCodec.cs" />
     <Compile Include="Utilities\MediaTypeDispatcher.cs" />
@@ -147,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MediaTypeHandlers\Unknown\UnknownMediaTypeRender.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\StandardStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

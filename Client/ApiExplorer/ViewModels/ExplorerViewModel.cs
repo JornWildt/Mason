@@ -12,6 +12,8 @@ namespace ApiExplorer.ViewModels
   public class ExecuteWebRequestEventArgs
   {
     public Request Request { get; set; }
+    public Action<Response> OnSuccess { get; set; }
+    public Action<Response> OnFailure { get; set; }
   }
 
 
@@ -132,17 +134,20 @@ namespace ApiExplorer.ViewModels
 
       args.Request
           .Async()
-          .OnError(HandleResponseError)
-          .Get(HandleResponse);
+          .OnError(r => HandleResponseError(r, args))
+          .Get(r => HandleResponse(r, args));
     }
 
 
-    protected void HandleResponse(Response r)
+    protected void HandleResponse(Response r, ExecuteWebRequestEventArgs args)
     {
       Application.Current.Dispatcher.Invoke(() =>
         {
           IsExecutingRequest = false;
           StatusLine = string.Format("{0} {1}", (int)r.StatusCode, r.StatusCode.ToString());
+
+          if (args.OnSuccess != null)
+            args.OnSuccess(r);
 
           if (ContentRender is IDisposable)
             ((IDisposable)ContentRender).Dispose();
@@ -154,12 +159,15 @@ namespace ApiExplorer.ViewModels
     }
 
 
-    protected void HandleResponseError(AsyncError err)
+    protected void HandleResponseError(AsyncError err, ExecuteWebRequestEventArgs args)
     {
       Application.Current.Dispatcher.Invoke(() =>
         {
           IsExecutingRequest = false;
           StatusLine = string.Format("{0} {1}", (int)err.Response.StatusCode, err.Response.StatusCode.ToString());
+
+          if (args.OnFailure != null)
+            args.OnFailure(err.Response);
 
           ContentRender = null;
           MessageBox.Show(err.Exception.Message);

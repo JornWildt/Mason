@@ -94,6 +94,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     {
       Publish(new MasonViewModel.SourceChangedEventArgs { Source = JsonValue.ToString() });
       UrlTemplatePopupWindow w = new UrlTemplatePopupWindow(this);
+      if (Parameters.Count > 0)
+        Parameters[0].IsFocused = true;
       w.Owner = Window.GetWindow(arg as DependencyObject);
       w.ShowDialog();
     }
@@ -111,7 +113,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     }
 
 
-    private void Submit(object arg)
+    private void Submit(object sender)
     {
       Dictionary<string, string> values = new Dictionary<string, string>();
       foreach (KeyValueParameterViewModel p in Parameters)
@@ -123,7 +125,15 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         session.Bind(Template, values)
                .Accept("application/vnd.mason;q=1, */*;q=0.5");
 
-      Publish(new ExecuteWebRequestEventArgs { Request = req });
+      Window w = Window.GetWindow(sender as DependencyObject);
+
+      Publish(new ExecuteWebRequestEventArgs { Request = req, OnSuccess = (r => HandleSuccess(r, w)) });
+    }
+
+    
+    private void HandleSuccess(Response r, Window w)
+    {
+      w.Close();
     }
 
 

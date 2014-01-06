@@ -38,6 +38,21 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     }
 
 
+    private bool _isFocused;
+    public bool IsFocused
+    {
+      get { return _isFocused; }
+      set
+      {
+        if (value != _isFocused)
+        {
+          _isFocused = value;
+          OnPropertyChanged("IsFocused");
+        }
+      }
+    }
+
+
 
     #endregion
 

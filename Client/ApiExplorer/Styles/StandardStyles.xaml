@@ -1,0 +1,25 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style TargetType="{x:Type TextBlock}">
+    <Setter Property="FontSize" Value="14"/>
+  </Style>
+  <Style TargetType="{x:Type TextBox}">
+    <Setter Property="FontSize" Value="14"/>
+  </Style>
+  <Style x:Key="FormHeading" TargetType="{x:Type TextBlock}">
+    <Setter Property="FontSize" Value="16"/>
+    <Setter Property="FontWeight" Value="Bold"/>
+  </Style>
+  <Style x:Key="Label" TargetType="{x:Type TextBlock}">
+    <Setter Property="FontSize" Value="14"/>
+    <Setter Property="FontWeight" Value="Bold"/>
+    <Setter Property="Margin" Value="0 0 6 0"/>
+  </Style>
+  <Style x:Key="ParamInfo" TargetType="{x:Type TextBlock}">
+    <Setter Property="FontSize" Value="12"/>
+    <Setter Property="FontStyle" Value="Italic"/>
+  </Style>
+  <Style x:Key="Readonly" TargetType="{x:Type TextBox}">
+    <Setter Property="BorderBrush" Value="Transparent"/>
+  </Style>
+</ResourceDictionary>
