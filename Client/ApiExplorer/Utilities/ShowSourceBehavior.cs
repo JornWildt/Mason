@@ -13,6 +13,10 @@ namespace ApiExplorer.Utilities
   {
     ShowSourceAdorner Adorner;
 
+    // This is only here for the XAML source editor - it complains about this being a missing class if the constructor is not here
+    public ShowSourceBehavior()
+    {
+    }
 
     public static DependencyProperty SourceProperty = DependencyProperty.RegisterAttached("Source", typeof(JToken), typeof(ShowSourceBehavior));
 
