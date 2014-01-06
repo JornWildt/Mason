@@ -108,8 +108,9 @@ namespace ApiExplorer.ViewModels
       Subscribe<ExecuteWebRequestEventArgs>(e => ExecuteWebRequest(e));
       Subscribe<SetStatusLineTextEventArgs>(e => SetUpdateStatusLine(e.Text));
       Subscribe<ResetStatusLineTextEventArgs>(e => ResetUpdateStatusLine());
-      
-      Url = "http://localhost/mason-demo/service-index";
+
+      Url = "http://localhost/mason-demo//casefiles/query";
+      //Url = "http://localhost/mason-demo/service-index";
       //Url = "http://localhost/mason-demo/origin";
     }
 

@@ -29,19 +29,12 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
-    public PropertyViewModel(ViewModel parent, JToken json)
+    public PropertyViewModel(ViewModel parent, JToken json, string name, object value)
       : base(parent, json)
     {
+      Name = name;
+      Value = value;
       IsExpanded = true;
-    }
-  }
-
-
-  public class ResourcePropertyViewModel : PropertyViewModel
-  {
-    public ResourcePropertyViewModel(ViewModel parent, JToken json)
-      : base(parent, json)
-    {
     }
   }
 }

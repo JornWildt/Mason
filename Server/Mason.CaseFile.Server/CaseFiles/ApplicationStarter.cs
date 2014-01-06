@@ -44,6 +44,9 @@ namespace Mason.CaseFile.Server.CaseFiles
 
       Domain.CaseFiles.CaseFile cf = new Domain.CaseFiles.CaseFile("Application for comedy fonds", "Dear Ministry of fun. I write to you because we have too little fun in our family. We therefore apply for $10.000 worth of funny entertainment over the next three years. Thanks. Yours cincerly, Jonathan");
       repo.Add(cf);
+
+      cf = new Domain.CaseFiles.CaseFile("Inquery about status of application", "Could you please give an estimated time of arrival for this?");
+      repo.Add(cf);
     }
   }
 }

@@ -39,7 +39,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     public MasonViewModel(ViewModel parent, JObject resource)
       : base(parent)
     {
-      MainProperty = new ResourcePropertyViewModel(this, resource) { Name = "ROOT RESOURCE", Value = new ResourceViewModel(this, resource) };
+      MainProperty = new ResourcePropertyViewModel(this, resource, "ROOT RESOURCE", new ResourceViewModel(this, resource));
 
       Subscribe<SourceChangedEventArgs>(e => Source = e.Source);
 

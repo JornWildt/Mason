@@ -69,20 +69,40 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         }
         else
         {
-          if (pair.Value is JArray)
-          {
-          }
-          else if (pair.Value is JObject)
-          {
-            Properties.Add(new ResourcePropertyViewModel(this, pair.Value) { Name = pair.Key, Value = new ResourceViewModel(this, (JObject)pair.Value) });
-          }
-          else
-            Properties.Add(new PropertyViewModel(this, pair.Value) { Name = pair.Key, Value = (pair.Value != null ? pair.Value.ToString() : "") });
+          Properties.Add(CreatePropertiesRecursively(pair.Key, pair.Value));
+          //if (pair.Value is JArray)
+          //{
+          //  //ObservableCollection<ViewModel> array = new ObservableCollection<ViewModel>(pair.Value.Select(i => );
+          //  //Properties.Add(new ArrayPropertyViewModel(this, pair.Value, pair.Key, new ArrayViewModel(this, (JArray)pair.Value)));
+          //}
+          //else if (pair.Value is JObject)
+          //{
+          //  Properties.Add(new ResourcePropertyViewModel(this, pair.Value, pair.Key, new ResourceViewModel(this, (JObject)pair.Value)));
+          //}
+          //else
+          //  Properties.Add(new PropertyViewModel(this, pair.Value, pair.Key, (pair.Value != null ? pair.Value.ToString() : "")));
         }
       }
 
       if (Links == null)
         Links = new ObservableCollection<LinkViewModel>();
+    }
+
+
+    private PropertyViewModel CreatePropertiesRecursively(string name, JToken json)
+    {
+      if (json is JArray)
+      {
+        int index=0;
+        ObservableCollection<ViewModel> array = new ObservableCollection<ViewModel>(json.Select(i => CreatePropertiesRecursively(string.Format("[{0}]",index++), i)));
+        return new ArrayPropertyViewModel(this, json, name, array);
+      }
+      else if (json is JObject)
+      {
+        return new ResourcePropertyViewModel(this, json, name, new ResourceViewModel(this, (JObject)json));
+      }
+      else
+        return new PropertyViewModel(this, json, name, (json != null ? json.ToString() : ""));
     }
   }
 }

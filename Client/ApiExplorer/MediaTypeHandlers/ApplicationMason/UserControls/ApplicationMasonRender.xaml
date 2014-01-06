@@ -191,6 +191,22 @@
       </Expander>
     </DataTemplate>
     
+    <!-- Template for displaying array (recursively) -->
+    <DataTemplate DataType="{x:Type mavm:ArrayPropertyViewModel}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="{Binding Name, StringFormat='{}{0}: '}" FontWeight="Bold">
+          <i:Interaction.Behaviors>
+            <axu:ShowSourceBehavior Prefix="{Binding Name, StringFormat='{}{0}: '}"/>
+          </i:Interaction.Behaviors>
+        </TextBlock>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Value}" Margin="20 0 0 0"/>
+      </Grid>
+    </DataTemplate>
+    
     <!-- Template for displaying simple property -->
     <DataTemplate DataType="{x:Type mavm:PropertyViewModel}">
       <StackPanel Orientation="Horizontal">
