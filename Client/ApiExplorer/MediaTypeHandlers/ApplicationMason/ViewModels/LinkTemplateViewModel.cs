@@ -27,7 +27,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     {
       get
       {
-        return GetValue<string>("title") ?? Name;
+        return GetValue<string>("description") ?? Name;
       }
     }
 
