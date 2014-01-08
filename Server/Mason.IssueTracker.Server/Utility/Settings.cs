@@ -2,8 +2,8 @@
 {
   public static class Settings
   {
-    public const string OriginName = "Demo Issue Tracker";
-    public const string OriginDescription = "This is an implementation of a issue tracker.";
+    public const string OriginName = "Demostradius";
+    public const string OriginDescription = "This is a demonstration of how an issue tracker could be implemented using Mason.";
   }
 }
 

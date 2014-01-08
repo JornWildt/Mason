@@ -27,6 +27,7 @@
           </Grid.RowDefinitions>
           <!-- Description -->
           <TextBlock Grid.Row="0" Text="{Binding Value.Description}" FontStyle="Italic" Foreground="Gray"
+                     TextWrapping="Wrap"
                      Visibility="{Binding Value.HasDescription, Converter={axv:BoolToVisibilityConverter}}">
             <i:Interaction.Behaviors>
               <axu:ShowSourceBehavior Source="{Binding Value.MetaJsonValue}" Prefix="mason:meta: "/>

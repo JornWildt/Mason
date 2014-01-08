@@ -1,4 +1,4 @@
-﻿using Mason.IssueTracker.Server.Origin.Resources;
+﻿using Mason.IssueTracker.Server.ResourceCommons.Resources;
 using Mason.Net;
 using OpenRasta.Web;
 using System;
@@ -12,12 +12,12 @@ namespace Mason.IssueTracker.Server.Codecs
     {
       Net.Resource r = ConvertToIssueTracker(resource);
 
-      Uri originUri = typeof(OriginResource).CreateUri();
-      Link originLink = new Link(RelTypes.Origin, originUri);
-      r.AddLink(originLink);
+      Uri resourceCommonUri = typeof(ResourceCommonResource).CreateUri();
+      Link resourceCommonLink = new Link(RelTypes.ResourceCommon, resourceCommonUri);
+      r.AddLink(resourceCommonLink);
 
-      r.AddNamespace(new Net.Namespace(RelTypes.NamespaceAlias, RelTypes.Namespace));
-      r[MasonProperties.Profile] = Profiles.IssueTracker;
+      //r.AddNamespace(new Net.Namespace(RelTypes.NamespaceAlias, RelTypes.Namespace));
+      //r[MasonProperties.Profile] = Profiles.IssueTracker;
 
       return r;
     }

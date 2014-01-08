@@ -18,7 +18,8 @@ namespace Mason.IssueTracker.Server
       {
         ResourceSpace.Uses.UriDecorator<ContentTypeExtensionUriDecorator>();
         Issues.ApplicationStarter.Start();
-        Origin.ApplicationStarter.Start();
+        Contact.ApplicationStarter.Start();
+        ResourceCommons.ApplicationStarter.Start();
         ServiceIndex.ApplicationStarter.Start();
       }
     }

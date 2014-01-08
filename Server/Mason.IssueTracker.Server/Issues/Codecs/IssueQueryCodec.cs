@@ -15,6 +15,9 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
     {
       dynamic result = new Resource();
 
+      result.SetMeta(MasonProperties.MetaProperties.Title, "Query result");
+      result.SetMeta(MasonProperties.MetaProperties.Description, "This is the result of a query for issues. Follow 'self' links to get more information about selected issues.");
+
       result.Issues = new List<SubResource>();
 
       foreach (Issue i in resource.Issues)

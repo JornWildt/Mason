@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comments\Comment.cs" />
     <Compile Include="Exceptions\DuplicateKeyException.cs" />
     <Compile Include="Exceptions\MissingResourceException.cs" />
     <Compile Include="Issues\Issue.cs" />
