@@ -110,8 +110,8 @@ namespace ApiExplorer.ViewModels
       Subscribe<ResetStatusLineTextEventArgs>(e => ResetUpdateStatusLine());
 
       //Url = "http://localhost/mason-demo//issues/query";
-      //Url = "http://localhost/mason-demo/service-index";
-      Url = "http://localhost/mason-demo/resource-common";
+      Url = "http://localhost/mason-demo/service-index";
+      //Url = "http://localhost/mason-demo/resource-common";
     }
 
 

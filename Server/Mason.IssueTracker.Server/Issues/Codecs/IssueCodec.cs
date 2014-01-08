@@ -11,6 +11,9 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
     {
       dynamic i = new Resource();
 
+      i.SetMeta(MasonProperties.MetaProperties.Title, issue.Issue.Title);
+      i.SetMeta(MasonProperties.MetaProperties.Description, "This resource represents a single issue with its data.");
+
       i.ID = issue.Issue.Id;
       i.Title = issue.Issue.Title;
       i.Description = issue.Issue.Description;
