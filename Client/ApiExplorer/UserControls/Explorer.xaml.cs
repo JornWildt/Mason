@@ -11,8 +11,19 @@ namespace ApiExplorer.UserControls
     public Explorer()
     {
       InitializeComponent();
+    }
 
+    
+    private void UrlInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+    {
+      UrlInput.SelectAll();
+    }
+
+    
+    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    {
       UrlInput.Focus();
+      UrlInput.SelectAll();
     }
   }
 }

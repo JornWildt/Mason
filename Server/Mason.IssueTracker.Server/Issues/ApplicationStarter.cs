@@ -23,7 +23,7 @@ namespace Mason.IssueTracker.Server.Issues
       ResourceSpace.Uses.CustomDependency<IIssueRepository, IssueInMemoryRepository>(DependencyLifetime.Singleton);
 
       ResourceSpace.Has.ResourcesOfType<IssueResource>()
-        .AtUri("/issues/{id}")
+        .AtUri(UrlPaths.Issue)
         .HandledBy<IssueHandler>()
         .TranscodedBy<IssueCodec>();
 

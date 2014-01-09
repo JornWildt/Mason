@@ -47,6 +47,23 @@ namespace ApiExplorer.ViewModels
     }
 
 
+    private bool _addressIsFocused;
+    public bool AddressIsFocused
+    {
+      get { return _addressIsFocused; }
+      set
+      {
+        if (value != _addressIsFocused)
+        {
+          _addressIsFocused = value;
+          OnPropertyChanged("AddressIsFocused");
+        }
+      }
+    }
+
+
+
+
     private bool _isExecutingRequest;
     public bool IsExecutingRequest
     {
@@ -97,6 +114,7 @@ namespace ApiExplorer.ViewModels
     #region Commands
 
     public DelegateCommand<object> GoCommand { get; private set; }
+    public DelegateCommand<object> AddressFocusCommand { get; private set; }
 
     #endregion
 
@@ -105,6 +123,7 @@ namespace ApiExplorer.ViewModels
       : base(parent)
     {
       RegisterCommand(GoCommand = new DelegateCommand<object>(Go));
+      RegisterCommand(AddressFocusCommand = new DelegateCommand<object>(AddressFocus));
       Subscribe<ExecuteWebRequestEventArgs>(e => ExecuteWebRequest(e));
       Subscribe<SetStatusLineTextEventArgs>(e => SetUpdateStatusLine(e.Text));
       Subscribe<ResetStatusLineTextEventArgs>(e => ResetUpdateStatusLine());
@@ -113,6 +132,16 @@ namespace ApiExplorer.ViewModels
       Url = "http://localhost/mason-demo/service-index";
       //Url = "http://localhost/mason-demo/resource-common";
     }
+
+
+    #region Address focus
+
+    private void AddressFocus(object arg)
+    {
+      AddressIsFocused = true;
+    }
+
+    #endregion
 
 
     #region Go command
