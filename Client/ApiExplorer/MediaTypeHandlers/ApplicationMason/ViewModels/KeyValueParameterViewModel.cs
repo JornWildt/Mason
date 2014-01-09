@@ -8,11 +8,50 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
   {
     #region UI properties
 
-    public string Name { get { return GetValue<string>("name"); } }
+    private string _name;
+    public string Name
+    {
+      get { return _name; }
+      set
+      {
+        if (value != _name)
+        {
+          _name = value;
+          OnPropertyChanged("Name");
+        }
+      }
+    }
 
-    public string Type { get { return GetValue<string>("type"); } }
 
-    public string Description { get { return GetValue<string>("description"); } }
+    private string _type;
+    public string Type
+    {
+      get { return _type; }
+      set
+      {
+        if (value != _type)
+        {
+          _type = value;
+          OnPropertyChanged("Type");
+        }
+      }
+    }
+
+
+    private string _description;
+    public string Description
+    {
+      get { return _description; }
+      set
+      {
+        if (value != _description)
+        {
+          _description = value;
+          OnPropertyChanged("Description");
+        }
+      }
+    }
+
 
     public string DisplayTitle
     {
@@ -60,7 +99,17 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     public KeyValueParameterViewModel(ViewModel parent, JToken json)
       : base(parent, json)
     {
+      Name = GetValue<string>("name");
+      Type = GetValue<string>("type");
+      Description = GetValue<string>("description");
       Value = GetValue<string>("value");
+    }
+
+
+    public KeyValueParameterViewModel(ViewModel parent, string name)
+      : base(parent, new JObject())
+    {
+      Name = name;
     }
   }
 }

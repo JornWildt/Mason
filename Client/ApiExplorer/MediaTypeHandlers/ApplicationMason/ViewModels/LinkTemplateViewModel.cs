@@ -81,10 +81,31 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         throw new InvalidOperationException("Expected JSON object for link template");
 
       JArray parameters = GetValue<JArray>(json, "parameters");
-      if (parameters != null)
+      if (parameters != null && parameters.Count > 0)
         Parameters = new ObservableCollection<KeyValueParameterViewModel>(parameters.Select(p => new KeyValueParameterViewModel(this, p)));
       else
-        Parameters = new ObservableCollection<KeyValueParameterViewModel>();
+        Parameters = BuildParametersFromTemplate();
+    }
+
+
+    private ObservableCollection<KeyValueParameterViewModel> BuildParametersFromTemplate()
+    {
+      ObservableCollection<KeyValueParameterViewModel> parameters = new ObservableCollection<KeyValueParameterViewModel>();
+      try
+      {
+        UriTemplate template = new UriTemplate(Template);
+        foreach (string name in template.QueryValueVariableNames)
+        {
+          KeyValueParameterViewModel p = new KeyValueParameterViewModel(this, name);
+          parameters.Add(p);
+        }
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show("Failed to read URL template: " + ex.Message);
+      }
+
+      return parameters;
     }
 
 

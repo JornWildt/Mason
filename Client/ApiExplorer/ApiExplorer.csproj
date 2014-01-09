@@ -120,6 +120,7 @@
     <Compile Include="Utilities\ShowSourceAdorner.cs" />
     <Compile Include="Utilities\ShowSourceBehavior.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\EmptyStringToVisibility.cs" />
     <Compile Include="ValueConverters\ValueConverterBase.cs" />
     <Compile Include="ViewModels\ExplorerViewModel.cs" />
     <Compile Include="ViewModels\JsonViewModel.cs" />
