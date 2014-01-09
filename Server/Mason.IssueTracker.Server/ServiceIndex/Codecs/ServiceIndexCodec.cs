@@ -20,6 +20,8 @@ namespace Mason.IssueTracker.Server.ServiceIndex.Codecs
       s.SetMeta(MasonProperties.MetaProperties.Title, "Issue tracker service index for " + Settings.OriginName);
       s.SetMeta(MasonProperties.MetaProperties.Description, "This is the service index for a demonstration of how an issue tracker could be implemented using Mason. The service index defines links, link templates and similar to be consumed at runtime by a Mason compatible client.");
 
+      s.AddMetaLink(new Link("documentation", "http://www.dr.dk", "Documentation"));
+
       string issueQueryUrl = CommunicationContext.ApplicationBaseUri.AbsoluteUri +"/" + UrlPaths.IssueQuery;
       LinkTemplate issueQueryTemplate = new LinkTemplate(RelTypes.IssueQuery, issueQueryUrl, "Search for issues");
       issueQueryTemplate.parameters.Add(new LinkTemplateParameter("id", description: "Issue ID"));

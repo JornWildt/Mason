@@ -24,6 +24,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
           </Grid.RowDefinitions>
           <!-- Description -->
           <TextBlock Grid.Row="0" Text="{Binding Value.Description}" Style="{StaticResource ResourceKey=Description}"
@@ -33,38 +34,29 @@
               <axu:ShowSourceBehavior Source="{Binding Value.MetaJsonValue}" Prefix="mason:meta: "/>
             </i:Interaction.Behaviors>
           </TextBlock>
+          <!-- Meta links -->
+          <StackPanel Grid.Row="1" Visibility="{Binding Value.HasMetaLinks, Converter={axv:BoolToVisibilityConverter}}">
+            <TextBlock Text="Meta-links" FontStyle="Italic" FontWeight="Bold">
+              <!-- Show source for links -->
+              <i:Interaction.Behaviors>
+                <axu:ShowSourceBehavior Source="{Binding Value.LinksJsonValue}" Prefix="mason:links: "/>
+              </i:Interaction.Behaviors>
+            </TextBlock>
+            <ItemsControl ItemsSource="{Binding Value.MetaLinks}" Margin="10 0 0 0"/>
+            <!-- Use styling to render links -->
+          </StackPanel>
           <!-- Links -->
-          <StackPanel Grid.Row="1" Visibility="{Binding Value.HasLinks, Converter={axv:BoolToVisibilityConverter}}">
+          <StackPanel Grid.Row="2" Visibility="{Binding Value.HasLinks, Converter={axv:BoolToVisibilityConverter}}">
             <TextBlock Text="Links" FontStyle="Italic" FontWeight="Bold">
               <!-- Show source for links -->
               <i:Interaction.Behaviors>
                 <axu:ShowSourceBehavior Source="{Binding Value.LinksJsonValue}" Prefix="mason:links: "/>
               </i:Interaction.Behaviors>
             </TextBlock>
-            <ItemsControl ItemsSource="{Binding Value.Links}" Margin="10 0 0 0">
-              <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock>
-                      <Hyperlink Command="{Binding FollowLinkCommand}"
-                                 ToolTip="{Binding DisplayTitle}">
-                        <!-- Updates status line -->
-                        <i:Interaction.Triggers>
-                          <i:EventTrigger EventName="MouseEnter">
-                            <mcmd:EventToCommand Command="{Binding SetStatusCommand}"/>
-                          </i:EventTrigger>
-                          <i:EventTrigger EventName="MouseLeave">
-                            <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
-                          </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <TextBlock Text="{Binding Rel}"/>
-                      </Hyperlink>
-                    </TextBlock>
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <ItemsControl ItemsSource="{Binding Value.Links}" Margin="10 0 0 0"/> <!-- Use styling to render links -->
           </StackPanel>
           <!-- Link templates -->
-          <StackPanel Grid.Row="2" Visibility="{Binding Value.HasLinkTemplates, Converter={axv:BoolToVisibilityConverter}}">
+          <StackPanel Grid.Row="3" Visibility="{Binding Value.HasLinkTemplates, Converter={axv:BoolToVisibilityConverter}}">
             <TextBlock Text="Link templates" FontStyle="Italic" FontWeight="Bold">
               <!-- Show source for link templates -->
               <i:Interaction.Behaviors>
@@ -104,11 +96,30 @@
             </ItemsControl>
           </StackPanel>
           <!-- Properties (recursion) -->
-          <ItemsControl Grid.Row="3" DockPanel.Dock="Top" ItemsSource="{Binding Value.Properties}"/>
+          <ItemsControl Grid.Row="4" DockPanel.Dock="Top" ItemsSource="{Binding Value.Properties}"/>
         </Grid>
       </Expander>
     </DataTemplate>
     
+    <!-- Template for displaying single link -->
+    <DataTemplate DataType="{x:Type mavm:LinkViewModel}">
+      <TextBlock>
+        <Hyperlink Command="{Binding FollowLinkCommand}"
+                   ToolTip="{Binding DisplayTitle}">
+          <!-- Updates status line -->
+          <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseEnter">
+              <mcmd:EventToCommand Command="{Binding SetStatusCommand}"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeave">
+              <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
+            </i:EventTrigger>
+          </i:Interaction.Triggers>
+          <TextBlock Text="{Binding Rel}"/>
+        </Hyperlink>
+      </TextBlock>
+    </DataTemplate>
+
     <!-- Template for displaying array (recursively) -->
     <DataTemplate DataType="{x:Type mavm:ArrayPropertyViewModel}">
       <Grid>
@@ -155,7 +166,9 @@
 
     <!-- UI (left side) -->
     <DockPanel Grid.Column="0" LastChildFill="True" Margin="8">
-      <ContentPresenter Content="{Binding MainProperty}"/>
+      <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ContentPresenter Content="{Binding MainProperty}"/>
+      </ScrollViewer>
     </DockPanel>
 
     <!-- Splitter -->

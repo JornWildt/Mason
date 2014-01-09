@@ -32,6 +32,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public JToken MetaJsonValue { get; private set; }
 
+    public ObservableCollection<LinkViewModel> MetaLinks { get; private set; }
+
+    public bool HasMetaLinks { get { return MetaLinks != null && MetaLinks.Count > 0; } }
+
     #endregion
 
 
@@ -66,6 +70,12 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         {
           MetaJsonValue = pair.Value;
           Description = GetValue<string>(pair.Value, MasonProperties.MetaProperties.Description);
+          JToken metaLinksProperty = pair.Value[MasonProperties.Links];
+          if (metaLinksProperty is JArray)
+          {
+            MetaLinks = new ObservableCollection<LinkViewModel>(
+              metaLinksProperty.Children().OfType<JObject>().Select(l => new LinkViewModel(this, l)));
+          }
         }
         else
         {

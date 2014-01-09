@@ -11,14 +11,22 @@ namespace Mason.Net
     public List<Namespace> Namespaces { get; set; }
 
     [JsonProperty("mason:meta")]
-    public DynamicDictionary Meta { get; set; }
+    public SubResource Meta { get; set; }
 
 
     public void SetMeta(string key, object value)
     {
       if (Meta == null)
-        Meta = new DynamicDictionary();
+        Meta = new SubResource();
       Meta[key] = value;
+    }
+
+
+    public void AddMetaLink(Link l)
+    {
+      if (Meta == null)
+        Meta = new SubResource();
+      Meta.AddLink(l);
     }
 
 
