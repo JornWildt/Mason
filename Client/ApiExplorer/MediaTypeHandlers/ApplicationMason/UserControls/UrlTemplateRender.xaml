@@ -8,6 +8,7 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
@@ -17,28 +18,33 @@
     </Grid.ColumnDefinitions>
 
     <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" Style="{StaticResource ResourceKey=Label}"/>
-    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding DisplayTitle}"/>
+    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
 
     <TextBlock Grid.Row="1" Grid.Column="0" Text="Template:" Style="{StaticResource ResourceKey=Label}"/>
-    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Template, Mode=OneTime}" IsReadOnly="True" Style="{StaticResource ResourceKey=Readonly}" Margin="0 0 0 10"/>
+    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Template, Mode=OneTime}" IsReadOnly="True" Style="{StaticResource ResourceKey=Readonly}"/>
 
-    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="Parameters" Style="{StaticResource ResourceKey=FormHeading}"/>
+    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" 
+               Text="{Binding DisplayTitle}" Style="{StaticResource ResourceKey=Description}" TextWrapping="Wrap"
+               Visibility="{Binding DisplayTitle, Converter={axv:EmptyStringToVisibility}}"
+                Margin="0 0 0 10"/>
+    
+    <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Text="Parameters" Style="{StaticResource ResourceKey=FormHeading}"/>
 
-    <ItemsControl Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding Parameters}" Focusable="False">
+    <ItemsControl Grid.Row="4" Grid.ColumnSpan="2" ItemsSource="{Binding Parameters}" Focusable="False">
       <ItemsControl.ItemTemplate>
         <DataTemplate>
           <StackPanel>
             <Label Target="{Binding ElementName=ParameterInput}" Content="{Binding DisplayTitle}" FontWeight="Bold" FontStyle="Italic" Padding="0" Margin="0"/>
             <TextBlock Text="{Binding Description}" Style="{StaticResource ResourceKey=ParamInfo}"
                        Visibility="{Binding Description, Converter={axv:EmptyStringToVisibility}}"/>
-            <TextBox Name="ParameterInput" Text="{Binding Value}" Margin="0 0 0 4"
+            <TextBox Name="ParameterInput" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 4"
                      axu:FocusBehavior.IsFocused="{Binding IsFocused}"/>
           </StackPanel>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
 
-    <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal">
+    <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal">
       <Button Content="Submit" IsDefault="True" Command="{Binding SubmitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
       <Button Content="Cancel" IsCancel="True" Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}" Margin="10 0 0 0"/>
     </StackPanel>

@@ -184,7 +184,7 @@ namespace ApiExplorer.ViewModels
 
           IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
           ContentRender = handler.GetRender(this, r);
-          Url = r.BaseUri.AbsoluteUri;
+          Url = r.WebResponse.ResponseUri.AbsoluteUri;
         });
     }
 
