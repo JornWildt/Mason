@@ -30,19 +30,21 @@
     
     <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Text="Parameters" Style="{StaticResource ResourceKey=FormHeading}"/>
 
-    <ItemsControl Grid.Row="4" Grid.ColumnSpan="2" ItemsSource="{Binding Parameters}" Focusable="False">
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <StackPanel>
-            <Label Target="{Binding ElementName=ParameterInput}" Content="{Binding DisplayTitle}" FontWeight="Bold" FontStyle="Italic" Padding="0" Margin="0"/>
-            <TextBlock Text="{Binding Description}" Style="{StaticResource ResourceKey=ParamInfo}"
-                       Visibility="{Binding Description, Converter={axv:EmptyStringToVisibility}}"/>
-            <TextBox Name="ParameterInput" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 4"
-                     axu:FocusBehavior.IsFocused="{Binding IsFocused}"/>
-          </StackPanel>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    <ScrollViewer Grid.Row="4" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
+      <ItemsControl ItemsSource="{Binding Parameters}" Focusable="False">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <StackPanel>
+              <Label Target="{Binding ElementName=ParameterInput}" Content="{Binding DisplayTitle}" FontWeight="Bold" FontStyle="Italic" Padding="0" Margin="0"/>
+              <TextBlock Text="{Binding Description}" Style="{StaticResource ResourceKey=ParamInfo}"
+                         Visibility="{Binding Description, Converter={axv:EmptyStringToVisibility}}"/>
+              <TextBox Name="ParameterInput" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 4"
+                       axu:FocusBehavior.IsFocused="{Binding IsFocused}"/>
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
 
     <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal">
       <Button Content="Submit" IsDefault="True" Command="{Binding SubmitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>

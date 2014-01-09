@@ -127,14 +127,18 @@
     
     <!-- Template for displaying simple property -->
     <DataTemplate DataType="{x:Type mavm:PropertyViewModel}">
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="{Binding Name, StringFormat='{}{0}: '}" FontWeight="Bold">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Text="{Binding Name, StringFormat='{}{0}: '}" FontWeight="Bold">
             <i:Interaction.Behaviors>
               <axu:ShowSourceBehavior Prefix="{Binding Name, StringFormat='{}{0}: '}"/>
             </i:Interaction.Behaviors>
         </TextBlock>
-        <TextBlock Text="{Binding Value}"/>
-      </StackPanel>
+        <TextBlock Grid.Column="1" Text="{Binding Value}" TextWrapping="Wrap"/>
+      </Grid>
     </DataTemplate>
   
   </UserControl.Resources>
