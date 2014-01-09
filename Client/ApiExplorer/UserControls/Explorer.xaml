@@ -7,6 +7,7 @@
   <Grid>
     <Grid.InputBindings>
       <KeyBinding Key="D" Modifiers="Alt" Command="{Binding AddressFocusCommand}"/>
+      <KeyBinding Key="F5" Command="{Binding GoCommand}"/>
     </Grid.InputBindings>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
