@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.cs" />
     <Compile Include="DynamicDictionary.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="LinkTemplate.cs" />

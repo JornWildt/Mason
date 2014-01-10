@@ -12,6 +12,9 @@ namespace Mason.Net
     [JsonProperty("mason:link-templates")]
     public List<LinkTemplate> LinkTemplates { get; set; }
 
+    [JsonProperty("mason:actions")]
+    public List<Action> Actions { get; set; }
+
 
     public void AddLink(Link l)
     {
@@ -26,6 +29,14 @@ namespace Mason.Net
       if (LinkTemplates == null)
         LinkTemplates = new List<LinkTemplate>();
       LinkTemplates.Add(t);
+    }
+
+
+    public void AddAction(Action a)
+    {
+      if (Actions == null)
+        Actions = new List<Action>();
+      Actions.Add(a);
     }
   }
 }

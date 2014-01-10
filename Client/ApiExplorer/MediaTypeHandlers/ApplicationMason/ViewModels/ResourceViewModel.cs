@@ -24,6 +24,12 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public JToken LinkTemplatesJsonValue { get; private set; }
 
+    public ObservableCollection<ActionViewModel> Actions { get; private set; }
+
+    public bool HasActions { get { return Actions != null && Actions.Count > 0; } }
+
+    public JToken ActionsJsonValue { get; private set; }
+
     public ObservableCollection<ViewModel> Properties { get; private set; }
 
     public string Description { get; set; }
@@ -62,6 +68,12 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
           LinkTemplatesJsonValue = pair.Value;
           LinkTemplates = new ObservableCollection<LinkTemplateViewModel>(
             pair.Value.Children().OfType<JObject>().Select(l => new LinkTemplateViewModel(this, l)));
+        }
+        else if (pair.Key == MasonProperties.Actions && pair.Value is JArray)
+        {
+          ActionsJsonValue = pair.Value;
+          Actions = new ObservableCollection<ActionViewModel>(
+            pair.Value.Children().OfType<JObject>().Select(a => ActionViewModel.CreateAction(this, a)));
         }
         else if (pair.Key == MasonProperties.Namespaces && pair.Value is JArray)
         {

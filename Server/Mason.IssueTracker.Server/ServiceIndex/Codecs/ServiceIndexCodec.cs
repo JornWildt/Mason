@@ -1,4 +1,5 @@
 ﻿using Mason.IssueTracker.Server.Codecs;
+using Mason.IssueTracker.Server.Issues.Resources;
 using Mason.IssueTracker.Server.ServiceIndex.Resources;
 using Mason.IssueTracker.Server.Utility;
 using Mason.Net;
@@ -20,13 +21,17 @@ namespace Mason.IssueTracker.Server.ServiceIndex.Codecs
       s.SetMeta(MasonProperties.MetaProperties.Title, "Issue tracker service index for " + Settings.OriginName);
       s.SetMeta(MasonProperties.MetaProperties.Description, "This is the service index for a demonstration of how an issue tracker could be implemented using Mason. The service index defines links, link templates and similar to be consumed at runtime by a Mason compatible client.");
 
-      s.AddMetaLink(new Link("documentation", "http://www.dr.dk", "Documentation"));
+      s.AddMetaLink(new Link("documentation", "http://www.dr.dk", "Documentation (NOT READY)"));
 
       string issueQueryUrl = CommunicationContext.ApplicationBaseUri.AbsoluteUri +"/" + UrlPaths.IssueQuery;
       LinkTemplate issueQueryTemplate = new LinkTemplate(RelTypes.IssueQuery, issueQueryUrl, "Search for issues");
       issueQueryTemplate.parameters.Add(new LinkTemplateParameter("id", description: "Issue ID"));
       issueQueryTemplate.parameters.Add(new LinkTemplateParameter("text", description: "Text query searching all relevante issue properties"));
       s.AddLinkTemplate(issueQueryTemplate);
+
+      Uri issuesUrl = typeof(IssueCollectionResource).CreateUri();
+      Net.Action addIssueAction = new Net.Action(RelTypes.CreateIssue, "multipart-json", issuesUrl.AbsoluteUri, "Create new issue.");
+      s.AddAction(addIssueAction);
 
       return s;
     }

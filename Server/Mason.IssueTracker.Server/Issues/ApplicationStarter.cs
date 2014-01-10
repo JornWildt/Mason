@@ -32,6 +32,10 @@ namespace Mason.IssueTracker.Server.Issues
         .HandledBy<IssueQueryHandler>()
         .TranscodedBy<IssueQueryCodec>();
 
+      ResourceSpace.Has.ResourcesOfType<IssueCollectionResource>()
+        .AtUri(UrlPaths.Issues)
+        .HandledBy<IssuesHandler>();
+
       LoadDemoData();
     }
 

@@ -25,6 +25,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
           </Grid.RowDefinitions>
           <!-- Description -->
           <TextBlock Grid.Row="0" Text="{Binding Value.Description}" Style="{StaticResource ResourceKey=Description}"
@@ -95,8 +96,48 @@
               </ItemsControl.ItemTemplate>
             </ItemsControl>
           </StackPanel>
+          <!-- Actions -->
+          <StackPanel Grid.Row="4" Visibility="{Binding Value.HasActions, Converter={axv:BoolToVisibilityConverter}}">
+            <TextBlock Text="Actions" FontStyle="Italic" FontWeight="Bold">
+              <!-- Show source for actions -->
+              <i:Interaction.Behaviors>
+                <axu:ShowSourceBehavior Source="{Binding Value.ActionsJsonValue}" Prefix="mason:actions: "/>
+              </i:Interaction.Behaviors>
+            </TextBlock>
+            <ItemsControl ItemsSource="{Binding Value.Actions}" Margin="10 0 0 0">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock>
+                    <TextBlock.Resources>
+                      <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Style.Triggers>
+                          <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand" />
+                          </Trigger>
+                        </Style.Triggers>
+                      </Style>
+                    </TextBlock.Resources>
+                    <Hyperlink Command="{Binding OpenActionCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                ToolTip="{Binding DisplayTitle}">
+                      <!-- Updates status line -->
+                      <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                          <mcmd:EventToCommand Command="{Binding SetStatusCommand}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                          <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
+                        </i:EventTrigger>
+                      </i:Interaction.Triggers>
+                      <TextBlock Text="{Binding Name}"/>
+                    </Hyperlink>
+                  </TextBlock>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
           <!-- Properties (recursion) -->
-          <ItemsControl Grid.Row="4" DockPanel.Dock="Top" ItemsSource="{Binding Value.Properties}"/>
+          <ItemsControl Grid.Row="5" DockPanel.Dock="Top" ItemsSource="{Binding Value.Properties}"/>
         </Grid>
       </Expander>
     </DataTemplate>

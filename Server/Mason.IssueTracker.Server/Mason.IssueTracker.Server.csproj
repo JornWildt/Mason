@@ -73,6 +73,8 @@
     <Compile Include="Issues\Codecs\IssueQueryCodec.cs" />
     <Compile Include="Issues\Handlers\IssueHandler.cs" />
     <Compile Include="Issues\Handlers\IssueQueryHandler.cs" />
+    <Compile Include="Issues\Handlers\IssuesHandler.cs" />
+    <Compile Include="Issues\Resources\IssueCollectionResource.cs" />
     <Compile Include="Issues\Resources\IssueResource.cs" />
     <Compile Include="Issues\Resources\IssueQueryResource.cs" />
     <Compile Include="Contact\ApplicationStarter.cs" />
