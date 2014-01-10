@@ -1,12 +1,13 @@
 ﻿using ApiExplorer.ViewModels;
-using CuttingEdge.Conditions;
+using Microsoft.Practices.Composite.Presentation.Commands;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Windows;
 
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public abstract class ActionViewModel : JsonViewModel
+  public abstract class ActionViewModel : ElementViewModel
   {
     #region UI properties
 
@@ -29,23 +30,49 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
+    #region Commands
+
+    public DelegateCommand<object> OpenActionCommand { get; private set; }
+
+    public DelegateCommand<object> SubmitCommand { get; private set; }
+
+    public DelegateCommand<object> CancelCommand { get; private set; }
+
+    #endregion
+
+
     public ActionViewModel(ViewModel parent, JToken json)
       : base(parent, json)
     {
+      RegisterCommand(OpenActionCommand = new DelegateCommand<object>(OpenAction));
+      RegisterCommand(SubmitCommand = new DelegateCommand<object>(Submit));
+      RegisterCommand(CancelCommand = new DelegateCommand<object>(Cancel));
     }
 
 
     public static ActionViewModel CreateAction(ViewModel parent, JToken json)
     {
-      Condition.Requires(json, "json").IsNotNull();
-
       JToken jtype = json["type"];
       string type = (jtype != null ? jtype.Value<string>() : null);
 
       if (type == "multipart-json")
         return new MultipartJsonActionViewModel(parent, json);
+      else if (type == "json")
+        return new JsonActionViewModel(parent, json);
 
       throw new InvalidOperationException(string.Format("Unknown action type '{0}'.", type));
     }
+
+    
+    protected void Cancel(object sender)
+    {
+      Window w = Window.GetWindow(sender as DependencyObject);
+      w.Close();
+    }
+
+    
+    protected abstract void OpenAction(object obj);
+
+    protected abstract void Submit(object sender);
   }
 }

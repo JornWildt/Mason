@@ -43,8 +43,8 @@
                 <axu:ShowSourceBehavior Source="{Binding Value.LinksJsonValue}" Prefix="mason:links: "/>
               </i:Interaction.Behaviors>
             </TextBlock>
-            <ItemsControl ItemsSource="{Binding Value.MetaLinks}" Margin="10 0 0 0"/>
             <!-- Use styling to render links -->
+            <ItemsControl ItemsSource="{Binding Value.MetaLinks}" Margin="10 0 0 0"/>
           </StackPanel>
           <!-- Links -->
           <StackPanel Grid.Row="2" Visibility="{Binding Value.HasLinks, Converter={axv:BoolToVisibilityConverter}}">
@@ -54,7 +54,8 @@
                 <axu:ShowSourceBehavior Source="{Binding Value.LinksJsonValue}" Prefix="mason:links: "/>
               </i:Interaction.Behaviors>
             </TextBlock>
-            <ItemsControl ItemsSource="{Binding Value.Links}" Margin="10 0 0 0"/> <!-- Use styling to render links -->
+            <!-- Use styling to render links -->
+            <ItemsControl ItemsSource="{Binding Value.Links}" Margin="10 0 0 0"/>
           </StackPanel>
           <!-- Link templates -->
           <StackPanel Grid.Row="3" Visibility="{Binding Value.HasLinkTemplates, Converter={axv:BoolToVisibilityConverter}}">
@@ -64,37 +65,8 @@
                 <axu:ShowSourceBehavior Source="{Binding Value.LinkTemplatesJsonValue}" Prefix="mason:link-templates: "/>
               </i:Interaction.Behaviors>
             </TextBlock>
-            <ItemsControl ItemsSource="{Binding Value.LinkTemplates}" Margin="10 0 0 0">
-              <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock>
-                    <TextBlock.Resources>
-                      <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Style.Triggers>
-                          <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Cursor" Value="Hand" />
-                          </Trigger>
-                        </Style.Triggers>
-                      </Style>
-                    </TextBlock.Resources>
-                    <Hyperlink Command="{Binding OpenLinkTemplateCommand}"
-                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                                ToolTip="{Binding DisplayTitle}">
-                      <!-- Updates status line -->
-                      <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseEnter">
-                          <mcmd:EventToCommand Command="{Binding SetStatusCommand}"/>
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="MouseLeave">
-                          <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
-                        </i:EventTrigger>
-                      </i:Interaction.Triggers>
-                      <TextBlock Text="{Binding Name}"/>
-                    </Hyperlink>
-                  </TextBlock>
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <!-- Use styling to render link templates -->
+            <ItemsControl ItemsSource="{Binding Value.LinkTemplates}" Margin="10 0 0 0"/>
           </StackPanel>
           <!-- Actions -->
           <StackPanel Grid.Row="4" Visibility="{Binding Value.HasActions, Converter={axv:BoolToVisibilityConverter}}">
@@ -104,37 +76,8 @@
                 <axu:ShowSourceBehavior Source="{Binding Value.ActionsJsonValue}" Prefix="mason:actions: "/>
               </i:Interaction.Behaviors>
             </TextBlock>
-            <ItemsControl ItemsSource="{Binding Value.Actions}" Margin="10 0 0 0">
-              <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock>
-                    <TextBlock.Resources>
-                      <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Style.Triggers>
-                          <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Cursor" Value="Hand" />
-                          </Trigger>
-                        </Style.Triggers>
-                      </Style>
-                    </TextBlock.Resources>
-                    <Hyperlink Command="{Binding OpenActionCommand}"
-                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                                ToolTip="{Binding DisplayTitle}">
-                      <!-- Updates status line -->
-                      <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseEnter">
-                          <mcmd:EventToCommand Command="{Binding SetStatusCommand}"/>
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="MouseLeave">
-                          <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
-                        </i:EventTrigger>
-                      </i:Interaction.Triggers>
-                      <TextBlock Text="{Binding Name}"/>
-                    </Hyperlink>
-                  </TextBlock>
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <!-- Use styling to render actions -->
+            <ItemsControl ItemsSource="{Binding Value.Actions}" Margin="10 0 0 0"/>
           </StackPanel>
           <!-- Properties (recursion) -->
           <ItemsControl Grid.Row="5" DockPanel.Dock="Top" ItemsSource="{Binding Value.Properties}"/>
@@ -157,6 +100,64 @@
             </i:EventTrigger>
           </i:Interaction.Triggers>
           <TextBlock Text="{Binding Rel}"/>
+        </Hyperlink>
+      </TextBlock>
+    </DataTemplate>
+
+    <!-- Template for displaying single link template -->
+    <DataTemplate DataType="{x:Type mavm:LinkTemplateViewModel}">
+      <TextBlock>
+        <TextBlock.Resources>
+          <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Style.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand" />
+              </Trigger>
+            </Style.Triggers>
+          </Style>
+        </TextBlock.Resources>
+        <Hyperlink Command="{Binding OpenLinkTemplateCommand}"
+                   CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                   ToolTip="{Binding DisplayTitle}">
+          <!-- Updates status line -->
+          <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseEnter">
+              <mcmd:EventToCommand Command="{Binding SetStatusCommand}" CommandParameter="{Binding Template}"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeave">
+              <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
+            </i:EventTrigger>
+          </i:Interaction.Triggers>
+          <TextBlock Text="{Binding Name}"/>
+        </Hyperlink>
+      </TextBlock>
+    </DataTemplate>
+
+    <!-- Template for rendring single action -->
+    <DataTemplate DataType="{x:Type mavm:ActionViewModel}">
+      <TextBlock>
+        <TextBlock.Resources>
+          <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Style.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand" />
+              </Trigger>
+            </Style.Triggers>
+          </Style>
+        </TextBlock.Resources>
+        <Hyperlink Command="{Binding OpenActionCommand}"
+                   CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                   ToolTip="{Binding DisplayTitle}">
+          <!-- Updates status line -->
+          <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseEnter">
+              <mcmd:EventToCommand Command="{Binding SetStatusCommand}" CommandParameter="{Binding HRef}"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeave">
+              <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
+            </i:EventTrigger>
+          </i:Interaction.Triggers>
+          <TextBlock Text="{Binding Name}"/>
         </Hyperlink>
       </TextBlock>
     </DataTemplate>

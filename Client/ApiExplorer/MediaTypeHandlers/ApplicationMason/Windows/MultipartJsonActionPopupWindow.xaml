@@ -1,0 +1,10 @@
+﻿<Window x:Class="ApiExplorer.MediaTypeHandlers.ApplicationMason.Windows.MultipartJsonActionPopupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:axuc="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason.UserControls"
+        Title="Multipart JSON action" Height="500" Width="600"
+        WindowStartupLocation="CenterOwner">
+  <Grid Margin="10">
+    <axuc:MultipartJsonActionRender/>
+  </Grid>
+</Window>

@@ -8,7 +8,7 @@ using Ramone;
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public class LinkViewModel : JsonViewModel
+  public class LinkViewModel : ElementViewModel
   {
     #region UI properties
 
@@ -36,10 +36,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public DelegateCommand<object> FollowLinkCommand { get; private set; }
 
-    public DelegateCommand<object> SetStatusCommand { get; private set; }
-
-    public DelegateCommand<object> ResetStatusCommand { get; private set; }
-
     #endregion
 
 
@@ -47,8 +43,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       : base(parent, link)
     {
       RegisterCommand(FollowLinkCommand = new DelegateCommand<object>(FollowLink));
-      RegisterCommand(SetStatusCommand = new DelegateCommand<object>(SetStatus));
-      RegisterCommand(ResetStatusCommand = new DelegateCommand<object>(ResetStatus));
     }
 
     
@@ -63,18 +57,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
                .Accept("application/vnd.mason;q=1, */*;q=0.5");
 
       Publish(new ExecuteWebRequestEventArgs { Request = req });
-    }
-
-
-    private void SetStatus(object arg)
-    {
-      Publish(new SetStatusLineTextEventArgs { Text = HRef });
-    }
-
-
-    private void ResetStatus(object arg)
-    {
-      Publish(new ResetStatusLineTextEventArgs());
     }
 
     #endregion

@@ -90,8 +90,16 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\UserControls\ApplicationMasonRender.xaml.cs">
       <DependentUpon>ApplicationMasonRender.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MediaTypeHandlers\ApplicationMason\UserControls\JsonActionRender.xaml.cs">
+      <DependentUpon>JsonActionRender.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MediaTypeHandlers\ApplicationMason\UserControls\MultipartJsonActionRender.xaml.cs">
+      <DependentUpon>MultipartJsonActionRender.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ActionViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ArrayPropertyViewModel.cs" />
+    <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\JsonActionViewModel.cs" />
+    <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ElementViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\KeyValueParameterViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\LinkTemplateViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\LinkViewModel.cs" />
@@ -103,6 +111,12 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ResourceViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\UserControls\UrlTemplateRender.xaml.cs">
       <DependentUpon>UrlTemplateRender.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MediaTypeHandlers\ApplicationMason\Windows\JsonActionPopupWindow.xaml.cs">
+      <DependentUpon>JsonActionPopupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MediaTypeHandlers\ApplicationMason\Windows\MultipartJsonActionPopupWindow.xaml.cs">
+      <DependentUpon>MultipartJsonActionPopupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MediaTypeHandlers\ApplicationMason\Windows\UrlTemplatePopupWindow.xaml.cs">
       <DependentUpon>UrlTemplatePopupWindow.xaml</DependentUpon>
@@ -144,7 +158,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MediaTypeHandlers\ApplicationMason\UserControls\JsonActionRender.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MediaTypeHandlers\ApplicationMason\UserControls\MultipartJsonActionRender.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MediaTypeHandlers\ApplicationMason\UserControls\UrlTemplateRender.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MediaTypeHandlers\ApplicationMason\Windows\JsonActionPopupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MediaTypeHandlers\ApplicationMason\Windows\MultipartJsonActionPopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

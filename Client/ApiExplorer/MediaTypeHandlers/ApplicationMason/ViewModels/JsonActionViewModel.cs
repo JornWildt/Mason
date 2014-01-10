@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public class MultipartJsonActionViewModel : ActionViewModel
+  public class JsonActionViewModel : ActionViewModel
   {
     #region UI properties
 
@@ -27,7 +27,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
-    public MultipartJsonActionViewModel(ViewModel parent, JToken json)
+    public JsonActionViewModel(ViewModel parent, JToken json)
       : base(parent, json)
     {
       JsonText = "{\n\n}";
@@ -39,7 +39,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     protected override void OpenAction(object sender)
     {
       Publish(new MasonViewModel.SourceChangedEventArgs { Source = JsonValue.ToString() });
-      MultipartJsonActionPopupWindow w = new MultipartJsonActionPopupWindow(this);
+      JsonActionPopupWindow w = new JsonActionPopupWindow(this);
       w.Owner = Window.GetWindow(sender as DependencyObject);
       w.ShowDialog();
     }

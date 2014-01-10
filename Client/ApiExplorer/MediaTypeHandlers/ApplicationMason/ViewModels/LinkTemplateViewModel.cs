@@ -13,7 +13,7 @@ using System.Windows;
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public class LinkTemplateViewModel : JsonViewModel
+  public class LinkTemplateViewModel : ElementViewModel
   {
     #region UI properties
 
@@ -22,6 +22,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     public string Template { get { return GetValue<string>("template"); } }
 
     public string Title { get { return GetValue<string>("title"); } }
+
+    public string Description { get { return GetValue<string>("description"); } }
 
     public string DisplayTitle
     {
@@ -49,15 +51,9 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
-
-
     #region Commands
 
     public DelegateCommand<object> OpenLinkTemplateCommand { get; private set; }
-
-    public DelegateCommand<object> SetStatusCommand { get; private set; }
-
-    public DelegateCommand<object> ResetStatusCommand { get; private set; }
 
     public DelegateCommand<object> SubmitCommand { get; private set; }
 
@@ -70,8 +66,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       : base(parent, json)
     {
       RegisterCommand(OpenLinkTemplateCommand = new DelegateCommand<object>(OpenLinkTemplate));
-      RegisterCommand(SetStatusCommand = new DelegateCommand<object>(SetStatus));
-      RegisterCommand(ResetStatusCommand = new DelegateCommand<object>(ResetStatus));
       RegisterCommand(SubmitCommand = new DelegateCommand<object>(Submit));
       RegisterCommand(CancelCommand = new DelegateCommand<object>(Cancel));
 
@@ -121,18 +115,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         Parameters[0].IsFocused = true;
       w.Owner = Window.GetWindow(arg as DependencyObject);
       w.ShowDialog();
-    }
-
-
-    private void SetStatus(object arg)
-    {
-      Publish(new SetStatusLineTextEventArgs { Text = Template });
-    }
-
-
-    private void ResetStatus(object arg)
-    {
-      Publish(new ResetStatusLineTextEventArgs());
     }
 
 

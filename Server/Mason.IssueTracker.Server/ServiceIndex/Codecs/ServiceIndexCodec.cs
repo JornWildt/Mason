@@ -30,7 +30,11 @@ namespace Mason.IssueTracker.Server.ServiceIndex.Codecs
       s.AddLinkTemplate(issueQueryTemplate);
 
       Uri issuesUrl = typeof(IssueCollectionResource).CreateUri();
-      Net.Action addIssueAction = new Net.Action(RelTypes.CreateIssue, "multipart-json", issuesUrl.AbsoluteUri, "Create new issue.");
+      Net.Action addIssueAction = new Net.Action(RelTypes.CreateIssue, "multipart-json", issuesUrl.AbsoluteUri, "Create new issue I.");
+      s.AddAction(addIssueAction);
+
+      // Non-files
+      addIssueAction = new Net.Action(RelTypes.CreateIssue, "json", issuesUrl.AbsoluteUri, "Create new issue II.");
       s.AddAction(addIssueAction);
 
       return s;

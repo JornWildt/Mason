@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ApiExplorer.MediaTypeHandlers.ApplicationMason.UserControls.UrlTemplateRender"
+﻿<UserControl x:Class="ApiExplorer.MediaTypeHandlers.ApplicationMason.UserControls.JsonActionRender"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:axu="clr-namespace:ApiExplorer.Utilities"
@@ -20,31 +20,19 @@
     <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" Style="{StaticResource ResourceKey=Label}"/>
     <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
 
-    <TextBlock Grid.Row="1" Grid.Column="0" Text="Template:" Style="{StaticResource ResourceKey=Label}"/>
-    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Template, Mode=OneTime}" IsReadOnly="True" Style="{StaticResource ResourceKey=Readonly}"/>
+    <TextBlock Grid.Row="1" Grid.Column="0" Text="HRef:" Style="{StaticResource ResourceKey=Label}"/>
+    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding HRef, Mode=OneTime}" IsReadOnly="True" Style="{StaticResource ResourceKey=Readonly}"/>
 
     <TextBlock Grid.Row="2" Grid.ColumnSpan="2" 
                Text="{Binding Description}" Style="{StaticResource ResourceKey=Description}" TextWrapping="Wrap"
                Visibility="{Binding Description, Converter={axv:EmptyStringToVisibility}}"
                Margin="0 0 0 10"/>
-    
-    <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Text="Parameters" Style="{StaticResource ResourceKey=FormHeading}"/>
 
-    <ScrollViewer Grid.Row="4" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
-      <ItemsControl ItemsSource="{Binding Parameters}" Focusable="False">
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-            <StackPanel>
-              <Label Target="{Binding ElementName=ParameterInput}" Content="{Binding DisplayTitle}" FontWeight="Bold" FontStyle="Italic" Padding="0" Margin="0"/>
-              <TextBlock Text="{Binding Description}" Style="{StaticResource ResourceKey=ParamInfo}"
-                         Visibility="{Binding Description, Converter={axv:EmptyStringToVisibility}}"/>
-              <TextBox Name="ParameterInput" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 4"
-                       axu:FocusBehavior.IsFocused="{Binding IsFocused}"/>
-            </StackPanel>
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
-      </ItemsControl>
-    </ScrollViewer>
+    <Label Grid.Row="3" Grid.ColumnSpan="2" Target="{Binding ElementName=JsonInput}" Content="JSON data:"/>
+    <TextBox Grid.Row="4" Grid.ColumnSpan="2" x:Name="JsonInput"
+             Text="{Binding JsonText}"
+             AcceptsReturn="True" TextWrapping="Wrap"
+             Height="Auto" Margin="0 0 0 10"/>
 
     <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal">
       <Button Content="Submit" IsDefault="True" Command="{Binding SubmitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
