@@ -52,9 +52,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     {
       ISession session = RamoneServiceManager.Service.NewSession();
 
-      Request req =
-        session.Bind(HRef)
-               .Accept("application/vnd.mason;q=1, */*;q=0.5");
+      Request req = session.Bind(HRef).Method("GET");
 
       Publish(new ExecuteWebRequestEventArgs { Request = req });
     }

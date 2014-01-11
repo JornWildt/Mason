@@ -34,10 +34,24 @@ namespace Mason.IssueTracker.Server.ServiceIndex.Codecs
       s.AddAction(addIssueAction);
 
       // Non-files
-      addIssueAction = new Net.Action(RelTypes.CreateIssue, "json", issuesUrl.AbsoluteUri, "Create new issue II.");
+      addIssueAction = new Net.Action(RelTypes.CreateIssue, "json", issuesUrl.AbsoluteUri, "Create new issue II.", createIssueSchema);
       s.AddAction(addIssueAction);
 
       return s;
     }
+
+
+    const string createIssueSchema = @"
+{
+  title: ""Issue creation arguments"",
+  type: ""object"",
+  properties:
+  {
+    ""Title"": { type: ""string"" },
+    ""Description"": { type: ""string"" },
+    ""Severity"": { type: ""integer"" }
+  }
+}";
+
   }
 }

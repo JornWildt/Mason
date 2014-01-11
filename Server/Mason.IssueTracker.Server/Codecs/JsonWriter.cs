@@ -6,7 +6,8 @@ using System.IO;
 
 namespace Mason.IssueTracker.Server.Codecs
 {
-  public abstract class JsonCodec<T> : IMediaTypeWriter
+  // Write internal resource of type T as JSON object - with optional conversion to another JSON specific model.
+  public class JsonWriter<T> : IMediaTypeWriter
   {
     public object Configuration { get; set; }
 
@@ -16,7 +17,7 @@ namespace Mason.IssueTracker.Server.Codecs
       if (resource == null)
         return;
 
-      object representation = ConvertToJson((T)resource);
+      object representation = ConvertToJsonModel((T)resource);
 
       JsonSerializer serializer = new JsonSerializer();
       using (StreamWriter sw = new StreamWriter(response.Stream))
@@ -27,6 +28,9 @@ namespace Mason.IssueTracker.Server.Codecs
     }
 
 
-    protected abstract object ConvertToJson(T resource);
+    protected virtual object ConvertToJsonModel(T resource)
+    {
+      return resource;
+    }
   }
 }

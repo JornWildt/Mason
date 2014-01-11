@@ -8,6 +8,7 @@ using OpenRasta.DI;
 using Mason.IssueTracker.Server.Issues.Resources;
 using Mason.IssueTracker.Server.IssueTracker.Codecs;
 using Mason.IssueTracker.Server.Domain.Comments;
+using Mason.IssueTracker.Server.Codecs;
 
 
 namespace Mason.IssueTracker.Server.Issues
@@ -35,6 +36,10 @@ namespace Mason.IssueTracker.Server.Issues
       ResourceSpace.Has.ResourcesOfType<IssueCollectionResource>()
         .AtUri(UrlPaths.Issues)
         .HandledBy<IssuesHandler>();
+
+      ResourceSpace.Has.ResourcesOfType<CreateIssueArgs>()
+        .WithoutUri
+        .TranscodedBy<JsonReader<CreateIssueArgs>>();
 
       LoadDemoData();
     }

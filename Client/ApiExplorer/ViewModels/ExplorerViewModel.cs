@@ -1,6 +1,7 @@
 ﻿using ApiExplorer.Utilities;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Ramone;
+using Ramone.HyperMedia;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -149,10 +150,8 @@ namespace ApiExplorer.ViewModels
     private void Go(object obj)
     {
       ISession session = RamoneServiceManager.Service.NewSession();
-      
-      Request req = 
-        session.Bind(Url)
-               .Accept("application/vnd.mason;q=1, */*;q=0.5");
+
+      Request req = session.Bind(Url).Method("GET");
 
       ExecuteWebRequest(new ExecuteWebRequestEventArgs { Request = req });
     }
@@ -163,9 +162,10 @@ namespace ApiExplorer.ViewModels
       IsExecutingRequest = true;
 
       args.Request
+          .Accept("application/vnd.mason;q=1, */*;q=0.5")
           .Async()
           .OnError(r => HandleResponseError(r, args))
-          .Get(r => HandleResponse(r, args));
+          .Submit(r => HandleResponse(r, args));
     }
 
 
@@ -181,6 +181,20 @@ namespace ApiExplorer.ViewModels
 
           if (ContentRender is IDisposable)
             ((IDisposable)ContentRender).Dispose();
+
+          // In case of "201 Created" with Location header: GET new location (but keep same success/failure handlers)
+          if (r.CreatedLocation != null)
+          {
+            Request req = r.CreatedLocation.Follow(r.Session).Method("GET");
+            ExecuteWebRequestEventArgs args2 = new ExecuteWebRequestEventArgs
+            {
+              Request = req,
+              OnSuccess = args.OnSuccess,
+              OnFailure = args.OnFailure
+            };
+            ExecuteWebRequest(args2);
+            return;
+          }
 
           IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
           ContentRender = handler.GetRender(this, r);

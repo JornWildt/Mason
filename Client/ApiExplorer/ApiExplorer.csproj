@@ -130,6 +130,7 @@
     </Compile>
     <Compile Include="Utilities\FocusBehavior.cs" />
     <Compile Include="Utilities\IHandleMediaType.cs" />
+    <Compile Include="Utilities\JsonExampleGenerator.cs" />
     <Compile Include="Utilities\JsonNetCodec.cs" />
     <Compile Include="Utilities\MediaTypeDispatcher.cs" />
     <Compile Include="Utilities\RamoneServiceManager.cs" />

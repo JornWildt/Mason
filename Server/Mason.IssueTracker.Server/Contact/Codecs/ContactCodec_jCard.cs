@@ -8,9 +8,9 @@ using OpenRasta.Codecs;
 namespace Mason.IssueTracker.Server.Contact.Codecs
 {
   [MediaType("application/json;q=0.9", "jcard")]
-  public class ContactCodec_jCard : JsonCodec<ContactResource>
+  public class ContactCodec_jCard : JsonWriter<ContactResource>
   {
-    protected override object ConvertToJson(ContactResource resource)
+    protected override object ConvertToJsonModel(ContactResource resource)
     {
       ContactResource c = new ContactHandler().Get();
 

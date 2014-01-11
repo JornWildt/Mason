@@ -126,9 +126,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       ISession session = RamoneServiceManager.Service.NewSession();
 
-      Request req =
-        session.Bind(Template, values)
-               .Accept("application/vnd.mason;q=1, */*;q=0.5");
+      Request req = session.Bind(Template, values).Method("GET");
 
       Window w = Window.GetWindow(sender as DependencyObject);
 

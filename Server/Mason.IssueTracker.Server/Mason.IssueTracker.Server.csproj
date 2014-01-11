@@ -66,7 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Codecs\IssueTrackerMasonCodec.cs" />
-    <Compile Include="Codecs\JsonCodec.cs" />
+    <Compile Include="Codecs\JsonWriter.cs" />
+    <Compile Include="Codecs\JsonReader.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Issues\ApplicationStarter.cs" />
     <Compile Include="Issues\Codecs\IssueCodec.cs" />

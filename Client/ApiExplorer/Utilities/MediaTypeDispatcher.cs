@@ -28,12 +28,17 @@ namespace ApiExplorer.Utilities
 
     public static IHandleMediaType GetMediaTypeHandler(Response r)
     {
-      string mediaType = r.ContentType.ToString();
-      if (!MediaTypeHandlers.ContainsKey(mediaType))
-        mediaType = UnknownMediaTypeId;
+      if (r.ContentType != null)
+      {
+        string mediaType = r.ContentType.ToString();
+        if (!MediaTypeHandlers.ContainsKey(mediaType))
+          mediaType = UnknownMediaTypeId;
 
-      IHandleMediaType handler = MediaTypeHandlers[mediaType];
-      return handler;
+        IHandleMediaType handler = MediaTypeHandlers[mediaType];
+        return handler;
+      }
+
+      return MediaTypeHandlers[UnknownMediaTypeId];
     }
   }
 }

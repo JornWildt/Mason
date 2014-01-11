@@ -10,13 +10,16 @@
 
     public string description { get; set; }
 
+    public string schema { get; set; }
 
-    public Action(string name, string type, string href, string description = null)
+
+    public Action(string name, string type, string href, string description = null, string schema = null)
     {
       this.name = name;
       this.type = type;
       this.href = href;
       this.description = description;
+      this.schema = schema;
     }
   }
 }

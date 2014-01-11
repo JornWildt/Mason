@@ -1,6 +1,11 @@
 ﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.Windows;
+using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
+//using JsonSchema;
+//using JsonSchema.Parser;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
+using Ramone;
 using System.Windows;
 
 
@@ -30,7 +35,17 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     public JsonActionViewModel(ViewModel parent, JToken json)
       : base(parent, json)
     {
-      JsonText = "{\n\n}";
+      JToken schemaJson = json["schema"];
+      if (schemaJson != null)
+      {
+        JsonSchema schema = JsonSchema.Parse(schemaJson.Value<string>());
+        JsonExampleGenerator generator = new JsonExampleGenerator();
+        JsonText = generator.GenerateJsonInstanceFromSchema(schema);
+      }
+      else
+      {
+        JsonText = "{\n\n}";
+      }
     }
 
 
@@ -47,26 +62,25 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     protected override void Submit(object sender)
     {
-      //Dictionary<string, string> values = new Dictionary<string, string>();
-      //foreach (KeyValueParameterViewModel p in Parameters)
-      //  values[p.Name] = p.Value;
+      ISession session = RamoneServiceManager.Service.NewSession();
 
-      //ISession session = RamoneServiceManager.Service.NewSession();
+      Request req =
+        session.Bind(HRef)
+               .Accept("application/vnd.mason;q=1, */*;q=0.5")
+               .AsJson()
+               .Body(JsonText)
+               .Method("POST");
 
-      //Request req =
-      //  session.Bind(Template, values)
-      //         .Accept("application/vnd.mason;q=1, */*;q=0.5");
+      Window w = Window.GetWindow(sender as DependencyObject);
 
-      //Window w = Window.GetWindow(sender as DependencyObject);
-
-      //Publish(new ExecuteWebRequestEventArgs { Request = req, OnSuccess = (r => HandleSuccess(r, w)) });
+      Publish(new ExecuteWebRequestEventArgs { Request = req, OnSuccess = (r => HandleSuccess(r, w)) });
     }
 
 
-    //private void HandleSuccess(Response r, Window w)
-    //{
-    //  w.Close();
-    //}
+    private void HandleSuccess(Response r, Window w)
+    {
+      w.Close();
+    }
 
     #endregion
   }
