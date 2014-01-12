@@ -5,6 +5,7 @@ obj/
 *.nupkg
 *.user
 *.suo
+*.dll
 TestResult.xml
 *.VisualState.xml
 UNUSED*
