@@ -6,22 +6,27 @@ namespace Mason.IssueTracker.Server.Domain.Projects
 {
   public class Project
   {
-    public Guid Id { get; private set; }
+    public virtual int Id { get; protected set; }
 
-    public string Abbreviation { get; protected set; }
+    public virtual string Code { get; protected set; }
 
-    public string Title { get; protected set; }
+    public virtual string Title { get; protected set; }
 
-    public string Description { get; protected set; }
+    public virtual string Description { get; protected set; }
 
 
-    public Project(string abbreviation, string title, string description)
+    public Project()
     {
-      Condition.Requires(abbreviation, "abbreviation").IsNotNullOrWhiteSpace();
+    }
+
+
+    public Project(string code, string title, string description)
+    {
+      Condition.Requires(code, "code").IsNotNullOrWhiteSpace();
       Condition.Requires(title, "title").IsNotNullOrWhiteSpace();
       Condition.Requires(description, "description").IsNotNull();
       
-      Id = Guid.NewGuid();
+      Code = code;
       Title = title;
       Description = description;
     }

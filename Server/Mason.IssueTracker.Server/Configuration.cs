@@ -1,6 +1,11 @@
 ﻿using log4net;
+using Mason.IssueTracker.Server.Domain;
+using Mason.IssueTracker.Server.Domain.Issues;
+using Mason.IssueTracker.Server.Domain.NHibernate;
+using Mason.IssueTracker.Server.Domain.Projects;
 using OpenRasta.Configuration;
 using OpenRasta.Web.UriDecorators;
+using System;
 
 
 namespace Mason.IssueTracker.Server
@@ -14,13 +19,31 @@ namespace Mason.IssueTracker.Server
     {
       InitializeLogging();
 
-      using (OpenRastaConfiguration.Manual)
+      try
       {
-        ResourceSpace.Uses.UriDecorator<ContentTypeExtensionUriDecorator>();
-        Issues.ApplicationStarter.Start();
-        Contact.ApplicationStarter.Start();
-        ResourceCommons.ApplicationStarter.Start();
-        ServiceIndex.ApplicationStarter.Start();
+        // Initialize OpenRasta/modules
+        using (OpenRastaConfiguration.Manual)
+        {
+          ResourceSpace.Uses.UriDecorator<ContentTypeExtensionUriDecorator>();
+          Projects.ApplicationStarter.Start();
+          Issues.ApplicationStarter.Start();
+          Contact.ApplicationStarter.Start();
+          ResourceCommons.ApplicationStarter.Start();
+          ServiceIndex.ApplicationStarter.Start();
+        }
+
+        // Setup default data
+        SessionManager.ExecuteUnitOfWork(() =>
+        {
+          IIssueRepository issueRepository = (IIssueRepository)ResourceSpace.Uses.Resolver.Resolve(typeof(IIssueRepository));
+          IProjectRepository projectRepository = (IProjectRepository)ResourceSpace.Uses.Resolver.Resolve(typeof(IProjectRepository));
+          DemoDataGenerator.GenerateDemoData(issueRepository, projectRepository);
+        });
+      }
+      catch (Exception ex)
+      {
+        Logger.Fatal(ex);
+        throw;
       }
     }
 
