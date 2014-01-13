@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mason.IssueTracker.Server.H
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mason.IssueTracker.Server.Domain.NHibernate", "Server\Mason.IssueTracker.Server.Domain.NHibernate\Mason.IssueTracker.Server.Domain.NHibernate.csproj", "{63A1FD80-F0F5-4961-A744-1C9D6F71F7A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mason.IssueTracker.Contract", "Common\Mason.IssueTracker.Contract\Mason.IssueTracker.Contract.csproj", "{243234FA-EC3C-4459-8019-8B4828990A11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{63A1FD80-F0F5-4961-A744-1C9D6F71F7A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63A1FD80-F0F5-4961-A744-1C9D6F71F7A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63A1FD80-F0F5-4961-A744-1C9D6F71F7A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{243234FA-EC3C-4459-8019-8B4828990A11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{243234FA-EC3C-4459-8019-8B4828990A11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{243234FA-EC3C-4459-8019-8B4828990A11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{243234FA-EC3C-4459-8019-8B4828990A11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,5 +75,6 @@ Global
 		{63A1FD80-F0F5-4961-A744-1C9D6F71F7A3} = {305705AD-BBCA-42F1-B607-DA1158D0B042}
 		{EDBAA853-053A-40E6-A03C-0161D3ED4968} = {4EA73291-C6D2-483F-80EB-57F5AF3B6B17}
 		{942BF912-7D72-40E6-AF86-1F28B240A0C8} = {291C76F3-A0A5-4515-A4F8-F11CFEC955DE}
+		{243234FA-EC3C-4459-8019-8B4828990A11} = {291C76F3-A0A5-4515-A4F8-F11CFEC955DE}
 	EndGlobalSection
 EndGlobal

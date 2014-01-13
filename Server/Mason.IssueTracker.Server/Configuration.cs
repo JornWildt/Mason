@@ -21,6 +21,8 @@ namespace Mason.IssueTracker.Server
 
       try
       {
+        ResourceSpace.Uses.CustomDependency<IUnitOfWorkManager, NHibernateUnitOfWorkManager>(OpenRasta.DI.DependencyLifetime.Singleton);
+
         // Initialize OpenRasta/modules
         using (OpenRastaConfiguration.Manual)
         {

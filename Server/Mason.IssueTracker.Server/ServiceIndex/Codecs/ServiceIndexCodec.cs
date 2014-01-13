@@ -1,5 +1,6 @@
 ﻿using Mason.IssueTracker.Server.Codecs;
 using Mason.IssueTracker.Server.Issues.Resources;
+using Mason.IssueTracker.Server.Projects.Resources;
 using Mason.IssueTracker.Server.ServiceIndex.Resources;
 using Mason.IssueTracker.Server.Utility;
 using Mason.Net;
@@ -29,13 +30,18 @@ namespace Mason.IssueTracker.Server.ServiceIndex.Codecs
       issueQueryTemplate.parameters.Add(new LinkTemplateParameter("text", description: "Text query searching all relevante issue properties"));
       s.AddLinkTemplate(issueQueryTemplate);
 
-      Uri issuesUrl = typeof(IssueCollectionResource).CreateUri();
-      Net.Action addIssueAction = new Net.Action(RelTypes.CreateIssue, "multipart-json", issuesUrl.AbsoluteUri, "Create new issue I.");
-      s.AddAction(addIssueAction);
 
-      // Non-files
-      addIssueAction = new Net.Action(RelTypes.CreateIssue, "json", issuesUrl.AbsoluteUri, "Create new issue II.", createIssueSchema);
-      s.AddAction(addIssueAction);
+      Uri projectsUrl = typeof(ProjectCollectionResource).CreateUri();
+      Net.Action addProjectAction = new Net.Action(RelTypes.CreateProject, "json", projectsUrl.AbsoluteUri, "Create new project");
+      s.AddAction(addProjectAction);
+
+      //Uri issuesUrl = typeof(IssueCollectionResource).CreateUri();
+      //Net.Action addIssueAction = new Net.Action(RelTypes.CreateIssue, "multipart-json", issuesUrl.AbsoluteUri, "Create new issue I.");
+      //s.AddAction(addIssueAction);
+
+      //// Non-files "add issue"
+      //addIssueAction = new Net.Action(RelTypes.CreateIssue, "json", issuesUrl.AbsoluteUri, "Create new issue II.", createIssueSchema);
+      //s.AddAction(addIssueAction);
 
       return s;
     }

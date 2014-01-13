@@ -8,6 +8,9 @@
     public const string ResourceCommon = NamespaceAlias + ":common";
     public const string Contact = NamespaceAlias + ":contact";
     public const string Logo = NamespaceAlias + ":logo";
+
+    public const string CreateProject = NamespaceAlias + ":project-create";
+
     public const string IssueQuery = NamespaceAlias + ":issue-query";
     public const string CreateIssue = NamespaceAlias + ":issue-create";
   }

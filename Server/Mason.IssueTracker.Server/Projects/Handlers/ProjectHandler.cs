@@ -4,7 +4,7 @@ using Mason.IssueTracker.Server.Projects.Resources;
 
 namespace Mason.IssueTracker.Server.Projects.Handlers
 {
-  public class ProjectHandler
+  public class ProjectHandler : BaseHandler
   {
     #region Dependencies
 
@@ -15,11 +15,14 @@ namespace Mason.IssueTracker.Server.Projects.Handlers
 
     public object Get(int id)
     {
-      Project p = ProjectRepository.Get(id);
-      return new ProjectResource
+      return ExecuteInUnitOfWork(() =>
       {
-        Project = p
-      };
+        Project p = ProjectRepository.Get(id);
+        return new ProjectResource
+        {
+          Project = p
+        };
+      });
     }
   }
 }
