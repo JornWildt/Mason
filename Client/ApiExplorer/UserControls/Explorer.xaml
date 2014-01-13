@@ -24,7 +24,7 @@
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
       </Grid.ColumnDefinitions>
-      <TextBox Grid.Column="0" Text="{Binding Url}" x:Name="UrlInput"
+      <TextBox Grid.Column="0" Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}" x:Name="UrlInput"
                axu:FocusBehavior.IsFocused="{Binding AddressIsFocused, Mode=TwoWay}"
                GotFocus="UrlInput_GotFocus"/>
       <Button Grid.Column="1" Command="{Binding GoCommand}" Content="Go" Width="50"/>

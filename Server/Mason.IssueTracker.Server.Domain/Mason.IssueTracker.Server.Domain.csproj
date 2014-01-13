@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="Comments\Comment.cs" />
     <Compile Include="DemoDataGenerator.cs" />
+    <Compile Include="ErrorHandling.cs" />
+    <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Exceptions\DuplicateKeyException.cs" />
     <Compile Include="Exceptions\MissingResourceException.cs" />
     <Compile Include="Issues\Issue.cs" />

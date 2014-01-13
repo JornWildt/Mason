@@ -110,8 +110,10 @@
     <Compile Include="Contact\Resources\ContactResource.cs" />
     <Compile Include="Profiles.cs" />
     <Compile Include="Projects\ApplicationStarter.cs" />
+    <Compile Include="Projects\Codecs\ProjectsCodec.cs" />
     <Compile Include="Projects\Codecs\ProjectCodec.cs" />
     <Compile Include="Projects\Handlers\ProjectHandler.cs" />
+    <Compile Include="Projects\Handlers\ProjectsHandler.cs" />
     <Compile Include="Projects\Resources\ProjectCollectionResource.cs" />
     <Compile Include="Projects\Resources\ProjectResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

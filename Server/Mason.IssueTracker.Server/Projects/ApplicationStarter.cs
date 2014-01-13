@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Mason.IssueTracker.Server.Codecs;
 using Mason.IssueTracker.Server.Domain.NHibernate.Projects;
 using Mason.IssueTracker.Server.Domain.Projects;
 using Mason.IssueTracker.Server.Projects.Codecs;
@@ -24,6 +25,15 @@ namespace Mason.IssueTracker.Server.Projects
         .AtUri(UrlPaths.Project)
         .HandledBy<ProjectHandler>()
         .TranscodedBy<ProjectCodec>();
+
+      ResourceSpace.Has.ResourcesOfType<ProjectCollectionResource>()
+        .AtUri(UrlPaths.Projects)
+        .HandledBy<ProjectsHandler>()
+        .TranscodedBy<ProjectsCodec>();
+
+      ResourceSpace.Has.ResourcesOfType<Contract.CreateProjectArgs>()
+        .WithoutUri
+        .TranscodedBy<JsonReader<Contract.CreateProjectArgs>>();
     }
   }
 }

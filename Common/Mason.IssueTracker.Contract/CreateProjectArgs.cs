@@ -1,6 +1,6 @@
 ﻿namespace Mason.IssueTracker.Contract
 {
-  public class AddNewProjectArgs
+  public class CreateProjectArgs
   {
     public string Code { get; set; }
 
