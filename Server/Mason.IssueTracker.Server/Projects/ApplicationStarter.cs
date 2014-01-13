@@ -1,16 +1,11 @@
 ﻿using log4net;
-using Mason.IssueTracker.Server.Issues.Codecs;
-using Mason.IssueTracker.Server.Issues.Handlers;
-using Mason.IssueTracker.Server.Domain.Issues;
-using Mason.IssueTracker.Server.Utility;
+using Mason.IssueTracker.Server.Domain.NHibernate.Projects;
+using Mason.IssueTracker.Server.Domain.Projects;
+using Mason.IssueTracker.Server.Projects.Codecs;
+using Mason.IssueTracker.Server.Projects.Handlers;
+using Mason.IssueTracker.Server.Projects.Resources;
 using OpenRasta.Configuration;
 using OpenRasta.DI;
-using Mason.IssueTracker.Server.Issues.Resources;
-using Mason.IssueTracker.Server.IssueTracker.Codecs;
-using Mason.IssueTracker.Server.Domain.Comments;
-using Mason.IssueTracker.Server.Codecs;
-using Mason.IssueTracker.Server.Domain.Projects;
-using Mason.IssueTracker.Server.Domain.NHibernate.Projects;
 
 
 namespace Mason.IssueTracker.Server.Projects
@@ -25,10 +20,10 @@ namespace Mason.IssueTracker.Server.Projects
       Logger.Debug("Starting Projects");
       ResourceSpace.Uses.CustomDependency<IProjectRepository, ProjectRepository>(DependencyLifetime.Singleton);
 
-      //ResourceSpace.Has.ResourcesOfType<IssueResource>()
-      //  .AtUri(UrlPaths.Issue)
-      //  .HandledBy<IssueHandler>()
-      //  .TranscodedBy<IssueCodec>();
+      ResourceSpace.Has.ResourcesOfType<ProjectResource>()
+        .AtUri(UrlPaths.Project)
+        .HandledBy<ProjectHandler>()
+        .TranscodedBy<ProjectCodec>();
     }
   }
 }

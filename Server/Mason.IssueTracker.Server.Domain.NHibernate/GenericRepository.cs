@@ -170,13 +170,13 @@ namespace Mason.IssueTracker.Server.Domain.NHibernate
     #endregion
 
 
-    #region -- Update ---------------------------------------------------------
+    //#region -- Update ---------------------------------------------------------
 
-    public virtual void Update(T entity)
-    {
-      Session.Update(entity);
-    }
+    //public virtual void Update(T entity)
+    //{
+    //  Session.Update(entity);
+    //}
 
-    #endregion
+    //#endregion
   }
 }
