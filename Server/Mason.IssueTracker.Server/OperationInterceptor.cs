@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Mason.IssueTracker.Server.Domain;
 using Mason.IssueTracker.Server.Domain.Exceptions;
 using Mason.Net;
 using OpenRasta.OperationModel;
@@ -82,6 +83,9 @@ namespace Mason.IssueTracker.Server
       else if (ex is MissingResourceException)
       {
         Logger.Info(string.Format("{0} [{1}]", ex.Message, id), ex);
+
+        error[MasonProperties.ErrorProperties.Code] = ErrorHandling.Codes.MissingResource; ;
+
         return new[] 
         {
           new OutputMember { Value = new OperationResult.NotFound { ResponseResource = result } }
@@ -90,6 +94,9 @@ namespace Mason.IssueTracker.Server
       else
       {
         Logger.Error(string.Format("{0} [{1}]", ex.Message, id), ex);
+
+        error[MasonProperties.ErrorProperties.Code] = ErrorHandling.Codes.InternalError; ;
+
         return new[] 
         {
           new OutputMember { Value = new OperationResult.InternalServerError { ResponseResource = result } }

@@ -36,11 +36,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public bool HasDescription { get { return !string.IsNullOrEmpty(Description); } }
 
-    public JToken MetaJsonValue { get; private set; }
-
     public ObservableCollection<LinkViewModel> MetaLinks { get; private set; }
 
     public bool HasMetaLinks { get { return MetaLinks != null && MetaLinks.Count > 0; } }
+
+    public JToken MetaJsonValue { get; private set; }
 
     #endregion
 
@@ -89,20 +89,15 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
               metaLinksProperty.Children().OfType<JObject>().Select(l => new LinkViewModel(this, l)));
           }
         }
+        else if (pair.Key == MasonProperties.Error && pair.Value is JObject)
+        {
+          ResourcePropertyViewModel error = new ResourcePropertyViewModel(this, pair.Value, pair.Key, new ResourceViewModel(this, (JObject)pair.Value));
+          error.IsError = true;
+          Properties.Add(error);
+        }
         else
         {
           Properties.Add(CreatePropertiesRecursively(pair.Key, pair.Value));
-          //if (pair.Value is JArray)
-          //{
-          //  //ObservableCollection<ViewModel> array = new ObservableCollection<ViewModel>(pair.Value.Select(i => );
-          //  //Properties.Add(new ArrayPropertyViewModel(this, pair.Value, pair.Key, new ArrayViewModel(this, (JArray)pair.Value)));
-          //}
-          //else if (pair.Value is JObject)
-          //{
-          //  Properties.Add(new ResourcePropertyViewModel(this, pair.Value, pair.Key, new ResourceViewModel(this, (JObject)pair.Value)));
-          //}
-          //else
-          //  Properties.Add(new PropertyViewModel(this, pair.Value, pair.Key, (pair.Value != null ? pair.Value.ToString() : "")));
         }
       }
 

@@ -26,6 +26,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       }
     }
 
+    public bool IsError { get; set; }
+
     #endregion
 
 

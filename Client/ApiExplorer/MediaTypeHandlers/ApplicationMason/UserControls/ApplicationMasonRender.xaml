@@ -18,6 +18,15 @@
           </TextBlock>
         </Expander.Header>
         <Grid>
+          <Grid.Resources>
+            <Style TargetType="{x:Type Grid}">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding IsError}" Value="true">
+                  <Setter Property="Background" Value="Red"/>
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Grid.Resources>
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
