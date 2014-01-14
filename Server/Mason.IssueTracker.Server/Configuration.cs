@@ -1,15 +1,22 @@
 ﻿using log4net;
+using Mason.IssueTracker.Server.Codecs;
 using Mason.IssueTracker.Server.Domain;
 using Mason.IssueTracker.Server.Domain.Issues;
 using Mason.IssueTracker.Server.Domain.NHibernate;
 using Mason.IssueTracker.Server.Domain.Projects;
+using Mason.Net;
 using OpenRasta.Configuration;
+using OpenRasta.DI;
+using OpenRasta.OperationModel;
+using OpenRasta.OperationModel.Interceptors;
 using OpenRasta.Web.UriDecorators;
 using System;
+using System.Collections.Generic;
 
 
 namespace Mason.IssueTracker.Server
 {
+
   public class Configuration : IConfigurationSource
   {
     static ILog Logger = LogManager.GetLogger(typeof(Configuration));
@@ -21,17 +28,22 @@ namespace Mason.IssueTracker.Server
 
       try
       {
-        ResourceSpace.Uses.CustomDependency<IUnitOfWorkManager, NHibernateUnitOfWorkManager>(OpenRasta.DI.DependencyLifetime.Singleton);
+        ResourceSpace.Uses.CustomDependency<IUnitOfWorkManager, NHibernateUnitOfWorkManager>(DependencyLifetime.Singleton);
 
         // Initialize OpenRasta/modules
         using (OpenRastaConfiguration.Manual)
         {
           ResourceSpace.Uses.UriDecorator<ContentTypeExtensionUriDecorator>();
+          ResourceSpace.Uses.CustomDependency<IOperationInterceptor, OperationInterceptor>(DependencyLifetime.PerRequest);
           Projects.ApplicationStarter.Start();
           Issues.ApplicationStarter.Start();
           Contact.ApplicationStarter.Start();
           ResourceCommons.ApplicationStarter.Start();
           ServiceIndex.ApplicationStarter.Start();
+
+          ResourceSpace.Has.ResourcesOfType<Resource>()
+                       .WithoutUri
+                       .TranscodedBy<IssueTrackerMasonCodec>();
         }
 
         // Setup default data

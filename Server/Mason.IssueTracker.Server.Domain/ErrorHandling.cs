@@ -8,6 +8,12 @@ namespace Mason.IssueTracker.Server.Domain
 {
   public static class ErrorHandling
   {
+    public class Codes
+    {
+      public const string InputValidation = "INVALIDINPUT";
+    }
+
+
     public static void ValidateInput(params Action[] actions)
     {
       List<string> messages = null;
@@ -27,7 +33,7 @@ namespace Mason.IssueTracker.Server.Domain
       }
 
       if (messages != null)
-        throw new DomainException("There was a problem with one or more input values.", messages);
+        throw new DomainException("There was a problem with one or more input values.", Codes.InputValidation, messages);
     }
   }
 }

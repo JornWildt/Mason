@@ -130,9 +130,9 @@ namespace ApiExplorer.ViewModels
       Subscribe<ResetStatusLineTextEventArgs>(e => ResetUpdateStatusLine());
 
       //Url = "http://localhost/mason-demo//issues/query";
-      //Url = "http://localhost/mason-demo/service-index";
+      Url = "http://localhost/mason-demo/service-index";
       //Url = "http://localhost/mason-demo/resource-common";
-      Url = "http://localhost/mason-demo/projects/1";
+      //Url = "http://localhost/mason-demo/projects/1";
     }
 
 
@@ -197,9 +197,7 @@ namespace ApiExplorer.ViewModels
             return;
           }
 
-          IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
-          ContentRender = handler.GetRender(this, r);
-          Url = r.WebResponse.ResponseUri.AbsoluteUri;
+          RenderResponse(r);
         });
     }
 
@@ -214,9 +212,17 @@ namespace ApiExplorer.ViewModels
           if (args.OnFailure != null)
             args.OnFailure(err.Response);
 
-          ContentRender = null;
+          RenderResponse(err.Response);
           MessageBox.Show(err.Exception.Message);
         });
+    }
+
+
+    private void RenderResponse(Response r)
+    {
+      IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
+      ContentRender = handler.GetRender(this, r);
+      Url = r.WebResponse.ResponseUri.AbsoluteUri;
     }
 
     #endregion

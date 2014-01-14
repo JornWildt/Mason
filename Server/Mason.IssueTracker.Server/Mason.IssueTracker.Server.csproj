@@ -108,6 +108,7 @@
     <Compile Include="Contact\Codecs\ContactCodec_vCard.cs" />
     <Compile Include="Contact\Handlers\ContactHandler.cs" />
     <Compile Include="Contact\Resources\ContactResource.cs" />
+    <Compile Include="OperationInterceptor.cs" />
     <Compile Include="Profiles.cs" />
     <Compile Include="Projects\ApplicationStarter.cs" />
     <Compile Include="Projects\Codecs\ProjectsCodec.cs" />
