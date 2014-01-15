@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="BaseHandler.cs" />
     <Compile Include="Codecs\IssueTrackerMasonCodec.cs" />
+    <Compile Include="JsonSchemas\Codecs\JsonSchemaWriter.cs" />
     <Compile Include="Codecs\JsonWriter.cs" />
     <Compile Include="Codecs\JsonReader.cs" />
     <Compile Include="Configuration.cs" />
@@ -101,6 +102,9 @@
     <Compile Include="Contact\Codecs\ContactCodec_vCard.cs" />
     <Compile Include="Contact\Handlers\ContactHandler.cs" />
     <Compile Include="Contact\Resources\ContactResource.cs" />
+    <Compile Include="JsonSchemas\ApplicationStarter.cs" />
+    <Compile Include="JsonSchemas\Handlers\SchemaHandler.cs" />
+    <Compile Include="JsonSchemas\Resources\SchemaTypeResource.cs" />
     <Compile Include="OperationInterceptor.cs" />
     <Compile Include="Profiles.cs" />
     <Compile Include="Projects\ApplicationStarter.cs" />

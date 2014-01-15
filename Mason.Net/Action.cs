@@ -1,4 +1,7 @@
-﻿namespace Mason.Net
+﻿using System;
+
+
+namespace Mason.Net
 {
   public class Action
   {
@@ -12,14 +15,17 @@
 
     public string schema { get; set; }
 
+    public string schemaUrl { get; set; }
 
-    public Action(string name, string type, string href, string description = null, string schema = null)
+
+    public Action(string name, string type, string href, string description = null, string schema = null, Uri schemaUrl = null)
     {
       this.name = name;
       this.type = type;
       this.href = href;
       this.description = description;
       this.schema = schema;
+      this.schemaUrl = schemaUrl.AbsoluteUri;
     }
   }
 }

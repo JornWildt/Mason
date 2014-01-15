@@ -1,11 +1,10 @@
 ﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.Windows;
 using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
-//using JsonSchema;
-//using JsonSchema.Parser;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Ramone;
+using System;
 using System.Windows;
 
 
@@ -54,6 +53,27 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     protected override void OpenAction(object sender)
     {
       Publish(new MasonViewModel.SourceChangedEventArgs { Source = JsonValue.ToString() });
+
+      JToken schemaUrlJson = JsonValue["schemaUrl"];
+      string schemaUrl = schemaUrlJson.Value<string>();
+      if (schemaUrlJson != null && !string.IsNullOrEmpty(schemaUrl))
+      {
+        try
+        {
+          using (var response = RamoneServiceManager.Service.NewSession().Bind(schemaUrl).Get<string>())
+          {
+            string schemaS = response.Body;
+            JsonSchema schema = JsonSchema.Parse(schemaS);
+            JsonExampleGenerator generator = new JsonExampleGenerator();
+            JsonText = generator.GenerateJsonInstanceFromSchema(schema);
+          }
+        }
+        catch (Exception ex)
+        {
+          JsonText = string.Format("Failed to retrieve JSON schema from '{0}': {1}", schemaUrl, ex.Message);
+        }
+      }
+
       JsonActionPopupWindow w = new JsonActionPopupWindow(this);
       w.Owner = Window.GetWindow(sender as DependencyObject);
       w.ShowDialog();

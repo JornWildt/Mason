@@ -1,5 +1,5 @@
 ﻿using Mason.IssueTracker.Server.Codecs;
-using Mason.IssueTracker.Server.Issues.Resources;
+using Mason.IssueTracker.Server.JsonSchemas.Resources;
 using Mason.IssueTracker.Server.Projects.Resources;
 using Mason.IssueTracker.Server.ServiceIndex.Resources;
 using Mason.IssueTracker.Server.Utility;
@@ -32,7 +32,8 @@ namespace Mason.IssueTracker.Server.ServiceIndex.Codecs
 
 
       Uri projectsUrl = typeof(ProjectCollectionResource).CreateUri();
-      Net.Action addProjectAction = new Net.Action(RelTypes.CreateProject, "json", projectsUrl.AbsoluteUri, "Create new project");
+      Uri schemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-project" });
+      Net.Action addProjectAction = new Net.Action(RelTypes.CreateProject, "json", projectsUrl.AbsoluteUri, "Create new project", schemaUrl: schemaUrl);
       s.AddAction(addProjectAction);
 
       //Uri issuesUrl = typeof(IssueCollectionResource).CreateUri();

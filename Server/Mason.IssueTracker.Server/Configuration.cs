@@ -40,6 +40,7 @@ namespace Mason.IssueTracker.Server
           Contact.ApplicationStarter.Start();
           ResourceCommons.ApplicationStarter.Start();
           ServiceIndex.ApplicationStarter.Start();
+          JsonSchemas.ApplicationStarter.Start();
 
           ResourceSpace.Has.ResourcesOfType<Resource>()
                        .WithoutUri
