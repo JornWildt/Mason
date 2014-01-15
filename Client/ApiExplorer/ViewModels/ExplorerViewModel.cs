@@ -54,11 +54,8 @@ namespace ApiExplorer.ViewModels
       get { return _addressIsFocused; }
       set
       {
-        if (value != _addressIsFocused)
-        {
-          _addressIsFocused = value;
-          OnPropertyChanged("AddressIsFocused");
-        }
+        _addressIsFocused = value;
+        OnPropertyChanged("AddressIsFocused");
       }
     }
 
