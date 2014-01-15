@@ -27,7 +27,7 @@ namespace Mason.IssueTracker.Server
           uow.Commit();
           return result;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
           uow.Rollback();
           throw;

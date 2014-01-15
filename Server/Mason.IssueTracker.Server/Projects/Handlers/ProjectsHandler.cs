@@ -2,6 +2,8 @@
 using Mason.IssueTracker.Server.Projects.Resources;
 using OpenRasta.Web;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace Mason.IssueTracker.Server.Projects.Handlers
@@ -13,6 +15,17 @@ namespace Mason.IssueTracker.Server.Projects.Handlers
     public IProjectRepository ProjectRepository { get; set; }
 
     #endregion
+
+
+    public object Get()
+    {
+      IEnumerable<Project> projects = ProjectRepository.FindAll();
+
+      ProjectCollectionResource result = new ProjectCollectionResource();
+      result.Projects = projects.ToList();
+
+      return result;
+    }
 
 
     public object Post(Contract.CreateProjectArgs args)
