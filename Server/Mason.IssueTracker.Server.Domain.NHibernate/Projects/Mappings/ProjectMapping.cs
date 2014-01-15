@@ -9,7 +9,7 @@ namespace Mason.IssueTracker.Server.Domain.NHibernate.Projects.Mappings
     public ProjectMapping()
     {
       Id(p => p.Id);
-      Map(p => p.Code);
+      Map(p => p.Code).Index("Idx_Project_Code").Unique();
       Map(p => p.Title);
       Map(p => p.Description);
     }

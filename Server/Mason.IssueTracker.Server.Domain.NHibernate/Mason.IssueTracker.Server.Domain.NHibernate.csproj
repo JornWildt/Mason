@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExceptionConverter.cs" />
     <Compile Include="GenericRepository.cs" />
     <Compile Include="NHibernateUnitOfWork.cs" />
     <Compile Include="NHibernateUnitOfWorkManager.cs" />

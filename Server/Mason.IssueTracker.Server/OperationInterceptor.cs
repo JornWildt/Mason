@@ -54,6 +54,8 @@ namespace Mason.IssueTracker.Server
       if (ex is TargetInvocationException)
         return BuildOutputFromException(ex.InnerException);
 
+      ex = Mason.IssueTracker.Server.Domain.NHibernate.ExceptionConverter.ConvertException(ex);
+
       string id = Guid.NewGuid().ToString();
 
       SubResource error = new SubResource();
@@ -89,6 +91,18 @@ namespace Mason.IssueTracker.Server
         return new[] 
         {
           new OutputMember { Value = new OperationResult.NotFound { ResponseResource = result } }
+        };
+      }
+      else if (ex is DuplicateKeyException)
+      {
+        Logger.Info(string.Format("{0} [{1}]", ex.Message, id), ex);
+
+        DuplicateKeyException dkex = (DuplicateKeyException)ex;
+        error[MasonProperties.ErrorProperties.Code] = ErrorHandling.Codes.DuplicateKey;
+
+        return new[] 
+        {
+          new OutputMember { Value = new OperationResult.BadRequest { ResponseResource = result } }
         };
       }
       else

@@ -13,6 +13,7 @@ namespace Mason.IssueTracker.Server.Domain
       public const string InputValidation = "INVALIDINPUT";
       public const string MissingResource = "NOTFOUND";
       public const string InternalError = "INTERNALERROR";
+      public const string DuplicateKey = "DUPLICATEKEY";
     }
 
 
