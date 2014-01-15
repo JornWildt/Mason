@@ -21,6 +21,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       p.AddLink(selfLink);
 
       p.Id = project.Project.Id;
+      p.Code = project.Project.Code;
       p.Title = project.Project.Title;
       p.Description = project.Project.Description;
 

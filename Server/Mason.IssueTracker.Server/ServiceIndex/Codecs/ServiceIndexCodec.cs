@@ -24,6 +24,10 @@ namespace Mason.IssueTracker.Server.ServiceIndex.Codecs
 
       s.AddMetaLink(new Link("documentation", "http://www.dr.dk", "Documentation (NOT READY)"));
 
+      Uri projectsUri = typeof(ProjectCollectionResource).CreateUri();
+      Link projectsLink = new Link(RelTypes.Projects, projectsUri, "List all projects");
+      s.AddLink(projectsLink);
+
       string issueQueryUrl = CommunicationContext.ApplicationBaseUri.AbsoluteUri +"/" + UrlPaths.IssueQuery;
       LinkTemplate issueQueryTemplate = new LinkTemplate(RelTypes.IssueQuery, issueQueryUrl, "Search for issues");
       issueQueryTemplate.parameters.Add(new LinkTemplateParameter("id", description: "Issue ID"));

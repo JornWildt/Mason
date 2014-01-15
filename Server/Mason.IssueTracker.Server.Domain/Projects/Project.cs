@@ -23,8 +23,8 @@ namespace Mason.IssueTracker.Server.Domain.Projects
     public Project(string code, string title, string description)
     {
       ErrorHandling.ValidateInput(
-        () => Condition.Requires(code, "code").IsNotNullOrWhiteSpace(),
-        () => Condition.Requires(title, "title").IsNotNullOrWhiteSpace(),
+        () => Condition.Requires(code, "code").IsNotNullOrWhiteSpace().IsNotLongerThan(20),
+        () => Condition.Requires(title, "title").IsNotNullOrWhiteSpace().IsNotLongerThan(255),
         () => Condition.Requires(description, "description").IsNotNull());
       
       Code = code;

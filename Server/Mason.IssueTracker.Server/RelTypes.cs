@@ -9,6 +9,7 @@
     public const string Contact = NamespaceAlias + ":contact";
     public const string Logo = NamespaceAlias + ":logo";
 
+    public const string Projects = NamespaceAlias + ":projects";
     public const string CreateProject = NamespaceAlias + ":project-create";
 
     public const string IssueQuery = NamespaceAlias + ":issue-query";
