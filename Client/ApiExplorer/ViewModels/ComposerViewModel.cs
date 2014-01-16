@@ -44,6 +44,21 @@ namespace ApiExplorer.ViewModels
     }
 
 
+    private string _contentType;
+    public string ContentType
+    {
+      get { return _contentType; }
+      set
+      {
+        if (value != _contentType)
+        {
+          _contentType = value;
+          OnPropertyChanged("ContentType");
+        }
+      }
+    }
+
+
     private static string _headers;
     public string Headers
     {
@@ -127,14 +142,15 @@ namespace ApiExplorer.ViewModels
             {
               if (header.Equals("accept", StringComparison.InvariantCultureIgnoreCase))
                 req.Accept(value);
-              else if (header.Equals("content-type", StringComparison.InvariantCultureIgnoreCase))
-                req.ContentType(value);
-              else
+              else if (!header.Equals("content-type", StringComparison.InvariantCultureIgnoreCase))
                 req.Header(header, value);
             }
           }
         }
       }
+
+      if (ContentType != null)
+        req.ContentType(ContentType);
 
       if (Body != null)
         req.Body(Body);

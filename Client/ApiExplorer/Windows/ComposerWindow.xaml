@@ -9,6 +9,7 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="2*"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="3*"/>
@@ -32,20 +33,37 @@
       <TextBox Grid.Column="1" Text="{Binding Url}"/>
     </Grid>
     
+    <!-- Specific headers -->
+    <Grid Grid.Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <TextBlock Grid.Row="0" Grid.Column="0" Text="Content-Type" Margin="0 0 4 0" Width="100"/>
+      <ComboBox Grid.Row="0" Grid.Column="1" Name="ContentTypeInput" Margin="0 4 0 0" 
+                Text="{Binding ContentType}" IsEditable="True">
+        <ComboBoxItem Content="application/json"/>
+        <ComboBoxItem Content="application/json-patch+json"/>
+      </ComboBox>
+    </Grid>
+    
     <!-- Headers -->
-    <TextBlock Grid.Row="1" Text="Headers"/>
-    <TextBox Grid.Row="2" Text="{Binding Headers}"
+    <TextBlock Grid.Row="2" Text="Headers"/>
+    <TextBox Grid.Row="3" Text="{Binding Headers}"
              TextWrapping="NoWrap" AcceptsReturn="True"
              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
 
     <!-- Body -->
-    <TextBlock Grid.Row="3" Text="Body"/>
-    <TextBox Grid.Row="4" Text="{Binding Body}"
+    <TextBlock Grid.Row="4" Text="Body"/>
+    <TextBox Grid.Row="5" Text="{Binding Body}"
              TextWrapping="NoWrap" AcceptsReturn="True"
              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
     
     <!-- Buttons -->
-    <StackPanel Grid.Row="5" Orientation="Horizontal">
+    <StackPanel Grid.Row="6" Orientation="Horizontal">
       <Button Content="Execute" Command="{Binding ExecuteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource self}}"
               IsDefault="True" Margin="0 4 0 0"/>
       <Button Content="Cancel" IsCancel="True" Margin="6 4 0 0"/>
