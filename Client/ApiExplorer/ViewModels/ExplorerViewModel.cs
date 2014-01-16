@@ -1,4 +1,5 @@
 ﻿using ApiExplorer.Utilities;
+using ApiExplorer.Windows;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Ramone;
 using Ramone.HyperMedia;
@@ -112,6 +113,7 @@ namespace ApiExplorer.ViewModels
     #region Commands
 
     public DelegateCommand<object> GoCommand { get; private set; }
+    public DelegateCommand<FrameworkElement> ComposeCommand { get; private set; }
     public DelegateCommand<object> AddressFocusCommand { get; private set; }
 
     #endregion
@@ -121,6 +123,7 @@ namespace ApiExplorer.ViewModels
       : base(parent)
     {
       RegisterCommand(GoCommand = new DelegateCommand<object>(Go));
+      RegisterCommand(ComposeCommand = new DelegateCommand<FrameworkElement>(Compose));
       RegisterCommand(AddressFocusCommand = new DelegateCommand<object>(AddressFocus));
       Subscribe<ExecuteWebRequestEventArgs>(e => ExecuteWebRequest(e));
       Subscribe<SetStatusLineTextEventArgs>(e => SetUpdateStatusLine(e.Text));
@@ -160,11 +163,18 @@ namespace ApiExplorer.ViewModels
     {
       IsExecutingRequest = true;
 
-      args.Request
-          .Accept("application/vnd.mason;q=1, */*;q=0.5")
-          .Async()
-          .OnError(r => HandleResponseError(r, args))
-          .Submit(r => HandleResponse(r, args));
+      try
+      {
+        args.Request
+            .Accept("application/vnd.mason;q=1, */*;q=0.5")
+            .Async()
+            .OnError(r => HandleResponseError(r, args))
+            .Submit(r => HandleResponse(r, args));
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(ex.Message, "Failed to setup request");
+      }
     }
 
 
@@ -240,6 +250,16 @@ namespace ApiExplorer.ViewModels
     private void ResetUpdateStatusLine()
     {
       StatusLine = PreviousStatusLine;
+    }
+
+    #endregion
+
+    
+    #region Compose
+
+    private void Compose(FrameworkElement sender)
+    {
+      ComposerWindow.OpenComposerWindow(Window.GetWindow(sender), this, "GET", Url);
     }
 
     #endregion

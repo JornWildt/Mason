@@ -13,6 +13,7 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
     <!-- URL bar -->
@@ -23,18 +24,21 @@
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
       </Grid.ColumnDefinitions>
       <TextBox Grid.Column="0" Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}" x:Name="UrlInput"
                axu:FocusBehavior.IsFocused="{Binding AddressIsFocused, Mode=TwoWay}"
                GotFocus="UrlInput_GotFocus"/>
-      <Button Grid.Column="1" Command="{Binding GoCommand}" Content="Go" Width="50"/>
+      <Button Grid.Column="1" Command="{Binding GoCommand}" Content="GET" Width="50"/>
+      <Button Grid.Column="2" Command="{Binding ComposeCommand}" Content="Other" Width="50"
+              CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
     </Grid>
 
     <!-- Content -->
     <ContentControl Grid.Row="1" Content="{Binding ContentRender}"/>
-    
+
     <!-- Status bar -->
-    <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1" Padding="4" Height="30">
+    <Border Grid.Row="3" BorderBrush="Gray" BorderThickness="1" Padding="4" Height="30">
       <Grid>
         <TextBlock Text="{Binding StatusLine}" VerticalAlignment="Center"
                    Visibility="{Binding IsExecutingRequest, Converter={axv:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>
