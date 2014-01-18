@@ -88,7 +88,7 @@ namespace ApiExplorer.Utilities
 
       ViewModel vm = AssociatedObject.DataContext as ViewModel;
       if (json != null && vm != null)
-        vm.Publish(new MasonViewModel.SourceChangedEventArgs { Source = (Prefix ?? "") + json.ToString() });
+        vm.Publish(new MasonViewModel.SourceChangedEventArgs { Source = (Prefix ?? "") + ": " + json.ToString() });
     }
   }
 }

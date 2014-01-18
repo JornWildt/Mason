@@ -34,6 +34,10 @@ namespace Mason.IssueTracker.Server.Projects
       ResourceSpace.Has.ResourcesOfType<Contract.CreateProjectArgs>()
         .WithoutUri
         .TranscodedBy<JsonReader<Contract.CreateProjectArgs>>();
+
+      ResourceSpace.Has.ResourcesOfType<Contract.UpdateProjectArgs>()
+        .WithoutUri
+        .TranscodedBy<JsonReader<Contract.UpdateProjectArgs>>();
     }
   }
 }

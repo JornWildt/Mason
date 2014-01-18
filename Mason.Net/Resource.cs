@@ -7,10 +7,10 @@ namespace Mason.Net
 {
   public class Resource : SubResource
   {
-    [JsonProperty("mason:namespaces")]
+    [JsonProperty(MasonProperties.Prefix + "namespaces")]
     public List<Namespace> Namespaces { get; set; }
 
-    [JsonProperty("mason:meta")]
+    [JsonProperty(MasonProperties.Prefix + "meta")]
     public SubResource Meta { get; set; }
 
 

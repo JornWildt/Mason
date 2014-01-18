@@ -27,5 +27,19 @@ namespace Mason.IssueTracker.Server.Projects.Handlers
         };
       });
     }
+
+
+    public object Post(int id, Contract.UpdateProjectArgs args)
+    {
+      return ExecuteInUnitOfWork(() =>
+      {
+        Project p = ProjectRepository.Get(id);
+        p.Update(args.Code, args.Title, args.Description);
+        return new ProjectResource
+        {
+          Project = p
+        };
+      });
+    }
   }
 }

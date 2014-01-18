@@ -20,6 +20,14 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       Link selfLink = new Link("self", selfUri, "Project details");
       p.AddLink(selfLink);
 
+      dynamic updateTemplate = new DynamicDictionary();
+      updateTemplate.Code = project.Project.Code;
+      updateTemplate.Title = project.Project.Title;
+      updateTemplate.Description = project.Project.Description;
+
+      Net.Action updateAction = new Net.Action("is:update-project", "json", selfUri, "Update project details", template: updateTemplate);
+      p.AddAction(updateAction);
+
       p.Id = project.Project.Id;
       p.Code = project.Project.Code;
       p.Title = project.Project.Title;

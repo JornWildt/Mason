@@ -70,9 +70,13 @@
     <Reference Include="OpenRasta.Hosting.AspNet">
       <HintPath>..\Libraries\OpenRasta.Hosting.AspNet.dll</HintPath>
     </Reference>
+    <Reference Include="Ramone">
+      <HintPath>..\..\packages\Ramone.1.3.0.77\lib\net40\Ramone.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -127,6 +131,7 @@
     <Compile Include="UrlPaths.cs" />
     <Compile Include="Utility\ContactInformation.cs" />
     <Compile Include="Utility\DependencyResolverAccessor.cs" />
+    <Compile Include="Utility\JsonPatchDocumentVisitorWithErrorHandling.cs" />
     <Compile Include="Utility\Log4NetTraceListener.cs" />
     <Compile Include="Codecs\MasonCodec.cs" />
     <Compile Include="Utility\Settings.cs" />

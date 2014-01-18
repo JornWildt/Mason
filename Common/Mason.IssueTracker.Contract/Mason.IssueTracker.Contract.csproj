@@ -51,6 +51,7 @@
     <Compile Include="Project.cs" />
     <Compile Include="ProjectCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateProjectArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Mason.Net\Mason.Net.csproj">

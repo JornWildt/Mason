@@ -37,7 +37,7 @@ namespace Mason.IssueTracker.Server.ServiceIndex.Codecs
 
       Uri projectsUrl = typeof(ProjectCollectionResource).CreateUri();
       Uri schemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-project" });
-      Net.Action addProjectAction = new Net.Action(RelTypes.CreateProject, "json", projectsUrl.AbsoluteUri, "Create new project", schemaUrl: schemaUrl);
+      Net.Action addProjectAction = new Net.Action(RelTypes.CreateProject, "json", projectsUrl, "Create new project", schemaUrl: schemaUrl);
       s.AddAction(addProjectAction);
 
       //Uri issuesUrl = typeof(IssueCollectionResource).CreateUri();

@@ -6,6 +6,9 @@
   <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
     <Setter Property="FontSize" Value="14"/>
   </Style>
+  <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+    <Setter Property="FontSize" Value="14"/>
+  </Style>
   <Style x:Key="FormHeading" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
     <Setter Property="FontSize" Value="16"/>
     <Setter Property="FontWeight" Value="Bold"/>

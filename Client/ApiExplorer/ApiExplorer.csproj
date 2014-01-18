@@ -103,7 +103,6 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\KeyValueParameterViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\LinkTemplateViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\LinkViewModel.cs" />
-    <Compile Include="MediaTypeHandlers\ApplicationMason\MasonCodec.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\MasonViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\MultipartJsonActionViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\PropertyViewModel.cs" />

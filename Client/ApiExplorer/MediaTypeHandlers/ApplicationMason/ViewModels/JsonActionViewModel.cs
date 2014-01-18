@@ -54,9 +54,16 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     {
       Publish(new MasonViewModel.SourceChangedEventArgs { Source = JsonValue.ToString() });
 
+      JToken templateJson = JsonValue["template"];
+
       JToken schemaUrlJson = JsonValue["schemaUrl"];
-      string schemaUrl = schemaUrlJson.Value<string>();
-      if (schemaUrlJson != null && !string.IsNullOrEmpty(schemaUrl))
+      string schemaUrl = (schemaUrlJson != null ? schemaUrlJson.Value<string>() : null);
+
+      if (templateJson != null)
+      {
+        JsonText = templateJson.ToString();
+      }
+      else if (schemaUrlJson != null && !string.IsNullOrEmpty(schemaUrl))
       {
         try
         {

@@ -5,7 +5,8 @@
              xmlns:mcmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
              xmlns:axv="clr-namespace:ApiExplorer.ValueConverters"
              xmlns:axu="clr-namespace:ApiExplorer.Utilities"
-             xmlns:mavm="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels">
+             xmlns:mavm="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels"
+             xmlns:mn="clr-namespace:Mason.Net;assembly=Mason.Net">
   <UserControl.Resources>
     <!-- Template for displaying resource (recursively) -->
     <DataTemplate DataType="{x:Type mavm:ResourcePropertyViewModel}">
@@ -13,7 +14,7 @@
         <Expander.Header>
           <TextBlock Text="{Binding Name}" FontWeight="Bold">
             <i:Interaction.Behaviors>
-              <axu:ShowSourceBehavior Prefix="{Binding Name, StringFormat='{}{0}: '}"/>
+              <axu:ShowSourceBehavior Prefix="{Binding Name}"/>
             </i:Interaction.Behaviors>
           </TextBlock>
         </Expander.Header>
@@ -41,7 +42,7 @@
                      TextWrapping="Wrap"
                      Visibility="{Binding Value.Description, Converter={axv:EmptyStringToVisibility}}">
             <i:Interaction.Behaviors>
-              <axu:ShowSourceBehavior Source="{Binding Value.MetaJsonValue}" Prefix="mason:meta: "/>
+              <axu:ShowSourceBehavior Source="{Binding Value.MetaJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Meta}}"/>
             </i:Interaction.Behaviors>
           </TextBlock>
           <!-- Meta links -->
@@ -49,7 +50,7 @@
             <TextBlock Text="Meta-links" FontStyle="Italic" FontWeight="Bold">
               <!-- Show source for links -->
               <i:Interaction.Behaviors>
-                <axu:ShowSourceBehavior Source="{Binding Value.LinksJsonValue}" Prefix="mason:links: "/>
+                <axu:ShowSourceBehavior Source="{Binding Value.LinksJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Links}}"/>
               </i:Interaction.Behaviors>
             </TextBlock>
             <!-- Use styling to render links -->
@@ -60,7 +61,7 @@
             <TextBlock Text="Links" FontStyle="Italic" FontWeight="Bold">
               <!-- Show source for links -->
               <i:Interaction.Behaviors>
-                <axu:ShowSourceBehavior Source="{Binding Value.LinksJsonValue}" Prefix="mason:links: "/>
+                <axu:ShowSourceBehavior Source="{Binding Value.LinksJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Links}}"/>
               </i:Interaction.Behaviors>
             </TextBlock>
             <!-- Use styling to render links -->
@@ -71,7 +72,7 @@
             <TextBlock Text="Link templates" FontStyle="Italic" FontWeight="Bold">
               <!-- Show source for link templates -->
               <i:Interaction.Behaviors>
-                <axu:ShowSourceBehavior Source="{Binding Value.LinkTemplatesJsonValue}" Prefix="mason:link-templates: "/>
+                <axu:ShowSourceBehavior Source="{Binding Value.LinkTemplatesJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.LinkTemplates}}"/>
               </i:Interaction.Behaviors>
             </TextBlock>
             <!-- Use styling to render link templates -->
@@ -82,7 +83,7 @@
             <TextBlock Text="Actions" FontStyle="Italic" FontWeight="Bold">
               <!-- Show source for actions -->
               <i:Interaction.Behaviors>
-                <axu:ShowSourceBehavior Source="{Binding Value.ActionsJsonValue}" Prefix="mason:actions: "/>
+                <axu:ShowSourceBehavior Source="{Binding Value.ActionsJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Actions}}"/>
               </i:Interaction.Behaviors>
             </TextBlock>
             <!-- Use styling to render actions -->
@@ -137,7 +138,7 @@
               <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
             </i:EventTrigger>
           </i:Interaction.Triggers>
-          <TextBlock Text="{Binding Name}"/>
+          <TextBlock Text="{Binding Name, StringFormat='{}{0}: '}"/>
         </Hyperlink>
       </TextBlock>
     </DataTemplate>
@@ -180,7 +181,7 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="{Binding Name, StringFormat='{}{0}: '}" FontWeight="Bold">
           <i:Interaction.Behaviors>
-            <axu:ShowSourceBehavior Prefix="{Binding Name, StringFormat='{}{0}: '}"/>
+            <axu:ShowSourceBehavior Prefix="{Binding Name}"/>
           </i:Interaction.Behaviors>
         </TextBlock>
         <ItemsControl Grid.Row="1" ItemsSource="{Binding Value}" Margin="20 0 0 0"/>
@@ -196,7 +197,7 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0" Text="{Binding Name, StringFormat='{}{0}: '}" FontWeight="Bold">
             <i:Interaction.Behaviors>
-              <axu:ShowSourceBehavior Prefix="{Binding Name, StringFormat='{}{0}: '}"/>
+              <axu:ShowSourceBehavior Prefix="{Binding Name}"/>
             </i:Interaction.Behaviors>
         </TextBlock>
         <TextBlock Grid.Column="1" Text="{Binding Value}" TextWrapping="Wrap"/>

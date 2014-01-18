@@ -17,15 +17,18 @@ namespace Mason.Net
 
     public string schemaUrl { get; set; }
 
+    public object template { get; set; }
 
-    public Action(string name, string type, string href, string description = null, string schema = null, Uri schemaUrl = null)
+
+    public Action(string name, string type, Uri href, string description = null, string schema = null, Uri schemaUrl = null, object template = null)
     {
       this.name = name;
       this.type = type;
-      this.href = href;
+      this.href = (href != null ? href.AbsoluteUri : null);
       this.description = description;
       this.schema = schema;
-      this.schemaUrl = schemaUrl.AbsoluteUri;
+      this.schemaUrl = (schemaUrl != null ? schemaUrl.AbsoluteUri : null);
+      this.template = template;
     }
   }
 }

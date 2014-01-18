@@ -6,13 +6,13 @@ namespace Mason.Net
 {
   public class SubResource : DynamicDictionary
   {
-    [JsonProperty("mason:links")]
+    [JsonProperty(MasonProperties.Prefix + "links")]
     public List<Link> Links { get; set; }
 
-    [JsonProperty("mason:link-templates")]
+    [JsonProperty(MasonProperties.Prefix + "link-templates")]
     public List<LinkTemplate> LinkTemplates { get; set; }
 
-    [JsonProperty("mason:actions")]
+    [JsonProperty(MasonProperties.Prefix + "actions")]
     public List<Action> Actions { get; set; }
 
 

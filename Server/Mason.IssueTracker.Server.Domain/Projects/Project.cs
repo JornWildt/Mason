@@ -22,11 +22,17 @@ namespace Mason.IssueTracker.Server.Domain.Projects
 
     public Project(string code, string title, string description)
     {
+      Update(code, title, description);
+    }
+
+
+    public virtual void Update(string code, string title, string description)
+    {
       ErrorHandling.ValidateInput(
         () => Condition.Requires(code, "code").IsNotNullOrWhiteSpace().IsNotLongerThan(20),
         () => Condition.Requires(title, "title").IsNotNullOrWhiteSpace().IsNotLongerThan(255),
         () => Condition.Requires(description, "description").IsNotNull());
-      
+
       Code = code;
       Title = title;
       Description = description;
