@@ -41,5 +41,16 @@ namespace Mason.IssueTracker.Server.Projects.Handlers
         };
       });
     }
+
+
+    public object Delete(int id)
+    {
+      return ExecuteInUnitOfWork(() =>
+      {
+        Project p = ProjectRepository.Get(id);
+        ProjectRepository.Delete(p);
+        return new OperationResult.NoContent();
+      });
+    }
   }
 }

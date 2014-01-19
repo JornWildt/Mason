@@ -1,4 +1,4 @@
-﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.Windows;
+﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.Dialogs;
 using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
 using Microsoft.Practices.Composite.Presentation.Commands;
@@ -123,11 +123,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     private void OpenLinkTemplate(object arg)
     {
       Publish(new MasonViewModel.SourceChangedEventArgs { Source = JsonValue.ToString() });
-      UrlTemplatePopupWindow w = new UrlTemplatePopupWindow(this);
+      UrlTemplatePopupDialog d = new UrlTemplatePopupDialog(this);
       if (Parameters.Count > 0)
         Parameters[0].IsFocused = true;
-      w.Owner = Window.GetWindow(arg as DependencyObject);
-      w.ShowDialog();
+      d.Owner = Window.GetWindow(arg as DependencyObject);
+      d.ShowDialog();
     }
 
 

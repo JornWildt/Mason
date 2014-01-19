@@ -2,14 +2,14 @@
 using System.Windows;
 
 
-namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.Windows
+namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.Dialogs
 {
   /// <summary>
   /// Interaction logic for UrlTemplatePopup.xaml
   /// </summary>
-  public partial class UrlTemplatePopupWindow : Window
+  public partial class UrlTemplatePopupDialog : Window
   {
-    public UrlTemplatePopupWindow(LinkTemplateViewModel vm)
+    public UrlTemplatePopupDialog(LinkTemplateViewModel vm)
     {
       InitializeComponent();
       DataContext = vm;

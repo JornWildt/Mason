@@ -1,4 +1,5 @@
 ﻿using ApiExplorer.ViewModels;
+using Mason.Net;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Newtonsoft.Json.Linq;
 using System;
@@ -28,6 +29,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     public string Type { get { return GetValue<string>("type"); } }
 
     public string HRef { get { return GetValue<string>("href"); } }
+
+    public string Method { get { return GetValue<string>("method"); } }
 
     public string Description { get { return GetValue<string>("description"); } }
 
@@ -69,10 +72,12 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       JToken jtype = action.Value["type"];
       string type = (jtype != null ? jtype.Value<string>() : null);
 
-      if (type == "multipart-json")
-        return new MultipartJsonActionViewModel(parent, action);
-      else if (type == "json")
+      if (type == MasonProperties.ActionTypes.JSON)
         return new JsonActionViewModel(parent, action);
+      else if (type == MasonProperties.ActionTypes.Void)
+        return new VoidActionViewModel(parent, action);
+      else if (type == MasonProperties.ActionTypes.JSONFiles)
+        return new MultipartJsonActionViewModel(parent, action);
 
       throw new InvalidOperationException(string.Format("Unknown action type '{0}'.", type));
     }

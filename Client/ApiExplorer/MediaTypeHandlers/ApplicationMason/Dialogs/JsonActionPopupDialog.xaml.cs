@@ -2,11 +2,11 @@
 using System.Windows;
 
 
-namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.Windows
+namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.Dialogs
 {
-  public partial class JsonActionPopupWindow : Window
+  public partial class JsonActionPopupDialog : Window
   {
-    public JsonActionPopupWindow(JsonActionViewModel vm)
+    public JsonActionPopupDialog(JsonActionViewModel vm)
     {
       InitializeComponent();
       DataContext = vm;

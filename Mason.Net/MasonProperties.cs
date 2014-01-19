@@ -20,6 +20,13 @@
       public const string Description = Prefix + "description";
     }
 
+    public static class ActionTypes
+    {
+      public const string JSON = "json";
+      public const string JSONFiles = "json-files";
+      public const string Void = "void";
+    }
+
     public static class ErrorProperties
     {
       public const string Id = Prefix + "id";

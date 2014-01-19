@@ -28,6 +28,9 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       Net.Action updateAction = new Net.Action("is:update-project", "json", selfUri, "Update project details", template: updateTemplate);
       p.AddAction(updateAction);
 
+      Net.Action deleteAction = new Net.Action("is:delete-project", MasonProperties.ActionTypes.Void, selfUri, "Delete project", method: "DELETE");
+      p.AddAction(deleteAction);
+
       p.Id = project.Project.Id;
       p.Code = project.Project.Code;
       p.Title = project.Project.Title;

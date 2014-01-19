@@ -1,4 +1,4 @@
-﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.Windows;
+﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.Dialogs;
 using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
 using Newtonsoft.Json.Linq;
@@ -81,9 +81,9 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         }
       }
 
-      JsonActionPopupWindow w = new JsonActionPopupWindow(this);
-      w.Owner = Window.GetWindow(sender as DependencyObject);
-      w.ShowDialog();
+      JsonActionPopupDialog d = new JsonActionPopupDialog(this);
+      d.Owner = Window.GetWindow(sender as DependencyObject);
+      d.ShowDialog();
     }
 
 
@@ -93,7 +93,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Request req =
         session.Bind(HRef)
-               .Accept("application/vnd.mason;q=1, */*;q=0.5")
+               //.Accept("application/vnd.mason;q=1, */*;q=0.5")
                .AsJson()
                .Body(JsonText)
                .Method("POST");

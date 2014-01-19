@@ -13,7 +13,7 @@ namespace Mason.IssueTracker.Server.Codecs
       Resource r = ConvertToIssueTracker(resource);
 
       Uri resourceCommonUri = typeof(ResourceCommonResource).CreateUri();
-      Link resourceCommonLink = new Link(RelTypes.ResourceCommon, resourceCommonUri, "Common information for all resources");
+      Link resourceCommonLink = new Link(RelTypes.ResourceCommon, resourceCommonUri, "Common information shared by all resources");
       r.AddLink(resourceCommonLink);
 
       //r.AddNamespace(new Net.Namespace(RelTypes.NamespaceAlias, RelTypes.Namespace));
