@@ -27,10 +27,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
-    public MultipartJsonActionViewModel(ViewModel parent, JToken json)
+    public MultipartJsonActionViewModel(ViewModel parent, JProperty json)
       : base(parent, json)
     {
-      JsonText = "{\n\n}";
+      JsonText = "{\nNOT IMPLEMENTED YET\n}";
     }
 
 

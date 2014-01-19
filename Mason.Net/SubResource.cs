@@ -7,36 +7,36 @@ namespace Mason.Net
   public class SubResource : DynamicDictionary
   {
     [JsonProperty(MasonProperties.Prefix + "links")]
-    public List<Link> Links { get; set; }
+    public Dictionary<string,Link> Links { get; set; }
 
     [JsonProperty(MasonProperties.Prefix + "link-templates")]
-    public List<LinkTemplate> LinkTemplates { get; set; }
+    public Dictionary<string, LinkTemplate> LinkTemplates { get; set; }
 
     [JsonProperty(MasonProperties.Prefix + "actions")]
-    public List<Action> Actions { get; set; }
+    public Dictionary<string, Action> Actions { get; set; }
 
 
     public void AddLink(Link l)
     {
       if (Links == null)
-        Links = new List<Link>();
-      Links.Add(l);
+        Links = new Dictionary<string, Link>();
+      Links[l.rel] = l;
     }
 
 
     public void AddLinkTemplate(LinkTemplate t)
     {
       if (LinkTemplates == null)
-        LinkTemplates = new List<LinkTemplate>();
-      LinkTemplates.Add(t);
+        LinkTemplates = new Dictionary<string, LinkTemplate>();
+      LinkTemplates[t.name] = t;
     }
 
 
     public void AddAction(Action a)
     {
       if (Actions == null)
-        Actions = new List<Action>();
-      Actions.Add(a);
+        Actions = new Dictionary<string, Action>();
+      Actions[a.name] = a;
     }
   }
 }

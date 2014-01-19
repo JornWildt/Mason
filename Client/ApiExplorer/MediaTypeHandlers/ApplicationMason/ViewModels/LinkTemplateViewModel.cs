@@ -17,7 +17,19 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
   {
     #region UI properties
 
-    public string Name { get { return GetValue<string>("name"); } }
+    private string _name;
+    public string Name
+    {
+      get { return _name; }
+      set
+      {
+        if (value != _name)
+        {
+          _name = value;
+          OnPropertyChanged("Name");
+        }
+      }
+    }
     
     public string Template { get { return GetValue<string>("template"); } }
 
@@ -62,19 +74,20 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
-    public LinkTemplateViewModel(ViewModel parent, JToken json)
-      : base(parent, json)
+    public LinkTemplateViewModel(ViewModel parent, JProperty template)
+      : base(parent, template.Value)
     {
       RegisterCommand(OpenLinkTemplateCommand = new DelegateCommand<object>(OpenLinkTemplate));
       RegisterCommand(SubmitCommand = new DelegateCommand<object>(Submit));
       RegisterCommand(CancelCommand = new DelegateCommand<object>(Cancel));
 
-      if (json == null)
+      if (template == null)
         throw new ArgumentNullException("json");
-      if (!(json is JObject))
+      if (!(template.Value is JObject))
         throw new InvalidOperationException("Expected JSON object for link template");
 
-      JArray parameters = GetValue<JArray>(json, "parameters");
+      Name = template.Name;
+      JArray parameters = GetValue<JArray>(template.Value, "parameters");
       if (parameters != null)
         Parameters = new ObservableCollection<KeyValueParameterViewModel>(parameters.Select(p => new KeyValueParameterViewModel(this, p)));
       else

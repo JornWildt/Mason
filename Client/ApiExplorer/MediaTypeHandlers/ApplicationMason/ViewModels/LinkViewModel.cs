@@ -12,7 +12,20 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
   {
     #region UI properties
 
-    public string Rel { get { return GetValue<string>("rel"); } }
+    private string _rel;
+    public string Rel
+    {
+      get { return _rel; }
+      set
+      {
+        if (value != _rel)
+        {
+          _rel = value;
+          OnPropertyChanged("Rel");
+        }
+      }
+    }
+
 
     public string HRef { get { return GetValue<string>("href"); } }
 
@@ -39,9 +52,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
-    public LinkViewModel(ViewModel parent, JObject link)
-      : base(parent, link)
+    public LinkViewModel(ViewModel parent, JProperty link)
+      : base(parent, link.Value)
     {
+      Rel = link.Name;
       RegisterCommand(FollowLinkCommand = new DelegateCommand<object>(FollowLink));
     }
 

@@ -103,7 +103,7 @@
           <!-- Updates status line -->
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseEnter">
-              <mcmd:EventToCommand Command="{Binding SetStatusCommand}"/>
+              <mcmd:EventToCommand Command="{Binding SetStatusCommand}" CommandParameter="{Binding HRef}"/>
             </i:EventTrigger>
             <i:EventTrigger EventName="MouseLeave">
               <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>

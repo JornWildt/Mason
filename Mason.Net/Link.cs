@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 
 namespace Mason.Net
 {
   public class Link
   {
+    [JsonIgnore]
     public string rel { get; set; }
 
     public string href { get; set; }

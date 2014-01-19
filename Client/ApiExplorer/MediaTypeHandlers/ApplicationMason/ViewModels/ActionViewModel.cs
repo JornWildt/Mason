@@ -11,7 +11,19 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
   {
     #region UI properties
 
-    public string Name { get { return GetValue<string>("name"); } }
+    private string _name;
+    public string Name
+    {
+      get { return _name; }
+      set
+      {
+        if (value != _name)
+        {
+          _name = value;
+          OnPropertyChanged("Name");
+        }
+      }
+    }
 
     public string Type { get { return GetValue<string>("type"); } }
 
@@ -41,24 +53,26 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
-    public ActionViewModel(ViewModel parent, JToken json)
-      : base(parent, json)
+    public ActionViewModel(ViewModel parent, JProperty json)
+      : base(parent, json.Value)
     {
       RegisterCommand(OpenActionCommand = new DelegateCommand<object>(OpenAction));
       RegisterCommand(SubmitCommand = new DelegateCommand<object>(Submit));
       RegisterCommand(CancelCommand = new DelegateCommand<object>(Cancel));
+
+      Name = json.Name;
     }
 
 
-    public static ActionViewModel CreateAction(ViewModel parent, JToken json)
+    public static ActionViewModel CreateAction(ViewModel parent, JProperty action)
     {
-      JToken jtype = json["type"];
+      JToken jtype = action.Value["type"];
       string type = (jtype != null ? jtype.Value<string>() : null);
 
       if (type == "multipart-json")
-        return new MultipartJsonActionViewModel(parent, json);
+        return new MultipartJsonActionViewModel(parent, action);
       else if (type == "json")
-        return new JsonActionViewModel(parent, json);
+        return new JsonActionViewModel(parent, action);
 
       throw new InvalidOperationException(string.Format("Unknown action type '{0}'.", type));
     }

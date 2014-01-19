@@ -31,10 +31,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
-    public JsonActionViewModel(ViewModel parent, JToken json)
-      : base(parent, json)
+    public JsonActionViewModel(ViewModel parent, JProperty action)
+      : base(parent, action)
     {
-      JToken schemaJson = json["schema"];
+      JToken schemaJson = action.Value["schema"];
       if (schemaJson != null)
       {
         JsonSchema schema = JsonSchema.Parse(schemaJson.Value<string>());

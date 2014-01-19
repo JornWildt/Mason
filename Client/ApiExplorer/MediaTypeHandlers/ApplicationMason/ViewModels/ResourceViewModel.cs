@@ -57,23 +57,23 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       foreach (var pair in resource)
       {
-        if (pair.Key == MasonProperties.Links && pair.Value is JArray)
+        if (pair.Key == MasonProperties.Links && pair.Value is JObject)
         {
           LinksJsonValue = pair.Value;
           Links = new ObservableCollection<LinkViewModel>(
-            pair.Value.Children().OfType<JObject>().Select(l => new LinkViewModel(this, l)));
+            pair.Value.Children().OfType<JProperty>().Select(l => new LinkViewModel(this, l)));
         }
-        else if (pair.Key == MasonProperties.LinkTemplates && pair.Value is JArray)
+        else if (pair.Key == MasonProperties.LinkTemplates && pair.Value is JObject)
         {
           LinkTemplatesJsonValue = pair.Value;
           LinkTemplates = new ObservableCollection<LinkTemplateViewModel>(
-            pair.Value.Children().OfType<JObject>().Select(l => new LinkTemplateViewModel(this, l)));
+            pair.Value.Children().OfType<JProperty>().Select(l => new LinkTemplateViewModel(this, l)));
         }
-        else if (pair.Key == MasonProperties.Actions && pair.Value is JArray)
+        else if (pair.Key == MasonProperties.Actions && pair.Value is JObject)
         {
           ActionsJsonValue = pair.Value;
           Actions = new ObservableCollection<ActionViewModel>(
-            pair.Value.Children().OfType<JObject>().Select(a => ActionViewModel.CreateAction(this, a)));
+            pair.Value.Children().OfType<JProperty>().Select(a => ActionViewModel.CreateAction(this, a)));
         }
         else if (pair.Key == MasonProperties.Namespaces && pair.Value is JArray)
         {
@@ -83,10 +83,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
           MetaJsonValue = pair.Value;
           Description = GetValue<string>(pair.Value, MasonProperties.MetaProperties.Description);
           JToken metaLinksProperty = pair.Value[MasonProperties.Links];
-          if (metaLinksProperty is JArray)
+          if (metaLinksProperty is JObject)
           {
             MetaLinks = new ObservableCollection<LinkViewModel>(
-              metaLinksProperty.Children().OfType<JObject>().Select(l => new LinkViewModel(this, l)));
+              metaLinksProperty.Children().OfType<JProperty>().Select(l => new LinkViewModel(this, l)));
           }
         }
         else if (pair.Key == MasonProperties.Error && pair.Value is JObject)
