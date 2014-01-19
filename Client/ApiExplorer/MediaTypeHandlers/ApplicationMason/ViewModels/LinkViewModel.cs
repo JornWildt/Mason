@@ -4,6 +4,7 @@ using Mason.Net;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Newtonsoft.Json.Linq;
 using Ramone;
+using System.Collections.ObjectModel;
 
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
@@ -38,9 +39,23 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         string type = GetValue<string>("type");
         if (!string.IsNullOrEmpty(type))
           type = " (" + type + ")";
-        return (GetValue<string>("title") ?? Rel) + type;
+        return Rel + type;
       } 
     }
+
+    public string ToolTip
+    {
+      get
+      {
+        string type = GetValue<string>("type");
+        if (!string.IsNullOrEmpty(type))
+          type = " (" + type + ")";
+        return (GetValue<string>("title") ?? Rel) + type;
+      }
+    }
+
+
+    public ObservableCollection<LinkViewModel> AlternateLinks { get; set; }
 
     #endregion
 
@@ -53,13 +68,30 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
 
     public LinkViewModel(ViewModel parent, JProperty link)
-      : base(parent, link.Value)
+      : this(parent, link.Value as JObject, link.Name)
     {
-      Rel = link.Name;
+      JArray alt = link.Value["alt"] as JArray;
+      if (alt != null)
+      {
+        AlternateLinks = new ObservableCollection<LinkViewModel>();
+        foreach (var l1 in alt)
+        {
+          JObject l = l1 as JObject;
+          if (l != null)
+            AlternateLinks.Add(new LinkViewModel(this, l, link.Name));
+        }
+      }
+    }
+
+
+    public LinkViewModel(ViewModel parent, JObject link, string name)
+      : base(parent, link)
+    {
+      Rel = name;
       RegisterCommand(FollowLinkCommand = new DelegateCommand<object>(FollowLink));
     }
 
-    
+
     #region Commands
 
     private void FollowLink(object arg)

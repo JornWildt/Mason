@@ -97,21 +97,25 @@
     
     <!-- Template for displaying single link -->
     <DataTemplate DataType="{x:Type mavm:LinkViewModel}">
-      <TextBlock>
-        <Hyperlink Command="{Binding FollowLinkCommand}"
-                   ToolTip="{Binding DisplayTitle}">
-          <!-- Updates status line -->
-          <i:Interaction.Triggers>
-            <i:EventTrigger EventName="MouseEnter">
-              <mcmd:EventToCommand Command="{Binding SetStatusCommand}" CommandParameter="{Binding HRef}"/>
-            </i:EventTrigger>
-            <i:EventTrigger EventName="MouseLeave">
-              <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
-            </i:EventTrigger>
-          </i:Interaction.Triggers>
-          <TextBlock Text="{Binding Rel}"/>
-        </Hyperlink>
-      </TextBlock>
+      <StackPanel>
+        <TextBlock>
+          <Hyperlink Command="{Binding FollowLinkCommand}"
+                     ToolTip="{Binding ToolTip}">
+            <!-- Updates status line -->
+            <i:Interaction.Triggers>
+              <i:EventTrigger EventName="MouseEnter">
+                <mcmd:EventToCommand Command="{Binding SetStatusCommand}" CommandParameter="{Binding HRef}"/>
+              </i:EventTrigger>
+              <i:EventTrigger EventName="MouseLeave">
+                <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
+              </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <TextBlock Text="{Binding DisplayTitle}"/>
+          </Hyperlink>
+        </TextBlock>
+        <!-- Use styling to render links -->
+        <ItemsControl ItemsSource="{Binding AlternateLinks}" Margin="10 0 0 0"/>
+      </StackPanel>
     </DataTemplate>
 
     <!-- Template for displaying single link template -->

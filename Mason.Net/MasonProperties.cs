@@ -2,6 +2,8 @@
 {
   public static class MasonProperties
   {
+    public const string MediaType = "application/mason+json";
+
     public const string Prefix = "@";
 
     public const string Namespaces = Prefix + "namespaces";

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 
 namespace Mason.Net
@@ -14,6 +15,8 @@ namespace Mason.Net
     public string title { get; set; }
 
     public string type { get; set; }
+
+    public List<Link> alt { get; set; }
 
 
     public Link()
@@ -33,6 +36,14 @@ namespace Mason.Net
       this.href = href;
       this.title = title;
       this.type = type;
+    }
+
+
+    public void AddAltLink(Link l)
+    {
+      if (alt == null)
+        alt = new List<Link>();
+      alt.Add(l);
     }
   }
 }
