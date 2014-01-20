@@ -124,10 +124,6 @@
     <Compile Include="ResourceCommons\Codecs\ResourceCommonCodec.cs" />
     <Compile Include="ResourceCommons\Handlers\ResourceCommonHandler.cs" />
     <Compile Include="ResourceCommons\Resources\ResourceCommonResource.cs" />
-    <Compile Include="ServiceIndex\ApplicationStarter.cs" />
-    <Compile Include="ServiceIndex\Codecs\ServiceIndexCodec.cs" />
-    <Compile Include="ServiceIndex\Handlers\ServiceIndexHandler.cs" />
-    <Compile Include="ServiceIndex\Resources\ServiceIndexResource.cs" />
     <Compile Include="UrlPaths.cs" />
     <Compile Include="Utility\ContactInformation.cs" />
     <Compile Include="Utility\DependencyResolverAccessor.cs" />

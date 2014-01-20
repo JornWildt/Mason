@@ -7,11 +7,9 @@ using Mason.IssueTracker.Server.Domain.Projects;
 using Mason.Net;
 using OpenRasta.Configuration;
 using OpenRasta.DI;
-using OpenRasta.OperationModel;
 using OpenRasta.OperationModel.Interceptors;
 using OpenRasta.Web.UriDecorators;
 using System;
-using System.Collections.Generic;
 
 
 namespace Mason.IssueTracker.Server
@@ -39,7 +37,6 @@ namespace Mason.IssueTracker.Server
           Issues.ApplicationStarter.Start();
           Contact.ApplicationStarter.Start();
           ResourceCommons.ApplicationStarter.Start();
-          ServiceIndex.ApplicationStarter.Start();
           JsonSchemas.ApplicationStarter.Start();
 
           ResourceSpace.Has.ResourcesOfType<Resource>()

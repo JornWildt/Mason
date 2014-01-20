@@ -30,16 +30,16 @@ namespace Mason.IssueTracker.Server.Contact.Codecs
 
       string cardBaseUrl = typeof(ContactResource).CreateUri().AbsoluteUri;
 
-      Link baseLink = new Link("self", cardBaseUrl, "Default contact information", MasonProperties.MediaType);
-      c.AddLink(baseLink);
-
-      Uri jCardUri = new Uri(cardBaseUrl + ".jcard");
-      Link jCardLink = new Link("alternate", jCardUri, "Contact information as jCard", "application/json");
-      baseLink.AddAltLink(jCardLink);
+      Link selfLink = new Link("self", cardBaseUrl, "Default contact information");
+      c.AddLink(selfLink);
 
       Uri vCardUri = new Uri(cardBaseUrl + ".vcard");
       Link vCardLink = new Link("alternate", vCardUri, "Contact information as vCard", "text/vcard");
-      baseLink.AddAltLink(vCardLink);
+      c.AddLink(vCardLink);
+
+      Uri jCardUri = new Uri(cardBaseUrl + ".jcard");
+      Link jCardLink = new Link("alternate", jCardUri, "Contact information as jCard", "application/json");
+      vCardLink.AddAltLink(jCardLink);
 
       return c;
     }
