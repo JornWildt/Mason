@@ -26,11 +26,25 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       }
     }
 
+    
+    private string _method;
+    public string Method
+    {
+      get { return _method; }
+      set
+      {
+        if (value != _method)
+        {
+          _method = value;
+          OnPropertyChanged("Method");
+        }
+      }
+    }
+
+
     public string Type { get { return GetValue<string>("type"); } }
 
     public string HRef { get { return GetValue<string>("href"); } }
-
-    public string Method { get { return GetValue<string>("method"); } }
 
     public string Description { get { return GetValue<string>("description"); } }
 
@@ -38,7 +52,16 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     {
       get
       {
-        return GetValue<string>("description") ?? Name;
+        string t = Name + " (" + Type + "," + Method + ")";
+        return t;
+      }
+    }
+
+    public string ToolTip
+    {
+      get
+      {
+        return GetValue<string>("description");
       }
     }
 
@@ -64,6 +87,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       RegisterCommand(CancelCommand = new DelegateCommand<object>(Cancel));
 
       Name = json.Name;
+      string method = GetValue<string>("method");
+      Method = method ?? "POST";
     }
 
 

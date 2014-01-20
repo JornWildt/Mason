@@ -93,7 +93,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Request req =
         session.Bind(HRef)
-               //.Accept("application/vnd.mason;q=1, */*;q=0.5")
                .AsJson()
                .Body(JsonText)
                .Method("POST");

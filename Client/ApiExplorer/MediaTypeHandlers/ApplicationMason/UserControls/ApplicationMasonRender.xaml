@@ -161,7 +161,7 @@
         </TextBlock.Resources>
         <Hyperlink Command="{Binding OpenActionCommand}"
                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                   ToolTip="{Binding DisplayTitle}">
+                   ToolTip="{Binding ToolTip}">
           <!-- Updates status line -->
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseEnter">
@@ -171,7 +171,7 @@
               <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
             </i:EventTrigger>
           </i:Interaction.Triggers>
-          <TextBlock Text="{Binding Name}"/>
+          <TextBlock Text="{Binding DisplayTitle}"/>
         </Hyperlink>
       </TextBlock>
     </DataTemplate>
