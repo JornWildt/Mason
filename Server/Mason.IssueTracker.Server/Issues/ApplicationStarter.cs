@@ -1,14 +1,13 @@
 ﻿using log4net;
+using Mason.IssueTracker.Server.Codecs;
+using Mason.IssueTracker.Server.Domain.Issues;
+using Mason.IssueTracker.Server.Domain.NHibernate.Issues;
 using Mason.IssueTracker.Server.Issues.Codecs;
 using Mason.IssueTracker.Server.Issues.Handlers;
-using Mason.IssueTracker.Server.Domain.Issues;
-using Mason.IssueTracker.Server.Utility;
-using OpenRasta.Configuration;
-using OpenRasta.DI;
 using Mason.IssueTracker.Server.Issues.Resources;
 using Mason.IssueTracker.Server.IssueTracker.Codecs;
-using Mason.IssueTracker.Server.Domain.Comments;
-using Mason.IssueTracker.Server.Codecs;
+using OpenRasta.Configuration;
+using OpenRasta.DI;
 
 
 namespace Mason.IssueTracker.Server.Issues
@@ -21,7 +20,7 @@ namespace Mason.IssueTracker.Server.Issues
     public static void Start()
     {
       Logger.Debug("Starting Issues");
-      ResourceSpace.Uses.CustomDependency<IIssueRepository, IssueInMemoryRepository>(DependencyLifetime.Singleton);
+      ResourceSpace.Uses.CustomDependency<IIssueRepository, IssueRepository>(DependencyLifetime.Singleton);
 
       ResourceSpace.Has.ResourcesOfType<IssueResource>()
         .AtUri(UrlPaths.Issue)
@@ -34,8 +33,9 @@ namespace Mason.IssueTracker.Server.Issues
         .TranscodedBy<IssueQueryCodec>();
 
       ResourceSpace.Has.ResourcesOfType<IssueCollectionResource>()
-        .AtUri(UrlPaths.Issues)
-        .HandledBy<IssuesHandler>();
+        .AtUri(UrlPaths.ProjectIssues)
+        .HandledBy<IssuesHandler>()
+        .TranscodedBy<IssueCollectionCodec>(); ;
 
       ResourceSpace.Has.ResourcesOfType<CreateIssueArgs>()
         .WithoutUri

@@ -48,8 +48,8 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
       common.AddLinkTemplate(issueQueryTemplate);
 
       Uri projectsUrl = typeof(ProjectCollectionResource).CreateUri();
-      Uri schemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-project" });
-      Net.Action addProjectAction = new Net.Action(RelTypes.CreateProject, "json", projectsUrl, "Create new project", schemaUrl: schemaUrl);
+      Uri createProjectSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-project" });
+      Net.Action addProjectAction = new Net.Action(RelTypes.CreateProject, "json", projectsUrl, "Create new project", schemaUrl: createProjectSchemaUrl);
       common.AddAction(addProjectAction);
 
       return new ResourceCommonResource { Value = common };

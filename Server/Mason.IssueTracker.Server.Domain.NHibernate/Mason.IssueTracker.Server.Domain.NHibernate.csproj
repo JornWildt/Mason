@@ -65,9 +65,11 @@
   <ItemGroup>
     <Compile Include="ExceptionConverter.cs" />
     <Compile Include="GenericRepository.cs" />
+    <Compile Include="Issues\IssueMapping.cs" />
+    <Compile Include="Issues\IssueRepository.cs" />
     <Compile Include="NHibernateUnitOfWork.cs" />
     <Compile Include="NHibernateUnitOfWorkManager.cs" />
-    <Compile Include="Projects\Mappings\ProjectMapping.cs" />
+    <Compile Include="Projects\ProjectMapping.cs" />
     <Compile Include="Projects\ProjectRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionManager.cs" />

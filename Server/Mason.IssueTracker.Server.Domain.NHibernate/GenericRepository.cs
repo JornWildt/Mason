@@ -1,6 +1,7 @@
 ﻿using Mason.IssueTracker.Server.Domain.Exceptions;
 using NHibernate;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -66,10 +67,10 @@ namespace Mason.IssueTracker.Server.Domain.NHibernate
 
     //#region -- Linq -----------------------------------------------------------
 
-    //public virtual IQueryable<T> Linq()
-    //{
-    //  return Session.Linq<T>();
-    //}
+    public virtual IQueryable<T> Query()
+    {
+      return Session.Query<T>();
+    }
 
     //#endregion
 

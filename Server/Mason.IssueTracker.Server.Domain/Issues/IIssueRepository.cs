@@ -12,7 +12,8 @@ namespace Mason.IssueTracker.Server.Domain.Issues
 
   public interface IIssueRepository
   {
-    Issue Get(long id);
+    Issue Get(int id);
+    List<Issue> IssuesForProject(int projectId);
     List<Issue> FindIssues(IssueSearchArgs args);
     void Add(Issue i);
   }

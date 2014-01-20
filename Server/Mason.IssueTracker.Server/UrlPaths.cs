@@ -4,6 +4,7 @@
   {
     public const string Projects = "projects";
     public const string Project = "projects/{id}";
+    public const string ProjectIssues = "projects/{id}/issues";
 
     public const string Issues = "issues";
     public const string Issue = "issues/{id}";

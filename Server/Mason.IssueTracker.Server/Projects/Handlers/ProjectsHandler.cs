@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Mason.IssueTracker.Server.Projects.Handlers
 {
-  public class ProjectsHandler
+  public class ProjectsHandler : BaseHandler
   {
     #region Dependencies
 
@@ -19,23 +19,29 @@ namespace Mason.IssueTracker.Server.Projects.Handlers
 
     public object Get()
     {
-      IEnumerable<Project> projects = ProjectRepository.FindAll();
+      return ExecuteInUnitOfWork(() =>
+      {
+        IEnumerable<Project> projects = ProjectRepository.FindAll();
 
-      ProjectCollectionResource result = new ProjectCollectionResource();
-      result.Projects = projects.ToList();
+        ProjectCollectionResource result = new ProjectCollectionResource();
+        result.Projects = projects.ToList();
 
-      return result;
+        return result;
+      });
     }
 
 
     public object Post(Contract.CreateProjectArgs args)
     {
-      Project p = new Project(args.Code, args.Title, args.Description);
-      ProjectRepository.Add(p);
+      return ExecuteInUnitOfWork(() =>
+      {
+        Project p = new Project(args.Code, args.Title, args.Description);
+        ProjectRepository.Add(p);
 
-      Uri projectUrl = typeof(ProjectResource).CreateUri(new { id = p.Id });
+        Uri projectUrl = typeof(ProjectResource).CreateUri(new { id = p.Id });
 
-      return new OperationResult.Created { RedirectLocation = projectUrl };
+        return new OperationResult.Created { RedirectLocation = projectUrl };
+      });
     }
   }
 }

@@ -1,15 +1,13 @@
 ﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using Mason.IssueTracker.Server.Domain.NHibernate.Projects.Mappings;
+using Mason.IssueTracker.Server.Domain.NHibernate.Projects;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Context;
 using NHibernate.Tool.hbm2ddl;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+
 
 namespace Mason.IssueTracker.Server.Domain.NHibernate
 {

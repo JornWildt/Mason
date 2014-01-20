@@ -2,7 +2,7 @@
 using Mason.IssueTracker.Server.Domain.Projects;
 
 
-namespace Mason.IssueTracker.Server.Domain.NHibernate.Projects.Mappings
+namespace Mason.IssueTracker.Server.Domain.NHibernate.Projects
 {
   public class ProjectMapping : ClassMap<Project>
   {

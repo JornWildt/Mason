@@ -1,4 +1,6 @@
 ﻿using Mason.IssueTracker.Server.Codecs;
+using Mason.IssueTracker.Server.Issues.Resources;
+using Mason.IssueTracker.Server.JsonSchemas.Resources;
 using Mason.IssueTracker.Server.Projects.Resources;
 using Mason.Net;
 using OpenRasta.Web;
@@ -25,8 +27,16 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       updateTemplate.Title = project.Project.Title;
       updateTemplate.Description = project.Project.Description;
 
+      Uri issuesUrl = typeof(IssueCollectionResource).CreateUri(new { id = project.Project.Id });
+      Link issuesLink = new Link("is:issues", issuesUrl, "All issues in project");
+      p.AddLink(issuesLink);
+
       Net.Action updateAction = new Net.Action("is:update-project", "json", selfUri, "Update project details", template: updateTemplate);
       p.AddAction(updateAction);
+
+      Uri addIssueSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-issue" });
+      Net.Action addIssueAction = new Net.Action("is:add-issue", "json", issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
+      p.AddAction(addIssueAction);
 
       Net.Action deleteAction = new Net.Action("is:delete-project", MasonProperties.ActionTypes.Void, selfUri, "Delete project", method: "DELETE");
       p.AddAction(deleteAction);

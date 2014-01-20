@@ -26,8 +26,6 @@ namespace Mason.IssueTracker.Server.Utility
     {
       container = new WindsorContainer();
 
-      container.Register(Component.For<IIssueRepository>().ImplementedBy<IssueInMemoryRepository>());
-
       return container;
     }
 

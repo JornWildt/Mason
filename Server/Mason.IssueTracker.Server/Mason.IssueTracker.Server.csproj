@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="BaseHandler.cs" />
     <Compile Include="Codecs\IssueTrackerMasonCodec.cs" />
+    <Compile Include="Issues\Codecs\IssueCollectionCodec.cs" />
     <Compile Include="JsonSchemas\Codecs\JsonSchemaWriter.cs" />
     <Compile Include="Codecs\JsonWriter.cs" />
     <Compile Include="Codecs\JsonReader.cs" />

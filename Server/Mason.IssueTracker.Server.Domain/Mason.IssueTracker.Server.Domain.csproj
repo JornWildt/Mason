@@ -57,7 +57,6 @@
     <Compile Include="Exceptions\MissingResourceException.cs" />
     <Compile Include="Issues\Issue.cs" />
     <Compile Include="Issues\IIssueRepository.cs" />
-    <Compile Include="Issues\IssueInMemoryRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IUnitOfWorkManager.cs" />
     <Compile Include="Projects\IProjectRepository.cs" />
