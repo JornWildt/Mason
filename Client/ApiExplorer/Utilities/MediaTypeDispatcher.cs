@@ -10,12 +10,14 @@ namespace ApiExplorer.Utilities
   {
     private static Dictionary<string, IHandleMediaType> MediaTypeHandlers = new Dictionary<string, IHandleMediaType>();
 
-    public const string UnknownMediaTypeId = "*UNKNOWN*";
+    private static UnknownMediaTypeHandler NoContentMediaTypeHandler { get; set; }
+    private static UnknownMediaTypeHandler UnknownMediaTypeHandler { get; set; }
 
 
     static MediaTypeDispatcher()
     {
-      RegisterHandler(UnknownMediaTypeId, new UnknownMediaTypeHandler());
+      UnknownMediaTypeHandler = new UnknownMediaTypeHandler("Unknown media type");
+      NoContentMediaTypeHandler = new UnknownMediaTypeHandler("No content");
       RegisterHandler("application/vnd.mason", new ApplicationMasonMediaTypeHandler());
     }
 
@@ -31,14 +33,16 @@ namespace ApiExplorer.Utilities
       if (r.ContentType != null)
       {
         string mediaType = r.ContentType.ToString();
-        if (!MediaTypeHandlers.ContainsKey(mediaType))
-          mediaType = UnknownMediaTypeId;
-
-        IHandleMediaType handler = MediaTypeHandlers[mediaType];
-        return handler;
+        if (MediaTypeHandlers.ContainsKey(mediaType))
+        {
+          IHandleMediaType handler = MediaTypeHandlers[mediaType];
+          return handler;
+        }
+        else
+          return UnknownMediaTypeHandler;
       }
 
-      return MediaTypeHandlers[UnknownMediaTypeId];
+      return NoContentMediaTypeHandler;
     }
   }
 }

@@ -8,9 +8,10 @@ namespace ApiExplorer.MediaTypeHandlers.Unknown
   /// </summary>
   public partial class UnknownMediaTypeRender : UserControl
   {
-    public UnknownMediaTypeRender()
+    public UnknownMediaTypeRender(string content)
     {
       InitializeComponent();
+      ContentElement.Text = content;
     }
   }
 }

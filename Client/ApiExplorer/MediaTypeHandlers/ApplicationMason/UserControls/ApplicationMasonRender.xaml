@@ -142,7 +142,7 @@
               <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
             </i:EventTrigger>
           </i:Interaction.Triggers>
-          <TextBlock Text="{Binding Name, StringFormat='{}{0}: '}"/>
+          <TextBlock Text="{Binding Name}"/>
         </Hyperlink>
       </TextBlock>
     </DataTemplate>
