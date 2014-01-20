@@ -87,9 +87,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="MediaTypeHandlers\ApplicationMason\ApplicationMasonMediaTypeHandler.cs" />
-    <Compile Include="MediaTypeHandlers\ApplicationMason\Dialogs\VoidActionPopupDialog.xaml.cs">
-      <DependentUpon>VoidActionPopupDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MediaTypeHandlers\ApplicationMason\UserControls\ApplicationMasonRender.xaml.cs">
       <DependentUpon>ApplicationMasonRender.xaml</DependentUpon>
     </Compile>
@@ -115,12 +112,6 @@
       <DependentUpon>UrlTemplateRender.xaml</DependentUpon>
     </Compile>
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\VoidActionViewModel.cs" />
-    <Compile Include="MediaTypeHandlers\ApplicationMason\Dialogs\JsonActionPopupDialog.xaml.cs">
-      <DependentUpon>JsonActionPopupDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MediaTypeHandlers\ApplicationMason\Dialogs\MultipartJsonActionPopupDialog.xaml.cs">
-      <DependentUpon>MultipartJsonActionPopupDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MediaTypeHandlers\ApplicationMason\Dialogs\UrlTemplatePopupDialog.xaml.cs">
       <DependentUpon>UrlTemplatePopupDialog.xaml</DependentUpon>
     </Compile>
@@ -162,10 +153,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MediaTypeHandlers\ApplicationMason\Dialogs\VoidActionPopupDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MediaTypeHandlers\ApplicationMason\UserControls\ApplicationMasonRender.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -179,14 +166,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MediaTypeHandlers\ApplicationMason\UserControls\UrlTemplateRender.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MediaTypeHandlers\ApplicationMason\Dialogs\JsonActionPopupDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MediaTypeHandlers\ApplicationMason\Dialogs\MultipartJsonActionPopupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

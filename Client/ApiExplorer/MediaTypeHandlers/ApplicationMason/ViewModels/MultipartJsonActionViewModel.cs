@@ -1,5 +1,6 @@
 ﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.Dialogs;
 using ApiExplorer.ViewModels;
+using ApiExplorer.Windows;
 using Newtonsoft.Json.Linq;
 using System.Windows;
 
@@ -39,9 +40,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     protected override void OpenAction(object sender)
     {
       Publish(new MasonViewModel.SourceChangedEventArgs { Source = JsonValue.ToString() });
-      MultipartJsonActionPopupDialog w = new MultipartJsonActionPopupDialog(this);
-      w.Owner = Window.GetWindow(sender as DependencyObject);
-      w.ShowDialog();
+
+      Window w = Window.GetWindow(sender as DependencyObject);
+      string title = Description ?? "JSON+Files Action";
+      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, JsonText, "multipart/forms");
     }
 
     #endregion
