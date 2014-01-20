@@ -34,13 +34,25 @@ namespace ApiExplorer.Windows
     }
 
 
-    public static void OpenComposerWindow(Window owner, ViewModel parent, string method, string url)
+    public static void OpenComposerWindow(
+      Window owner, 
+      ViewModel parent, 
+      string method, 
+      string url, 
+      string windowTitle = null, 
+      string body = null,
+      string contentType = null)
     {
       ComposerViewModel vm = new ComposerViewModel(parent);
       if (method != null)
         vm.Method = method;
       if (url != null)
         vm.Url = url;
+      if (body != null)
+        vm.Body = body;
+      if (contentType != null)
+        vm.ContentType = contentType;
+      vm.WindowTitle = windowTitle ?? "Request composer";
 
       ComposerWindow w = new ComposerWindow(vm);
       w.Owner = owner;

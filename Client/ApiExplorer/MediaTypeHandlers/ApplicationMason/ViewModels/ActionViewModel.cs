@@ -72,10 +72,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public DelegateCommand<object> OpenActionCommand { get; private set; }
 
-    public DelegateCommand<object> SubmitCommand { get; private set; }
-
-    public DelegateCommand<object> CancelCommand { get; private set; }
-
     #endregion
 
 
@@ -83,8 +79,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       : base(parent, json.Value)
     {
       RegisterCommand(OpenActionCommand = new DelegateCommand<object>(OpenAction));
-      RegisterCommand(SubmitCommand = new DelegateCommand<object>(Submit));
-      RegisterCommand(CancelCommand = new DelegateCommand<object>(Cancel));
 
       Name = json.Name;
       string method = GetValue<string>("method");
@@ -108,15 +102,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     }
 
     
-    protected void Cancel(object sender)
-    {
-      Window w = Window.GetWindow(sender as DependencyObject);
-      w.Close();
-    }
-
-    
     protected abstract void OpenAction(object obj);
-
-    protected abstract void Submit(object sender);
   }
 }

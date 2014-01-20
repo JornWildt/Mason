@@ -3,16 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:axuc="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason.UserControls"
         xmlns:axu="clr-namespace:ApiExplorer.Utilities"
-        Title="Request composer" Height="500" Width="600"
+        xmlns:vc="clr-namespace:ApiExplorer.ValueConverters"
+        Title="{Binding WindowTitle}" Height="500" Width="600"
         WindowStartupLocation="CenterOwner">
   <Grid Margin="10">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="2*"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="3*"/>
+      <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
     
@@ -23,12 +21,8 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
       <ComboBox Grid.Column="0" Width="100" Margin="0 0 4 0" Name="MethodInput"
-                Text="{Binding Method}" IsEditable="True">
-        <ComboBoxItem Content="GET"/>
-        <ComboBoxItem Content="POST"/>
-        <ComboBoxItem Content="PUT"/>
-        <ComboBoxItem Content="DELETE"/>
-        <ComboBoxItem Content="PATCH"/>
+                Text="{Binding Method}" IsEditable="True"
+                ItemsSource="{Binding Methods}" SelectedValuePath="Name" DisplayMemberPath="Name">
       </ComboBox>
       <TextBox Grid.Column="1" Text="{Binding Url}"/>
     </Grid>
@@ -50,20 +44,29 @@
       </ComboBox>
     </Grid>
     
-    <!-- Headers -->
-    <TextBlock Grid.Row="2" Text="Headers"/>
-    <TextBox Grid.Row="3" Text="{Binding Headers}"
+    <TabControl Grid.Row="2" Margin="0 4 0 0">
+      <TabItem Header="Body">
+        <!-- Body -->
+        <Grid>
+          <TextBox Text="{Binding Body}"
+                   TextWrapping="NoWrap" AcceptsReturn="True"
+                   HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                   Visibility="{Binding MethodAllowsContent, Converter={vc:BoolToVisibilityConverter}}"/>
+          <TextBlock Text="No content allowed for this method"
+                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                     Visibility="{Binding MethodAllowsContent, Converter={vc:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>
+        </Grid>
+      </TabItem>
+      <TabItem Header="Headers">
+        <!-- Headers -->
+        <TextBox Text="{Binding Headers}"
              TextWrapping="NoWrap" AcceptsReturn="True"
              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
-
-    <!-- Body -->
-    <TextBlock Grid.Row="4" Text="Body"/>
-    <TextBox Grid.Row="5" Text="{Binding Body}"
-             TextWrapping="NoWrap" AcceptsReturn="True"
-             HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
+      </TabItem>
+    </TabControl>
     
     <!-- Buttons -->
-    <StackPanel Grid.Row="6" Orientation="Horizontal">
+    <StackPanel Grid.Row="3" Orientation="Horizontal">
       <Button Content="Execute" Command="{Binding ExecuteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource self}}"
               IsDefault="True" Margin="0 4 0 0"/>
       <Button Content="Cancel" IsCancel="True" Margin="6 4 0 0"/>

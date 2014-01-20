@@ -1,6 +1,7 @@
 ﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.Dialogs;
 using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
+using ApiExplorer.Windows;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Ramone;
@@ -81,31 +82,9 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         }
       }
 
-      JsonActionPopupDialog d = new JsonActionPopupDialog(this);
-      d.Owner = Window.GetWindow(sender as DependencyObject);
-      d.ShowDialog();
-    }
-
-
-    protected override void Submit(object sender)
-    {
-      ISession session = RamoneServiceManager.Service.NewSession();
-
-      Request req =
-        session.Bind(HRef)
-               .AsJson()
-               .Body(JsonText)
-               .Method("POST");
-
       Window w = Window.GetWindow(sender as DependencyObject);
-
-      Publish(new ExecuteWebRequestEventArgs { Request = req, OnSuccess = (r => HandleSuccess(r, w)) });
-    }
-
-
-    private void HandleSuccess(Response r, Window w)
-    {
-      w.Close();
+      string title = Description ?? "JSON Action";
+      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, JsonText, "application/json");
     }
 
     #endregion

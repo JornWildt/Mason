@@ -3,6 +3,7 @@ using Microsoft.Practices.Composite.Presentation.Commands;
 using Ramone;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,31 @@ namespace ApiExplorer.ViewModels
 {
   public class ComposerViewModel : ViewModel
   {
+    public class MethodDefinition
+    {
+      public string Name { get; set; }
+      public bool AllowContent { get; set; }
+    }
+
+    
     #region UI properties
+
+    private string _windowTitle;
+    public string WindowTitle
+    {
+      get { return _windowTitle; }
+      set
+      {
+        if (value != _windowTitle)
+        {
+          _windowTitle = value;
+          OnPropertyChanged("WindowTitle");
+        }
+      }
+    }
+
+
+    public ObservableCollection<MethodDefinition> Methods { get; set; }
 
     private string _method;
     public string Method
@@ -24,7 +49,18 @@ namespace ApiExplorer.ViewModels
         {
           _method = value;
           OnPropertyChanged("Method");
+          OnPropertyChanged("MethodAllowsContent");
         }
+      }
+    }
+
+
+    public bool MethodAllowsContent
+    {
+      get
+      {
+        MethodDefinition def = Methods.Where(m => m.Name == Method).FirstOrDefault();
+        return def == null || def.AllowContent;
       }
     }
 
@@ -104,6 +140,14 @@ namespace ApiExplorer.ViewModels
     {
       RegisterCommand(ExecuteCommand = new DelegateCommand<FrameworkElement>(Execute));
       Url = "";
+      Methods = new ObservableCollection<MethodDefinition>
+      {
+        new MethodDefinition { Name = "GET", AllowContent = false },
+        new MethodDefinition { Name = "POST", AllowContent = true },
+        new MethodDefinition { Name = "PUT", AllowContent = true },
+        new MethodDefinition { Name = "DELETE", AllowContent = false },
+        new MethodDefinition { Name = "PATCH", AllowContent = true }
+      };
     }
 
 
