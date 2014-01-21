@@ -41,8 +41,8 @@
         <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-      <TextBlock Grid.Row="0" Grid.Column="0" Text="Type" Margin="0 0 4 0" Width="100"/>
-      <ComboBox Grid.Row="0" Grid.Column="1" Name="TypeInput" Margin="0 4 0 0" 
+      <TextBlock Grid.Row="0" Grid.Column="0" Text="Type" Margin="0 0 4 0" Width="100" VerticalAlignment="Center"/>
+      <ComboBox Grid.Row="0" Grid.Column="1" Name="TypeInput" Margin="0 4 0 0" VerticalAlignment="Center"
                 ItemsSource="{Binding Types}"
                 SelectedItem="{Binding SelectedType}"/>
     </Grid>

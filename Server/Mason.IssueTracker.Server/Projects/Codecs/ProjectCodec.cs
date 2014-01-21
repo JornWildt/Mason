@@ -36,6 +36,8 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
 
       Uri addIssueSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-issue" });
       Net.Action addIssueAction = new Net.Action("is:add-issue", MasonProperties.ActionTypes.JSONFiles, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
+      addIssueAction.jsonFile = "issue";
+      addIssueAction.AddFile("attachment", "Attachment for issue");
       p.AddAction(addIssueAction);
 
       Net.Action deleteAction = new Net.Action("is:delete-project", MasonProperties.ActionTypes.Void, selfUri, "Delete project", method: "DELETE");

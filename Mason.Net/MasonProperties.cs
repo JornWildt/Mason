@@ -27,6 +27,14 @@
       public const string Void = "void";
     }
 
+    public static class ActionProperties
+    {
+      public const string JsonFile = "jsonFile";
+      public const string Files = "files";
+      public const string Files_Name = "name";
+      public const string Files_Description = "description";
+    }
+
     public static class ErrorProperties
     {
       public const string Id = Prefix + "id";

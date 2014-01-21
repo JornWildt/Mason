@@ -1,8 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 
 
 namespace Mason.Net
 {
+  public class ActionFile
+  {
+    public string name { get; set; }
+
+    public string description { get; set; }
+  }
+
+
   public class Action
   {
     public string name { get; set; }
@@ -21,6 +30,10 @@ namespace Mason.Net
 
     public object template { get; set; }
 
+    public string jsonFile { get; set; }
+
+    public List<ActionFile> files { get; set; }
+
 
     public Action(string name, string type, Uri href, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
     {
@@ -32,6 +45,16 @@ namespace Mason.Net
       this.schemaUrl = (schemaUrl != null ? schemaUrl.AbsoluteUri : null);
       this.template = template;
       this.method = method;
+    }
+
+
+    public void AddFile(string name, string description)
+    {
+      if (files == null)
+        files = new List<ActionFile>();
+
+      ActionFile file = new ActionFile { name = name, description = description };
+      files.Add(file);
     }
   }
 }

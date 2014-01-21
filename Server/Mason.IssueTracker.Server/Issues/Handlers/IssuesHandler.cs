@@ -35,12 +35,12 @@ namespace Mason.IssueTracker.Server.Issues.Handlers
     }
 
 
-    public object Post(int id, CreateIssueArgs args, IFile file)
+    public object Post(int id, CreateIssueArgs issue, IFile attachment)
     {
       return ExecuteInUnitOfWork(() =>
       {
         Project p = ProjectRepository.Get(id);
-        Issue i = new Issue(p, args.Title, args.Description, args.Severity);
+        Issue i = new Issue(p, issue.Title, issue.Description, issue.Severity);
         IssueRepository.Add(i);
 
         Uri issueUrl = typeof(IssueResource).CreateUri(new { id = i.Id });

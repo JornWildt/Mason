@@ -41,7 +41,8 @@ namespace ApiExplorer.Windows
       string url, 
       string windowTitle = null, 
       string body = null,
-      string actionType = null)
+      string actionType = null,
+      Action<ComposerViewModel> modifier = null)
     {
       ComposerViewModel vm = new ComposerViewModel(parent);
       if (method != null)
@@ -53,6 +54,9 @@ namespace ApiExplorer.Windows
       if (actionType != null)
         vm.SelectedType = actionType;
       vm.WindowTitle = windowTitle ?? "Request composer";
+
+      if (modifier != null)
+        modifier(vm);
 
       ComposerWindow w = new ComposerWindow(vm);
       w.Owner = owner;

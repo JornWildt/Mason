@@ -153,6 +153,8 @@ namespace ApiExplorer.ViewModels
 
     #endregion
 
+    public string JsonFilename { get; set; }
+
 
     public ComposerViewModel(ViewModel parent)
       : base(parent)
@@ -173,10 +175,6 @@ namespace ApiExplorer.ViewModels
       Types.Add(MasonProperties.ActionTypes.Void);
       SelectedType = MasonProperties.ActionTypes.JSON;
       Files = new ObservableCollection<ComposerFileViewModel>();
-      Files.Add(new ComposerFileViewModel(this) { Name = "file", Description = "Select file 1" });
-      Files.Add(new ComposerFileViewModel(this) { Name = "file2", Description = "Select file 2" });
-      Files.Add(new ComposerFileViewModel(this) { Name = "file3", Description = "Select file 3" });
-      Files.Add(new ComposerFileViewModel(this) { Name = "file4", Description = "Select file 4" });
     }
 
 
@@ -227,14 +225,15 @@ namespace ApiExplorer.ViewModels
         req.AsJson();
         req.Body(Body);
       }
-      else if (SelectedType == MasonProperties.ActionTypes.JSONFiles && Body != null)
+      else if (SelectedType == MasonProperties.ActionTypes.JSONFiles)
       {
         req.AsMultipartFormData();
         Hashtable files = new Hashtable();
-        files["args"] = new Ramone.IO.StringFile { Filename = "args", ContentType = "application/json", Data = Body };
+        if (Body != null && !string.IsNullOrEmpty(JsonFilename))
+          files[JsonFilename] = new Ramone.IO.StringFile { Filename = JsonFilename, ContentType = "application/json", Data = Body };
         foreach (ComposerFileViewModel file in Files)
         {
-          if (!string.IsNullOrEmpty(file.Filename) && System.IO.File.Exists(file.Filename))
+          if (!string.IsNullOrEmpty(file.Name) && !string.IsNullOrEmpty(file.Filename) && System.IO.File.Exists(file.Filename))
             files[file.Name] = new Ramone.IO.File(file.Filename);
         }
         req.Body(files);
