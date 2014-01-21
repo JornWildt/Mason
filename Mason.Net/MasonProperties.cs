@@ -23,7 +23,7 @@
     public static class ActionTypes
     {
       public const string JSON = "json";
-      public const string JSONFiles = "json-files";
+      public const string JSONFiles = "json+files";
       public const string Void = "void";
     }
 

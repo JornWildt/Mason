@@ -2,6 +2,7 @@
 using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
 using ApiExplorer.Windows;
+using Mason.Net;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Ramone;
@@ -30,6 +31,9 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     }
 
     #endregion
+
+
+    protected virtual string ActionType { get { return MasonProperties.ActionTypes.JSON; } }
 
 
     public JsonActionViewModel(ViewModel parent, JProperty action)
@@ -84,7 +88,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Window w = Window.GetWindow(sender as DependencyObject);
       string title = Description ?? "JSON Action";
-      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, JsonText, "application/json");
+      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, JsonText, actionType: ActionType);
     }
 
     #endregion

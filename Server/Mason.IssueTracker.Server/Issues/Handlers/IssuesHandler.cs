@@ -2,6 +2,7 @@
 using Mason.IssueTracker.Server.Domain.Issues;
 using Mason.IssueTracker.Server.Domain.Projects;
 using Mason.IssueTracker.Server.Issues.Resources;
+using OpenRasta.IO;
 using OpenRasta.Web;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace Mason.IssueTracker.Server.Issues.Handlers
     }
 
 
-    public object Post(int id, CreateIssueArgs args)
+    public object Post(int id, CreateIssueArgs args, IFile file)
     {
       return ExecuteInUnitOfWork(() =>
       {

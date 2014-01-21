@@ -1,7 +1,9 @@
 ﻿using ApiExplorer.Utilities;
+using Mason.Net;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Ramone;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -48,8 +50,7 @@ namespace ApiExplorer.ViewModels
         if (value != _method)
         {
           _method = value;
-          OnPropertyChanged("Method");
-          OnPropertyChanged("MethodAllowsContent");
+          OnPropertyChanged(null);
         }
       }
     }
@@ -75,21 +76,6 @@ namespace ApiExplorer.ViewModels
         {
           _url = value;
           OnPropertyChanged("Url");
-        }
-      }
-    }
-
-
-    private string _contentType;
-    public string ContentType
-    {
-      get { return _contentType; }
-      set
-      {
-        if (value != _contentType)
-        {
-          _contentType = value;
-          OnPropertyChanged("ContentType");
         }
       }
     }
@@ -125,6 +111,39 @@ namespace ApiExplorer.ViewModels
     }
 
 
+    public ObservableCollection<string> Types { get; set; }
+
+
+    private string _selectedType;
+    public string SelectedType
+    {
+      get { return _selectedType; }
+      set
+      {
+        if (value != _selectedType)
+        {
+          _selectedType = value;
+          OnPropertyChanged(null);
+        }
+      }
+    }
+
+
+    public bool ShowTextEditor
+    {
+      get { return SelectedType == MasonProperties.ActionTypes.JSON && MethodAllowsContent; }
+    }
+
+
+    public bool ShowTextEditorWithFiles
+    {
+      get { return SelectedType == MasonProperties.ActionTypes.JSONFiles && MethodAllowsContent; }
+    }
+
+
+    public ObservableCollection<ComposerFileViewModel> Files { get; set; }
+
+
     #endregion
 
 
@@ -148,6 +167,16 @@ namespace ApiExplorer.ViewModels
         new MethodDefinition { Name = "DELETE", AllowContent = false },
         new MethodDefinition { Name = "PATCH", AllowContent = true }
       };
+      Types = new ObservableCollection<string>();
+      Types.Add(MasonProperties.ActionTypes.JSON);
+      Types.Add(MasonProperties.ActionTypes.JSONFiles);
+      Types.Add(MasonProperties.ActionTypes.Void);
+      SelectedType = MasonProperties.ActionTypes.JSON;
+      Files = new ObservableCollection<ComposerFileViewModel>();
+      Files.Add(new ComposerFileViewModel(this) { Name = "file", Description = "Select file 1" });
+      Files.Add(new ComposerFileViewModel(this) { Name = "file2", Description = "Select file 2" });
+      Files.Add(new ComposerFileViewModel(this) { Name = "file3", Description = "Select file 3" });
+      Files.Add(new ComposerFileViewModel(this) { Name = "file4", Description = "Select file 4" });
     }
 
 
@@ -193,11 +222,23 @@ namespace ApiExplorer.ViewModels
         }
       }
 
-      if (ContentType != null)
-        req.ContentType(ContentType);
-
-      if (Body != null)
+      if (SelectedType == MasonProperties.ActionTypes.JSON && Body != null)
+      {
+        req.AsJson();
         req.Body(Body);
+      }
+      else if (SelectedType == MasonProperties.ActionTypes.JSONFiles && Body != null)
+      {
+        req.AsMultipartFormData();
+        Hashtable files = new Hashtable();
+        files["args"] = new Ramone.IO.StringFile { Filename = "args", ContentType = "application/json", Data = Body };
+        foreach (ComposerFileViewModel file in Files)
+        {
+          if (!string.IsNullOrEmpty(file.Filename) && System.IO.File.Exists(file.Filename))
+            files[file.Name] = new Ramone.IO.File(file.Filename);
+        }
+        req.Body(files);
+      }
 
       Window w = Window.GetWindow(sender as DependencyObject);
 

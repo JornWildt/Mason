@@ -1,0 +1,8 @@
+﻿<UserControl x:Class="ApiExplorer.UserControls.RequestEditors.TextEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vc="clr-namespace:ApiExplorer.ValueConverters">
+  <TextBox Text="{Binding Body}"
+           TextWrapping="NoWrap" AcceptsReturn="True"
+           HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
+</UserControl>

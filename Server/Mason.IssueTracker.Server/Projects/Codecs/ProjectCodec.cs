@@ -31,11 +31,11 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       Link issuesLink = new Link("is:issues", issuesUrl, "All issues in project");
       p.AddLink(issuesLink);
 
-      Net.Action updateAction = new Net.Action("is:update-project", "json", selfUri, "Update project details", template: updateTemplate);
+      Net.Action updateAction = new Net.Action("is:update-project", MasonProperties.ActionTypes.JSON, selfUri, "Update project details", template: updateTemplate);
       p.AddAction(updateAction);
 
       Uri addIssueSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-issue" });
-      Net.Action addIssueAction = new Net.Action("is:add-issue", "json", issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
+      Net.Action addIssueAction = new Net.Action("is:add-issue", MasonProperties.ActionTypes.JSONFiles, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
       p.AddAction(addIssueAction);
 
       Net.Action deleteAction = new Net.Action("is:delete-project", MasonProperties.ActionTypes.Void, selfUri, "Delete project", method: "DELETE");

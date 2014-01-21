@@ -40,6 +40,8 @@ namespace Mason.IssueTracker.Server.Issues
       ResourceSpace.Has.ResourcesOfType<CreateIssueArgs>()
         .WithoutUri
         .TranscodedBy<JsonReader<CreateIssueArgs>>();
+
+      ResourceSpace.Uses.CustomDependency<JsonReader<CreateIssueArgs>, JsonReader<CreateIssueArgs>>(DependencyLifetime.Transient);
     }
   }
 }

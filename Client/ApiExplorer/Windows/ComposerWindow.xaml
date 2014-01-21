@@ -4,6 +4,7 @@
         xmlns:axuc="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason.UserControls"
         xmlns:axu="clr-namespace:ApiExplorer.Utilities"
         xmlns:vc="clr-namespace:ApiExplorer.ValueConverters"
+        xmlns:req="clr-namespace:ApiExplorer.UserControls.RequestEditors"
         Title="{Binding WindowTitle}" Height="500" Width="600"
         WindowStartupLocation="CenterOwner">
   <Grid Margin="10">
@@ -24,7 +25,11 @@
                 Text="{Binding Method}" IsEditable="True"
                 ItemsSource="{Binding Methods}" SelectedValuePath="Name" DisplayMemberPath="Name">
       </ComboBox>
-      <TextBox Grid.Column="1" Text="{Binding Url}"/>
+      <TextBox Grid.Column="1" Text="{Binding Url}">
+        <axu:WatermarkService.Watermark>
+          <TextBlock>Enter request URL</TextBlock>
+        </axu:WatermarkService.Watermark>
+      </TextBox>
     </Grid>
     
     <!-- Specific headers -->
@@ -36,22 +41,18 @@
         <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-      <TextBlock Grid.Row="0" Grid.Column="0" Text="Content-Type" Margin="0 0 4 0" Width="100"/>
-      <ComboBox Grid.Row="0" Grid.Column="1" Name="ContentTypeInput" Margin="0 4 0 0" 
-                Text="{Binding ContentType}" IsEditable="True">
-        <ComboBoxItem Content="application/json"/>
-        <ComboBoxItem Content="application/json-patch+json"/>
-      </ComboBox>
+      <TextBlock Grid.Row="0" Grid.Column="0" Text="Type" Margin="0 0 4 0" Width="100"/>
+      <ComboBox Grid.Row="0" Grid.Column="1" Name="TypeInput" Margin="0 4 0 0" 
+                ItemsSource="{Binding Types}"
+                SelectedItem="{Binding SelectedType}"/>
     </Grid>
     
     <TabControl Grid.Row="2" Margin="0 4 0 0">
       <TabItem Header="Body">
         <!-- Body -->
         <Grid>
-          <TextBox Text="{Binding Body}"
-                   TextWrapping="NoWrap" AcceptsReturn="True"
-                   HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
-                   Visibility="{Binding MethodAllowsContent, Converter={vc:BoolToVisibilityConverter}}"/>
+          <req:TextEditor Visibility="{Binding ShowTextEditor, Converter={vc:BoolToVisibilityConverter}}"/>
+          <req:TextWithFilesEditor Visibility="{Binding ShowTextEditorWithFiles, Converter={vc:BoolToVisibilityConverter}}"/>
           <TextBlock Text="No content allowed for this method"
                      VerticalAlignment="Center" HorizontalAlignment="Center"
                      Visibility="{Binding MethodAllowsContent, Converter={vc:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>

@@ -134,6 +134,7 @@ namespace ApiExplorer.ViewModels
       //Url = "http://localhost/mason-demo/resource-common";
       //Url = "http://localhost/mason-demo/contact";
       Url = "http://localhost/mason-demo/projects/1";
+      //Url = "http://jorn-pc/mason-demo/projects/1/issues";
     }
 
 

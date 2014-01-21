@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="ApiExplorer.UserControls.RequestEditors.TextWithFilesEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vc="clr-namespace:ApiExplorer.ValueConverters">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="2*"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <TextBox Grid.Row="0" Text="{Binding Body}"
+             TextWrapping="NoWrap" AcceptsReturn="True"
+             HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+             Visibility="{Binding MethodAllowsContent, Converter={vc:BoolToVisibilityConverter}}"/>
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                  Visibility="{Binding MethodAllowsContent, Converter={vc:BoolToVisibilityConverter}}">
+      <ItemsControl ItemsSource="{Binding Files}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <DockPanel LastChildFill="True" Margin="0 4 0 0">
+              <TextBlock DockPanel.Dock="Top" Text="{Binding Description}" Style="{StaticResource ResourceKey=Description}"/>
+              <Button DockPanel.Dock="Left" Content="Choose file" Margin="0 0 4 0"
+                      Command="{Binding SelectFileCommand}"
+                      CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+              <TextBox DockPanel.Dock="Left" Text="{Binding Filename}" IsReadOnly="True"/>
+            </DockPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </Grid>
+</UserControl>
