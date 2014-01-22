@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using Ramone;
-using ApiExplorer.Utilities;
-using System.Collections;
-using System.IO;
-using ApiExplorer.Windows;
+﻿using System.Windows;
+using System.Windows.Threading;
+using log4net;
 
 
 namespace ApiExplorer
@@ -19,8 +10,21 @@ namespace ApiExplorer
   /// </summary>
   public partial class App : Application
   {
+    static ILog Logger = LogManager.GetLogger(typeof(App));
+
     protected override void OnStartup(StartupEventArgs e)
     {
+      log4net.Config.XmlConfigurator.Configure();
+      Logger.Info("******************************************************************");
+      Logger.Info("Starting ApiExplorer");
+      Logger.Info("******************************************************************");
+
+      Application.Current.DispatcherUnhandledException += OnDispatcherUnhandledException;
+    }
+
+    private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+      Logger.Fatal("Unhandled exception", e.Exception);
     }
   }
 }
