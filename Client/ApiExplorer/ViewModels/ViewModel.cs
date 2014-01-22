@@ -17,7 +17,7 @@ namespace ApiExplorer.ViewModels
       Parent = parent;
       OwnerWindow = owner;
       if (Parent != null)
-        Parent.RegisterChildViewModel(this);
+        Parent.AddChildViewModel(this);
       Events = new EventAggregator();
     }
 
@@ -42,15 +42,28 @@ namespace ApiExplorer.ViewModels
     private IList<ViewModel> ChildViewModels = new List<ViewModel>();
 
 
-    protected void RegisterChildViewModel(ViewModel viewModel)
+    protected void AddChildViewModel(ViewModel vm)
     {
-      ChildViewModels.Add(viewModel);
+      ChildViewModels.Add(vm);
+    }
+
+
+    protected void RemoveChildViewModel(ViewModel vm)
+    {
+      ChildViewModels.Remove(vm);
     }
 
 
     protected void ClearChildViewModels()
     {
       ChildViewModels.Clear();
+    }
+
+
+    public void RemoveFromParent()
+    {
+      if (Parent != null)
+        Parent.RemoveChildViewModel(this);
     }
 
     #endregion
