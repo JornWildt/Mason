@@ -39,8 +39,8 @@ namespace ApiExplorer.ViewModels
     #endregion
 
 
-    public MainViewModel()
-      : base(null)
+    public MainViewModel(Window owner)
+      : base(null, owner)
     {
       Explorer = new ExplorerViewModel(this);
       Title = "API Explorer";

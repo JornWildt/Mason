@@ -113,7 +113,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       }
       catch (Exception ex)
       {
-        MessageBox.Show("Failed to read URL template: " + ex.Message);
+        MessageBox.Show(GetOwnerWindow(), "Failed to read URL template: " + ex.Message);
       }
     }
 

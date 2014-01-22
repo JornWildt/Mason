@@ -5,15 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows;
 
 
 namespace ApiExplorer.ViewModels
 {
   public class ViewModel : INotifyPropertyChanged
   {
-    public ViewModel(ViewModel parent)
+    public ViewModel(ViewModel parent, Window owner = null)
     {
       Parent = parent;
+      OwnerWindow = owner;
       if (Parent != null)
         Parent.RegisterChildViewModel(this);
       Events = new EventAggregator();
@@ -97,6 +99,24 @@ namespace ApiExplorer.ViewModels
       PropertyChangedEventHandler handler = PropertyChanged;
       if (handler != null)
         handler(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    #endregion
+
+
+    #region Window handling
+
+    private Window OwnerWindow { get; set; }
+
+
+    protected Window GetOwnerWindow()
+    {
+      if (OwnerWindow != null)
+        return OwnerWindow;
+      if (Parent != null)
+        return Parent.GetOwnerWindow();
+
+      throw new InvalidOperationException("No Window supplied in any parent ViewModel");
     }
 
     #endregion

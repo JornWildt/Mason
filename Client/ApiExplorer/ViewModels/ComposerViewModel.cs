@@ -186,13 +186,13 @@ namespace ApiExplorer.ViewModels
       }
       catch (Exception)
       {
-        MessageBox.Show("Invalid URL");
+        MessageBox.Show(GetOwnerWindow(), "Invalid URL");
         return;
       }
 
       if (string.IsNullOrEmpty(Method))
       {
-        MessageBox.Show("Missing HTTP method");
+        MessageBox.Show(GetOwnerWindow(), "Missing HTTP method");
         return;
       }
 

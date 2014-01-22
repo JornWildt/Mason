@@ -174,7 +174,7 @@ namespace ApiExplorer.ViewModels
       }
       catch (Exception ex)
       {
-        MessageBox.Show(ex.Message, "Failed to setup request");
+        MessageBox.Show(GetOwnerWindow(), ex.Message, "Failed to setup request");
       }
     }
 
@@ -222,7 +222,7 @@ namespace ApiExplorer.ViewModels
             args.OnFailure(err.Response);
 
           RenderResponse(err.Response);
-          MessageBox.Show(err.Exception.Message);
+          MessageBox.Show(GetOwnerWindow(), err.Exception.Message);
         });
     }
 

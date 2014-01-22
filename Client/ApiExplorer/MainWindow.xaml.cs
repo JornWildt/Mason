@@ -13,7 +13,7 @@ namespace ApiExplorer
     {
       InitializeComponent();
 
-      MainViewModel vm = new MainViewModel();
+      MainViewModel vm = new MainViewModel(this);
       DataContext = vm;
     }
   }
