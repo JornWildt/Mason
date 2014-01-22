@@ -39,6 +39,7 @@ namespace Mason.IssueTracker.Server.Issues.Handlers
     }
 
 
+    // "id" is project ID
     public object Post(int id, CreateIssueArgs issue, IFile attachment)
     {
       return ExecuteInUnitOfWork(() =>
@@ -48,11 +49,14 @@ namespace Mason.IssueTracker.Server.Issues.Handlers
         Issue i = new Issue(p, issue.Title, issue.Description, issue.Severity);
         IssueRepository.Add(i);
 
-        using (Stream s = attachment.OpenStream())
+        if (issue.Attachment != null)
         {
-          byte[] content = s.ReadAllBytes();
-          Attachment att = new Attachment(i, attachment.FileName, content, attachment.ContentType.MediaType);
-          AttachmentRepository.Add(att);
+          using (Stream s = attachment.OpenStream())
+          {
+            byte[] content = s.ReadAllBytes();
+            Attachment att = new Attachment(i, issue.Attachment.Title, issue.Attachment.Description, content, attachment.ContentType.MediaType);
+            AttachmentRepository.Add(att);
+          }
         }
 
         Uri issueUrl = typeof(IssueResource).CreateUri(new { id = i.Id });

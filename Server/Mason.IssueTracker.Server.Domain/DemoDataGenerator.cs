@@ -32,7 +32,11 @@ Chris", 3);
       issueRepository.Add(i);
 
       string errorReport = "To be done ...";
-      Attachment att = new Attachment(i, "Error report", Encoding.UTF8.GetBytes(errorReport), "text/plain");
+      Attachment att = new Attachment(i, "Error report", "Error report from end user", Encoding.UTF8.GetBytes(errorReport), "text/plain");
+      attachmentRepository.Add(att);
+
+      string logFile = "DEBUG 2014-01-22 15:45:07,610 166033ms  [9] Log4NetTraceListener   WriteLine          - Executing OperationResult OperationResult: type=OK, statusCode=200.";
+      att = new Attachment(i, "Logfile", "Logfile with server stack trace", Encoding.UTF8.GetBytes(logFile), "text/plain");
       attachmentRepository.Add(att);
 
       i = new Issue(p, "Incorrect AssemblyVersion", @"I have been having some problems with missing method exceptions from Json.Net 5.0.8 for methods that were added in v5, but only on some machines. It seemed the .net framework kept picking up the wrong Json dll.

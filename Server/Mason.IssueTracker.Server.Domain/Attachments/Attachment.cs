@@ -15,6 +15,8 @@ namespace Mason.IssueTracker.Server.Domain.Attachments
 
     public virtual string Title { get; protected set; }
 
+    public virtual string Description { get; protected set; }
+
     public virtual byte[] Content { get; protected set; }
     
     public virtual string ContentType { get; protected set; }
@@ -29,23 +31,25 @@ namespace Mason.IssueTracker.Server.Domain.Attachments
     }
 
 
-    public Attachment(Issue owner, string title, byte[] content, string contentType)
+    public Attachment(Issue owner, string title, string description, byte[] content, string contentType)
     {
       Condition.Requires(owner, "owner").IsNotNull();
       OwnerIssue = owner;
-      Update(title, content, contentType);
+      Update(title, description, content, contentType);
       CreatedDate = DateTime.Now;
     }
 
 
-    public virtual void Update(string title, byte[] content, string contentType)
+    public virtual void Update(string title, string description, byte[] content, string contentType)
     {
       ErrorHandling.ValidateInput(
         () => Condition.Requires(title, "title").IsNotNullOrWhiteSpace().IsNotLongerThan(255),
+        () => Condition.Requires(description, "description").IsNotNull(),
         () => Condition.Requires(content, "content").IsNotNull().IsNotLongerThan(MaxContentLength),
         () => Condition.Requires(contentType, "contentType").IsNotNullOrWhiteSpace());
 
       Title = title;
+      Description = description;
       Content = content;
       ContentType = contentType;
       ContentLength = content.Length;

@@ -11,9 +11,11 @@ namespace Mason.AttachmentTracker.Server.Domain.NHibernate.Attachments
       Id(a => a.Id);
       References(a => a.OwnerIssue).Column("Issue_Id");
       Map(a => a.Title).CustomType("AnsiString").Length(255);
+      Map(a => a.Description);
       Map(a => a.Content);
       Map(a => a.ContentType);
       Map(a => a.ContentLength);
+      Map(a => a.CreatedDate);
     }
   }
 }

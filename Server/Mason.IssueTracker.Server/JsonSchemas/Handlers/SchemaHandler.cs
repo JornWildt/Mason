@@ -10,6 +10,11 @@ namespace Mason.IssueTracker.Server.JsonSchemas.Handlers
   {
     public object Get(string name)
     {
+      if (name != null && name.EndsWith(".txt"))
+        name = name.Substring(0, name.Length - 4);
+      else if (name != null && name.EndsWith(".json"))
+        name = name.Substring(0, name.Length - 5);
+
       if (name == "create-project")
         return new SchemaTypeResource { SchemaType = typeof(CreateProjectArgs) };
       else if (name == "create-issue")

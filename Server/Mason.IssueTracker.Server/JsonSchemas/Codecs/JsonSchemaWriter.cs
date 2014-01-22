@@ -10,8 +10,8 @@ using System.Reflection;
 
 namespace Mason.IssueTracker.Server.JsonSchemas.Codecs
 {
-  //[MediaType("application/schema+json;q=1")]
   [MediaType("application/json;q=0.9", ".json")]
+  [MediaType("application/schema+json;q=0.8")]
   [MediaType("text/plain;q=0.1", ".txt")]
   public class JsonSchemaWriter : IMediaTypeWriter
   {
@@ -30,20 +30,26 @@ namespace Mason.IssueTracker.Server.JsonSchemas.Codecs
 
       using (StreamWriter sw = new StreamWriter(response.Stream))
       {
-        sw.WriteLine("{");
-        sw.WriteLine("title: \"Schema\",");
-        sw.WriteLine("type: \"object\",");
-        sw.WriteLine("properties: {");
-        Write(sw, t);
-        sw.WriteLine("\n}");
-        sw.WriteLine("\n}");
+        WriteSchema(sw, t);
       }
     }
 
     #endregion
 
 
-    private void Write(StreamWriter sw, Type t)
+    private void WriteSchema(StreamWriter sw, Type t)
+    {
+      sw.WriteLine("{");
+      sw.WriteLine("\"title\": \"Schema\",");
+      sw.WriteLine("\"type\": \"object\",");
+      sw.WriteLine("\"properties\": {");
+      WriteProperties(sw, t);
+      sw.WriteLine("\n}");
+      sw.WriteLine("\n}");
+    }
+
+
+    private void WriteProperties(StreamWriter sw, Type t)
     {
       bool first = true;
       // So far very very simpel
@@ -51,7 +57,15 @@ namespace Mason.IssueTracker.Server.JsonSchemas.Codecs
       {
         if (!first)
           sw.WriteLine(",");
-        sw.Write(string.Format("\"{0}\": {{ type: \"{1}\" }}", p.Name, GetSchemaType(p.PropertyType)));
+        string schemaType = GetSchemaType(p.PropertyType);
+        sw.Write(string.Format("\"{0}\": {{ \"type\": \"{1}\"", p.Name, schemaType));
+        if (schemaType == "object" && t.IsClass)
+        {
+          sw.WriteLine(",\n   \"properties\": {");
+          WriteProperties(sw, p.PropertyType);
+          sw.WriteLine("}");
+        }
+        sw.Write("}");
         first = false;
       }
     }

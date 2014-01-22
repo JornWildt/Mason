@@ -15,7 +15,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
     {
       Contract.Project p = new Contract.Project();
 
-      p.SetMeta(MasonProperties.MetaProperties.Title, project.Project.Title);
+      p.SetMeta(MasonProperties.MetaProperties.Title, "Project");
       p.SetMeta(MasonProperties.MetaProperties.Description, "This resource represents a single project with its data and related actions.");
 
       Uri selfUri = typeof(ProjectResource).CreateUri(new { id = project.Project.Id });
