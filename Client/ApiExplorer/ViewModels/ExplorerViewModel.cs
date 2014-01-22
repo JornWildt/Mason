@@ -185,6 +185,7 @@ namespace ApiExplorer.ViewModels
         {
           IsExecutingRequest = false;
           StatusLine = string.Format("{0} {1}", (int)r.StatusCode, r.StatusCode.ToString());
+          PreviousStatusLine = null;
 
           if (args.OnSuccess != null)
             args.OnSuccess(r);
@@ -217,6 +218,7 @@ namespace ApiExplorer.ViewModels
         {
           IsExecutingRequest = false;
           StatusLine = string.Format("{0} {1}", (int)err.Response.StatusCode, err.Response.StatusCode.ToString());
+          PreviousStatusLine = null;
 
           if (args.OnFailure != null)
             args.OnFailure(err.Response);
@@ -254,7 +256,9 @@ namespace ApiExplorer.ViewModels
 
     private void ResetUpdateStatusLine()
     {
-      StatusLine = PreviousStatusLine;
+      if (PreviousStatusLine != null)
+        StatusLine = PreviousStatusLine;
+      PreviousStatusLine = null;
     }
 
     #endregion
