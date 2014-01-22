@@ -1,4 +1,5 @@
 ﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason;
+using ApiExplorer.MediaTypeHandlers.Text;
 using ApiExplorer.MediaTypeHandlers.Unknown;
 using Ramone;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace ApiExplorer.Utilities
       UnknownMediaTypeHandler = new UnknownMediaTypeHandler("Unknown media type");
       NoContentMediaTypeHandler = new UnknownMediaTypeHandler("No content");
       RegisterHandler("application/vnd.mason", new ApplicationMasonMediaTypeHandler());
+      RegisterHandler("text/plain", new TextMediaTypeHandler());
     }
 
 

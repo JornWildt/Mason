@@ -123,6 +123,11 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\Dialogs\UrlTemplatePopupDialog.xaml.cs">
       <DependentUpon>UrlTemplatePopupDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MediaTypeHandlers\Text\TextMediaTypeHandler.cs" />
+    <Compile Include="MediaTypeHandlers\Text\UserControls\TextRender.xaml.cs">
+      <DependentUpon>TextRender.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MediaTypeHandlers\Text\ViewModels\TextViewModel.cs" />
     <Compile Include="MediaTypeHandlers\Unknown\UnknownMediaTypeHandler.cs" />
     <Compile Include="MediaTypeHandlers\Unknown\UnknownMediaTypeRender.xaml.cs">
       <DependentUpon>UnknownMediaTypeRender.xaml</DependentUpon>
@@ -190,6 +195,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MediaTypeHandlers\Text\UserControls\TextRender.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MediaTypeHandlers\Unknown\UnknownMediaTypeRender.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -251,9 +260,7 @@
       <Name>Mason.Net</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MediaTypeHandlers\ApplicationMason\Windows\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

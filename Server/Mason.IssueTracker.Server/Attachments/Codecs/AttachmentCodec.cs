@@ -21,6 +21,10 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       Link issueLink = new Link("up", issueUrl, "Containing issue");
       a.AddLink(issueLink);
 
+      Uri contentUrl = typeof(AttachmentContentResource).CreateUri(new { id = att.Attachment.Id });
+      Link contentLink = new Link("is:content", contentUrl, "Download content", att.Attachment.ContentType);
+      a.AddLink(contentLink);
+
       a.ID = att.Attachment.Id;
       a.Title = att.Attachment.Title;
       a.Description = att.Attachment.Description;

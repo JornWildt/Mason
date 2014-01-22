@@ -12,6 +12,7 @@
     public const string IssueAttachments = "issues/{id}/attachments";
 
     public const string Attachment = "attachments/{id}";
+    public const string AttachmentContent = "attachments/{id}/content";
 
     public const string Schema = "/schemas/{name}";
   }

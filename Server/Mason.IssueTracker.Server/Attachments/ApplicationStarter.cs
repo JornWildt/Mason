@@ -27,7 +27,9 @@ namespace Mason.IssueTracker.Server.Attachments
         .HandledBy<AttachmentHandler>()
         .TranscodedBy<AttachmentCodec>();
 
-      //ResourceSpace.Uses.CustomDependency<JsonReader<CreateAttachmentArgs>, JsonReader<CreateAttachmentArgs>>(DependencyLifetime.Transient);
+      ResourceSpace.Has.ResourcesOfType<AttachmentContentResource>()
+        .AtUri(UrlPaths.AttachmentContent)
+        .HandledBy<AttachmentContentHandler>();
     }
   }
 }

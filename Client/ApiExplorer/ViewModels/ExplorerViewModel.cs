@@ -229,6 +229,10 @@ namespace ApiExplorer.ViewModels
 
     private void RenderResponse(Response r)
     {
+      string contentType = r.ContentType.ToString();
+      if (!string.IsNullOrEmpty(contentType))
+        StatusLine += " [" + contentType + "]";
+
       IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
       ContentRender = handler.GetRender(this, r);
       Url = r.WebResponse.ResponseUri.AbsoluteUri;

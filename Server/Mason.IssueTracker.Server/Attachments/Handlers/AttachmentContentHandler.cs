@@ -1,5 +1,4 @@
-﻿using Mason.IssueTracker.Server.Attachments.Resources;
-using Mason.IssueTracker.Server.Domain.Attachments;
+﻿using Mason.IssueTracker.Server.Domain.Attachments;
 using OpenRasta.IO;
 using OpenRasta.Web;
 using System.IO;
@@ -7,7 +6,7 @@ using System.IO;
 
 namespace Mason.IssueTracker.Server.Attachments.Handlers
 {
-  public class AttachmentHandler : BaseHandler
+  public class AttachmentContentHandler : BaseHandler
   {
     public IAttachmentRepository AttachmentRepository { get; set; }
 
@@ -17,10 +16,7 @@ namespace Mason.IssueTracker.Server.Attachments.Handlers
       return ExecuteInUnitOfWork(() =>
       {
         Domain.Attachments.Attachment a = AttachmentRepository.Get(id);
-        return new AttachmentResource
-        {
-          Attachment = a
-        };
+        return new InMemoryFile(new MemoryStream(a.Content)) { ContentType = new MediaType(a.ContentType) };
       });
     }
   }

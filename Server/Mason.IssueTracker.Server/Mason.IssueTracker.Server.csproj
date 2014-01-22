@@ -81,8 +81,10 @@
   <ItemGroup>
     <Compile Include="Attachments\ApplicationStarter.cs" />
     <Compile Include="Attachments\Codecs\AttachmentCodec.cs" />
+    <Compile Include="Attachments\Handlers\AttachmentContentHandler.cs" />
     <Compile Include="Attachments\Handlers\AttachmentHandler.cs" />
     <Compile Include="Attachments\Resources\AttachmentResource.cs" />
+    <Compile Include="Attachments\Resources\AttachmentContentResource.cs" />
     <Compile Include="BaseHandler.cs" />
     <Compile Include="Codecs\IssueTrackerMasonCodec.cs" />
     <Compile Include="Issues\Codecs\IssueCollectionCodec.cs" />
