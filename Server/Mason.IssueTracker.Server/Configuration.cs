@@ -1,6 +1,7 @@
 ﻿using log4net;
 using Mason.IssueTracker.Server.Codecs;
 using Mason.IssueTracker.Server.Domain;
+using Mason.IssueTracker.Server.Domain.Attachments;
 using Mason.IssueTracker.Server.Domain.Issues;
 using Mason.IssueTracker.Server.Domain.NHibernate;
 using Mason.IssueTracker.Server.Domain.Projects;
@@ -35,6 +36,7 @@ namespace Mason.IssueTracker.Server
           ResourceSpace.Uses.CustomDependency<IOperationInterceptor, OperationInterceptor>(DependencyLifetime.PerRequest);
           Projects.ApplicationStarter.Start();
           Issues.ApplicationStarter.Start();
+          Attachments.ApplicationStarter.Start();
           Contact.ApplicationStarter.Start();
           ResourceCommons.ApplicationStarter.Start();
           JsonSchemas.ApplicationStarter.Start();
@@ -49,7 +51,8 @@ namespace Mason.IssueTracker.Server
         {
           IIssueRepository issueRepository = (IIssueRepository)ResourceSpace.Uses.Resolver.Resolve(typeof(IIssueRepository));
           IProjectRepository projectRepository = (IProjectRepository)ResourceSpace.Uses.Resolver.Resolve(typeof(IProjectRepository));
-          DemoDataGenerator.GenerateDemoData(issueRepository, projectRepository);
+          IAttachmentRepository attachmentRepository = (IAttachmentRepository)ResourceSpace.Uses.Resolver.Resolve(typeof(IAttachmentRepository));
+          DemoDataGenerator.GenerateDemoData(issueRepository, projectRepository, attachmentRepository);
         });
       }
       catch (Exception ex)

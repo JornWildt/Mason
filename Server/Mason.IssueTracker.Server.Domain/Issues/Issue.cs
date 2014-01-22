@@ -41,7 +41,7 @@ namespace Mason.IssueTracker.Server.Domain.Issues
       ErrorHandling.ValidateInput(
         () => Condition.Requires(title, "title").IsNotNullOrWhiteSpace().IsNotLongerThan(255),
         () => Condition.Requires(description, "description").IsNotNull(),
-        () => Condition.Requires(severity).IsInRange(1,5));
+        () => Condition.Requires(severity, "severity").IsInRange(1,5));
 
       Title = title;
       Description = description;

@@ -1,13 +1,18 @@
-﻿using Mason.IssueTracker.Server.Domain.Comments;
+﻿using Mason.IssueTracker.Server.Domain.Attachments;
+using Mason.IssueTracker.Server.Domain.Comments;
 using Mason.IssueTracker.Server.Domain.Issues;
 using Mason.IssueTracker.Server.Domain.Projects;
+using System.Text;
 
 
 namespace Mason.IssueTracker.Server.Domain
 {
   public static class DemoDataGenerator
   {
-    public static void GenerateDemoData(IIssueRepository issueRepository, IProjectRepository projectRepository)
+    public static void GenerateDemoData(
+      IIssueRepository issueRepository, 
+      IProjectRepository projectRepository, 
+      IAttachmentRepository attachmentRepository)
     {
       Project p = new Project("P", "Project 1", "Blah ...");
       projectRepository.Add(p);
@@ -25,6 +30,10 @@ Thanks,
 Chris", 3);
 
       issueRepository.Add(i);
+
+      string errorReport = "To be done ...";
+      Attachment att = new Attachment(i, "Error report", Encoding.UTF8.GetBytes(errorReport), "text/plain");
+      attachmentRepository.Add(att);
 
       i = new Issue(p, "Incorrect AssemblyVersion", @"I have been having some problems with missing method exceptions from Json.Net 5.0.8 for methods that were added in v5, but only on some machines. It seemed the .net framework kept picking up the wrong Json dll.
 

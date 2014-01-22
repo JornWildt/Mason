@@ -67,6 +67,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attachment\AttachmentMapping.cs" />
+    <Compile Include="Attachment\AttachmentRepository.cs" />
     <Compile Include="ExceptionConverter.cs" />
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Issues\IssueMapping.cs" />

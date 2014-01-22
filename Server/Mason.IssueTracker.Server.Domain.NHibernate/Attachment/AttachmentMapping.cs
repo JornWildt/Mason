@@ -1,0 +1,19 @@
+﻿using FluentNHibernate.Mapping;
+using Mason.IssueTracker.Server.Domain.Attachments;
+
+
+namespace Mason.AttachmentTracker.Server.Domain.NHibernate.Attachments
+{
+  public class AttachmentMapping : ClassMap<Attachment>
+  {
+    public AttachmentMapping()
+    {
+      Id(a => a.Id);
+      References(a => a.OwnerIssue).Column("Issue_Id");
+      Map(a => a.Title).CustomType("AnsiString").Length(255);
+      Map(a => a.Content);
+      Map(a => a.ContentType);
+      Map(a => a.ContentLength);
+    }
+  }
+}

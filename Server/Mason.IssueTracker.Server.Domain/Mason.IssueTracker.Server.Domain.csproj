@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attachments\Attachment.cs" />
+    <Compile Include="Attachments\IAttachmentRepository.cs" />
     <Compile Include="Comments\Comment.cs" />
     <Compile Include="DemoDataGenerator.cs" />
     <Compile Include="ErrorHandling.cs" />
