@@ -13,9 +13,10 @@ namespace Mason.IssueTracker.Server.Utility
     // Seconds
     static readonly int ApplicationLifeTime = 10 * 60 * 1000;
 
-    public static DateTime NextRestart { get; set; }
-
     private static Timer RestartTimer { get; set; }
+
+
+    public static DateTime NextRestart { get; set; }
 
 
     static ApplicationLifeTimeManager()
@@ -26,7 +27,7 @@ namespace Mason.IssueTracker.Server.Utility
 
     public static void Start()
     {
-      RestartTimer = new Timer(RestartApplication, null, ApplicationLifeTime, 0);
+      RestartTimer = new Timer(RestartApplication, null, ApplicationLifeTime, ApplicationLifeTime+5000);
       NextRestart = DateTime.Now + TimeSpan.FromMilliseconds(ApplicationLifeTime);
       Logger.DebugFormat("Next restart: {0}", NextRestart);
     }
@@ -34,8 +35,12 @@ namespace Mason.IssueTracker.Server.Utility
 
     private static void RestartApplication(object state)
     {
-      Logger.Debug("### RESTART APPLICATION ###");
-      HttpRuntime.UnloadAppDomain();
+      Logger.Debug("### Test application restart ###");
+      if (DateTime.Now > NextRestart)
+      {
+        Logger.Debug("### RESTART APPLICATION ###");
+        HttpRuntime.UnloadAppDomain();
+      }
     }
   }
 }
