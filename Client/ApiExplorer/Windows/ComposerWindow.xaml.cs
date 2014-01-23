@@ -35,9 +35,9 @@ namespace ApiExplorer.Windows
       else
       {
         if (TextEditorInput.Visibility == System.Windows.Visibility.Visible)
-          TextEditorInput.Focus();
+          TextEditorInput.SetFocus();
         else if (TextWithFilesEditorInput.Visibility == System.Windows.Visibility.Visible)
-          TextWithFilesEditorInput.Focus();
+          TextWithFilesEditorInput.SetFocus();
       }
     }
 

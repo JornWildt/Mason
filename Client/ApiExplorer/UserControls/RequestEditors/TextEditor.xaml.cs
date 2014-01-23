@@ -26,9 +26,8 @@ namespace ApiExplorer.UserControls.RequestEditors
     }
 
 
-    protected override void OnGotFocus(RoutedEventArgs e)
+    public void SetFocus()
     {
-      base.OnGotFocus(e);
       TextBoxInput.Focus();
     }
   }

@@ -20,11 +20,7 @@ namespace Mason.IssueTracker.Server.Issues.Handlers
         {
           Issue i = IssueRepository.Get(id);
           List<Attachment> attachments = AttachmentRepository.AttachmentsForIssue(id);
-          return new IssueResource
-          {
-            Issue = i,
-            Attachments = attachments
-          };
+          return ReadIssueResource(id);
         });
     }
 
@@ -35,10 +31,7 @@ namespace Mason.IssueTracker.Server.Issues.Handlers
       {
         Issue i = IssueRepository.Get(id);
         i.Update(args.Title, args.Description, args.Severity);
-        return new IssueResource
-        {
-          Issue = i
-        };
+        return ReadIssueResource(id);
       });
     }
 
@@ -51,6 +44,18 @@ namespace Mason.IssueTracker.Server.Issues.Handlers
         IssueRepository.Delete(i);
         return new OperationResult.NoContent();
       });
+    }
+
+
+    private object ReadIssueResource(int id)
+    {
+      Issue i = IssueRepository.Get(id);
+      List<Attachment> attachments = AttachmentRepository.AttachmentsForIssue(id);
+      return new IssueResource
+      {
+        Issue = i,
+        Attachments = attachments
+      };
     }
   }
 }
