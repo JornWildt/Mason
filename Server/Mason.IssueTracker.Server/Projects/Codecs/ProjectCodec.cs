@@ -15,15 +15,18 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
     {
       Contract.Project p = new Contract.Project();
 
-      p.SetMeta(MasonProperties.MetaProperties.Title, "Project");
-      p.SetMeta(MasonProperties.MetaProperties.Description, "This resource represents a single project with its data and related actions.");
+      if (!CommunicationContext.PreferMinimalResponse())
+      {
+        p.SetMeta(MasonProperties.MetaProperties.Title, "Project");
+        p.SetMeta(MasonProperties.MetaProperties.Description, "This resource represents a single project with its data and related actions.");
+      }
 
       Uri selfUrl = typeof(ProjectResource).CreateUri(new { id = project.Project.Id });
-      Link selfLink = new Link("self", selfUrl, "Project details");
+      Link selfLink = CommunicationContext.NewLink("self", selfUrl, "Project details");
       p.AddLink(selfLink);
 
       Uri issuesUrl = typeof(IssueCollectionResource).CreateUri(new { id = project.Project.Id });
-      Link issuesLink = new Link("is:issues", issuesUrl, "All issues in project");
+      Link issuesLink = CommunicationContext.NewLink("is:issues", issuesUrl, "All issues in project");
       p.AddLink(issuesLink);
 
       dynamic updateTemplate = new DynamicDictionary();
@@ -31,16 +34,19 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       updateTemplate.Title = project.Project.Title;
       updateTemplate.Description = project.Project.Description;
 
-      Net.Action updateAction = new Net.Action("is:update-project", MasonProperties.ActionTypes.JSON, selfUrl, "Update project details", template: updateTemplate);
+      Net.Action updateAction = CommunicationContext.NewAction("is:update-project", MasonProperties.ActionTypes.JSON, selfUrl, "Update project details", template: (DynamicDictionary)updateTemplate);
       p.AddAction(updateAction);
 
       Uri addIssueSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-issue" });
-      Net.Action addIssueAction = new Net.Action("is:add-issue", MasonProperties.ActionTypes.JSONFiles, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
-      addIssueAction.jsonFile = "issue";
-      addIssueAction.AddFile("attachment", "Attachment for issue");
+      Net.Action addIssueAction = CommunicationContext.NewAction("is:add-issue", MasonProperties.ActionTypes.JSONFiles, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
+      if (!CommunicationContext.PreferMinimalResponse())
+      {
+        addIssueAction.jsonFile = "issue";
+        addIssueAction.AddFile("attachment", "Attachment for issue");
+      }
       p.AddAction(addIssueAction);
 
-      Net.Action deleteAction = new Net.Action("is:delete-project", MasonProperties.ActionTypes.Void, selfUrl, "Delete project", method: "DELETE");
+      Net.Action deleteAction = CommunicationContext.NewAction("is:delete-project", MasonProperties.ActionTypes.Void, selfUrl, "Delete project", method: "DELETE");
       p.AddAction(deleteAction);
 
       p.Id = project.Project.Id;

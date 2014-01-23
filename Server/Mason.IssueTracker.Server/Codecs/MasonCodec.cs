@@ -10,6 +10,13 @@ namespace Mason.IssueTracker.Server.Codecs
   [MediaType("application/json;q=1", "json")]
   public abstract class MasonCodec<T> : IMediaTypeWriter
   {
+    #region Dependencies
+
+    public ICommunicationContext CommunicationContext { get; set; }
+
+    #endregion
+
+
     public object Configuration { get; set; }
 
 

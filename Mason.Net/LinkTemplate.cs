@@ -19,7 +19,14 @@ namespace Mason.Net
       this.name = name;
       this.template = template;
       this.description = description;
-      parameters = new List<LinkTemplateParameter>();
+    }
+
+
+    public void AddParameter(LinkTemplateParameter p)
+    {
+      if (parameters == null)
+        parameters = new List<LinkTemplateParameter>();
+      parameters.Add(p);
     }
   }
 

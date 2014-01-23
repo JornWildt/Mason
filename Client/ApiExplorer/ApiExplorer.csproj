@@ -132,6 +132,7 @@
     <Compile Include="MediaTypeHandlers\Unknown\UnknownMediaTypeRender.xaml.cs">
       <DependentUpon>UnknownMediaTypeRender.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="UserControls\Explorer.xaml.cs">
       <DependentUpon>Explorer.xaml</DependentUpon>
     </Compile>
@@ -160,6 +161,7 @@
     <Compile Include="ViewModels\JsonViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Windows\ComposerWindow.xaml.cs">
       <DependentUpon>ComposerWindow.xaml</DependentUpon>

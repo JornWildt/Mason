@@ -14,15 +14,18 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
     {
       dynamic a = new Resource();
 
-      a.SetMeta(MasonProperties.MetaProperties.Title, "Attachment");
-      a.SetMeta(MasonProperties.MetaProperties.Description, "This resource represents a single attachment with its data and related actions.");
+      if (!CommunicationContext.PreferMinimalResponse())
+      {
+        a.SetMeta(MasonProperties.MetaProperties.Title, "Attachment");
+        a.SetMeta(MasonProperties.MetaProperties.Description, "This resource represents a single attachment with its data and related actions.");
+      }
 
       Uri issueUrl = typeof(IssueResource).CreateUri(new { id = att.Attachment.OwnerIssue.Id });
-      Link issueLink = new Link("up", issueUrl, "Containing issue");
+      Link issueLink = CommunicationContext.NewLink("up", issueUrl, "Containing issue");
       a.AddLink(issueLink);
 
       Uri contentUrl = typeof(AttachmentContentResource).CreateUri(new { id = att.Attachment.Id });
-      Link contentLink = new Link("is:content", contentUrl, "Download content", att.Attachment.ContentType);
+      Link contentLink = CommunicationContext.NewLink("is:content", contentUrl, "Download content", att.Attachment.ContentType);
       a.AddLink(contentLink);
 
       a.ID = att.Attachment.Id;

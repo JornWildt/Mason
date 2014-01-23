@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 
@@ -14,6 +15,7 @@ namespace Mason.Net
 
   public class Action
   {
+    [JsonIgnore]
     public string name { get; set; }
 
     public string type { get; set; }

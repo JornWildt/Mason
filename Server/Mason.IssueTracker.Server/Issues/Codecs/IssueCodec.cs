@@ -18,15 +18,18 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
     {
       dynamic i = new Resource();
 
-      i.SetMeta(MasonProperties.MetaProperties.Title, "Issue");
-      i.SetMeta(MasonProperties.MetaProperties.Description, "This resource represents a single issue with its data and related actions.");
+      if (!CommunicationContext.PreferMinimalResponse())
+      {
+        i.SetMeta(MasonProperties.MetaProperties.Title, "Issue");
+        i.SetMeta(MasonProperties.MetaProperties.Description, "This resource represents a single issue with its data and related actions.");
+      }
 
       Uri selfUrl = typeof(IssueResource).CreateUri(new { id = issue.Issue.Id });
-      Link selfLink = new Link("self", selfUrl);
+      Link selfLink = CommunicationContext.NewLink("self", selfUrl);
       i.AddLink(selfLink);
 
       Uri projectUrl = typeof(ProjectResource).CreateUri(new { id = issue.Issue.OwnerProject.Id });
-      Link projectLink = new Link("up", projectUrl, "Containing project");
+      Link projectLink = CommunicationContext.NewLink("up", projectUrl, "Containing project");
       i.AddLink(projectLink);
 
       dynamic updateTemplate = new DynamicDictionary();
@@ -34,10 +37,10 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       updateTemplate.Description = issue.Issue.Description;
       updateTemplate.Severity = issue.Issue.Severity;
 
-      Net.Action updateAction = new Net.Action("is:update-issue", MasonProperties.ActionTypes.JSON, selfUrl, "Update issue details", template: updateTemplate);
+      Net.Action updateAction = CommunicationContext.NewAction("is:update-issue", MasonProperties.ActionTypes.JSON, selfUrl, "Update issue details", template: (DynamicDictionary)updateTemplate);
       i.AddAction(updateAction);
-      
-      Net.Action deleteAction = new Net.Action("is:delete-issue", MasonProperties.ActionTypes.Void, selfUrl, "Delete issue", method: "DELETE");
+
+      Net.Action deleteAction = CommunicationContext.NewAction("is:delete-issue", MasonProperties.ActionTypes.Void, selfUrl, "Delete issue", method: "DELETE");
       i.AddAction(deleteAction);
 
       i.ID = issue.Issue.Id;
@@ -53,7 +56,7 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
         a.Title = att.Title;
 
         Uri attachmentUrl = typeof(AttachmentResource).CreateUri(new { id = att.Id });
-        Link attachmentLink = new Link("self", attachmentUrl);
+        Link attachmentLink = CommunicationContext.NewLink("self", attachmentUrl);
         a.AddLink(attachmentLink);
 
         attachments.Add(a);

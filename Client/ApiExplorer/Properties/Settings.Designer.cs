@@ -22,5 +22,17 @@ namespace ApiExplorer.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PreferMinimalResponseSize {
+            get {
+                return ((bool)(this["PreferMinimalResponseSize"]));
+            }
+            set {
+                this["PreferMinimalResponseSize"] = value;
+            }
+        }
     }
 }

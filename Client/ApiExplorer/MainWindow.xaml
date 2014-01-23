@@ -2,6 +2,30 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ax="clr-namespace:ApiExplorer.UserControls"
+        xmlns:avm="clr-namespace:ApiExplorer.ViewModels"
         Title="{Binding Title}" WindowState="Maximized">
-  <ax:Explorer DataContext="{Binding Explorer}"/>
+  <DockPanel LastChildFill="True">
+    <ToolBar DockPanel.Dock="Top">
+      <!-- Response preference -->
+      <CheckBox IsChecked="{Binding PreferMinimalResponseSize, Source={x:Static avm:SettingsViewModel.Default}}" Content="Prefer minimal response">
+        <CheckBox.Style>
+          <Style TargetType="{x:Type CheckBox}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding PreferMinimalResponseSize, Source={x:Static avm:SettingsViewModel.Default}}" Value="true">
+                <DataTrigger.Setters>
+                  <Setter Property="CheckBox.ToolTip" Value="Prefer minimal representation in response (active)"/>
+                </DataTrigger.Setters>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding PreferMinimalResponseSize, Source={x:Static avm:SettingsViewModel.Default}}" Value="false">
+                <DataTrigger.Setters>
+                  <Setter Property="CheckBox.ToolTip" Value="Prefer minimal representation in response (inactive)"/>
+                </DataTrigger.Setters>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </CheckBox.Style>
+      </CheckBox>
+    </ToolBar>
+    <ax:Explorer DockPanel.Dock="Top" DataContext="{Binding Explorer}"/>
+  </DockPanel>
 </Window>

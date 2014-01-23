@@ -13,16 +13,19 @@ namespace Mason.IssueTracker.Server.Codecs
     {
       Resource r = ConvertToIssueTracker(resource);
 
-      string msg = string.Format("This application restarts in {0:m\\:ss} minutes", ApplicationLifeTimeManager.NextRestart - DateTime.Now);
-      if (r.Meta == null)
-        r.Meta = new SubResource();
-      if (r.Meta[MasonProperties.MetaProperties.Description] == null)
-        r.Meta[MasonProperties.MetaProperties.Description] = msg;
-      else
-        r.Meta[MasonProperties.MetaProperties.Description] += " [" + msg + "]";
+      if (!CommunicationContext.PreferMinimalResponse())
+      {
+        string msg = string.Format("This application restarts in {0:m\\:ss} minutes", ApplicationLifeTimeManager.NextRestart - DateTime.Now);
+        if (r.Meta == null)
+          r.Meta = new SubResource();
+        if (r.Meta[MasonProperties.MetaProperties.Description] == null)
+          r.Meta[MasonProperties.MetaProperties.Description] = msg;
+        else
+          r.Meta[MasonProperties.MetaProperties.Description] += " [" + msg + "]";
+      }
 
       Uri resourceCommonUri = typeof(ResourceCommonResource).CreateUri();
-      Link resourceCommonLink = new Link(RelTypes.ResourceCommon, resourceCommonUri, "Common information shared by all resources");
+      Link resourceCommonLink = CommunicationContext.NewLink(RelTypes.ResourceCommon, resourceCommonUri, "Common information shared by all resources");
       r.AddLink(resourceCommonLink);
 
       //r.AddNamespace(new Net.Namespace(RelTypes.NamespaceAlias, RelTypes.Namespace));

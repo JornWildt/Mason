@@ -173,6 +173,9 @@ namespace ApiExplorer.ViewModels
 
       try
       {
+        if (Properties.Settings.Default.PreferMinimalResponseSize)
+          args.Request.Header("Prefer", "return=minimal");
+
         args.Request
             .Accept("application/vnd.mason;q=1, */*;q=0.5")
             .OnHeadersReady(r => { CurrentRequest = r; })

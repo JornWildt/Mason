@@ -1,5 +1,7 @@
 ﻿using log4net;
 using Mason.IssueTracker.Server.Domain;
+using Mason.Net;
+using OpenRasta.Web;
 using System;
 
 
@@ -13,6 +15,8 @@ namespace Mason.IssueTracker.Server
     #region Dependencies
 
     public IUnitOfWorkManager UnitOfWorkManager { get; set; }
+
+    public ICommunicationContext CommunicationContext { get; set; }
 
     #endregion
 
