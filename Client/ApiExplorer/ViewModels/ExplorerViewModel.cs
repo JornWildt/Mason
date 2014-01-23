@@ -7,6 +7,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using System.Net;
 
 
 namespace ApiExplorer.ViewModels
@@ -158,16 +159,26 @@ namespace ApiExplorer.ViewModels
     }
 
 
+    protected HttpWebRequest CurrentRequest { get; set; }
+
     protected void ExecuteWebRequest(ExecuteWebRequestEventArgs args)
     {
       IsExecutingRequest = true;
+
+      if (CurrentRequest != null)
+      {
+        // CurrentRequest.Abort(); FIXME: needs Ramone to handle this
+        CurrentRequest = null;
+      }
 
       try
       {
         args.Request
             .Accept("application/vnd.mason;q=1, */*;q=0.5")
+            .OnHeadersReady(r => { CurrentRequest = r; })
             .Async()
             .OnError(r => HandleResponseError(r, args))
+            .OnComplete(() => CurrentRequest = null)
             .Submit(r => HandleResponse(r, args));
       }
       catch (Exception ex)
