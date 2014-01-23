@@ -2,6 +2,7 @@
 using Mason.Net;
 using OpenRasta.Web;
 using System;
+using Mason.IssueTracker.Server.Utility;
 
 
 namespace Mason.IssueTracker.Server.Codecs
@@ -11,6 +12,14 @@ namespace Mason.IssueTracker.Server.Codecs
     protected override Net.Resource ConvertToMason(T resource)
     {
       Resource r = ConvertToIssueTracker(resource);
+
+      string msg = string.Format("This application restarts in {0:m\\:ss} minutes", ApplicationLifeTimeManager.NextRestart - DateTime.Now);
+      if (r.Meta == null)
+        r.Meta = new SubResource();
+      if (r.Meta[MasonProperties.MetaProperties.Description] == null)
+        r.Meta[MasonProperties.MetaProperties.Description] = msg;
+      else
+        r.Meta[MasonProperties.MetaProperties.Description] += " [" + msg + "]";
 
       Uri resourceCommonUri = typeof(ResourceCommonResource).CreateUri();
       Link resourceCommonLink = new Link(RelTypes.ResourceCommon, resourceCommonUri, "Common information shared by all resources");

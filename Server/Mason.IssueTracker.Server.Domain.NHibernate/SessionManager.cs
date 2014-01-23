@@ -33,6 +33,11 @@ namespace Mason.IssueTracker.Server.Domain.NHibernate
     }
 
 
+    public static void Restart()
+    {
+    }
+
+
     private static ISessionFactory _sessionFactory;
     public static ISessionFactory SessionFactory
     {

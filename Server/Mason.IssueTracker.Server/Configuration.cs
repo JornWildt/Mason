@@ -11,6 +11,10 @@ using OpenRasta.DI;
 using OpenRasta.OperationModel.Interceptors;
 using OpenRasta.Web.UriDecorators;
 using System;
+using System.Reflection;
+using System.Threading;
+using System.Web;
+using Mason.IssueTracker.Server.Utility;
 
 
 namespace Mason.IssueTracker.Server
@@ -47,6 +51,7 @@ namespace Mason.IssueTracker.Server
         }
 
         // Setup default data
+        SessionManager.Restart();
         SessionManager.ExecuteUnitOfWork(() =>
         {
           IIssueRepository issueRepository = (IIssueRepository)ResourceSpace.Uses.Resolver.Resolve(typeof(IIssueRepository));
@@ -54,6 +59,8 @@ namespace Mason.IssueTracker.Server
           IAttachmentRepository attachmentRepository = (IAttachmentRepository)ResourceSpace.Uses.Resolver.Resolve(typeof(IAttachmentRepository));
           DemoDataGenerator.GenerateDemoData(issueRepository, projectRepository, attachmentRepository);
         });
+
+        ApplicationLifeTimeManager.Start();
       }
       catch (Exception ex)
       {
