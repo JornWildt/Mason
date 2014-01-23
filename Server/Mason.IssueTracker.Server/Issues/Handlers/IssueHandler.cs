@@ -3,6 +3,7 @@ using Mason.IssueTracker.Server.Domain.Issues;
 using System;
 using Mason.IssueTracker.Server.Domain.Attachments;
 using System.Collections.Generic;
+using OpenRasta.Web;
 
 
 namespace Mason.IssueTracker.Server.Issues.Handlers
@@ -25,6 +26,31 @@ namespace Mason.IssueTracker.Server.Issues.Handlers
             Attachments = attachments
           };
         });
+    }
+
+
+    public object Post(int id, UpdateIssueArgs args)
+    {
+      return ExecuteInUnitOfWork(() =>
+      {
+        Issue i = IssueRepository.Get(id);
+        i.Update(args.Title, args.Description, args.Severity);
+        return new IssueResource
+        {
+          Issue = i
+        };
+      });
+    }
+
+
+    public object Delete(int id)
+    {
+      return ExecuteInUnitOfWork(() =>
+      {
+        Issue i = IssueRepository.Get(id);
+        IssueRepository.Delete(i);
+        return new OperationResult.NoContent();
+      });
     }
   }
 }

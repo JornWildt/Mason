@@ -7,7 +7,7 @@
       <RowDefinition Height="2*"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
-    <TextBox Grid.Row="0" Text="{Binding Body}"
+    <TextBox Grid.Row="0" x:Name="TextBoxInput" Text="{Binding Body}"
              TextWrapping="NoWrap" AcceptsReturn="True"
              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
              Visibility="{Binding MethodAllowsContent, Converter={vc:BoolToVisibilityConverter}}"/>

@@ -88,7 +88,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Window w = Window.GetWindow(sender as DependencyObject);
       string title = Description ?? "JSON Action";
-      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, JsonText, actionType: ActionType, modifier: ModifyComposerWindow);
+      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, JsonText, actionType: ActionType, modifier: ModifyComposerWindow, focus: ComposerWindow.StartFocus.Body);
     }
 
     #endregion

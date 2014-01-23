@@ -16,5 +16,6 @@ namespace Mason.IssueTracker.Server.Domain.Issues
     List<Issue> IssuesForProject(int projectId);
     List<Issue> FindIssues(IssueSearchArgs args);
     void Add(Issue i);
+    void Delete(Issue i);
   }
 }

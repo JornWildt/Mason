@@ -20,19 +20,29 @@ namespace ApiExplorer.Windows
   /// </summary>
   public partial class ComposerWindow : Window
   {
-    public ComposerWindow(ComposerViewModel vm)
+    public ComposerWindow(ComposerViewModel vm, StartFocus focus)
     {
       InitializeComponent();
       DataContext = vm;
-      Loaded += ComposerWindow_Loaded;
+      Loaded += (s,e) => ComposerWindow_Loaded(focus);
     }
 
-    
-    void ComposerWindow_Loaded(object sender, RoutedEventArgs e)
+
+    void ComposerWindow_Loaded(StartFocus focus)
     {
-      MethodInput.Focus();
+      if (focus == StartFocus.Method)
+        MethodInput.Focus();
+      else
+      {
+        if (TextEditorInput.Visibility == System.Windows.Visibility.Visible)
+          TextEditorInput.Focus();
+        else if (TextWithFilesEditorInput.Visibility == System.Windows.Visibility.Visible)
+          TextWithFilesEditorInput.Focus();
+      }
     }
 
+
+    public enum StartFocus { Method, Body }
 
     public static void OpenComposerWindow(
       Window owner, 
@@ -42,7 +52,8 @@ namespace ApiExplorer.Windows
       string windowTitle = null, 
       string body = null,
       string actionType = null,
-      Action<ComposerViewModel> modifier = null)
+      Action<ComposerViewModel> modifier = null,
+      StartFocus focus = StartFocus.Method)
     {
       ComposerViewModel vm = new ComposerViewModel(parent);
       if (method != null)
@@ -58,7 +69,7 @@ namespace ApiExplorer.Windows
       if (modifier != null)
         modifier(vm);
 
-      ComposerWindow w = new ComposerWindow(vm);
+      ComposerWindow w = new ComposerWindow(vm, focus);
       w.Owner = owner;
       w.ShowDialog();
     }

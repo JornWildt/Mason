@@ -51,8 +51,8 @@
       <TabItem Header="Body">
         <!-- Body -->
         <Grid>
-          <req:TextEditor Visibility="{Binding ShowTextEditor, Converter={vc:BoolToVisibilityConverter}}"/>
-          <req:TextWithFilesEditor Visibility="{Binding ShowTextEditorWithFiles, Converter={vc:BoolToVisibilityConverter}}"/>
+          <req:TextEditor Visibility="{Binding ShowTextEditor, Converter={vc:BoolToVisibilityConverter}}" x:Name="TextEditorInput"/>
+          <req:TextWithFilesEditor Visibility="{Binding ShowTextEditorWithFiles, Converter={vc:BoolToVisibilityConverter}}" x:Name="TextWithFilesEditorInput"/>
           <TextBlock Text="No content allowed for this method"
                      VerticalAlignment="Center" HorizontalAlignment="Center"
                      Visibility="{Binding MethodAllowsContent, Converter={vc:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>

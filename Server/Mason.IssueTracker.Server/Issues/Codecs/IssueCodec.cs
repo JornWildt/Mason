@@ -29,6 +29,17 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       Link projectLink = new Link("up", projectUrl, "Containing project");
       i.AddLink(projectLink);
 
+      dynamic updateTemplate = new DynamicDictionary();
+      updateTemplate.Title = issue.Issue.Title;
+      updateTemplate.Description = issue.Issue.Description;
+      updateTemplate.Severity = issue.Issue.Severity;
+
+      Net.Action updateAction = new Net.Action("is:update-issue", MasonProperties.ActionTypes.JSON, selfUrl, "Update issue details", template: updateTemplate);
+      i.AddAction(updateAction);
+      
+      Net.Action deleteAction = new Net.Action("is:delete-issue", MasonProperties.ActionTypes.Void, selfUrl, "Delete issue", method: "DELETE");
+      i.AddAction(deleteAction);
+
       i.ID = issue.Issue.Id;
       i.Title = issue.Issue.Title;
       i.Description = issue.Issue.Description;
