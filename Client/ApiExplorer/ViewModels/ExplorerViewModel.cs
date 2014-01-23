@@ -34,21 +34,6 @@ namespace ApiExplorer.ViewModels
   {
     #region UI properties
 
-    private string _url;
-    public string Url
-    {
-      get { return _url; }
-      set
-      {
-        if (value != _url)
-        {
-          _url = value;
-          OnPropertyChanged("Url");
-        }
-      }
-    }
-
-
     private bool _addressIsFocused;
     public bool AddressIsFocused
     {
@@ -59,8 +44,6 @@ namespace ApiExplorer.ViewModels
         OnPropertyChanged("AddressIsFocused");
       }
     }
-
-
 
 
     private bool _isExecutingRequest;
@@ -109,7 +92,14 @@ namespace ApiExplorer.ViewModels
 
     #endregion
 
+    
+    #region Sub view models
 
+    public NavigationViewModel Navigation { get; set; }
+
+    #endregion
+
+    
     #region Commands
 
     public DelegateCommand<object> GoCommand { get; private set; }
@@ -122,19 +112,21 @@ namespace ApiExplorer.ViewModels
     public ExplorerViewModel(ViewModel parent)
       : base(parent)
     {
+      Navigation = new NavigationViewModel(this);
       RegisterCommand(GoCommand = new DelegateCommand<object>(Go));
       RegisterCommand(ComposeCommand = new DelegateCommand<FrameworkElement>(Compose));
       RegisterCommand(AddressFocusCommand = new DelegateCommand<object>(AddressFocus));
       Subscribe<ExecuteWebRequestEventArgs>(e => ExecuteWebRequest(e));
       Subscribe<SetStatusLineTextEventArgs>(e => SetUpdateStatusLine(e.Text));
       Subscribe<ResetStatusLineTextEventArgs>(e => ResetUpdateStatusLine());
+      Subscribe<NavigationViewModel.NavigateEventArgs>(e => Navigate());
 
       //Url = "http://localhost/mason-demo/projects";
       //Url = "http://localhost/mason-demo//issues/query";
       //Url = "http://localhost/mason-demo/resource-common";
       //Url = "http://localhost/mason-demo/contact";
       //Url = "http://localhost/mason-demo/projects/1";
-      Url = "http://localhost/mason-demo/issues/1";
+      Navigation.CurrentUrl = "http://localhost/mason-demo/issues/1";
       //Url = "http://jorn-pc/mason-demo/projects/1/issues";
     }
 
@@ -148,14 +140,19 @@ namespace ApiExplorer.ViewModels
 
     #endregion
 
+    #region Navigation
 
-    #region Go command
+    private void Navigate()
+    {
+      Go(null);
+    }
+
 
     private void Go(object obj)
     {
       ISession session = RamoneServiceManager.Service.NewSession();
 
-      Request req = session.Bind(Url).Method("GET");
+      Request req = session.Bind(Navigation.CurrentUrl).Method("GET");
 
       ExecuteWebRequest(new ExecuteWebRequestEventArgs { Request = req });
     }
@@ -238,7 +235,9 @@ namespace ApiExplorer.ViewModels
 
       IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
       ContentRender = handler.GetRender(this, r);
-      Url = r.WebResponse.ResponseUri.AbsoluteUri;
+      Navigation.CurrentUrl = r.WebResponse.ResponseUri.AbsoluteUri;
+      if (r.WebResponse.Method == "GET")
+        Navigation.RegisterUrl();
     }
 
     #endregion
@@ -269,7 +268,7 @@ namespace ApiExplorer.ViewModels
 
     private void Compose(FrameworkElement sender)
     {
-      ComposerWindow.OpenComposerWindow(Window.GetWindow(sender), this, "GET", Url);
+      ComposerWindow.OpenComposerWindow(Window.GetWindow(sender), this, "GET", Navigation.CurrentUrl);
     }
 
     #endregion

@@ -22,15 +22,18 @@
         <KeyBinding Key="Enter" Command="{Binding GoCommand}"/>
       </Grid.InputBindings>
       <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="Auto"/>
       </Grid.ColumnDefinitions>
-      <TextBox Grid.Column="0" Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}" x:Name="UrlInput"
+      <Button Grid.Column="0" Content="Back" Command="{Binding Navigation.BackCommand}"/>
+      <TextBox Grid.Column="2" Text="{Binding Navigation.CurrentUrl, UpdateSourceTrigger=PropertyChanged}" x:Name="UrlInput"
                axu:FocusBehavior.IsFocused="{Binding AddressIsFocused, Mode=TwoWay}"
                GotFocus="UrlInput_GotFocus"/>
-      <Button Grid.Column="1" Command="{Binding GoCommand}" Content="GET" Width="50"/>
-      <Button Grid.Column="2" Command="{Binding ComposeCommand}" Content="Other" Width="50"
+      <Button Grid.Column="3" Command="{Binding GoCommand}" Content="GET" Width="50"/>
+      <Button Grid.Column="4" Command="{Binding ComposeCommand}" Content="Other" Width="50"
               CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
     </Grid>
 
