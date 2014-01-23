@@ -17,7 +17,7 @@
     </Grid.RowDefinitions>
 
     <!-- URL bar -->
-    <Grid Grid.Row="0">
+    <Grid Grid.Row="0" Margin="4">
       <Grid.InputBindings>
         <KeyBinding Key="Enter" Command="{Binding GoCommand}"/>
       </Grid.InputBindings>
@@ -28,7 +28,7 @@
         <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="Auto"/>
       </Grid.ColumnDefinitions>
-      <Button Grid.Column="0" Content="Back" Command="{Binding Navigation.BackCommand}"/>
+      <Button Grid.Column="0" Content="Back" Command="{Binding Navigation.BackCommand}" Margin="0 0 6 0"/>
       <TextBox Grid.Column="2" Text="{Binding Navigation.CurrentUrl, UpdateSourceTrigger=PropertyChanged}" x:Name="UrlInput"
                axu:FocusBehavior.IsFocused="{Binding AddressIsFocused, Mode=TwoWay}"
                GotFocus="UrlInput_GotFocus"/>
