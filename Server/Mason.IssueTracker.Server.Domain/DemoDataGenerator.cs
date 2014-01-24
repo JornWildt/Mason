@@ -31,7 +31,7 @@ Chris", 3);
 
       issueRepository.Add(i);
 
-      string errorReport = "To be done ...";
+      string errorReport = "This is an error report ...";
       Attachment att = new Attachment(i, "Error report", "Error report from end user", Encoding.UTF8.GetBytes(errorReport), "text/plain");
       attachmentRepository.Add(att);
 

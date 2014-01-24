@@ -41,7 +41,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       Net.Action addIssueAction = CommunicationContext.NewAction("is:add-issue", MasonProperties.ActionTypes.JSONFiles, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
       if (!CommunicationContext.PreferMinimalResponse())
       {
-        addIssueAction.jsonFile = "issue";
+        addIssueAction.jsonFile = "args";
         addIssueAction.AddFile("attachment", "Attachment for issue");
       }
       p.AddAction(addIssueAction);

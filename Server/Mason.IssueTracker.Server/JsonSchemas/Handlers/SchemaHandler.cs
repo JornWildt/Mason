@@ -8,6 +8,8 @@ namespace Mason.IssueTracker.Server.JsonSchemas.Handlers
 {
   public class SchemaHandler
   {
+    // Not the best implementation, but its not important right now ...
+
     public object Get(string name)
     {
       if (name != null && name.EndsWith(".txt"))
@@ -19,6 +21,8 @@ namespace Mason.IssueTracker.Server.JsonSchemas.Handlers
         return new SchemaTypeResource { SchemaType = typeof(CreateProjectArgs) };
       else if (name == "create-issue")
         return new SchemaTypeResource { SchemaType = typeof(CreateIssueArgs) };
+      else if (name == "create-attachment")
+        return new SchemaTypeResource { SchemaType = typeof(AddAttachmentArgs) };
       
       return null;
     }

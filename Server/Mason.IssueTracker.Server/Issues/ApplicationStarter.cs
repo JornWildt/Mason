@@ -34,7 +34,8 @@ namespace Mason.IssueTracker.Server.Issues
 
       ResourceSpace.Has.ResourcesOfType<IssueAttachmentsResource>()
         .AtUri(UrlPaths.IssueAttachments)
-        .HandledBy<IssueAttachmentsHandler>();
+        .HandledBy<IssueAttachmentsHandler>()
+        .TranscodedBy<IssueAttachmentsCodec>();
 
       // This is anoying - is there are better way?
 
@@ -51,7 +52,7 @@ namespace Mason.IssueTracker.Server.Issues
         .TranscodedBy<JsonReader<AddAttachmentArgs>>();
 
       ResourceSpace.Uses.CustomDependency<JsonReader<CreateIssueArgs>, JsonReader<CreateIssueArgs>>(DependencyLifetime.Transient);
-      //ResourceSpace.Uses.CustomDependency<JsonReader<UpdateIssueArgs>, JsonReader<UpdateIssueArgs>>(DependencyLifetime.Transient);
+      ResourceSpace.Uses.CustomDependency<JsonReader<AddAttachmentArgs>, JsonReader<AddAttachmentArgs>>(DependencyLifetime.Transient);
     }
   }
 }

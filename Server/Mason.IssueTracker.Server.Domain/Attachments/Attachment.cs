@@ -44,15 +44,31 @@ namespace Mason.IssueTracker.Server.Domain.Attachments
     {
       ErrorHandling.ValidateInput(
         () => Condition.Requires(title, "title").IsNotNullOrWhiteSpace().IsNotLongerThan(255),
-        () => Condition.Requires(description, "description").IsNotNull(),
-        () => Condition.Requires(content, "content").IsNotNull().IsNotLongerThan(MaxContentLength),
-        () => Condition.Requires(contentType, "contentType").IsNotNullOrWhiteSpace());
+        () => Condition.Requires(description, "description").IsNotNull());
+
+      if (content != null)
+      {
+        ErrorHandling.ValidateInput(
+          () => Condition.Requires(content, "content").IsNotNull().IsNotLongerThan(MaxContentLength),
+          () => Condition.Requires(contentType, "contentType").IsNotNullOrWhiteSpace());
+      }
 
       Title = title;
       Description = description;
       Content = content;
       ContentType = contentType;
-      ContentLength = content.Length;
+      ContentLength = (content != null ? content.Length : 0);
+    }
+
+
+    public virtual void Update(string title, string description)
+    {
+      ErrorHandling.ValidateInput(
+        () => Condition.Requires(title, "title").IsNotNullOrWhiteSpace().IsNotLongerThan(255),
+        () => Condition.Requires(description, "description").IsNotNull());
+
+      Title = title;
+      Description = description;
     }
   }
 }

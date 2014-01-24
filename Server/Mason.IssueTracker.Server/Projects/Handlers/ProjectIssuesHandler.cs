@@ -16,8 +16,6 @@ namespace Mason.IssueTracker.Server.Projects.Handlers
 {
   public class ProjectIssuesHandler : BaseHandler
   {
-    static ILog Logger = LogManager.GetLogger(typeof(ProjectIssuesHandler));
-
     #region Dependencies
 
     public IIssueRepository IssueRepository { get; set; }
@@ -44,21 +42,21 @@ namespace Mason.IssueTracker.Server.Projects.Handlers
 
 
     // "id" is project ID
-    public object Post(int id, CreateIssueArgs issue, IFile attachment)
+    public object Post(int id, CreateIssueArgs args, IFile attachment = null)
     {
       return ExecuteInUnitOfWork(() =>
       {
         Project p = ProjectRepository.Get(id);
 
-        Issue i = new Issue(p, issue.Title, issue.Description, issue.Severity);
+        Issue i = new Issue(p, args.Title, args.Description, args.Severity);
         IssueRepository.Add(i);
 
-        if (issue.Attachment != null)
+        if (args.Attachment != null)
         {
           using (Stream s = attachment.OpenStream())
           {
             byte[] content = s.ReadAllBytes();
-            Attachment att = new Attachment(i, issue.Attachment.Title, issue.Attachment.Description, content, attachment.ContentType.MediaType);
+            Attachment att = new Attachment(i, args.Attachment.Title, args.Attachment.Description, content, attachment.ContentType.MediaType);
             AttachmentRepository.Add(att);
           }
         }

@@ -2,6 +2,7 @@
 using Mason.IssueTracker.Server.Codecs;
 using Mason.IssueTracker.Server.Domain.Attachments;
 using Mason.IssueTracker.Server.Issues.Resources;
+using Mason.IssueTracker.Server.JsonSchemas.Resources;
 using Mason.IssueTracker.Server.Projects.Resources;
 using Mason.Net;
 using OpenRasta.Web;
@@ -32,6 +33,10 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       Link projectLink = CommunicationContext.NewLink("up", projectUrl, "Containing project");
       i.AddLink(projectLink);
 
+      Uri attachmentsUrl = typeof(IssueAttachmentsResource).CreateUri(new { id = issue.Issue.Id });
+      Link attachmentsLink = CommunicationContext.NewLink("is:atttachments", attachmentsUrl, "All attachments for this issue");
+      i.AddLink(attachmentsLink);
+
       dynamic updateTemplate = new DynamicDictionary();
       updateTemplate.Title = issue.Issue.Title;
       updateTemplate.Description = issue.Issue.Description;
@@ -42,6 +47,15 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
 
       Net.Action deleteAction = CommunicationContext.NewAction("is:delete-issue", MasonProperties.ActionTypes.Void, selfUrl, "Delete issue", method: "DELETE");
       i.AddAction(deleteAction);
+
+      Uri addAttachmentSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-attachment" });
+      Net.Action addAttachmentAction = CommunicationContext.NewAction("is:add-attachment", MasonProperties.ActionTypes.JSONFiles, attachmentsUrl, "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
+      if (!CommunicationContext.PreferMinimalResponse())
+      {
+        addAttachmentAction.jsonFile = "args";
+        addAttachmentAction.AddFile("attachment", "Attachment for issue");
+      }
+      i.AddAction(addAttachmentAction);
 
       i.ID = issue.Issue.Id;
       i.Title = issue.Issue.Title;

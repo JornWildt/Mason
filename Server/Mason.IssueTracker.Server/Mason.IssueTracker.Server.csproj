@@ -86,8 +86,10 @@
     <Compile Include="Attachments\Handlers\AttachmentHandler.cs" />
     <Compile Include="Attachments\Resources\AttachmentResource.cs" />
     <Compile Include="Attachments\Resources\AttachmentContentResource.cs" />
+    <Compile Include="Attachments\Resources\UpdateAttachmentArgs.cs" />
     <Compile Include="BaseHandler.cs" />
     <Compile Include="Codecs\IssueTrackerMasonCodec.cs" />
+    <Compile Include="Issues\Codecs\IssueAttachmentsCodec.cs" />
     <Compile Include="Issues\Handlers\IssueAttachmentsHandler.cs" />
     <Compile Include="Issues\Resources\AddAttachmentArgs.cs" />
     <Compile Include="Issues\Resources\IssueAttachmentsResource.cs" />

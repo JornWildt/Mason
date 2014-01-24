@@ -30,6 +30,12 @@ namespace Mason.IssueTracker.Server.Attachments
       ResourceSpace.Has.ResourcesOfType<AttachmentContentResource>()
         .AtUri(UrlPaths.AttachmentContent)
         .HandledBy<AttachmentContentHandler>();
+
+      ResourceSpace.Has.ResourcesOfType<UpdateAttachmentArgs>()
+        .WithoutUri
+        .TranscodedBy<JsonReader<UpdateAttachmentArgs>>();
+
+      ResourceSpace.Uses.CustomDependency<JsonReader<UpdateAttachmentArgs>, JsonReader<UpdateAttachmentArgs>>(DependencyLifetime.Transient);
     }
   }
 }

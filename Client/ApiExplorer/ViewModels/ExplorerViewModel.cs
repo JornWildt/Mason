@@ -250,12 +250,20 @@ namespace ApiExplorer.ViewModels
 
     private void RenderResponse(Response r)
     {
-      string contentType = r.ContentType.ToString();
-      if (!string.IsNullOrEmpty(contentType))
-        StatusLine += " [" + contentType + "]";
+      if (r.StatusCode != HttpStatusCode.NoContent && r.ContentType != null)
+      {
+        string contentType = r.ContentType.ToString();
+        if (!string.IsNullOrEmpty(contentType))
+          StatusLine += " [" + contentType + "]";
 
-      IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
-      ContentRender = handler.GetRender(this, r);
+        IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
+        ContentRender = handler.GetRender(this, r);
+      }
+      else
+      {
+        ContentRender = null;
+      }
+
       Navigation.CurrentUrl = r.WebResponse.ResponseUri.AbsoluteUri;
       if (r.WebResponse.Method == "GET")
         Navigation.RegisterUrl();

@@ -16,26 +16,26 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
   {
     protected override Resource ConvertToIssueTracker(ProjectIssuesResource project)
     {
-      dynamic result = new Resource();
+      dynamic p = new Resource();
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
-        result.SetMeta(MasonProperties.MetaProperties.Title, "Project issues");
-        result.SetMeta(MasonProperties.MetaProperties.Description, "This is the list of issues for a single project.");
+        p.SetMeta(MasonProperties.MetaProperties.Title, "Project issues");
+        p.SetMeta(MasonProperties.MetaProperties.Description, "This is the list of issues for a single project.");
       }
 
       Uri selfUrl = typeof(ProjectIssuesResource).CreateUri(new { id = project.Project.Id });
       Link selfLink = CommunicationContext.NewLink("self", selfUrl);
-      result.AddLink(selfLink);
+      p.AddLink(selfLink);
 
       Uri projectUrl = typeof(ProjectResource).CreateUri(new { id = project.Project.Id });
       Link projectLink = CommunicationContext.NewLink("up", projectUrl);
-      result.AddLink(projectLink);
+      p.AddLink(projectLink);
 
-      result.Id = project.Project.Id;
-      result.Title = project.Project.Title;
+      p.Id = project.Project.Id;
+      p.Title = project.Project.Title;
 
-      result.Issues = new List<SubResource>();
+      p.Issues = new List<SubResource>();
 
       foreach (Issue i in project.Issues)
       {
@@ -47,10 +47,10 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
         Link itemSelfLink = CommunicationContext.NewLink("self", itemSelfUri);
         item.AddLink(itemSelfLink);
 
-        result.Issues.Add(item);
+        p.Issues.Add(item);
       }
 
-      return result;
+      return p;
     }
   }
 }
