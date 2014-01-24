@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="ApiExplorer.MediaTypeHandlers.Image.UserControls.ImageRender"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vc="clr-namespace:ApiExplorer.ValueConverters">
+  <DockPanel>
+    <ScrollViewer x:Name="ImageScollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Padding="4" >
+      <Image Source="{Binding Filename, Converter={vc:PathToImageConverter}}" Stretch="None"/>
+    </ScrollViewer>
+  </DockPanel>
+</UserControl>

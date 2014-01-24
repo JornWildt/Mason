@@ -123,6 +123,11 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\Dialogs\UrlTemplatePopupDialog.xaml.cs">
       <DependentUpon>UrlTemplatePopupDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MediaTypeHandlers\Image\ImageMediaTypeHandler.cs" />
+    <Compile Include="MediaTypeHandlers\Image\UserControls\ImageRender.xaml.cs">
+      <DependentUpon>ImageRender.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MediaTypeHandlers\Image\ViewModels\ImageViewModel.cs" />
     <Compile Include="MediaTypeHandlers\Text\TextMediaTypeHandler.cs" />
     <Compile Include="MediaTypeHandlers\Text\UserControls\TextRender.xaml.cs">
       <DependentUpon>TextRender.xaml</DependentUpon>
@@ -142,6 +147,7 @@
     <Compile Include="UserControls\RequestEditors\TextWithFilesEditor.xaml.cs">
       <DependentUpon>TextWithFilesEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\CurieManager.cs" />
     <Compile Include="Utilities\FocusBehavior.cs" />
     <Compile Include="Utilities\IHandleMediaType.cs" />
     <Compile Include="Utilities\JsonExampleGenerator.cs" />
@@ -154,6 +160,7 @@
     <Compile Include="Utilities\WatermarkService.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\EmptyStringToVisibility.cs" />
+    <Compile Include="ValueConverters\PathToImageConverter.cs" />
     <Compile Include="ValueConverters\ValueConverterBase.cs" />
     <Compile Include="ViewModels\ComposerFileViewModel.cs" />
     <Compile Include="ViewModels\ComposerViewModel.cs" />
@@ -195,6 +202,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MediaTypeHandlers\ApplicationMason\Dialogs\UrlTemplatePopupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MediaTypeHandlers\Image\UserControls\ImageRender.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -177,7 +177,8 @@ namespace ApiExplorer.ViewModels
           args.Request.Header("Prefer", "return=minimal");
 
         args.Request
-            .Accept("application/vnd.mason;q=1, */*;q=0.5")
+            .Accept("application/vnd.mason", 1)
+            .Accept("*/*", 0.5)
             .OnHeadersReady(r => { CurrentRequest = r; })
             .Async()
             .OnError(r => HandleResponseError(r, args))

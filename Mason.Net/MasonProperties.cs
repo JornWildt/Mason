@@ -7,12 +7,17 @@
     public const string Prefix = "@";
 
     public const string Namespaces = Prefix + "namespaces";
+    public const string Meta = Prefix + "meta";
+    public const string Profile = Prefix + "profile";
     public const string Links = Prefix + "links";
     public const string LinkTemplates = Prefix + "link-templates";
     public const string Actions = Prefix + "actions";
-    public const string Meta = Prefix + "meta";
-    public const string Profile = Prefix + "profile";
     public const string Error = Prefix + "error";
+
+    public static class NamespaceProperties
+    {
+      public const string Name = "name";
+    }
 
     public static class MetaProperties
     {

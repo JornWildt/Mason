@@ -3,6 +3,7 @@ using ApiExplorer.MediaTypeHandlers.Text;
 using ApiExplorer.MediaTypeHandlers.Unknown;
 using Ramone;
 using System.Collections.Generic;
+using ApiExplorer.MediaTypeHandlers.Image;
 
 
 namespace ApiExplorer.Utilities
@@ -21,6 +22,7 @@ namespace ApiExplorer.Utilities
       NoContentMediaTypeHandler = new UnknownMediaTypeHandler("No content");
       RegisterHandler("application/vnd.mason", new ApplicationMasonMediaTypeHandler());
       RegisterHandler("text/plain", new TextMediaTypeHandler());
+      RegisterHandler("image/png", new ImageMediaTypeHandler());
     }
 
 

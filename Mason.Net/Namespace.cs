@@ -1,10 +1,14 @@
-﻿namespace Mason.Net
+﻿using Newtonsoft.Json;
+
+
+namespace Mason.Net
 {
   public class Namespace
   {
-    public string alias { get; set; }
+    [JsonIgnore]
+    public string prefix { get; set; }
 
-    public string value { get; set; }
+    public string reference { get; set; }
 
     public Namespace()
     {
@@ -12,8 +16,8 @@
 
     public Namespace(string alias, string value)
     {
-      this.value = value;
-      this.alias = alias;
+      this.reference = value;
+      this.prefix = alias;
     }
   }
 }

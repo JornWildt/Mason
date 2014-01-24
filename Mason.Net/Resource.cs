@@ -8,7 +8,7 @@ namespace Mason.Net
   public class Resource : SubResource
   {
     [JsonProperty(MasonProperties.Prefix + "namespaces")]
-    public List<Namespace> Namespaces { get; set; }
+    public Dictionary<string, Namespace> Namespaces { get; set; }
 
     [JsonProperty(MasonProperties.Prefix + "meta")]
     public SubResource Meta { get; set; }
@@ -33,8 +33,8 @@ namespace Mason.Net
     public void AddNamespace(Namespace ns)
     {
       if (Namespaces == null)
-        Namespaces = new List<Namespace>();
-      Namespaces.Add(ns);
+        Namespaces = new Dictionary<string, Namespace>();
+      Namespaces[ns.prefix] = ns;
     }
   }
 }
