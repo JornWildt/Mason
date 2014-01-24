@@ -35,7 +35,11 @@ namespace Mason.IssueTracker.Server.Issues
       ResourceSpace.Has.ResourcesOfType<IssueCollectionResource>()
         .AtUri(UrlPaths.ProjectIssues)
         .HandledBy<IssuesHandler>()
-        .TranscodedBy<IssueCollectionCodec>(); ;
+        .TranscodedBy<IssueCollectionCodec>();
+
+      ResourceSpace.Has.ResourcesOfType<IssueAttachmentsResource>()
+        .AtUri(UrlPaths.IssueAttachments)
+        .HandledBy<IssueAttachmentsHandler>();
 
       ResourceSpace.Has.ResourcesOfType<CreateIssueArgs>()
         .WithoutUri
@@ -44,6 +48,10 @@ namespace Mason.IssueTracker.Server.Issues
       ResourceSpace.Has.ResourcesOfType<UpdateIssueArgs>()
         .WithoutUri
         .TranscodedBy<JsonReader<UpdateIssueArgs>>();
+
+      ResourceSpace.Has.ResourcesOfType<AddAttachmentArgs>()
+        .WithoutUri
+        .TranscodedBy<JsonReader<AddAttachmentArgs>>();
 
       ResourceSpace.Uses.CustomDependency<JsonReader<CreateIssueArgs>, JsonReader<CreateIssueArgs>>(DependencyLifetime.Transient);
       //ResourceSpace.Uses.CustomDependency<JsonReader<UpdateIssueArgs>, JsonReader<UpdateIssueArgs>>(DependencyLifetime.Transient);

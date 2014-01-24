@@ -89,6 +89,9 @@
     <Compile Include="BaseHandler.cs" />
     <Compile Include="Codecs\IssueTrackerMasonCodec.cs" />
     <Compile Include="Issues\Codecs\IssueCollectionCodec.cs" />
+    <Compile Include="Issues\Handlers\IssueAttachmentsHandler.cs" />
+    <Compile Include="Issues\Resources\AddAttachmentArgs.cs" />
+    <Compile Include="Issues\Resources\IssueAttachmentsResource.cs" />
     <Compile Include="Issues\Resources\UpdateIssueArgs.cs" />
     <Compile Include="JsonSchemas\Codecs\JsonSchemaWriter.cs" />
     <Compile Include="Codecs\JsonWriter.cs" />

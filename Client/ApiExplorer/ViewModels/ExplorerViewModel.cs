@@ -128,7 +128,7 @@ namespace ApiExplorer.ViewModels
       //Url = "http://localhost/mason-demo/contact";
       //Url = "http://localhost/mason-demo/projects/1";
       Navigation.CurrentUrl = "http://localhost/mason-demo/issues/1";
-      //Url = "http://jorn-pc/mason-demo/projects/1/issues";
+      //Navigation.CurrentUrl = "http://jorn-pc/mason-demo/projects/1/issues";
     }
 
 
