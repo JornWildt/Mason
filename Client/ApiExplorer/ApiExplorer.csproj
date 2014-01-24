@@ -147,6 +147,7 @@
     <Compile Include="UserControls\RequestEditors\TextWithFilesEditor.xaml.cs">
       <DependentUpon>TextWithFilesEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\CurieManager.cs" />
     <Compile Include="Utilities\FocusBehavior.cs" />
     <Compile Include="Utilities\IHandleMediaType.cs" />
     <Compile Include="Utilities\JsonExampleGenerator.cs" />

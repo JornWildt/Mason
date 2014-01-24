@@ -13,6 +13,8 @@ namespace Mason.IssueTracker.Server.Codecs
     {
       Resource r = ConvertToIssueTracker(resource);
 
+      r.AddNamespace(new Namespace("is", "http://elfisk.dk/issue-tracker/rels#"));
+
       if (!CommunicationContext.PreferMinimalResponse())
       {
         string msg = string.Format("This application restarts in {0:m\\:ss} minutes", ApplicationLifeTimeManager.NextRestart - DateTime.Now);
