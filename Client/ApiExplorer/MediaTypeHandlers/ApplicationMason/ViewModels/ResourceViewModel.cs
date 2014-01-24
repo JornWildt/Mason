@@ -50,33 +50,34 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
-    public ResourceViewModel(ViewModel parent, JObject resource)
+    public ResourceViewModel(ViewModel parent, JObject resource, BuilderContext context)
       : base(parent, resource)
     {
       Properties = new ObservableCollection<ViewModel>();
 
       foreach (var pair in resource)
       {
-        if (pair.Key == MasonProperties.Links && pair.Value is JObject)
+        if (pair.Key == MasonProperties.Namespaces && pair.Value is JObject)
+        {
+          BuildNamespaces((JObject)pair.Value, context);
+        }
+        else if (pair.Key == MasonProperties.Links && pair.Value is JObject)
         {
           LinksJsonValue = pair.Value;
           Links = new ObservableCollection<LinkViewModel>(
-            pair.Value.Children().OfType<JProperty>().Select(l => new LinkViewModel(this, l)));
+            pair.Value.Children().OfType<JProperty>().Select(l => new LinkViewModel(this, l, context)));
         }
         else if (pair.Key == MasonProperties.LinkTemplates && pair.Value is JObject)
         {
           LinkTemplatesJsonValue = pair.Value;
           LinkTemplates = new ObservableCollection<LinkTemplateViewModel>(
-            pair.Value.Children().OfType<JProperty>().Select(l => new LinkTemplateViewModel(this, l)));
+            pair.Value.Children().OfType<JProperty>().Select(l => new LinkTemplateViewModel(this, l, context)));
         }
         else if (pair.Key == MasonProperties.Actions && pair.Value is JObject)
         {
           ActionsJsonValue = pair.Value;
           Actions = new ObservableCollection<ActionViewModel>(
-            pair.Value.Children().OfType<JProperty>().Select(a => ActionViewModel.CreateAction(this, a)));
-        }
-        else if (pair.Key == MasonProperties.Namespaces && pair.Value is JArray)
-        {
+            pair.Value.Children().OfType<JProperty>().Select(a => ActionViewModel.CreateAction(this, a, context)));
         }
         else if (pair.Key == MasonProperties.Meta && pair.Value is JObject)
         {
@@ -86,18 +87,18 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
           if (metaLinksProperty is JObject)
           {
             MetaLinks = new ObservableCollection<LinkViewModel>(
-              metaLinksProperty.Children().OfType<JProperty>().Select(l => new LinkViewModel(this, l)));
+              metaLinksProperty.Children().OfType<JProperty>().Select(l => new LinkViewModel(this, l, context)));
           }
         }
         else if (pair.Key == MasonProperties.Error && pair.Value is JObject)
         {
-          ResourcePropertyViewModel error = new ResourcePropertyViewModel(this, pair.Value, pair.Key, new ResourceViewModel(this, (JObject)pair.Value));
+          ResourcePropertyViewModel error = new ResourcePropertyViewModel(this, pair.Value, pair.Key, new ResourceViewModel(this, (JObject)pair.Value, context));
           error.IsError = true;
           Properties.Add(error);
         }
         else
         {
-          Properties.Add(CreatePropertiesRecursively(pair.Key, pair.Value));
+          Properties.Add(CreatePropertiesRecursively(pair.Key, pair.Value, context));
         }
       }
 
@@ -106,20 +107,37 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     }
 
 
-    private PropertyViewModel CreatePropertiesRecursively(string name, JToken json)
+    private PropertyViewModel CreatePropertiesRecursively(string name, JToken json, BuilderContext context)
     {
       if (json is JArray)
       {
         int index=0;
-        ObservableCollection<ViewModel> array = new ObservableCollection<ViewModel>(json.Select(i => CreatePropertiesRecursively(string.Format("[{0}]",index++), i)));
+        ObservableCollection<ViewModel> array = new ObservableCollection<ViewModel>(json.Select(i => CreatePropertiesRecursively(string.Format("[{0}]",index++), i, context)));
         return new ArrayPropertyViewModel(this, json, name, array);
       }
       else if (json is JObject)
       {
-        return new ResourcePropertyViewModel(this, json, name, new ResourceViewModel(this, (JObject)json));
+        return new ResourcePropertyViewModel(this, json, name, new ResourceViewModel(this, (JObject)json, context));
       }
       else
         return new PropertyViewModel(this, json, name, (json != null ? json.ToString() : ""));
+    }
+
+
+    private void BuildNamespaces(JObject namespaces, BuilderContext context)
+    {
+      foreach (JProperty ns in namespaces.Properties())
+      {
+        JObject nsDef = ns.Value as JObject;
+        if (nsDef != null)
+        {
+          JToken jsonName = nsDef[MasonProperties.NamespaceProperties.Name];
+          string ns_name = (jsonName != null && jsonName.Type == JTokenType.String ? jsonName.Value<string>() : null);
+          string ns_prefix = ns.Name;
+          if (!string.IsNullOrWhiteSpace(ns_prefix) && !string.IsNullOrWhiteSpace(ns_name))
+            context.Namespaces.Namespace(ns_prefix, ns_name);
+        }
+      }
     }
   }
 }

@@ -11,6 +11,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.UserControls
   /// </summary>
   public partial class ApplicationMasonRender : UserControl, IDisposable
   {
+    public ApplicationMasonRender()
+    {
+    }
+
+
     public ApplicationMasonRender(MasonViewModel vm)
     {
       InitializeComponent();

@@ -110,7 +110,9 @@
                 <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
               </i:EventTrigger>
             </i:Interaction.Triggers>
-            <TextBlock Text="{Binding DisplayTitle}"/>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding DisplayTitle1}" FontWeight="Light"/><TextBlock Text="{Binding DisplayTitle2}"/>
+            </StackPanel>
           </Hyperlink>
         </TextBlock>
         <!-- Use styling to render links -->
@@ -132,7 +134,7 @@
         </TextBlock.Resources>
         <Hyperlink Command="{Binding OpenLinkTemplateCommand}"
                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                   ToolTip="{Binding DisplayTitle}">
+                   ToolTip="{Binding ToolTip}">
           <!-- Updates status line -->
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseEnter">
@@ -142,7 +144,9 @@
               <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
             </i:EventTrigger>
           </i:Interaction.Triggers>
-          <TextBlock Text="{Binding Name}"/>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding DisplayTitle1}" FontWeight="Light"/><TextBlock Text="{Binding DisplayTitle2}"/>
+          </StackPanel>
         </Hyperlink>
       </TextBlock>
     </DataTemplate>
@@ -171,7 +175,9 @@
               <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
             </i:EventTrigger>
           </i:Interaction.Triggers>
-          <TextBlock Text="{Binding DisplayTitle}"/>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding DisplayTitle1}" FontWeight="Light"/><TextBlock Text="{Binding DisplayTitle2}"/>
+          </StackPanel>
         </Hyperlink>
       </TextBlock>
     </DataTemplate>

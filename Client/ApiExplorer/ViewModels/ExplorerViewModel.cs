@@ -1,5 +1,6 @@
 ﻿using ApiExplorer.Utilities;
 using ApiExplorer.Windows;
+using log4net;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Ramone;
 using Ramone.HyperMedia;
@@ -33,6 +34,9 @@ namespace ApiExplorer.ViewModels
 
   public class ExplorerViewModel : ViewModel
   {
+    static ILog Logger = LogManager.GetLogger(typeof(ExplorerViewModel));
+
+
     #region UI properties
 
     private bool _addressIsFocused;
@@ -227,6 +231,8 @@ namespace ApiExplorer.ViewModels
 
     protected void HandleResponseError(AsyncError err, ExecuteWebRequestEventArgs args)
     {
+      Logger.Error("Error in response handling", err.Exception);
+
       Application.Current.Dispatcher.Invoke(() =>
         {
           IsExecutingRequest = false;

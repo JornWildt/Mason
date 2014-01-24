@@ -13,7 +13,7 @@ namespace Mason.IssueTracker.Server.Codecs
     {
       Resource r = ConvertToIssueTracker(resource);
 
-      r.AddNamespace(new Namespace("is", "http://elfisk.dk/issue-tracker/rels#"));
+      r.AddNamespace(new Namespace(RelTypes.NSPrefix, RelTypes.NSName));
 
       if (!CommunicationContext.PreferMinimalResponse())
       {

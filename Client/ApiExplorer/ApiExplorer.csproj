@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ActionViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ArrayPropertyViewModel.cs" />
+    <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\BuilderContext.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\JsonActionViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ElementViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\KeyValueParameterViewModel.cs" />
@@ -147,7 +148,7 @@
     <Compile Include="UserControls\RequestEditors\TextWithFilesEditor.xaml.cs">
       <DependentUpon>TextWithFilesEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\CurieManager.cs" />
+    <Compile Include="Utilities\NamespaceManager.cs" />
     <Compile Include="Utilities\FocusBehavior.cs" />
     <Compile Include="Utilities\IHandleMediaType.cs" />
     <Compile Include="Utilities\JsonExampleGenerator.cs" />

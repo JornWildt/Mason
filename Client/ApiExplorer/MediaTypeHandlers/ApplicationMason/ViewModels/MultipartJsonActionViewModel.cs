@@ -11,8 +11,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     protected override string ActionType { get { return MasonProperties.ActionTypes.JSONFiles; } }
 
 
-    public MultipartJsonActionViewModel(ViewModel parent, JProperty json)
-      : base(parent, json)
+    public MultipartJsonActionViewModel(ViewModel parent, JProperty json, BuilderContext context)
+      : base(parent, json, context)
     {
     }
 

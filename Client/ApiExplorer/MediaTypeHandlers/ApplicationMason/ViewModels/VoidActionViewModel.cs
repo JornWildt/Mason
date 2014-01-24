@@ -1,9 +1,6 @@
-﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.Dialogs;
-using ApiExplorer.Utilities;
-using ApiExplorer.ViewModels;
+﻿using ApiExplorer.ViewModels;
 using ApiExplorer.Windows;
 using Newtonsoft.Json.Linq;
-using Ramone;
 using System.Windows;
 
 
@@ -11,8 +8,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class VoidActionViewModel : ActionViewModel
   {
-    public VoidActionViewModel(ViewModel parent, JProperty json)
-      : base(parent, json)
+    public VoidActionViewModel(ViewModel parent, JProperty json, BuilderContext context)
+      : base(parent, json, context)
     {
     }
 

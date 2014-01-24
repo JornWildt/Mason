@@ -17,7 +17,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason
     {
       JObject resource = r.Decode<JObject>();
 
-      MasonViewModel vm = new MasonViewModel(parent, resource);
+      BuilderContext context = new BuilderContext();
+      MasonViewModel vm = new MasonViewModel(parent, resource, context);
       return new ApplicationMasonRender(vm);
     }
 

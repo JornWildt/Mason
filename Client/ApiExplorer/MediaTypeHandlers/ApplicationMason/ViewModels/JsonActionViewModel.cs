@@ -36,8 +36,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     protected virtual string ActionType { get { return MasonProperties.ActionTypes.JSON; } }
 
 
-    public JsonActionViewModel(ViewModel parent, JProperty action)
-      : base(parent, action)
+    public JsonActionViewModel(ViewModel parent, JProperty action, BuilderContext context)
+      : base(parent, action, context)
     {
       JToken schemaJson = action.Value["schema"];
       if (schemaJson != null)

@@ -13,46 +13,17 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
   {
     #region UI properties
 
-    private string _rel;
-    public string Rel
-    {
-      get { return _rel; }
-      set
-      {
-        if (value != _rel)
-        {
-          _rel = value;
-          OnPropertyChanged("Rel");
-        }
-      }
-    }
-
+    public string Rel { get; set; }
 
     public string HRef { get { return GetValue<string>("href"); } }
 
     public string Title { get { return GetValue<string>("title"); } }
 
-    public string DisplayTitle
-    { 
-      get 
-      { 
-        string type = GetValue<string>("type");
-        if (!string.IsNullOrEmpty(type))
-          type = " (" + type + ")";
-        return Rel + type;
-      } 
-    }
+    public string DisplayTitle1 { get; set; }
 
-    public string ToolTip
-    {
-      get
-      {
-        string type = GetValue<string>("type");
-        if (!string.IsNullOrEmpty(type))
-          type = " (" + type + ")";
-        return (GetValue<string>("title") ?? Rel) + type;
-      }
-    }
+    public string DisplayTitle2 { get; set; }
+
+    public string ToolTip { get; set; }
 
 
     public ObservableCollection<LinkViewModel> AlternateLinks { get; set; }
@@ -67,8 +38,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
-    public LinkViewModel(ViewModel parent, JProperty link)
-      : this(parent, link.Value as JObject, link.Name)
+    public LinkViewModel(ViewModel parent, JProperty link, BuilderContext context)
+      : this(parent, link.Value as JObject, link.Name, context)
     {
       JArray alt = link.Value["alt"] as JArray;
       if (alt != null)
@@ -78,16 +49,39 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         {
           JObject l = l1 as JObject;
           if (l != null)
-            AlternateLinks.Add(new LinkViewModel(this, l, link.Name));
+            AlternateLinks.Add(new LinkViewModel(this, l, link.Name, context));
         }
       }
     }
 
 
-    public LinkViewModel(ViewModel parent, JObject link, string name)
+    public LinkViewModel(ViewModel parent, JObject link, string rel, BuilderContext context)
       : base(parent, link)
     {
-      Rel = name;
+      string prefix;
+      string reference;
+      string nsname;
+
+      Rel = context.Namespaces.Expand(rel, out prefix, out reference, out nsname);
+
+      ToolTip = (string.IsNullOrWhiteSpace(Title) ? "" : Title + "\n");
+      ToolTip += "Links to " + HRef;
+
+      if (reference != null && nsname != null)
+      {
+        DisplayTitle1 = nsname;
+        DisplayTitle2 = reference;
+      }
+      else
+      {
+        DisplayTitle1 = "";
+        DisplayTitle2 = Rel;
+      }
+
+      string type = GetValue<string>("type");
+      if (!string.IsNullOrWhiteSpace(type))
+        DisplayTitle2 += " (" + type + ")";
+
       RegisterCommand(FollowLinkCommand = new DelegateCommand<object>(FollowLink));
     }
 

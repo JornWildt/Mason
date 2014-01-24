@@ -17,19 +17,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
   {
     #region UI properties
 
-    private string _name;
-    public string Name
-    {
-      get { return _name; }
-      set
-      {
-        if (value != _name)
-        {
-          _name = value;
-          OnPropertyChanged("Name");
-        }
-      }
-    }
+    public string Name { get; set; }
     
     public string Template { get { return GetValue<string>("template"); } }
 
@@ -37,13 +25,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public string Description { get { return GetValue<string>("description"); } }
 
-    public string DisplayTitle
-    {
-      get
-      {
-        return GetValue<string>("description") ?? Name;
-      }
-    }
+    public string ToolTip { get; set; }
+
+    public string DisplayTitle1 { get; set; }
+
+    public string DisplayTitle2 { get; set; }
 
 
     private ObservableCollection<KeyValueParameterViewModel> _parameters;
@@ -74,7 +60,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
 
 
-    public LinkTemplateViewModel(ViewModel parent, JProperty template)
+    public LinkTemplateViewModel(ViewModel parent, JProperty template, BuilderContext context)
       : base(parent, template.Value)
     {
       RegisterCommand(OpenLinkTemplateCommand = new DelegateCommand<object>(OpenLinkTemplate));
@@ -86,7 +72,27 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       if (!(template.Value is JObject))
         throw new InvalidOperationException("Expected JSON object for link template");
 
-      Name = template.Name;
+      string prefix;
+      string reference;
+      string nsname;
+
+      Name = context.Namespaces.Expand(template.Name, out prefix, out reference, out nsname);
+
+      ToolTip = (string.IsNullOrWhiteSpace(Title) ? "" : Title + "\n");
+      ToolTip += "Links to " + Template;
+
+      if (reference != null && nsname != null)
+      {
+        DisplayTitle1 = nsname;
+        DisplayTitle2 = reference;
+      }
+      else
+      {
+        DisplayTitle1 = "";
+        DisplayTitle2 = Name;
+      }
+
+
       JArray parameters = GetValue<JArray>(template.Value, "parameters");
       if (parameters != null)
         Parameters = new ObservableCollection<KeyValueParameterViewModel>(parameters.Select(p => new KeyValueParameterViewModel(this, p)));
