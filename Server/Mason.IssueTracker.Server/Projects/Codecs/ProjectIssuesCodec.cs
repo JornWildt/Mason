@@ -1,6 +1,7 @@
 ﻿using Mason.IssueTracker.Server.Codecs;
 using Mason.IssueTracker.Server.Domain.Issues;
 using Mason.IssueTracker.Server.Issues.Resources;
+using Mason.IssueTracker.Server.Projects.Resources;
 using Mason.Net;
 using OpenRasta.Web;
 using System;
@@ -9,11 +10,11 @@ using System.Linq;
 using System.Text;
 
 
-namespace Mason.IssueTracker.Server.Issues.Codecs
+namespace Mason.IssueTracker.Server.Projects.Codecs
 {
-  public class IssueCollectionCodec : IssueTrackerMasonCodec<IssueCollectionResource>
+  public class ProjectIssuesCodec : IssueTrackerMasonCodec<ProjectIssuesResource>
   {
-    protected override Resource ConvertToIssueTracker(IssueCollectionResource resource)
+    protected override Resource ConvertToIssueTracker(ProjectIssuesResource project)
     {
       dynamic result = new Resource();
 
@@ -23,11 +24,20 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
         result.SetMeta(MasonProperties.MetaProperties.Description, "This is the list of issues for a single project.");
       }
 
-      //Uri selfUrl = typeof(IssueCollectionResource).CreateUri(new { id = resource.
+      Uri selfUrl = typeof(ProjectIssuesResource).CreateUri(new { id = project.Project.Id });
+      Link selfLink = CommunicationContext.NewLink("self", selfUrl);
+      result.AddLink(selfLink);
+
+      Uri projectUrl = typeof(ProjectResource).CreateUri(new { id = project.Project.Id });
+      Link projectLink = CommunicationContext.NewLink("up", projectUrl);
+      result.AddLink(projectLink);
+
+      result.Id = project.Project.Id;
+      result.Title = project.Project.Title;
 
       result.Issues = new List<SubResource>();
 
-      foreach (Issue i in resource.Issues)
+      foreach (Issue i in project.Issues)
       {
         dynamic item = new SubResource();
         item.ID = i.Id.ToString();

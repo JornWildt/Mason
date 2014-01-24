@@ -88,7 +88,6 @@
     <Compile Include="Attachments\Resources\AttachmentContentResource.cs" />
     <Compile Include="BaseHandler.cs" />
     <Compile Include="Codecs\IssueTrackerMasonCodec.cs" />
-    <Compile Include="Issues\Codecs\IssueCollectionCodec.cs" />
     <Compile Include="Issues\Handlers\IssueAttachmentsHandler.cs" />
     <Compile Include="Issues\Resources\AddAttachmentArgs.cs" />
     <Compile Include="Issues\Resources\IssueAttachmentsResource.cs" />
@@ -102,9 +101,7 @@
     <Compile Include="Issues\Codecs\IssueQueryCodec.cs" />
     <Compile Include="Issues\Handlers\IssueHandler.cs" />
     <Compile Include="Issues\Handlers\IssueQueryHandler.cs" />
-    <Compile Include="Issues\Handlers\IssuesHandler.cs" />
     <Compile Include="Issues\Resources\CreateIssueArgs.cs" />
-    <Compile Include="Issues\Resources\IssueCollectionResource.cs" />
     <Compile Include="Issues\Resources\IssueResource.cs" />
     <Compile Include="Issues\Resources\IssueQueryResource.cs" />
     <Compile Include="Contact\ApplicationStarter.cs" />
@@ -119,11 +116,14 @@
     <Compile Include="OperationInterceptor.cs" />
     <Compile Include="Profiles.cs" />
     <Compile Include="Projects\ApplicationStarter.cs" />
+    <Compile Include="Projects\Codecs\ProjectIssuesCodec.cs" />
     <Compile Include="Projects\Codecs\ProjectsCodec.cs" />
     <Compile Include="Projects\Codecs\ProjectCodec.cs" />
     <Compile Include="Projects\Handlers\ProjectHandler.cs" />
+    <Compile Include="Projects\Handlers\ProjectIssuesHandler.cs" />
     <Compile Include="Projects\Handlers\ProjectsHandler.cs" />
     <Compile Include="Projects\Resources\ProjectCollectionResource.cs" />
+    <Compile Include="Projects\Resources\ProjectIssuesResource.cs" />
     <Compile Include="Projects\Resources\ProjectResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelTypes.cs" />

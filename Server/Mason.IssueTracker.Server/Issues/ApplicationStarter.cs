@@ -32,14 +32,11 @@ namespace Mason.IssueTracker.Server.Issues
         .HandledBy<IssueQueryHandler>()
         .TranscodedBy<IssueQueryCodec>();
 
-      ResourceSpace.Has.ResourcesOfType<IssueCollectionResource>()
-        .AtUri(UrlPaths.ProjectIssues)
-        .HandledBy<IssuesHandler>()
-        .TranscodedBy<IssueCollectionCodec>();
-
       ResourceSpace.Has.ResourcesOfType<IssueAttachmentsResource>()
         .AtUri(UrlPaths.IssueAttachments)
         .HandledBy<IssueAttachmentsHandler>();
+
+      // This is anoying - is there are better way?
 
       ResourceSpace.Has.ResourcesOfType<CreateIssueArgs>()
         .WithoutUri

@@ -11,7 +11,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
 {
   public class ProjectCodec : IssueTrackerMasonCodec<ProjectResource>
   {
-    protected override Net.Resource ConvertToIssueTracker(ProjectResource project)
+    protected override Resource ConvertToIssueTracker(ProjectResource project)
     {
       Contract.Project p = new Contract.Project();
 
@@ -25,7 +25,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       Link selfLink = CommunicationContext.NewLink("self", selfUrl, "Project details");
       p.AddLink(selfLink);
 
-      Uri issuesUrl = typeof(IssueCollectionResource).CreateUri(new { id = project.Project.Id });
+      Uri issuesUrl = typeof(ProjectIssuesResource).CreateUri(new { id = project.Project.Id });
       Link issuesLink = CommunicationContext.NewLink("is:issues", issuesUrl, "All issues in project");
       p.AddLink(issuesLink);
 
