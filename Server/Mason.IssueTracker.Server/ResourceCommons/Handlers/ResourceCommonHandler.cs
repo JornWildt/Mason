@@ -17,7 +17,7 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
     {
       dynamic common = new Resource();
       common.Title = Settings.OriginName;
-      common.Description = Settings.OriginDescription;
+      common.Description = "Example of an IssueTracker service using Mason media type.";
 
       Uri selfUri = typeof(ResourceCommonResource).CreateUri();
       Link selfLink = CommunicationContext.NewLink("self", selfUri);
@@ -27,7 +27,7 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
       Link contactLink = CommunicationContext.NewLink(RelTypes.Contact, contactUri, "Complete contact information in standard formats such as vCard and jCard");
       common.AddLink(contactLink);
 
-      Uri logoUri = new Uri(CommunicationContext.ApplicationBaseUri.EnsureHasTrailingSlash(), "Origins/MinistryOfFun/logo.png");
+      Uri logoUri = new Uri(CommunicationContext.ApplicationBaseUri.EnsureHasTrailingSlash(), "Origins/JoeHacker/logo.png");
       Link logoLink = CommunicationContext.NewLink(RelTypes.Logo, logoUri);
       common.AddLink(logoLink);
 

@@ -12,12 +12,12 @@ namespace Mason.IssueTracker.Server.Contact.Handlers
       {
         Contact = new ContactInformation
         {
-          FullName = Settings.OriginName,
-          Address1 = "33 Demo Road",
-          PostalCode = "1234",
-          City = "Demon",
+          FullName = Settings.OriginName + " (by Jørn Wildt)",
+          Address1 = "Mosevej 10B",
+          PostalCode = "3450",
+          City = "Allerød",
           Phone = "+45 12345678",
-          EMail = "info@demostradius.org",
+          EMail = "jw@fjeldgruppen.dk",
           Country = "Denmark"
         }
       };
