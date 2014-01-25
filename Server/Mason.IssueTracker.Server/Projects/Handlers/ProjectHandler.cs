@@ -29,7 +29,7 @@ namespace Mason.IssueTracker.Server.Projects.Handlers
     }
 
 
-    public object Post(int id, Contract.UpdateProjectArgs args)
+    public object Post(int id, UpdateProjectArgs args)
     {
       return ExecuteInUnitOfWork(() =>
       {

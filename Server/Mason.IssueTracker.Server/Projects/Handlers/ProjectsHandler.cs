@@ -31,7 +31,7 @@ namespace Mason.IssueTracker.Server.Projects.Handlers
     }
 
 
-    public object Post(Contract.CreateProjectArgs args)
+    public object Post(AddProjectArgs args)
     {
       return ExecuteInUnitOfWork(() =>
       {

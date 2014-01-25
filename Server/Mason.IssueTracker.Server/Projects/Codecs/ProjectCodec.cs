@@ -13,7 +13,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
   {
     protected override Resource ConvertToIssueTracker(ProjectResource project)
     {
-      Contract.Project p = new Contract.Project();
+      dynamic p = new Resource();
 
       if (!CommunicationContext.PreferMinimalResponse())
       {

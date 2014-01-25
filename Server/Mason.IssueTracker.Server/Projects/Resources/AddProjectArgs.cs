@@ -1,6 +1,6 @@
-﻿namespace Mason.IssueTracker.Contract
+﻿namespace Mason.IssueTracker.Server.Projects.Resources
 {
-  public class UpdateProjectArgs
+  public class AddProjectArgs
   {
     public string Code { get; set; }
 

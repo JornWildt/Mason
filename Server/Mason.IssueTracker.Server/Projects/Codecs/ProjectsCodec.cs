@@ -14,7 +14,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
   {
     protected override Net.Resource ConvertToIssueTracker(ProjectCollectionResource projects)
     {
-      Contract.ProjectCollection pcol = new Contract.ProjectCollection();
+      dynamic pcol = new Resource();
 
       if (!CommunicationContext.PreferMinimalResponse())
       {

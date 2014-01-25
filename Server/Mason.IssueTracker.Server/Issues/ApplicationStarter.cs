@@ -39,9 +39,9 @@ namespace Mason.IssueTracker.Server.Issues
 
       // This is anoying - is there are better way?
 
-      ResourceSpace.Has.ResourcesOfType<CreateIssueArgs>()
+      ResourceSpace.Has.ResourcesOfType<AddIssueArgs>()
         .WithoutUri
-        .TranscodedBy<JsonReader<CreateIssueArgs>>();
+        .TranscodedBy<JsonReader<AddIssueArgs>>();
 
       ResourceSpace.Has.ResourcesOfType<UpdateIssueArgs>()
         .WithoutUri
@@ -51,7 +51,7 @@ namespace Mason.IssueTracker.Server.Issues
         .WithoutUri
         .TranscodedBy<JsonReader<AddAttachmentArgs>>();
 
-      ResourceSpace.Uses.CustomDependency<JsonReader<CreateIssueArgs>, JsonReader<CreateIssueArgs>>(DependencyLifetime.Transient);
+      ResourceSpace.Uses.CustomDependency<JsonReader<AddIssueArgs>, JsonReader<AddIssueArgs>>(DependencyLifetime.Transient);
       ResourceSpace.Uses.CustomDependency<JsonReader<AddAttachmentArgs>, JsonReader<AddAttachmentArgs>>(DependencyLifetime.Transient);
     }
   }

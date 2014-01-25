@@ -104,7 +104,7 @@
     <Compile Include="Issues\Codecs\IssueQueryCodec.cs" />
     <Compile Include="Issues\Handlers\IssueHandler.cs" />
     <Compile Include="Issues\Handlers\IssueQueryHandler.cs" />
-    <Compile Include="Issues\Resources\CreateIssueArgs.cs" />
+    <Compile Include="Issues\Resources\AddIssueArgs.cs" />
     <Compile Include="Issues\Resources\IssueResource.cs" />
     <Compile Include="Issues\Resources\IssueQueryResource.cs" />
     <Compile Include="Contact\ApplicationStarter.cs" />
@@ -125,9 +125,11 @@
     <Compile Include="Projects\Handlers\ProjectHandler.cs" />
     <Compile Include="Projects\Handlers\ProjectIssuesHandler.cs" />
     <Compile Include="Projects\Handlers\ProjectsHandler.cs" />
+    <Compile Include="Projects\Resources\AddProjectArgs.cs" />
     <Compile Include="Projects\Resources\ProjectCollectionResource.cs" />
     <Compile Include="Projects\Resources\ProjectIssuesResource.cs" />
     <Compile Include="Projects\Resources\ProjectResource.cs" />
+    <Compile Include="Projects\Resources\UpdateProjectArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelTypes.cs" />
     <Compile Include="ResourceCommons\ApplicationStarter.cs" />
@@ -149,10 +151,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Mason.IssueTracker.Contract\Mason.IssueTracker.Contract.csproj">
-      <Project>{243234fa-ec3c-4459-8019-8b4828990a11}</Project>
-      <Name>Mason.IssueTracker.Contract</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Mason.Net\Mason.Net.csproj">
       <Project>{942bf912-7d72-40e6-af86-1f28b240a0c8}</Project>
       <Name>Mason.Net</Name>

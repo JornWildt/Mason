@@ -1,6 +1,6 @@
 ﻿namespace Mason.IssueTracker.Server.Issues.Resources
 {
-  public class CreateIssueArgs
+  public class AddIssueArgs
   {
     public class AttachmentArgs
     {

@@ -37,13 +37,13 @@ namespace Mason.IssueTracker.Server.Projects
         .HandledBy<ProjectIssuesHandler>()
         .TranscodedBy<ProjectIssuesCodec>();
 
-      ResourceSpace.Has.ResourcesOfType<Contract.CreateProjectArgs>()
+      ResourceSpace.Has.ResourcesOfType<AddProjectArgs>()
         .WithoutUri
-        .TranscodedBy<JsonReader<Contract.CreateProjectArgs>>();
+        .TranscodedBy<JsonReader<AddProjectArgs>>();
 
-      ResourceSpace.Has.ResourcesOfType<Contract.UpdateProjectArgs>()
+      ResourceSpace.Has.ResourcesOfType<UpdateProjectArgs>()
         .WithoutUri
-        .TranscodedBy<JsonReader<Contract.UpdateProjectArgs>>();
+        .TranscodedBy<JsonReader<UpdateProjectArgs>>();
     }
   }
 }

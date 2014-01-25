@@ -42,7 +42,7 @@ namespace Mason.IssueTracker.Server.Projects.Handlers
 
 
     // "id" is project ID
-    public object Post(int id, CreateIssueArgs args, IFile attachment = null)
+    public object Post(int id, AddIssueArgs args, IFile attachment = null)
     {
       return ExecuteInUnitOfWork(() =>
       {
