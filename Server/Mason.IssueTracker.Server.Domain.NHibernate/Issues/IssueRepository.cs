@@ -27,7 +27,12 @@ namespace Mason.IssueTracker.Server.Domain.NHibernate.Issues
 
     public List<Issue> FindIssues(IssueSearchArgs args)
     {
-      throw new NotImplementedException();
+      var query = Query().Where(i =>
+        (string.IsNullOrWhiteSpace(args.TextQuery) || i.Title.Contains(args.TextQuery) || i.Description.Contains(args.TextQuery))
+        && (args.Severity == null || args.Severity == i.Severity)
+        && (args.ProjectId == null || args.ProjectId == i.OwnerProject.Id));
+
+      return query.ToList();
     }
 
 

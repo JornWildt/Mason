@@ -8,7 +8,7 @@
 
     public const string Issues = "issues";
     public const string Issue = "issues/{id}";
-    public const string IssueQuery = "issues-query?id={id}&text={text}";
+    public const string IssueQuery = "issues-query?text={text}&severity={severity}&project={pid}";
     public const string IssueAttachments = "issues/{id}/attachments";
 
     public const string Attachment = "attachments/{id}";

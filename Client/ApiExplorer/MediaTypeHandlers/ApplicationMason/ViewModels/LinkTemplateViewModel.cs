@@ -31,6 +31,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public string DisplayTitle2 { get; set; }
 
+    public string WindowTitle { get; set; }
+
 
     private ObservableCollection<KeyValueParameterViewModel> _parameters;
     public ObservableCollection<KeyValueParameterViewModel> Parameters
@@ -92,6 +94,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         DisplayTitle2 = Name;
       }
 
+      WindowTitle = (string.IsNullOrWhiteSpace(Title) ? "Link template editor" : Title);
 
       JArray parameters = GetValue<JArray>(template.Value, "parameters");
       if (parameters != null)

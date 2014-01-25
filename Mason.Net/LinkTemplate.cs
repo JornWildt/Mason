@@ -9,15 +9,18 @@ namespace Mason.Net
 
     public string template { get; set; }
 
+    public string title { get; set; }
+
     public string description { get; set; }
 
     public List<LinkTemplateParameter> parameters { get; private set; }
 
 
-    public LinkTemplate(string name, string template, string description = null)
+    public LinkTemplate(string name, string template, string title = null, string description = null)
     {
       this.name = name;
       this.template = template;
+      this.title = title;
       this.description = description;
     }
 

@@ -5,8 +5,9 @@ namespace Mason.IssueTracker.Server.Domain.Issues
 {
   public class IssueSearchArgs
   {
-    public long? Id { get; set; }
     public string TextQuery { get; set; }
+    public int? Severity { get; set; }
+    public int? ProjectId { get; set; }
   }
 
 

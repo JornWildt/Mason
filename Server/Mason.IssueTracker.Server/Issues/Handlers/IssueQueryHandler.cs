@@ -20,18 +20,21 @@ namespace Mason.IssueTracker.Server.Issues.Handlers
     #endregion
 
 
-    public object Get(string id=null, string text=null)
+    public object Get(string text=null, string severity=null, string pid=null)
     {
-      Logger.DebugFormat("id = {0}", id);
+      // iseverity = integer severity (best known way to handle (ignore) empty parameter severity="")
+      int? iseverity = null;
+      if (!string.IsNullOrEmpty(severity))
+        iseverity = int.Parse(severity);
 
-      // iid = integer ID (best known way to handle (ignore) empty parameter id="")
-      int? iid = null;
-      if (!string.IsNullOrEmpty(id))
-        iid = int.Parse(id);
+      // ipid = integer project ID (best known way to handle (ignore) empty parameter pid="")
+      int? ipid = null;
+      if (!string.IsNullOrEmpty(pid))
+        ipid = int.Parse(pid);
 
-      IssueSearchArgs args = new IssueSearchArgs { Id = iid, TextQuery = text };
+      IssueSearchArgs args = new IssueSearchArgs { TextQuery = text, Severity = iseverity, ProjectId = ipid };
 
-      Uri selfUri = typeof(IssueQueryResource).CreateUri(new { id = iid, text = text });
+      Uri selfUri = typeof(IssueQueryResource).CreateUri(new { text = text, severity = severity, pid = pid });
 
       List<Issue> issues = IssueRepository.FindIssues(args);
       return new Resources.IssueQueryResource

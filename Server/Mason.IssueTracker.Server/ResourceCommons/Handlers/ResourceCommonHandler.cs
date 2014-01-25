@@ -1,4 +1,5 @@
 ﻿using Mason.IssueTracker.Server.Contact.Resources;
+using Mason.IssueTracker.Server.Issues;
 using Mason.IssueTracker.Server.JsonSchemas.Resources;
 using Mason.IssueTracker.Server.Projects.Resources;
 using Mason.IssueTracker.Server.ResourceCommons.Resources;
@@ -12,9 +13,6 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
 {
   public class ResourceCommonHandler : BaseHandler
   {
-    public ICommunicationContext Context { get; set; }
-
-
     public object Get()
     {
       dynamic common = new Resource();
@@ -29,7 +27,7 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
       Link contactLink = CommunicationContext.NewLink(RelTypes.Contact, contactUri, "Complete contact information in standard formats such as vCard and jCard");
       common.AddLink(contactLink);
 
-      Uri logoUri = new Uri(Context.ApplicationBaseUri.EnsureHasTrailingSlash(), "Origins/MinistryOfFun/logo.png");
+      Uri logoUri = new Uri(CommunicationContext.ApplicationBaseUri.EnsureHasTrailingSlash(), "Origins/MinistryOfFun/logo.png");
       Link logoLink = CommunicationContext.NewLink(RelTypes.Logo, logoUri);
       common.AddLink(logoLink);
 
@@ -44,14 +42,7 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
       Link projectsLink = CommunicationContext.NewLink(RelTypes.Projects, projectsUri, "List all projects");
       common.AddLink(projectsLink);
 
-      string issueQueryUrl = Context.ApplicationBaseUri.AbsoluteUri + "/" + UrlPaths.IssueQuery;
-      LinkTemplate issueQueryTemplate = CommunicationContext.NewLinkTemplate(RelTypes.IssueQuery, issueQueryUrl, "Search for issues");
-      if (!CommunicationContext.PreferMinimalResponse())
-      {
-        issueQueryTemplate.AddParameter(new LinkTemplateParameter("id", description: "Issue ID"));
-        issueQueryTemplate.AddParameter(new LinkTemplateParameter("text", description: "Text query searching all relevante issue properties"));
-      }
-      common.AddLinkTemplate(issueQueryTemplate);
+      common.AddLinkTemplate(CommunicationContext.BuildIssueQueryTemplate());
 
       Uri projectsUrl = typeof(ProjectCollectionResource).CreateUri();
       Uri createProjectSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-project" });

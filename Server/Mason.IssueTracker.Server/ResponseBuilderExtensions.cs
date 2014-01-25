@@ -32,15 +32,15 @@ namespace Mason.IssueTracker.Server
     }
 
 
-    public static LinkTemplate NewLinkTemplate(this ICommunicationContext context, string name, string template, string description = null)
+    public static LinkTemplate NewLinkTemplate(this ICommunicationContext context, string name, string template, string title = null, string description = null)
     {
       if (context.PreferMinimalResponse())
       {
-        return new LinkTemplate(name, template, null);
+        return new LinkTemplate(name, template, null, null);
       }
       else
       {
-        return new LinkTemplate(name, template, description);
+        return new LinkTemplate(name, template, title, description);
       }
     }
 
