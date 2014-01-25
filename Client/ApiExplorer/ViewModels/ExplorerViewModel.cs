@@ -163,7 +163,7 @@ namespace ApiExplorer.ViewModels
     }
 
 
-    protected HttpWebRequest CurrentRequest { get; set; }
+    protected Request CurrentRequest { get; set; }
 
     protected void ExecuteWebRequest(ExecuteWebRequestEventArgs args)
     {
@@ -171,7 +171,7 @@ namespace ApiExplorer.ViewModels
 
       if (CurrentRequest != null)
       {
-        // CurrentRequest.Abort(); FIXME: needs Ramone to handle this
+        CurrentRequest.CancelAsync();
         CurrentRequest = null;
       }
 
@@ -183,11 +183,12 @@ namespace ApiExplorer.ViewModels
         args.Request
             .Accept("application/vnd.mason", 1)
             .Accept("*/*", 0.5)
-            .OnHeadersReady(r => { CurrentRequest = r; })
             .Async()
             .OnError(r => HandleResponseError(r, args))
             .OnComplete(() => CurrentRequest = null)
             .Submit(r => HandleResponse(r, args));
+
+        CurrentRequest = args.Request;
       }
       catch (Exception ex)
       {
