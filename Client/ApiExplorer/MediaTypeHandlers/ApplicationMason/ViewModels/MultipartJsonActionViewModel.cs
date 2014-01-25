@@ -19,6 +19,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     protected override void ModifyComposerWindow(ComposerViewModel vm)
     {
+      string title = (string.IsNullOrWhiteSpace(Title) ? "JSON+Files Action" : Title);
+      vm.WindowTitle = title;
+      vm.Description = Description;
+
       JToken jsonFile = JsonValue[MasonProperties.ActionProperties.JsonFile];
       if (jsonFile != null)
         vm.JsonFilename = jsonFile.Value<string>();

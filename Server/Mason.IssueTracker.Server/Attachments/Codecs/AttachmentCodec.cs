@@ -39,7 +39,7 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       updateTemplate.Title = attachment.Attachment.Title;
       updateTemplate.Description = attachment.Attachment.Description;
 
-      Net.Action updateAction = CommunicationContext.NewAction("is:update-attachment", MasonProperties.ActionTypes.JSONFiles, selfUrl, "Update attachment details", template: (DynamicDictionary)updateTemplate);
+      Net.Action updateAction = CommunicationContext.NewAction("is:update-attachment", MasonProperties.ActionTypes.JSONFiles, selfUrl, "Update attachment details", description: "Update title and description of attachment", template: (DynamicDictionary)updateTemplate);
       if (!CommunicationContext.PreferMinimalResponse())
       {
         updateAction.jsonFile = "args";
@@ -47,7 +47,7 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       }
       a.AddAction(updateAction);
 
-      Net.Action deleteAction = CommunicationContext.NewAction("is:delete-attachment", MasonProperties.ActionTypes.Void, selfUrl, "Delete action", method: "DELETE");
+      Net.Action deleteAction = CommunicationContext.NewAction("is:delete-attachment", MasonProperties.ActionTypes.Void, selfUrl, "Delete attachment", method: "DELETE");
       a.AddAction(deleteAction);
 
       a.ID = attachment.Attachment.Id;

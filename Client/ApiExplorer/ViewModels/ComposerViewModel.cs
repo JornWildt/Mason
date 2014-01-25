@@ -96,6 +96,21 @@ namespace ApiExplorer.ViewModels
     }
 
 
+    private string _description;
+    public string Description
+    {
+      get { return _description; }
+      set
+      {
+        if (value != _description)
+        {
+          _description = value;
+          OnPropertyChanged("Description");
+        }
+      }
+    }
+
+
     private string _body;
     public string Body
     {

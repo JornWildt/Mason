@@ -1,17 +1,12 @@
 ﻿using ApiExplorer.ViewModels;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public abstract class ElementViewModel : JsonViewModel
   {
-
     #region Commands
 
     public DelegateCommand<object> SetStatusCommand { get; private set; }

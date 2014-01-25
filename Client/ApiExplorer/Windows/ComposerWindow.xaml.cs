@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace ApiExplorer.Windows
 {
-  /// <summary>
-  /// Interaction logic for ComposerWindow.xaml
-  /// </summary>
   public partial class ComposerWindow : Window
   {
     public ComposerWindow(ComposerViewModel vm, StartFocus focus)
@@ -52,6 +49,7 @@ namespace ApiExplorer.Windows
       string windowTitle = null, 
       string body = null,
       string actionType = null,
+      string description = null,
       Action<ComposerViewModel> modifier = null,
       StartFocus focus = StartFocus.Method)
     {
@@ -64,6 +62,9 @@ namespace ApiExplorer.Windows
         vm.Body = body;
       if (actionType != null)
         vm.SelectedType = actionType;
+      if (description != null)
+        vm.Description = description;
+
       vm.WindowTitle = windowTitle ?? "Request composer";
 
       if (modifier != null)

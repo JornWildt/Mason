@@ -45,15 +45,15 @@ namespace Mason.IssueTracker.Server
     }
 
 
-    public static Net.Action NewAction(this ICommunicationContext contex, string name, string type, Uri href, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
+    public static Net.Action NewAction(this ICommunicationContext contex, string name, string type, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
     {
       if (contex.PreferMinimalResponse())
       {
-        return new Net.Action(name, type, href, null, null, null, null, method);
+        return new Net.Action(name, type, href, null, null, null, null, null, method);
       }
       else
       {
-        return new Net.Action(name, type, href, description, schema, schemaUrl, template, method);
+        return new Net.Action(name, type, href, title, description, schema, schemaUrl, template, method);
       }
     }
   }

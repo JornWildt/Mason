@@ -24,6 +24,8 @@ namespace Mason.Net
 
     public string method { get; set; }
 
+    public string title { get; set; }
+
     public string description { get; set; }
 
     public string schema { get; set; }
@@ -37,11 +39,12 @@ namespace Mason.Net
     public List<ActionFile> files { get; set; }
 
 
-    public Action(string name, string type, Uri href, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
+    public Action(string name, string type, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
     {
       this.name = name;
       this.type = type;
       this.href = (href != null ? href.AbsoluteUri : null);
+      this.title = title;
       this.description = description;
       this.schema = schema;
       this.schemaUrl = (schemaUrl != null ? schemaUrl.AbsoluteUri : null);

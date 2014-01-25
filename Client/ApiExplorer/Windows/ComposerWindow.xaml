@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:axuc="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason.UserControls"
         xmlns:axu="clr-namespace:ApiExplorer.Utilities"
-        xmlns:vc="clr-namespace:ApiExplorer.ValueConverters"
+        xmlns:axvc="clr-namespace:ApiExplorer.ValueConverters"
         xmlns:req="clr-namespace:ApiExplorer.UserControls.RequestEditors"
         Title="{Binding WindowTitle}" Height="500" Width="600"
         WindowStartupLocation="CenterOwner">
   <Grid Margin="10">
     <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
@@ -47,15 +48,20 @@
                 SelectedItem="{Binding SelectedType}"/>
     </Grid>
     
-    <TabControl Grid.Row="2" Margin="0 4 0 0">
+    <!-- Description -->
+    <TextBlock Grid.Row="2" Margin="0 4 0 0" Text="{Binding Description}" 
+               Style="{StaticResource ResourceKey=Description}" TextWrapping="Wrap"
+               Visibility="{Binding Description, Converter={axvc:EmptyStringToVisibility}}"/>
+    
+    <TabControl Grid.Row="3" Margin="0 4 0 0">
       <TabItem Header="Body">
         <!-- Body -->
         <Grid>
-          <req:TextEditor Visibility="{Binding ShowTextEditor, Converter={vc:BoolToVisibilityConverter}}" x:Name="TextEditorInput"/>
-          <req:TextWithFilesEditor Visibility="{Binding ShowTextEditorWithFiles, Converter={vc:BoolToVisibilityConverter}}" x:Name="TextWithFilesEditorInput"/>
+          <req:TextEditor Visibility="{Binding ShowTextEditor, Converter={axvc:BoolToVisibilityConverter}}" x:Name="TextEditorInput"/>
+          <req:TextWithFilesEditor Visibility="{Binding ShowTextEditorWithFiles, Converter={axvc:BoolToVisibilityConverter}}" x:Name="TextWithFilesEditorInput"/>
           <TextBlock Text="No content allowed for this method"
                      VerticalAlignment="Center" HorizontalAlignment="Center"
-                     Visibility="{Binding MethodAllowsContent, Converter={vc:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>
+                     Visibility="{Binding MethodAllowsContent, Converter={axvc:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>
         </Grid>
       </TabItem>
       <TabItem Header="Headers">
@@ -67,7 +73,7 @@
     </TabControl>
     
     <!-- Buttons -->
-    <StackPanel Grid.Row="3" Orientation="Horizontal">
+    <StackPanel Grid.Row="4" Orientation="Horizontal">
       <Button Content="Execute" Command="{Binding ExecuteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource self}}"
               IsDefault="True" Margin="0 4 0 0"/>
       <Button Content="Cancel" IsCancel="True" Margin="6 4 0 0"/>

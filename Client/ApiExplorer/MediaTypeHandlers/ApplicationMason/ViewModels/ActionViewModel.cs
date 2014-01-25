@@ -20,6 +20,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public string HRef { get { return GetValue<string>("href"); } }
 
+    public string Title { get { return GetValue<string>("title"); } }
+
     public string Description { get { return GetValue<string>("description"); } }
 
     public string DisplayTitle1 { get; set; }
@@ -49,7 +51,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Name = context.Namespaces.Expand(json.Name, out prefix, out reference, out nsname);
 
-      ToolTip = (string.IsNullOrWhiteSpace(Description) ? "" : Description + "\n");
+      ToolTip = (string.IsNullOrWhiteSpace(Title) ? "" : Title + "\n");
       ToolTip += "Goes to " + HRef;
 
       if (reference != null && nsname != null)

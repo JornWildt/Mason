@@ -18,8 +18,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       Publish(new MasonViewModel.SourceChangedEventArgs { Source = JsonValue.ToString() });
 
       Window w = Window.GetWindow(sender as DependencyObject);
-      string title = Description ?? "JSON Action";
-      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title);
+      string title = (string.IsNullOrWhiteSpace(Title) ? "Void Action" : Title);
+      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, description: Description);
     }
   }
 }
