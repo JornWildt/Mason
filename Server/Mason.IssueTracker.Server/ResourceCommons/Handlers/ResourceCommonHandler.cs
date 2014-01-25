@@ -35,7 +35,7 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
       {
         common.SetMeta(MasonProperties.MetaProperties.Title, "Common resource data for " + Settings.OriginName);
         common.SetMeta(MasonProperties.MetaProperties.Description, "This resource contains common information for all resources (such as common links, implementation and owner details).");
-        common.AddMetaLink(CommunicationContext.NewLink("documentation", "http://www.dr.dk", "Documentation (NOT READY)"));
+        common.AddMetaLink(CommunicationContext.NewLink("documentation", "https://github.com/JornWildt/Mason", "Documentation (GitHub)"));
       }
 
       Uri projectsUri = typeof(ProjectCollectionResource).CreateUri();
