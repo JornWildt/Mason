@@ -22,6 +22,10 @@ namespace ApiExplorer.Utilities
       NoContentMediaTypeHandler = new UnknownMediaTypeHandler("No content");
       RegisterHandler("application/vnd.mason", new ApplicationMasonMediaTypeHandler());
       RegisterHandler("text/plain", new TextMediaTypeHandler());
+      RegisterHandler("text/vcard", new TextMediaTypeHandler());
+      RegisterHandler("application/json", new TextMediaTypeHandler());
+      RegisterHandler("application/jcard+json", new TextMediaTypeHandler());
+      RegisterHandler("application/schema+json", new TextMediaTypeHandler());
       RegisterHandler("image/png", new ImageMediaTypeHandler());
     }
 
