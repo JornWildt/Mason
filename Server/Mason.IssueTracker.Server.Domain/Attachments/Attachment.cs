@@ -1,13 +1,24 @@
 ﻿using CuttingEdge.Conditions;
 using Mason.IssueTracker.Server.Domain.Issues;
 using System;
+using System.Configuration;
 
 
 namespace Mason.IssueTracker.Server.Domain.Attachments
 {
   public class Attachment
   {
-    public const int MaxContentLength = 1000;
+    public static int MaxContentLength
+    {
+      get
+      {
+        string ls = ConfigurationManager.AppSettings["Attachment.MaxFileSize"];
+        int size;
+        if (ls != null && int.TryParse(ls, out size))
+          return size;
+        return 10000;
+      }
+    }
 
     public virtual int Id { get; protected set; }
 

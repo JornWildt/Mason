@@ -56,11 +56,10 @@ namespace Mason.IssueTracker.Server.Domain.NHibernate
       if (File.Exists(DBFilename))
         File.Delete(DBFilename);
 
-      return Fluently.Configure()
-        .Database(
-          SQLiteConfiguration.Standard
-            .UsingFile(DBFilename)
-        )
+      var cfg = new global::NHibernate.Cfg.Configuration();
+      cfg.Configure();
+
+      return Fluently.Configure(cfg)
         .Mappings(m => m.FluentMappings.AddFromAssemblyOf<ProjectMapping>())
         .ExposeConfiguration(BuildSchema)
         .BuildSessionFactory();
