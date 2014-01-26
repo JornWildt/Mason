@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="73C1F58B-EA03-4753-983E-2F33762E37C0" Name="API Explorer 1.0" Language="1033" Version="1.0.0.0" Codepage="windows-1252"
+           Manufacturer="Jørn Wildt" UpgradeCode="B56816F4-C74D-482F-AFC8-422EE8003C79">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"  />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of API Explorer is already installed." />
+
+    <Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes"/>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="ElfiskProgramDir" Name="Elfisk">
+          <Directory Id="INSTALLFOLDER" Name="API Explorer">
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="API Explorer" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ProductComponent" Guid="CBA40046-1157-43B9-A13A-78C53556615B">
+        <File Id="ApiExplorerExe" Name="APIExplorer.exe" Source="$(var.ApiExplorer.TargetPath)" KeyPath="yes"/>
+        <RemoveFolder Id="ElfiskProgramDir" On="uninstall"/>
+      </Component> 
+    </ComponentGroup>
+  </Fragment>
+</Wix>
