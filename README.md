@@ -70,6 +70,8 @@ You should be using Mason because:
 
 ## Getting started
 
+Read the introduction: ...
+
 Download the generic client for improved browsing experience: ...
 
 Explore the demo implementation of a fictive issue tracker service: ...
@@ -84,14 +86,13 @@ View the source code of client and server reference implementations: https://git
 Mason uses the mediatype identifier `application/mason+json`. A registration with IANA is planned when Mason has a decent written spec.
 
 
-## Progressive adoption
-
-
 ## Feedback
 
-Discussion group for general discussion and announcements: ...
+Discussion group for general discussion and announcements:
+- https://groups.google.com/d/forum/mason-media-type
+- mason-media-type@googlegroups.com
 
-Issue tracker on GitHub: ...
+Issue tracker on GitHub: https://github.com/JornWildt/Mason/issues
 
 Contact author: 
 - Name: Jørn Wildt
@@ -104,8 +105,19 @@ Contact author:
 
 Mason is not the only format for hypermedia enabled APIs. Actually it is heavily inspired by existing formats such as HAL which it owns a lot to. Here is a short comparison to some of the other formats:
 
-[HAL](http://tools.ietf.org/html/draft-kelly-json-hal-06): Mason is a superset of HAL. Both formats works by merging raw API data with additional hypermedia elements. Mason adds actions, error handling .
+[HAL](http://tools.ietf.org/html/draft-kelly-json-hal-06): Mason is a superset of HAL. Both formats works by merging raw API data with additional hypermedia elements. Mason adds actions, error handling and more (see below).
 
-[Siren](https://github.com/kevinswiber/siren): Siren and Mason are somewhat related as both of them has both links and actions. Mason adds error handling 
+[Siren](https://github.com/kevinswiber/siren): Siren and Mason are somewhat related as each of them have both links and actions. Mason adds error handling and more (see below).
 
-(*) and has a strong focus on communication with the client developers
+[Hydra](http://www.markus-lanthaler.com/hydra/): Hydra is for JSON-LD (JSON linked data) and uses a completely different approach to encoding hypermedia (RDF). I cannot say how much these two formats overlap in terms of features.
+
+[Collection-JSON](http://amundsen.com/media-types/collection/): Cj is a format for working with collections of data. Mason and Cj has both support for links, link templates, actions and error handling but Cj requires data to be represented as collections whereas Mason has no such kind of restrictions. Mason works with existing API data whereas Cj requires data to be encoded in a completely different way.
+
+HTML: HTML has support for links and actions but is restricted to POST actions. Mason goes beyond that and is much more focused on APIs.
+
+The major differentiators between Mason and the other formats are:
+
+- Mason has a strong focus on communicating details about the API to the client developers.
+- Mason uses JSON for sending data in actions (and defines a way to combine file uploads with JSON).
+- Mason defines a way to reduce the payload for M2M communication.
+- Mason has a predefined set of properties for error handling.
