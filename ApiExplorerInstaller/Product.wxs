@@ -10,24 +10,63 @@
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="ElfiskProgramDir" Name="Elfisk">
-          <Directory Id="INSTALLFOLDER" Name="API Explorer">
-          </Directory>
-        </Directory>
+        <Directory Id="INSTALLFOLDER" Name="API Explorer"/>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationStartMenuFolder" Name="API Explorer"/>
       </Directory>
     </Directory>
 
     <Feature Id="ProductFeature" Title="API Explorer" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ApplicationShortcut"/>
     </Feature>
-  </Product>
 
-  <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-      <Component Id="ProductComponent" Guid="CBA40046-1157-43B9-A13A-78C53556615B">
-        <File Id="ApiExplorerExe" Name="APIExplorer.exe" Source="$(var.ApiExplorer.TargetPath)" KeyPath="yes"/>
-        <RemoveFolder Id="ElfiskProgramDir" On="uninstall"/>
-      </Component> 
+      <Component Id="ApiExplorerExe" Guid="{2E1E4A57-E453-4265-988F-56C0F69229B4}">
+        <File Id="ApiExplorerExe" Name="APIExplorer.exe" Source="$(var.ApiExplorer.TargetPath)"/>
+      </Component>
+      <Component Id="Newtonsoft.Json.dll" Guid="{D7BA0FA7-2E17-4383-9023-8A6B9930C9F8}">
+        <File Id="Newtonsoft.Json.dll" Source="$(var.ApiExplorer.TargetDir)\Newtonsoft.Json.dll"/>
+      </Component>
+      <Component Id="ApiExplorer.exe.config" Guid="{63217782-8C9B-481F-A526-021F68EF298A}">
+        <File Id="ApiExplorer.exe.config" Source="$(var.ApiExplorer.TargetDir)\ApiExplorer.exe.config"/>
+      </Component>
+      <Component Id="GalaSoft.MvvmLight.Extras.WPF45.dll" Guid="{1A92018D-2F63-4894-9CB3-D61CAE21FC4A}">
+        <File Id="GalaSoft.MvvmLight.Extras.WPF45.dll" Source="$(var.ApiExplorer.TargetDir)\GalaSoft.MvvmLight.Extras.WPF45.dll"/>
+      </Component>
+      <Component Id="GalaSoft.MvvmLight.WPF45.dll" Guid="{DCC77D81-2619-4111-810A-6BB5DE5BAF4C}">
+        <File Id="GalaSoft.MvvmLight.WPF45.dll" Source="$(var.ApiExplorer.TargetDir)\GalaSoft.MvvmLight.WPF45.dll"/>
+      </Component>
+      <Component Id="log4net.dll" Guid="{8ACE14A0-1D55-4480-9141-BBF8480718FD}">
+        <File Id="log4net.dll" Source="$(var.ApiExplorer.TargetDir)\log4net.dll"/>
+      </Component>
+      <Component Id="Mason.Net.dll" Guid="{1AAF9128-AA99-4B25-8831-7143B5B9F5B8}">
+        <File Id="Mason.Net.dll" Source="$(var.ApiExplorer.TargetDir)\Mason.Net.dll"/>
+      </Component>
+      <Component Id="Microsoft.Practices.Composite.dll" Guid="{BC33DC26-42A0-46E9-95D1-D1EA69E4A88F}">
+        <File Id="Microsoft.Practices.Composite.dll" Source="$(var.ApiExplorer.TargetDir)\Microsoft.Practices.Composite.dll"/>
+      </Component>
+      <Component Id="Microsoft.Practices.ServiceLocation.dll" Guid="{D472B4AD-EB71-4C7C-B401-5A4498A485CE}">
+        <File Id="Microsoft.Practices.ServiceLocation.dll" Source="$(var.ApiExplorer.TargetDir)\Microsoft.Practices.ServiceLocation.dll"/>
+      </Component>
+      <Component Id="Microsoft.Practices.Composite.Presentation.dll" Guid="{33B2AB75-70A9-4687-9A87-5919A48E26C5}">
+        <File Id="Microsoft.Practices.Composite.Presentation.dll" Source="$(var.ApiExplorer.TargetDir)\Microsoft.Practices.Composite.Presentation.dll"/>
+      </Component>
+      <Component Id="Ramone.dll" Guid="{C3111273-C0D6-415C-BDA7-2198EBA84BEA}">
+        <File Id="Ramone.dll" Source="$(var.ApiExplorer.TargetDir)\Ramone.dll"/>
+      </Component>
+      <Component Id="System.Windows.Interactivity.dll" Guid="{31935662-75DE-437E-909F-4BCB662B2E61}">
+        <File Id="System.Windows.Interactivity.dll" Source="$(var.ApiExplorer.TargetDir)\System.Windows.Interactivity.dll"/>
+      </Component>
     </ComponentGroup>
-  </Fragment>
+    
+    <Component Id="ApplicationShortcut" Directory="ApplicationStartMenuFolder" Guid="{80AB7ED0-319C-4A73-AD0E-A15065A61AFD}">
+      <Shortcut Id="ApplicationStartMenuShortcut" Name="API Explorer"
+                Target="[INSTALLFOLDER]ApiExplorer.exe" WorkingDirectory="INSTALLFOLDER"/>
+      <RemoveFolder Id="ApplicationStartMenuFolder" On="uninstall"/>
+      <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]"
+                     Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+    </Component>
+  </Product>
 </Wix>
