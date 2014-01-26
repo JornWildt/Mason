@@ -70,7 +70,7 @@ You should be using Mason because:
 
 ## Getting started
 
-Read the introduction: ...
+Check the feature list: https://github.com/JornWildt/Mason/wiki/Mason-features
 
 Download the generic client for improved browsing experience: ...
 
