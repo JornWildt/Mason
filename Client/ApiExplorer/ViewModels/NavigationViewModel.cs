@@ -52,13 +52,20 @@ namespace ApiExplorer.ViewModels
     {
       PreviousUrls = new Stack<string>();
       RegisterCommand(BackCommand = new DelegateCommand<object>(Back));
+
+      CurrentUrl = Properties.Settings.Default.LastAccessedUrl;
+      if (string.IsNullOrEmpty(CurrentUrl))
+        CurrentUrl = "http://mason-issue-tracker.cbrain.net/issues/1";
     }
 
 
     public void RegisterUrl()
     {
       if (PreviousUrls.Count == 0 || PreviousUrls.Peek() != CurrentUrl)
+      {
         PreviousUrls.Push(CurrentUrl);
+        Properties.Settings.Default.LastAccessedUrl = CurrentUrl;
+      }
     }
 
 

@@ -125,14 +125,6 @@ namespace ApiExplorer.ViewModels
       Subscribe<SetStatusLineTextEventArgs>(e => SetUpdateStatusLine(e.Text));
       Subscribe<ResetStatusLineTextEventArgs>(e => ResetUpdateStatusLine());
       Subscribe<NavigationViewModel.NavigateEventArgs>(e => Navigate());
-
-      //Url = "http://localhost/mason-demo/projects";
-      //Url = "http://localhost/mason-demo//issues/query";
-      //Url = "http://localhost/mason-demo/resource-common";
-      //Url = "http://localhost/mason-demo/contact";
-      //Url = "http://localhost/mason-demo/projects/1";
-      Navigation.CurrentUrl = "http://localhost/mason-demo/issues/1";
-      //Navigation.CurrentUrl = "http://jorn-pc/mason-demo/projects/1/issues";
     }
 
 

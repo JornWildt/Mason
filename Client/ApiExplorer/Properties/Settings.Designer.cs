@@ -34,5 +34,17 @@ namespace ApiExplorer.Properties {
                 this["PreferMinimalResponseSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastAccessedUrl {
+            get {
+                return ((string)(this["LastAccessedUrl"]));
+            }
+            set {
+                this["LastAccessedUrl"] = value;
+            }
+        }
     }
 }
