@@ -19,6 +19,20 @@
     }
 
 
+    public bool UseMethodOverride
+    {
+      get { return ApiExplorer.Properties.Settings.Default.UseMethodOverride; }
+      set
+      {
+        if (value != ApiExplorer.Properties.Settings.Default.UseMethodOverride)
+        {
+          ApiExplorer.Properties.Settings.Default.UseMethodOverride = value;
+          OnPropertyChanged("UseMethodOverride");
+        }
+      }
+    }
+
+
     public SettingsViewModel()
       : base(null)
     {

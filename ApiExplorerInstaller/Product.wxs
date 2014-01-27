@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="73C1F58B-EA03-4753-983E-2F33762E37C0" Name="API Explorer 1.0" Language="1033" Version="1.0.0.0" Codepage="windows-1252"
+  <Product Id="73C1F58B-EA03-4753-983E-2F33762E37C0" Name="API Explorer" Language="1033" Version="1.0.0.0" Codepage="windows-1252"
            Manufacturer="Jørn Wildt" UpgradeCode="B56816F4-C74D-482F-AFC8-422EE8003C79">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"  />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of API Explorer is already installed." />
 
     <Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes"/>
-
+    
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+        
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="API Explorer"/>
@@ -17,14 +19,34 @@
       </Directory>
     </Directory>
 
-    <Feature Id="ProductFeature" Title="API Explorer" Level="1">
+    <UI>
+        <UIRef Id="WixUI_InstallDir" />
+        <Publish Dialog="ExitDialog" 
+            Control="Finish" 
+            Event="DoAction" 
+            Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+    </UI>
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Api Explorer" />
+
+    <Property Id="WixShellExecTarget" Value="[#ApiExplorer.Exe]" />
+    <CustomAction Id="LaunchApplication" 
+        BinaryKey="WixCA" 
+        DllEntry="WixShellExec"
+        Impersonate="yes" />
+    
+    <!--<UIRef Id="WixUI_InstallDir" />
+    <UIRef Id="WixUI_ErrorProgressText" />-->
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+    
+    <Feature Id="ProductFeature" Title="API Explorer" Description="The complete Mason API Explorer" 
+             Display="expand" Level="1" ConfigurableDirectory="INSTALLFOLDER">
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentRef Id="ApplicationShortcut"/>
     </Feature>
 
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-      <Component Id="ApiExplorerExe" Guid="{2E1E4A57-E453-4265-988F-56C0F69229B4}">
-        <File Id="ApiExplorerExe" Name="APIExplorer.exe" Source="$(var.ApiExplorer.TargetPath)"/>
+      <Component Id="ApiExplorer.Exe" Guid="{2E1E4A57-E453-4265-988F-56C0F69229B4}">
+        <File Id="ApiExplorer.Exe" Name="APIExplorer.exe" Source="$(var.ApiExplorer.TargetPath)"/>
       </Component>
       <Component Id="Newtonsoft.Json.dll" Guid="{D7BA0FA7-2E17-4383-9023-8A6B9930C9F8}">
         <File Id="Newtonsoft.Json.dll" Source="$(var.ApiExplorer.TargetDir)\Newtonsoft.Json.dll"/>
@@ -32,11 +54,11 @@
       <Component Id="ApiExplorer.exe.config" Guid="{63217782-8C9B-481F-A526-021F68EF298A}">
         <File Id="ApiExplorer.exe.config" Source="$(var.ApiExplorer.TargetDir)\ApiExplorer.exe.config"/>
       </Component>
-      <Component Id="GalaSoft.MvvmLight.Extras.WPF45.dll" Guid="{1A92018D-2F63-4894-9CB3-D61CAE21FC4A}">
-        <File Id="GalaSoft.MvvmLight.Extras.WPF45.dll" Source="$(var.ApiExplorer.TargetDir)\GalaSoft.MvvmLight.Extras.WPF45.dll"/>
+      <Component Id="GalaSoft.MvvmLight.Extras.WPF4.dll" Guid="{1A92018D-2F63-4894-9CB3-D61CAE21FC4A}">
+        <File Id="GalaSoft.MvvmLight.Extras.WPF4.dll" Source="$(var.ApiExplorer.TargetDir)\GalaSoft.MvvmLight.Extras.WPF4.dll"/>
       </Component>
-      <Component Id="GalaSoft.MvvmLight.WPF45.dll" Guid="{DCC77D81-2619-4111-810A-6BB5DE5BAF4C}">
-        <File Id="GalaSoft.MvvmLight.WPF45.dll" Source="$(var.ApiExplorer.TargetDir)\GalaSoft.MvvmLight.WPF45.dll"/>
+      <Component Id="GalaSoft.MvvmLight.WPF4.dll" Guid="{DCC77D81-2619-4111-810A-6BB5DE5BAF4C}">
+        <File Id="GalaSoft.MvvmLight.WPF4.dll" Source="$(var.ApiExplorer.TargetDir)\GalaSoft.MvvmLight.WPF4.dll"/>
       </Component>
       <Component Id="log4net.dll" Guid="{8ACE14A0-1D55-4480-9141-BBF8480718FD}">
         <File Id="log4net.dll" Source="$(var.ApiExplorer.TargetDir)\log4net.dll"/>

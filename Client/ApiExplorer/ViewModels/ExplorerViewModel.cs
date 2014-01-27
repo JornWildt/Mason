@@ -15,9 +15,16 @@ namespace ApiExplorer.ViewModels
 {
   public class ExecuteWebRequestEventArgs
   {
+    public ISession Session { get; set; }
     public Request Request { get; set; }
     public Action<Response> OnSuccess { get; set; }
     public Action<Response> OnFailure { get; set; }
+
+    public ExecuteWebRequestEventArgs(ISession session, Request request)
+    {
+      Session = session;
+      Request = request;
+    }
   }
 
 
@@ -151,7 +158,7 @@ namespace ApiExplorer.ViewModels
 
       Request req = session.Bind(Navigation.CurrentUrl).Method("GET");
 
-      ExecuteWebRequest(new ExecuteWebRequestEventArgs { Request = req });
+      ExecuteWebRequest(new ExecuteWebRequestEventArgs(session, req));
     }
 
 
@@ -172,6 +179,9 @@ namespace ApiExplorer.ViewModels
         if (Properties.Settings.Default.PreferMinimalResponseSize)
           args.Request.Header("Prefer", "return=minimal");
 
+        if (Properties.Settings.Default.UseMethodOverride && args.Session.RequestInterceptors.Find("MethodOverrideInterceptor") == null)
+          args.Session.RequestInterceptors.Add("MethodOverrideInterceptor", new MethodOverrideInterceptor());
+
         args.Request
             .Accept("application/vnd.mason", 1)
             .Accept("*/*", 0.5)
@@ -191,7 +201,7 @@ namespace ApiExplorer.ViewModels
 
     protected void HandleResponse(Response r, ExecuteWebRequestEventArgs args)
     {
-      Application.Current.Dispatcher.Invoke(() =>
+      Application.Current.Dispatcher.Invoke(new Action(() =>
         {
           IsExecutingRequest = false;
           StatusLine = string.Format("{0} {1}", (int)r.StatusCode, r.StatusCode.ToString());
@@ -207,9 +217,8 @@ namespace ApiExplorer.ViewModels
           if (r.CreatedLocation != null)
           {
             Request req = r.CreatedLocation.Follow(r.Session).Method("GET");
-            ExecuteWebRequestEventArgs args2 = new ExecuteWebRequestEventArgs
+            ExecuteWebRequestEventArgs args2 = new ExecuteWebRequestEventArgs(r.Session, req)
             {
-              Request = req,
               OnSuccess = args.OnSuccess,
               OnFailure = args.OnFailure
             };
@@ -218,7 +227,7 @@ namespace ApiExplorer.ViewModels
           }
 
           RenderResponse(r);
-        });
+        }));
     }
 
 
@@ -226,7 +235,7 @@ namespace ApiExplorer.ViewModels
     {
       Logger.Error("Error in response handling", err.Exception);
 
-      Application.Current.Dispatcher.Invoke(() =>
+      Application.Current.Dispatcher.Invoke(new Action(() =>
         {
           IsExecutingRequest = false;
           StatusLine = string.Format("{0} {1}", (int)err.Response.StatusCode, err.Response.StatusCode.ToString());
@@ -237,7 +246,7 @@ namespace ApiExplorer.ViewModels
 
           RenderResponse(err.Response);
           MessageBox.Show(GetOwnerWindow(), err.Exception.Message);
-        });
+        }));
     }
 
 

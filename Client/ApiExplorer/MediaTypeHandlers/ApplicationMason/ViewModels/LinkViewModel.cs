@@ -94,7 +94,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Request req = session.Bind(HRef).Method("GET");
 
-      Publish(new ExecuteWebRequestEventArgs { Request = req });
+      Publish(new ExecuteWebRequestEventArgs(session, req));
     }
 
     #endregion

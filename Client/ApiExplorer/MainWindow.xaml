@@ -25,6 +25,26 @@
           </Style>
         </CheckBox.Style>
       </CheckBox>
+
+      <!-- Method override -->
+      <CheckBox IsChecked="{Binding UseMethodOverride, Source={x:Static avm:SettingsViewModel.Default}}" Content="Use X-Http-method-Override">
+        <CheckBox.Style>
+          <Style TargetType="{x:Type CheckBox}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding UseMethodOverride, Source={x:Static avm:SettingsViewModel.Default}}" Value="true">
+                <DataTrigger.Setters>
+                  <Setter Property="CheckBox.ToolTip" Value="Use X-Http-Method-Override header to tunnel other HTTP methods than GET and POST (active)"/>
+                </DataTrigger.Setters>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding UseMethodOverride, Source={x:Static avm:SettingsViewModel.Default}}" Value="false">
+                <DataTrigger.Setters>
+                  <Setter Property="CheckBox.ToolTip" Value="Use X-Http-Method-Override header to tunnel other HTTP methods than GET and POST  (inactive)"/>
+                </DataTrigger.Setters>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </CheckBox.Style>
+      </CheckBox>
     </ToolBar>
     <ax:Explorer DockPanel.Dock="Top" DataContext="{Binding Explorer}"/>
   </DockPanel>

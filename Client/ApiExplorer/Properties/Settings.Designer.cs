@@ -46,5 +46,17 @@ namespace ApiExplorer.Properties {
                 this["LastAccessedUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseMethodOverride {
+            get {
+                return ((bool)(this["UseMethodOverride"]));
+            }
+            set {
+                this["UseMethodOverride"] = value;
+            }
+        }
     }
 }

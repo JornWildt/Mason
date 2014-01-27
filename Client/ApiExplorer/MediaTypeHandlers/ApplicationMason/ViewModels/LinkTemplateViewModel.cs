@@ -152,7 +152,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Window w = Window.GetWindow(sender as DependencyObject);
 
-      Publish(new ExecuteWebRequestEventArgs { Request = req, OnSuccess = (r => HandleSuccess(r, w)) });
+      Publish(new ExecuteWebRequestEventArgs(session, req) { OnSuccess = (r => HandleSuccess(r, w)) });
     }
 
     
