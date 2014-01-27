@@ -7,13 +7,15 @@ using NHibernate.Context;
 using NHibernate.Tool.hbm2ddl;
 using System;
 using System.IO;
+using log4net;
+using System.Configuration;
 
 
 namespace Mason.IssueTracker.Server.Domain.NHibernate
 {
   public static class SessionManager
   {
-    private const string DBFilename = "C:\\temp\\IssueTracker.db";
+    static ILog Logger = LogManager.GetLogger(typeof(SessionManager));
 
 
     public static void ExecuteUnitOfWork(Action a)
@@ -52,9 +54,13 @@ namespace Mason.IssueTracker.Server.Domain.NHibernate
 
     private static ISessionFactory CreateSessionFactory()
     {
+      Logger.DebugFormat("DataDirectory: {0}", AppDomain.CurrentDomain.GetData("DataDirectory"));
+
       // delete the existing db on each run
-      if (File.Exists(DBFilename))
-        File.Delete(DBFilename);
+      string dbname = ConfigurationManager.AppSettings["Database.Filename"];
+      Logger.DebugFormat("Try delete: {0}", dbname);
+      if (dbname != null && File.Exists(dbname))
+        File.Delete(dbname);
 
       var cfg = new global::NHibernate.Cfg.Configuration();
       cfg.Configure();
@@ -66,7 +72,7 @@ namespace Mason.IssueTracker.Server.Domain.NHibernate
     }
 
 
-    private static void BuildSchema(Configuration config)
+    private static void BuildSchema(global::NHibernate.Cfg.Configuration config)
     {
       config.SetProperty(global::NHibernate.Cfg.Environment.CurrentSessionContextClass, "web");
 

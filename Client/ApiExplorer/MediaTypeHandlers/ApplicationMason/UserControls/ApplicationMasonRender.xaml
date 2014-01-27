@@ -50,7 +50,7 @@
             <TextBlock Text="Meta-links" FontStyle="Italic" FontWeight="Bold">
               <!-- Show source for links -->
               <i:Interaction.Behaviors>
-                <axu:ShowSourceBehavior Source="{Binding Value.LinksJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Links}}"/>
+                <axu:ShowSourceBehavior Source="{Binding Value.MetaLinksJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Links}}"/>
               </i:Interaction.Behaviors>
             </TextBlock>
             <!-- Use styling to render links -->

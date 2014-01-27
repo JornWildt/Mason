@@ -12,3 +12,5 @@ UNUSED*
 UNUSED*/
 Logs/
 packages/
+Server/Mason.IssueTracker.Server.Host/App_Data/IssueTracker.db
+Server/Mason.IssueTracker.Server.Host/IssueTrackerServiceLog.txt

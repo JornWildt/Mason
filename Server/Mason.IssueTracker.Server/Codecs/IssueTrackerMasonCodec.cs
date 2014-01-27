@@ -24,6 +24,7 @@ namespace Mason.IssueTracker.Server.Codecs
           r.Meta[MasonProperties.MetaProperties.Description] = msg;
         else
           r.Meta[MasonProperties.MetaProperties.Description] += " [" + msg + "]";
+        r.AddMetaLink(CommunicationContext.NewLink("documentation", "https://github.com/JornWildt/Mason", "Documentation (GitHub)"));
       }
 
       Uri resourceCommonUri = typeof(ResourceCommonResource).CreateUri();

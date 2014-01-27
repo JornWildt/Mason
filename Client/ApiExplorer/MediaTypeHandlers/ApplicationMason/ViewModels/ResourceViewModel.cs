@@ -40,6 +40,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public bool HasMetaLinks { get { return MetaLinks != null && MetaLinks.Count > 0; } }
 
+    public JToken MetaLinksJsonValue { get; private set; }
+
     public JToken MetaJsonValue { get; private set; }
 
     #endregion
@@ -86,6 +88,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
           JToken metaLinksProperty = pair.Value[MasonProperties.Links];
           if (metaLinksProperty is JObject)
           {
+            MetaLinksJsonValue = metaLinksProperty;
             MetaLinks = new ObservableCollection<LinkViewModel>(
               metaLinksProperty.Children().OfType<JProperty>().Select(l => new LinkViewModel(this, l, context)));
           }
