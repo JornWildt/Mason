@@ -1,6 +1,6 @@
 # Mason: a hypermedia enabled JSON format
 
-Mason is a JSON format for introducing hypermedia elements to classic JSON data representations. 
+Mason is a JSON format for introducing hypermedia elements to classic JSON data representations. With Mason you get hypermedia elements for linking and modifying data, features for communicating to client developers and standardized error handling. Mason is build on JSON, reads JSON, writes JSON and generally fits well into a JSON based eco-system.
 
 Here is a simple example representing a single issue from an issue tracker application:
 
@@ -23,7 +23,7 @@ Here is a simple example representing a single issue from an issue tracker appli
       }
     }
   ],
-  // Additional hypermedia
+  // Additional hypermedia elements
   "@links": {
     // Hypermedia linking to self
     "self": {
@@ -38,7 +38,7 @@ Here is a simple example representing a single issue from an issue tracker appli
 }
 ```
 
-In the above example you can see how one resource can link to other related resources using the reserved name @links. Mason works by taking a classic JSON representation and adding hypermedia and other elements to it. Mason uses the prefix @ in order to avoid name collisions between data and reserved names.
+In the above example you can see how one resource can link to other related resources using the reserved name @links. Mason works by taking a classic JSON representation and adding hypermedia and other elements to it. The format uses the prefix @ in order to avoid name collisions between data and reserved names.
 
 Mason is not restricted to links as the only kind of hypermedia element but includes also actions for modifying data.
 
@@ -48,19 +48,12 @@ Mason is not restricted to links as the only kind of hypermedia element but incl
 You should be using Mason because:
 
 - It enables building of standardized hypermedia enabled services.
-
 - It is very easy to adopt in existing solutions.
-
 - It is completely based on JSON(*) and fits easily into existing JSON based ecosystems.
-
 - It enables client developers to explore all parts of a service (including actions) with the use of a generic client.
-
 - It has elements for communicating helpful information to client developers.
-
 - It allows clients to request compact representations for improved performance(**).
-
 - It removes client coupling on technical details (such as URLs and HTTP method).
-
 - It features standardized error handling.
 
 (*) Except for uploading of files where multipart/form-data is used in addition to JSON.
@@ -70,20 +63,20 @@ You should be using Mason because:
 
 ## Getting started
 
-Check the feature list: https://github.com/JornWildt/Mason/wiki/Mason-features
+Check the [feature list](https://github.com/JornWildt/Mason/wiki/Mason-features).
 
-Download the generic client for improved browsing experience: ...
+Download the [generic client](https://github.com/JornWildt/Mason/wiki/Generic-Mason-browser) for improved browsing experience.
 
-Explore the demo implementation of a fictive issue tracker service: ...
+Explore the [demo implementation](https://github.com/JornWildt/Mason/wiki/Example-service%3A-issue-tracker) of a fictive issue tracker service.
 
-Read the specification: ...
+Read the [format specification](https://github.com/JornWildt/Mason/wiki/mason-format-specification).
 
-View the source code of client and server reference implementations: https://github.com/JornWildt/Mason
+View the source code of client and server reference implementations here on GitHub.
 
 
 ## Media type registration
 
-Mason uses the mediatype identifier `application/mason+json`. A registration with IANA is planned when Mason has a decent written spec.
+Mason uses the mediatype identifier `application/vnd.mason+json`. A registration with IANA is planned when Mason has a decent written spec.
 
 
 ## Feedback
