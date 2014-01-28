@@ -1,6 +1,6 @@
 # Mason: a hypermedia enabled JSON format
 
-Mason is a JSON format for introducing hypermedia elements to classic JSON data representations. With Mason you get hypermedia elements for linking and modifying data, features for communicating to client developers and standardized error handling. Mason is build on JSON, reads JSON, writes JSON and generally fits well into a JSON based eco-system.
+Mason is a JSON format for introducing hypermedia elements to classic JSON data representations. With Mason you get hypermedia elements for linking and modifying data, features for communicating to client developers and standardized error handling. Mason is built on JSON, reads JSON, writes JSON and generally fits well into a JSON based eco-system.
 
 Here is a simple example representing a single issue from an issue tracker application:
 
@@ -63,15 +63,11 @@ You should be using Mason because:
 
 ## Getting started
 
-Check the [feature list](https://github.com/JornWildt/Mason/wiki/Mason-features).
-
-Download the [generic client](https://github.com/JornWildt/Mason/wiki/Generic-Mason-browser) for improved browsing experience.
-
-Explore the [demo implementation](https://github.com/JornWildt/Mason/wiki/Example-service%3A-issue-tracker) of a fictive issue tracker service.
-
-Read the [format specification](https://github.com/JornWildt/Mason/wiki/mason-format-specification).
-
-View the source code of client and server reference implementations here on GitHub.
+- Check the [feature list](https://github.com/JornWildt/Mason/wiki/Mason-features).
+- Download the [generic client](https://github.com/JornWildt/Mason/wiki/Generic-Mason-browser) for improved browsing experience.
+- Explore the [demo implementation](https://github.com/JornWildt/Mason/wiki/Example-service%3A-issue-tracker) of a fictitious issue tracker service.
+- Read the [format specification](https://github.com/JornWildt/Mason/wiki/mason-format-specification).
+- View the source code of client and server reference implementations [on GitHub](https://github.com/JornWildt/Mason).
 
 
 ## Media type registration
@@ -81,14 +77,13 @@ Mason uses the mediatype identifier `application/vnd.mason+json`. A registration
 
 ## Feedback
 
-Discussion group for general discussion and announcements:
+Discussion group for general discussion and announcements is available via Google Groups:
 - https://groups.google.com/d/forum/mason-media-type
 - mason-media-type@googlegroups.com
 
 Issue tracker on GitHub: https://github.com/JornWildt/Mason/issues
 
-Contact author: 
-- Name: Jørn Wildt
+You may also contact the author, Jørn Wildt, directly: 
 - E-mail: jw@fjeldgruppen.dk
 - Twitter: @JornWildt
 - Blog: soabits.blogger.com
@@ -104,7 +99,7 @@ Mason is not the only format for hypermedia enabled APIs. Actually it is heavily
 
 [Hydra](http://www.markus-lanthaler.com/hydra/): Hydra is for JSON-LD (JSON linked data) and uses a completely different approach to encoding hypermedia (RDF). I cannot say how much these two formats overlap in terms of features.
 
-[Collection-JSON](http://amundsen.com/media-types/collection/): Cj is a format for working with collections of data. Mason and Cj has both support for links, link templates, actions and error handling but Cj requires data to be represented as collections whereas Mason has no such kind of restrictions. Mason works with existing API data whereas Cj requires data to be encoded in a completely different way.
+[Collection-JSON](http://amundsen.com/media-types/collection/): Cj is a format for working with collections of data. Mason and Cj both have support for links, link templates, actions and error handling. However, Cj requires data to be represented as collections whereas Mason has no such kind of restrictions. Furthermore, Mason works with existing API data whereas Cj requires data to be encoded in a unique way.
 
 HTML: HTML has support for links and actions but is restricted to POST actions. Mason goes beyond that and is much more focused on APIs.
 
@@ -112,5 +107,5 @@ The major differentiators between Mason and the other formats are:
 
 - Mason has a strong focus on communicating details about the API to the client developers.
 - Mason uses JSON for sending data in actions (and defines a way to combine file uploads with JSON).
-- Mason defines a way to reduce the payload for M2M communication.
+- Mason defines a way to reduce the payload for machine-to-machine (M2M) communication.
 - Mason has a predefined set of properties for error handling.
