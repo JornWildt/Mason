@@ -194,6 +194,7 @@ namespace ApiExplorer.ViewModels
       }
       catch (Exception ex)
       {
+        IsExecutingRequest = false;
         MessageBox.Show(GetOwnerWindow(), ex.Message, "Failed to setup request");
       }
     }
@@ -238,7 +239,14 @@ namespace ApiExplorer.ViewModels
       Application.Current.Dispatcher.Invoke(new Action(() =>
         {
           IsExecutingRequest = false;
-          StatusLine = string.Format("{0} {1}", (int)err.Response.StatusCode, err.Response.StatusCode.ToString());
+
+          if (err.Response.WebResponse != null)
+            StatusLine = string.Format("{0} {1}", (int)err.Response.StatusCode, err.Response.StatusCode.ToString());
+          else if (err.Exception != null)
+            StatusLine = err.Exception.Message;
+          else
+            StatusLine = "Unknown error";
+
           PreviousStatusLine = null;
 
           if (args.OnFailure != null)

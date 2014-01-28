@@ -51,7 +51,7 @@ namespace Mason.IssueTracker.Server.Projects.Handlers
         Issue i = new Issue(p, args.Title, args.Description, args.Severity);
         IssueRepository.Add(i);
 
-        if (args.Attachment != null)
+        if (args.Attachment != null && attachment != null)
         {
           using (Stream s = attachment.OpenStream())
           {
