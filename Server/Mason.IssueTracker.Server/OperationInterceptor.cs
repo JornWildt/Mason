@@ -32,7 +32,7 @@ namespace Mason.IssueTracker.Server
       string method = CommunicationContext.Request.HttpMethod;
       string url = CommunicationContext.Request.Uri.AbsoluteUri;
       string userAgent = CommunicationContext.Request.Headers["User-Agent"];
-      Logger.DebugFormat("Incoming {0} request for {1} [{2}]", method, url, userAgent);
+      Logger.InfoFormat("Incoming {0} request for {1} [{2}]", method, url, userAgent);
       return true;
     }
 
