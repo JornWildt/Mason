@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 
 namespace Mason.Net
 {
   public class LinkTemplate
   {
+    [JsonIgnore]
     public string name { get; set; }
 
     public string template { get; set; }
