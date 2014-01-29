@@ -16,6 +16,8 @@ namespace Mason.IssueTracker.Server
   {
     static ILog Logger = LogManager.GetLogger(typeof(OperationInterceptor));
 
+    public ICommunicationContext CommunicationContext { get; set; }
+
 
     #region IOperationInterceptor Members
 
@@ -27,6 +29,10 @@ namespace Mason.IssueTracker.Server
 
     public bool BeforeExecute(OpenRasta.OperationModel.IOperation operation)
     {
+      string method = CommunicationContext.Request.HttpMethod;
+      string url = CommunicationContext.Request.Uri.AbsoluteUri;
+      string userAgent = CommunicationContext.Request.Headers["User-Agent"];
+      Logger.DebugFormat("Incoming {0} request for {1} [{2}]", method, url, userAgent);
       return true;
     }
 
