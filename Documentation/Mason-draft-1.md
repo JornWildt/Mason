@@ -1,6 +1,3 @@
-**PLEASE DO NOT EDIT THIS AS IT WILL BE REPLACED FROM OTHER SOURCE**
-
-
 ## Introduction
 
 Mason is a JSON format for adding hypermedia elements, standardized error handling and additional meta data to classic JSON representations. It is a generic format and imposes very little restrictions on the data it is integrated with.
