@@ -34,7 +34,7 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       i.AddLink(projectLink);
 
       Uri attachmentsUrl = typeof(IssueAttachmentsResource).CreateUri(new { id = issue.Issue.Id });
-      Link attachmentsLink = CommunicationContext.NewLink("is:atttachments", attachmentsUrl, "All attachments for this issue");
+      Link attachmentsLink = CommunicationContext.NewLink(RelTypes.Attachments, attachmentsUrl, "All attachments for this issue");
       i.AddLink(attachmentsLink);
 
       dynamic updateTemplate = new DynamicDictionary();
@@ -42,14 +42,14 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       updateTemplate.Description = issue.Issue.Description;
       updateTemplate.Severity = issue.Issue.Severity;
 
-      Net.Action updateAction = CommunicationContext.NewAction("is:update-issue", MasonProperties.ActionTypes.JSON, selfUrl, "Update issue details", template: (DynamicDictionary)updateTemplate);
+      Net.Action updateAction = CommunicationContext.NewAction(RelTypes.IssueUpdate, MasonProperties.ActionTypes.JSON, selfUrl, "Update issue details", template: (DynamicDictionary)updateTemplate);
       i.AddAction(updateAction);
 
-      Net.Action deleteAction = CommunicationContext.NewAction("is:delete-issue", MasonProperties.ActionTypes.Void, selfUrl, "Delete issue", method: "DELETE");
+      Net.Action deleteAction = CommunicationContext.NewAction(RelTypes.IssueDelete, MasonProperties.ActionTypes.Void, selfUrl, "Delete issue", method: "DELETE");
       i.AddAction(deleteAction);
 
       Uri addAttachmentSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-attachment" });
-      Net.Action addAttachmentAction = CommunicationContext.NewAction("is:add-attachment", MasonProperties.ActionTypes.JSONFiles, attachmentsUrl, "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
+      Net.Action addAttachmentAction = CommunicationContext.NewAction(RelTypes.IssueAddAttachment, MasonProperties.ActionTypes.JSONFiles, attachmentsUrl, "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
       if (!CommunicationContext.PreferMinimalResponse())
       {
         addAttachmentAction.jsonFile = "args";

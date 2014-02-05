@@ -26,7 +26,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       p.AddLink(selfLink);
 
       Uri issuesUrl = typeof(ProjectIssuesResource).CreateUri(new { id = project.Project.Id });
-      Link issuesLink = CommunicationContext.NewLink("is:issues", issuesUrl, "All issues in project");
+      Link issuesLink = CommunicationContext.NewLink(RelTypes.Issues, issuesUrl, "All issues in project");
       p.AddLink(issuesLink);
 
       dynamic updateTemplate = new DynamicDictionary();
@@ -34,11 +34,11 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       updateTemplate.Title = project.Project.Title;
       updateTemplate.Description = project.Project.Description;
 
-      Net.Action updateAction = CommunicationContext.NewAction("is:update-project", MasonProperties.ActionTypes.JSON, selfUrl, "Update project details", template: (DynamicDictionary)updateTemplate);
+      Net.Action updateAction = CommunicationContext.NewAction(RelTypes.ProjectUpdate, MasonProperties.ActionTypes.JSON, selfUrl, "Update project details", template: (DynamicDictionary)updateTemplate);
       p.AddAction(updateAction);
 
       Uri addIssueSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-issue" });
-      Net.Action addIssueAction = CommunicationContext.NewAction("is:add-issue", MasonProperties.ActionTypes.JSONFiles, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
+      Net.Action addIssueAction = CommunicationContext.NewAction(RelTypes.ProjectAddIssue, MasonProperties.ActionTypes.JSONFiles, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
       if (!CommunicationContext.PreferMinimalResponse())
       {
         addIssueAction.jsonFile = "args";
@@ -46,7 +46,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       }
       p.AddAction(addIssueAction);
 
-      Net.Action deleteAction = CommunicationContext.NewAction("is:delete-project", MasonProperties.ActionTypes.Void, selfUrl, "Delete project", method: "DELETE");
+      Net.Action deleteAction = CommunicationContext.NewAction(RelTypes.ProjectDelete, MasonProperties.ActionTypes.Void, selfUrl, "Delete project", method: "DELETE");
       p.AddAction(deleteAction);
 
       p.Id = project.Project.Id;

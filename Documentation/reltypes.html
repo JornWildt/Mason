@@ -2,16 +2,206 @@
 
 <head>
   <title>Relationship types for Issue Tracker example</title>
+  <style>
+    body
+    {
+      font: 100%/1.3 helvetica,arial,sans-serif;
+    }
+
+#container
+{
+	margin: 0 auto;
+	width: 800px;
+	background:#fff;
+}
+
+#header
+{
+	background:#ccc;
+	padding: 20px;
+}
+
+#header h1 { margin: 0; }
+
+#navigation
+{
+	float: left;
+	width: 800px;
+	background:#333;
+}
+
+#navigation ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+#navigation ul li
+{
+	list-style-type: none;
+	display: inline;
+}
+
+#navigation li a
+{
+	display: block;
+	float: left;
+	padding: 5px 10px;
+	color:#fff;
+	text-decoration: none;
+	border-right: 1px solid#fff;
+}
+
+#navigation li a:hover { background:#383; }
+
+#content
+{
+	clear: left;
+	padding: 20px;
+}
+
+#content h2
+{
+	color:#000;
+	font-size: 160%;
+	margin: 0 0 .5em;
+}
+
+#footer
+{
+	background:#ccc;
+	text-align: right;
+	padding: 20px;
+	height: 1%;
+}
+
+    a:link {text-decoration:none; color: #000;}
+    a:visited {text-decoration:none; color: #000;}
+    a:hover {text-decoration:underline; color: #000;}
+    a:active {text-decoration:underline; color: #000;}
+
+  </style>
 </head>
 
 <body>
-  <h1>Relationship types for Issue Tracker example</h1>
-    
-  <p>This document describes a set of link relationship types for a fictive issue tracker. The issue tracker is
-    part of a demo for the <a href="https://github.com/JornWildt/Mason">Mason media type</a>.</p>
-      
-    
+  <div id="container">
+	  <div id="header">
+		  <h1>Relationship types for Issue Tracker example</h1>
+	  </div>
+	  <!--<div id="navigation">
+		  <ul>
+			  <li><a href="#">Home</a></li>
+			  <li><a href="#">About</a></li>
+			  <li><a href="#">Services</a></li>
+			  <li><a href="#">Contact us</a></li>
+		  </ul>
+	  </div>-->
+	  <div id="content">
+      <p>This document describes a set of link relationship types for a fictive issue tracker. The issue tracker is
+        part of a demo for the <a href="https://github.com/JornWildt/Mason">Mason media type</a>.</p>
+
+      <p>The link and action descriptions here are purposely short as they only serve to illustrate how link relations can be documented when a
+        link relation type URI refers to online content.
+      </p>
   
+      <h2><a href="#common" name="common">Relationship type "common"</a></h2>
+
+      <p>Link to resource containing shared information common to all resources. This is also the "landing page" or "service index" of the issue tracker service.</p>
+
+  
+      <h2><a href="#contact" name="contact">Relationship type "contact"</a></h2>
+
+      <p>Link to contact information.</p>
+
+  
+      <h2><a href="#logo" name="logo">Relationship type "logo"</a></h2>
+
+      <p>Link to logo (image).</p>
+
+  
+      <h2><a href="#projects" name="projects">Relationship type "projects"</a></h2>
+
+      <p>Link to list of all projects</p>
+
+  
+      <h2><a href="#project-create" name="project-create">Action name "project-create"</a></h2>
+
+      <p>Action for adding a new project</p>
+
+  
+      <h2><a href="#project-update" name="project-update">Action name "project-update"</a></h2>
+
+      <p>Action for updating project</p>
+
+  
+      <h2><a href="#project-delete" name="project-delete">Action name "project-delete"</a></h2>
+
+      <p>Action for deleting project</p>
+
+  
+      <h2><a href="#add-issue" name="add-issue">Action name "add-issue"</a></h2>
+
+      <p>Blah ...</p>
+
+  
+      <h2><a href="#issues" name="issues">Relationship type "issues"</a></h2>
+
+      <p>Blah ...</p>
+
+  
+      <h2><a href="#issue-create" name="issue-create">Action name "issue-create"</a></h2>
+
+      <p>Blah ...</p>
+
+  
+      <h2><a href="#issue-update" name="issue-update">Action name "issue-update"</a></h2>
+
+      <p>Blah ...</p>
+
+  
+      <h2><a href="#issue-delete" name="issue-delete">Action name "issue-delete"</a></h2>
+
+      <p>Blah ...</p>
+
+  
+      <h2><a href="#add-attachment" name="add-attachment">Action name "add-attachment"</a></h2>
+
+      <p>Blah ...</p>
+
+  
+      <h2><a href="#issue-query" name="issue-query">Link-template name "issue-query"</a></h2>
+
+      <p>Blah ...</p>
+
+  
+      <h2><a href="#attachments" name="attachments">Relationship type "attachments"</a></h2>
+
+      <p>Blah ...</p>
+
+  
+      <h2><a href="#content" name="content">Relationship type "content"</a></h2>
+
+      <p>Blah ...</p>
+
+  
+      <h2><a href="#update-attachment" name="update-attachment">Action name "update-attachment"</a></h2>
+
+      <p>Blah ...</p>
+
+  
+      <h2><a href="#delete-attachment" name="delete-attachment">Action name "delete-attachment"</a></h2>
+
+      <p>Blah ...</p>
+  
+	  </div>
+	  <div id="footer">
+		  Jørn Wildt 2014
+	  </div>
+  </div>
+
+
+  
+    
 </body>
 
 </html>

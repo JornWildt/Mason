@@ -31,7 +31,7 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       if (attachment.Attachment.ContentType != null)
       {
         Uri contentUrl = typeof(AttachmentContentResource).CreateUri(new { id = attachment.Attachment.Id });
-        Link contentLink = CommunicationContext.NewLink("is:content", contentUrl, "Download content", attachment.Attachment.ContentType);
+        Link contentLink = CommunicationContext.NewLink(RelTypes.AttachmentContent, contentUrl, "Download content", attachment.Attachment.ContentType);
         a.AddLink(contentLink);
       }
 
@@ -39,7 +39,7 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       updateTemplate.Title = attachment.Attachment.Title;
       updateTemplate.Description = attachment.Attachment.Description;
 
-      Net.Action updateAction = CommunicationContext.NewAction("is:update-attachment", MasonProperties.ActionTypes.JSONFiles, selfUrl, "Update attachment details", description: "Update title and description of attachment", template: (DynamicDictionary)updateTemplate);
+      Net.Action updateAction = CommunicationContext.NewAction(RelTypes.AttachmentUpdate, MasonProperties.ActionTypes.JSONFiles, selfUrl, "Update attachment details", description: "Update title and description of attachment", template: (DynamicDictionary)updateTemplate);
       if (!CommunicationContext.PreferMinimalResponse())
       {
         updateAction.jsonFile = "args";
@@ -47,7 +47,7 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       }
       a.AddAction(updateAction);
 
-      Net.Action deleteAction = CommunicationContext.NewAction("is:delete-attachment", MasonProperties.ActionTypes.Void, selfUrl, "Delete attachment", method: "DELETE");
+      Net.Action deleteAction = CommunicationContext.NewAction(RelTypes.AttachmentDelete, MasonProperties.ActionTypes.Void, selfUrl, "Delete attachment", method: "DELETE");
       a.AddAction(deleteAction);
 
       a.ID = attachment.Attachment.Id;
