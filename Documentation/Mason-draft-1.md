@@ -53,6 +53,8 @@ The prefix character is not used for all Mason properties, only for those that c
 
 Curie is an abbreviation for "Compact URI" and is a way to define short scoped names that map to URIs. Mason uses namespace declarations to declare prefixes for use in Curies. A Curie is expanded to a URI by replacing the namespace prefix with the corresponding name declared in the `@namespaces` object.
 
+Curies are only expanded in link relation types - not in target URLs of links, link templates and actions.
+
 See [CURIE Syntax 1.0](http://www.w3.org/TR/2009/CR-curie-20090116/) for further information.
 
 
