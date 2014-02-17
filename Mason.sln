@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{49A74228-9CCA-4AD7-9BED-0FCB33A36441}"
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Mason-draft-1.md = Documentation\Mason-draft-1.md
+		README.md = README.md
 		Documentation\reltypes.html = Documentation\reltypes.html
 	EndProjectSection
 EndProject
