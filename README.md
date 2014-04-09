@@ -72,7 +72,7 @@ You should be using Mason because:
 
 ## Media type registration
 
-Mason uses the mediatype identifier `application/vnd.mason+json`. A registration with IANA is planned when Mason has a decent written spec.
+Mason is registered in the IANA media type registry as `application/vnd.mason+json`. See http://www.iana.org/assignments/media-types/application/vnd.mason+json
 
 
 ## Feedback
