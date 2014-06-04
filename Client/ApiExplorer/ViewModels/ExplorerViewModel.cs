@@ -183,7 +183,7 @@ namespace ApiExplorer.ViewModels
           args.Session.RequestInterceptors.Add("MethodOverrideInterceptor", new MethodOverrideInterceptor());
 
         args.Request
-            .Accept("application/vnd.mason", 1)
+            .Accept("application/vnd.mason+json", 1)
             .Accept("*/*", 0.5)
             .Async()
             .OnError(r => HandleResponseError(r, args))
@@ -260,18 +260,26 @@ namespace ApiExplorer.ViewModels
 
     private void RenderResponse(Response r)
     {
-      if (r.StatusCode != HttpStatusCode.NoContent && r.ContentType != null)
+      try
       {
-        string contentType = r.ContentType.ToString();
-        if (!string.IsNullOrEmpty(contentType))
-          StatusLine += " [" + contentType + "]";
+        if (r.StatusCode != HttpStatusCode.NoContent && r.ContentType != null)
+        {
+          string contentType = r.ContentType.ToString();
+          if (!string.IsNullOrEmpty(contentType))
+            StatusLine += " [" + contentType + "]";
 
-        IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
-        ContentRender = handler.GetRender(this, r);
+          IHandleMediaType handler = MediaTypeDispatcher.GetMediaTypeHandler(r);
+          ContentRender = handler.GetRender(this, r);
+        }
+        else
+        {
+          ContentRender = null;
+        }
       }
-      else
+      catch (Exception ex)
       {
-        ContentRender = null;
+        Logger.Error(ex);
+        StatusLine = ex.Message;
       }
 
       Navigation.CurrentUrl = r.WebResponse.ResponseUri.AbsoluteUri;

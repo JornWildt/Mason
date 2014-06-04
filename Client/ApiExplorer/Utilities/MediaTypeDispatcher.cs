@@ -4,6 +4,7 @@ using ApiExplorer.MediaTypeHandlers.Unknown;
 using Ramone;
 using System.Collections.Generic;
 using ApiExplorer.MediaTypeHandlers.Image;
+using ApiExplorer.MediaTypeHandlers.Html;
 
 
 namespace ApiExplorer.Utilities
@@ -20,13 +21,14 @@ namespace ApiExplorer.Utilities
     {
       UnknownMediaTypeHandler = new UnknownMediaTypeHandler("Unknown media type");
       NoContentMediaTypeHandler = new UnknownMediaTypeHandler("No content");
-      RegisterHandler("application/vnd.mason", new ApplicationMasonMediaTypeHandler());
+      RegisterHandler("application/vnd.mason+json", new ApplicationMasonMediaTypeHandler());
       RegisterHandler("text/plain", new TextMediaTypeHandler());
       RegisterHandler("text/vcard", new TextMediaTypeHandler());
       RegisterHandler("application/json", new TextMediaTypeHandler());
       RegisterHandler("application/jcard+json", new TextMediaTypeHandler());
       RegisterHandler("application/schema+json", new TextMediaTypeHandler());
       RegisterHandler("image/png", new ImageMediaTypeHandler());
+      RegisterHandler("text/html", new HtmlMediaTypeHandler());
     }
 
 

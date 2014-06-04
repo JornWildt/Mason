@@ -123,6 +123,11 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\Dialogs\UrlTemplatePopupDialog.xaml.cs">
       <DependentUpon>UrlTemplatePopupDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MediaTypeHandlers\Html\HtmlMediaTypeHandler.cs" />
+    <Compile Include="MediaTypeHandlers\Html\UserControls\HtmlRender.xaml.cs">
+      <DependentUpon>HtmlRender.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MediaTypeHandlers\Html\ViewModels\HtmlViewModel.cs" />
     <Compile Include="MediaTypeHandlers\Image\ImageMediaTypeHandler.cs" />
     <Compile Include="MediaTypeHandlers\Image\UserControls\ImageRender.xaml.cs">
       <DependentUpon>ImageRender.xaml</DependentUpon>
@@ -159,6 +164,7 @@
     <Compile Include="Utilities\ShowSourceBehavior.cs" />
     <Compile Include="Utilities\WatermarkAdorner.cs" />
     <Compile Include="Utilities\WatermarkService.cs" />
+    <Compile Include="Utilities\WebBrowserUtility.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\EmptyStringToVisibility.cs" />
     <Compile Include="ValueConverters\PathToImageConverter.cs" />
@@ -203,6 +209,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MediaTypeHandlers\ApplicationMason\Dialogs\UrlTemplatePopupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MediaTypeHandlers\Html\UserControls\HtmlRender.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

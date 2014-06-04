@@ -1,0 +1,9 @@
+﻿<UserControl x:Class="ApiExplorer.MediaTypeHandlers.Html.UserControls.HtmlRender"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vc="clr-namespace:ApiExplorer.ValueConverters"
+             xmlns:util="clr-namespace:ApiExplorer.Utilities">
+  <DockPanel>
+    <WebBrowser util:WebBrowserUtility.Source="{Binding Source}"/>
+  </DockPanel>
+</UserControl>
