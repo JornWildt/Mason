@@ -3,6 +3,7 @@ using ApiExplorer.MediaTypeHandlers.Html.ViewModels;
 using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
 using Ramone;
+using System;
 using System.IO;
 using System.Windows.Controls;
 
@@ -18,8 +19,9 @@ namespace ApiExplorer.MediaTypeHandlers.Html
       string filename = Path.GetTempFileName();
       r.SaveToFile(filename);
 
+      Uri baseUri = r.BaseUri;
       HtmlViewModel vm = new HtmlViewModel(parent, filename);
-      return new HtmlRender(vm);
+      return new HtmlRender(vm, baseUri);
     }
 
     #endregion

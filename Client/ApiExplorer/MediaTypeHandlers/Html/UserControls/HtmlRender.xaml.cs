@@ -15,10 +15,17 @@ namespace ApiExplorer.MediaTypeHandlers.Html.UserControls
   {
     private static ILog Logger = LogManager.GetLogger(typeof(HtmlRender));
 
-    public HtmlRender(HtmlViewModel vm)
+    public HtmlRender(HtmlViewModel vm, Uri baseUri)
     {
       InitializeComponent();
       DataContext = vm;
+      Browser.LoadCompleted += Browser_LoadCompleted;
+    }
+
+
+    void Browser_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+    {
+      // How to set base URL of document? Would be nice for relative URLs in for instance stylesheets
     }
 
 

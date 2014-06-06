@@ -4,6 +4,6 @@
              xmlns:vc="clr-namespace:ApiExplorer.ValueConverters"
              xmlns:util="clr-namespace:ApiExplorer.Utilities">
   <DockPanel>
-    <WebBrowser util:WebBrowserUtility.Source="{Binding Source}"/>
+    <WebBrowser x:Name="Browser" util:WebBrowserUtility.Source="{Binding Source}"/>
   </DockPanel>
 </UserControl>
