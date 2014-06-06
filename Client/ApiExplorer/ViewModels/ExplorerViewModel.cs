@@ -154,7 +154,7 @@ namespace ApiExplorer.ViewModels
 
     private void Go(object obj)
     {
-      ISession session = RamoneServiceManager.Service.NewSession();
+      ISession session = RamoneServiceManager.Session;
 
       Request req = session.Bind(Navigation.CurrentUrl).Method("GET");
 
@@ -254,7 +254,28 @@ namespace ApiExplorer.ViewModels
 
           RenderResponse(err.Response);
           MessageBox.Show(GetOwnerWindow(), err.Exception.Message);
+          
+          if (err.Response != null)
+            TryHandleAuthorization(err.Response);
         }));
+    }
+
+    
+    private void TryHandleAuthorization(Response response)
+    {
+      string authHeader = response.Headers["WWW-Authenticate"];
+      if (response.StatusCode == HttpStatusCode.Unauthorized && authHeader != null)
+      {
+        if (authHeader.StartsWith("BASIC", StringComparison.InvariantCultureIgnoreCase))
+        {
+          string username;
+          string password;
+          if (BasicAuthorizationSetupWindow.ShowBasicAuthorizationSetup(authHeader.Substring(6), out username, out password))
+          {
+            response.Session.BasicAuthentication(username, password);
+          }
+        }
+      }
     }
 
 

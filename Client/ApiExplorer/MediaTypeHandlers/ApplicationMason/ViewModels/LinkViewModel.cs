@@ -90,7 +90,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     private void FollowLink(object arg)
     {
-      ISession session = RamoneServiceManager.Service.NewSession();
+      ISession session = RamoneServiceManager.Session;
 
       Request req = session.Bind(HRef).Method("GET");
 

@@ -72,7 +72,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       {
         try
         {
-          using (var response = RamoneServiceManager.Service.NewSession().Bind(schemaUrl).Get<string>())
+          using (var response = RamoneServiceManager.Session.Bind(schemaUrl).Get<string>())
           {
             string schemaS = response.Body;
             JsonSchema schema = JsonSchema.Parse(schemaS);

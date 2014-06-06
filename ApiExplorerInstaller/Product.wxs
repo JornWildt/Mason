@@ -76,7 +76,7 @@
         <File Id="Microsoft.Practices.Composite.Presentation.dll" Source="$(var.ApiExplorer.TargetDir)\Microsoft.Practices.Composite.Presentation.dll"/>
       </Component>
       <Component Id="Ramone.dll" Guid="{C3111273-C0D6-415C-BDA7-2198EBA84BEA}">
-        <File Id="Ramone.dll" Source="$(var.ApiExplorer.TargetDir)\Ramone.dll"/>
+        <File Id="Ramone.Core.dll" Source="$(var.ApiExplorer.TargetDir)\Ramone.Core.dll"/>
       </Component>
       <Component Id="System.Windows.Interactivity.dll" Guid="{31935662-75DE-437E-909F-4BCB662B2E61}">
         <File Id="System.Windows.Interactivity.dll" Source="$(var.ApiExplorer.TargetDir)\System.Windows.Interactivity.dll"/>

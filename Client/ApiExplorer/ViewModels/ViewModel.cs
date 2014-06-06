@@ -119,7 +119,7 @@ namespace ApiExplorer.ViewModels
 
     #region Window handling
 
-    private Window OwnerWindow { get; set; }
+    public Window OwnerWindow { get; set; }
 
 
     protected Window GetOwnerWindow()
@@ -130,6 +130,12 @@ namespace ApiExplorer.ViewModels
         return Parent.GetOwnerWindow();
 
       throw new InvalidOperationException("No Window supplied in any parent ViewModel");
+    }
+
+
+    protected void CloseWindow()
+    {
+      OwnerWindow.Close();
     }
 
     #endregion

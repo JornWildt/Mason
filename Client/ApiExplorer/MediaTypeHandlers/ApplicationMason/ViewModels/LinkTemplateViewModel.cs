@@ -146,7 +146,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       foreach (KeyValueParameterViewModel p in Parameters)
         values[p.Name] = p.Value;
 
-      ISession session = RamoneServiceManager.Service.NewSession();
+      ISession session = RamoneServiceManager.Session;
 
       Request req = session.Bind(Template, values).Method("GET");
 

@@ -211,7 +211,7 @@ namespace ApiExplorer.ViewModels
         return;
       }
 
-      ISession session = RamoneServiceManager.Service.NewSession();
+      ISession session = RamoneServiceManager.Session;
 
       Request req = session.Bind(Url).Method(Method);
 

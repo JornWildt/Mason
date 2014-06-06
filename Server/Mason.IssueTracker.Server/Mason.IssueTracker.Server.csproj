@@ -71,9 +71,8 @@
     <Reference Include="OpenRasta.Hosting.AspNet">
       <HintPath>..\Libraries\OpenRasta.Hosting.AspNet.dll</HintPath>
     </Reference>
-    <Reference Include="Ramone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Ramone.1.3.1.79\lib\net40\Ramone.dll</HintPath>
+    <Reference Include="Ramone.Core">
+      <HintPath>..\..\..\Ramone\Ramone\bin\Debug\Ramone.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

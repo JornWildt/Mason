@@ -1,0 +1,30 @@
+﻿<Window x:Class="ApiExplorer.Windows.BasicAuthorizationSetupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Authorize" Height="300" Width="500">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    
+    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Prompt}"/>
+    
+    <Label Grid.Row="1" Grid.Column="0" Content="Username" Target="{Binding ElementName=UsernameInput}" />
+    <TextBox Grid.Row="1" Grid.Column="1" x:Name="UsernameInput" Text="{Binding Username}"/>
+
+    <Label Grid.Row="2" Grid.Column="0" Content="Password" Target="{Binding ElementName=PasswordInput}" />
+    <TextBox Grid.Row="2" Grid.Column="1" x:Name="PasswordInput" Text="{Binding Password}" />
+    
+    <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+      <Button Content="Ok" Command="{Binding OkCommand}" IsDefault="True"/>
+      <Button Content="Cancel" Command="{Binding CancelCommand}" IsCancel="True"/>
+    </StackPanel>
+  </Grid>
+</Window>
