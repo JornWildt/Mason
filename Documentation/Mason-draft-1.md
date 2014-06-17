@@ -265,6 +265,9 @@ This property is OPTIONAL. If present it MUST be a string value. It contains som
 
 This property can safely be removed in minimized representations.
 
+##### `type` (optional)
+This property is OPTIONAL. If present it MUST be a string value. It contains the expected media type of the target resource.
+
 ##### `parameters` (optional)
 This property is OPTIONAL. If present it MUST be an array of parameter definition objects as described below.
 
