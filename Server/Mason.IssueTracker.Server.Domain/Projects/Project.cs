@@ -29,7 +29,7 @@ namespace Mason.IssueTracker.Server.Domain.Projects
     public virtual void Update(string code, string title, string description)
     {
       ErrorHandling.ValidateInput(
-        () => Condition.Requires(code, "code").IsNotNullOrWhiteSpace().IsNotLongerThan(20),
+        () => Condition.Requires(code, "code").IsNotNullOrWhiteSpace().IsNotLongerThan(40),
         () => Condition.Requires(title, "title").IsNotNullOrWhiteSpace().IsNotLongerThan(255),
         () => Condition.Requires(description, "description").IsNotNull());
 

@@ -2,7 +2,7 @@
 {
   public static class MasonProperties
   {
-    public const string MediaType = "application/mason+json";
+    public const string MediaType = "application/vnd.mason+json";
 
     public const string Prefix = "@";
 

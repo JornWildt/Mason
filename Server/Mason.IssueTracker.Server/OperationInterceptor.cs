@@ -70,8 +70,8 @@ namespace Mason.IssueTracker.Server
 
       Resource result = new Resource();
       result[MasonProperties.Error] = error;
-      result.SetMeta(MasonProperties.MetaProperties.Title, "Application error");
-      result.SetMeta(MasonProperties.MetaProperties.Description, "Something went wrong while processing the request. The data contained in this response should explain the problem.");
+      result.Meta.Title = "Application error";
+      result.Meta.Description = "Something went wrong while processing the request. The data contained in this response should explain the problem.";
 
       if (ex is DomainException)
       {

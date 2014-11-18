@@ -18,8 +18,8 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
-        pcol.SetMeta(MasonProperties.MetaProperties.Title, "Project list");
-        pcol.SetMeta(MasonProperties.MetaProperties.Description, "List of all projects.");
+        pcol.Meta.Title = "Project list";
+        pcol.Meta.Description = "List of all projects.";
       }
 
       pcol.Projects = new List<SubResource>(

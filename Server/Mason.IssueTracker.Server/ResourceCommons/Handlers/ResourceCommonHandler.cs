@@ -33,8 +33,8 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
-        common.SetMeta(MasonProperties.MetaProperties.Title, "Common resource data for " + Settings.OriginName);
-        common.SetMeta(MasonProperties.MetaProperties.Description, "This resource contains common information for all resources (such as common links, implementation and owner details).");
+        common.Meta.Title = "Common resource data for " + Settings.OriginName;
+        common.Meta.Description = "This resource contains common information for all resources (such as common links, implementation and owner details).";
       }
 
       Uri projectsUri = typeof(ProjectCollectionResource).CreateUri();

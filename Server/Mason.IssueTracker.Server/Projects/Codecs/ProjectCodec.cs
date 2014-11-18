@@ -17,8 +17,8 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
-        p.SetMeta(MasonProperties.MetaProperties.Title, "Project");
-        p.SetMeta(MasonProperties.MetaProperties.Description, "This resource represents a single project with its data and related actions.");
+        p.Meta.Title = "Project";
+        p.Meta.Description = "This resource represents a single project with its data and related actions.";
       }
 
       Uri selfUrl = typeof(ProjectResource).CreateUri(new { id = project.Project.Id });

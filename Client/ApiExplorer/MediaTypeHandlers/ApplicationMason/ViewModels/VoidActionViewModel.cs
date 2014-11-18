@@ -1,5 +1,6 @@
 ﻿using ApiExplorer.ViewModels;
 using ApiExplorer.Windows;
+using Mason.Net;
 using Newtonsoft.Json.Linq;
 using System.Windows;
 
@@ -19,7 +20,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Window w = Window.GetWindow(sender as DependencyObject);
       string title = (string.IsNullOrWhiteSpace(Title) ? "Void Action" : Title);
-      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, description: Description);
+      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, description: Description, actionType: MasonProperties.ActionTypes.Void);
     }
   }
 }

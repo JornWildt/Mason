@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Mason.IssueTracker.Server.Codecs
 {
-  [MediaType("application/vnd.mason;q=0.9", "ms")]
+  [MediaType("application/vnd.mason+json;q=0.9", "ms")]
   [MediaType("application/json;q=1", "json")]
   public abstract class MasonCodec<T> : IMediaTypeWriter
   {

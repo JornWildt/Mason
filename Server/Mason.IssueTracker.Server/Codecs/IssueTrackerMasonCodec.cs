@@ -18,13 +18,11 @@ namespace Mason.IssueTracker.Server.Codecs
       if (!CommunicationContext.PreferMinimalResponse())
       {
         string msg = string.Format("This application restarts in {0:m\\:ss} minutes", ApplicationLifeTimeManager.NextRestart - DateTime.Now);
-        if (r.Meta == null)
-          r.Meta = new SubResource();
-        if (r.Meta[MasonProperties.MetaProperties.Description] == null)
-          r.Meta[MasonProperties.MetaProperties.Description] = msg;
+        if (r.Meta.Description == null)
+          r.Meta.Description = msg;
         else
-          r.Meta[MasonProperties.MetaProperties.Description] += " [" + msg + "]";
-        r.AddMetaLink(CommunicationContext.NewLink("documentation", "https://github.com/JornWildt/Mason", "Documentation (GitHub)"));
+          r.Meta.Description += " [" + msg + "]";
+        r.Meta.AddLink(CommunicationContext.NewLink("documentation", "https://github.com/JornWildt/Mason", "Documentation (GitHub)"));
       }
 
       Uri resourceCommonUri = typeof(ResourceCommonResource).CreateUri();

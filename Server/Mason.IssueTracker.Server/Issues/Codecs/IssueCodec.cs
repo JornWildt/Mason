@@ -21,8 +21,8 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
-        i.SetMeta(MasonProperties.MetaProperties.Title, "Issue");
-        i.SetMeta(MasonProperties.MetaProperties.Description, "This resource represents a single issue with its data and related actions.");
+        i.Meta.Title = "Issue";
+        i.Meta.Description = "This resource represents a single issue with its data and related actions.";
       }
 
       Uri selfUrl = typeof(IssueResource).CreateUri(new { id = issue.Issue.Id });

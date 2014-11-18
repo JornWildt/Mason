@@ -49,9 +49,11 @@
   <ItemGroup>
     <Compile Include="Action.cs" />
     <Compile Include="DynamicDictionary.cs" />
+    <Compile Include="ErrorElement.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="LinkTemplate.cs" />
     <Compile Include="MasonProperties.cs" />
+    <Compile Include="MetaElement.cs" />
     <Compile Include="Namespace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />

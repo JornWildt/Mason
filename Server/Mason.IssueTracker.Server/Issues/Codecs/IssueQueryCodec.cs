@@ -17,8 +17,8 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
-        result.SetMeta(MasonProperties.MetaProperties.Title, "Query result");
-        result.SetMeta(MasonProperties.MetaProperties.Description, "This is the result of a query for issues. Follow issues 'self' link to get more information about individual issues.");
+        result.Meta.Title = "Query result";
+        result.Meta.Description = "This is the result of a query for issues. Follow issues 'self' link to get more information about individual issues.";
       }
 
       result.AddLinkTemplate(CommunicationContext.BuildIssueQueryTemplate());

@@ -40,19 +40,13 @@ namespace Mason.Net
   {
     public string name { get; set; }
 
-    public string type { get; set; }
-
     public string description { get; set; }
 
-    public string value { get; set; }
 
-
-    public LinkTemplateParameter(string name, string type = null, string description = null, string value = null)
+    public LinkTemplateParameter(string name, string description = null)
     {
       this.name = name;
-      this.type = type;
       this.description = description;
-      this.value = value;
     }
   }
 }

@@ -17,8 +17,8 @@ namespace Mason.IssueTracker.Server.Contact.Codecs
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
-        representation.SetMeta(MasonProperties.MetaProperties.Title, "Contact information for " + Settings.OriginName);
-        representation.SetMeta(MasonProperties.MetaProperties.Description, "This resource contains the contact information for " + Settings.OriginName + ". Use either content negotiation or links for different formats.");
+        representation.Meta.Title = "Contact information for " + Settings.OriginName;
+        representation.Meta.Description = "This resource contains the contact information for " + Settings.OriginName + ". Use either content negotiation or links for different formats.";
       }
 
       dynamic c = representation;

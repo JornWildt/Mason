@@ -20,8 +20,8 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
-        i.SetMeta(MasonProperties.MetaProperties.Title, "Issue attachments");
-        i.SetMeta(MasonProperties.MetaProperties.Description, "This is the list of attachments for a single issue.");
+        i.Meta.Title = "Issue attachments";
+        i.Meta.Description = "This is the list of attachments for a single issue.";
       }
 
       Uri selfUrl = typeof(IssueAttachmentsResource).CreateUri(new { id = issue.Issue.Id });

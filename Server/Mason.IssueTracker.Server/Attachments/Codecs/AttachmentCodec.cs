@@ -16,8 +16,8 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
-        a.SetMeta(MasonProperties.MetaProperties.Title, "Attachment");
-        a.SetMeta(MasonProperties.MetaProperties.Description, "This resource represents a single attachment with its data and related actions.");
+        a.Meta.Title = "Attachment";
+        a.Meta.Description = "This resource represents a single attachment with its data and related actions.";
       }
 
       Uri selfUrl = typeof(AttachmentResource).CreateUri(new { id = attachment.Attachment.Id });
