@@ -82,8 +82,8 @@ namespace ApiExplorer.Utilities
       if (json == null)
       {
         JsonViewModel jvm = AssociatedObject.DataContext as JsonViewModel;
-        if (jvm != null && jvm.JsonValue != null)
-          json = jvm.JsonValue;
+        if (jvm != null && jvm.OriginalJsonValue != null)
+          json = jvm.OriginalJsonValue;
       }
 
       ViewModel vm = AssociatedObject.DataContext as ViewModel;

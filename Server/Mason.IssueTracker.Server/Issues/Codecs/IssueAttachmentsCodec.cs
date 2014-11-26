@@ -16,7 +16,7 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
   {
     protected override Resource ConvertToIssueTracker(IssueAttachmentsResource issue)
     {
-      dynamic i = new Resource();
+      Resource i = new Resource();
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
@@ -26,28 +26,28 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
 
       Uri selfUrl = typeof(IssueAttachmentsResource).CreateUri(new { id = issue.Issue.Id });
       Link selfLink = CommunicationContext.NewLink("self", selfUrl);
-      i.AddLink(selfLink);
+      i.AddNavigation(selfLink);
 
       Uri issueUrl = typeof(IssueResource).CreateUri(new { id = issue.Issue.Id });
       Link issueLink = CommunicationContext.NewLink("up", issueUrl);
-      i.AddLink(issueLink);
+      i.AddNavigation(issueLink);
 
-      i.Id = issue.Issue.Id;
-      i.Title = issue.Issue.Title;
+      ((dynamic)i).Id = issue.Issue.Id;
+      ((dynamic)i).Title = issue.Issue.Title;
 
-      i.Attachments = new List<SubResource>();
+      ((dynamic)i).Attachments = new List<SubResource>();
 
       foreach (Attachment a in issue.Attachments)
       {
-        dynamic item = new SubResource();
-        item.ID = a.Id.ToString();
-        item.Title = a.Title;
+        SubResource item = new SubResource();
+        ((dynamic)item).ID = a.Id.ToString();
+        ((dynamic)item).Title = a.Title;
 
         Uri itemSelfUri = typeof(AttachmentResource).CreateUri(new { id = a.Id });
         Link itemSelfLink = CommunicationContext.NewLink("self", itemSelfUri);
-        item.AddLink(itemSelfLink);
+        item.AddNavigation(itemSelfLink);
 
-        i.Attachments.Add(item);
+        ((dynamic)i).Attachments.Add(item);
       }
 
       return i;

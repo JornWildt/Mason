@@ -13,15 +13,15 @@ namespace Mason.IssueTracker.Server.Contact.Codecs
   {
     protected override Resource ConvertToIssueTracker(ContactResource resource)
     {
-      Resource representation = new Resource();
+      Resource contact = new Resource();
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
-        representation.Meta.Title = "Contact information for " + Settings.OriginName;
-        representation.Meta.Description = "This resource contains the contact information for " + Settings.OriginName + ". Use either content negotiation or links for different formats.";
+        contact.Meta.Title = "Contact information for " + Settings.OriginName;
+        contact.Meta.Description = "This resource contains the contact information for " + Settings.OriginName + ". Use either content negotiation or links for different formats.";
       }
 
-      dynamic c = representation;
+      dynamic c = contact;
       c.Name = resource.Contact.FullName;
       c.Address1 = resource.Contact.Address1;
       c.Address2 = resource.Contact.Address2;
@@ -34,15 +34,15 @@ namespace Mason.IssueTracker.Server.Contact.Codecs
       string cardBaseUrl = typeof(ContactResource).CreateUri().AbsoluteUri;
 
       Link selfLink = CommunicationContext.NewLink("self", cardBaseUrl, "Default contact information");
-      c.AddLink(selfLink);
+      contact.AddNavigation(selfLink);
 
       Uri vCardUri = new Uri(cardBaseUrl + ".vcard");
       Link vCardLink = CommunicationContext.NewLink("alternate", vCardUri, "Contact information as vCard", "text/vcard");
-      c.AddLink(vCardLink);
+      contact.AddNavigation(vCardLink);
 
       Uri jCardUri = new Uri(cardBaseUrl + ".jcard");
       Link jCardLink = CommunicationContext.NewLink("alternate", jCardUri, "Contact information as jCard", "application/json");
-      vCardLink.AddAltLink(jCardLink);
+      vCardLink.AddAlternateLink(jCardLink);
 
       return c;
     }

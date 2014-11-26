@@ -9,9 +9,7 @@
     public const string Namespaces = Prefix + "namespaces";
     public const string Meta = Prefix + "meta";
     public const string Profile = Prefix + "profile";
-    public const string Links = Prefix + "links";
-    public const string LinkTemplates = Prefix + "link-templates";
-    public const string Actions = Prefix + "actions";
+    public const string Navigation = Prefix + "navigation";
     public const string Error = Prefix + "error";
 
     public static class NamespaceProperties
@@ -25,8 +23,10 @@
       public const string Description = Prefix + "description";
     }
 
-    public static class ActionTypes
+    public static class NavigationTypes
     {
+      public const string Link = "link";
+      public const string LinkTemplate = "link-template";
       public const string JSON = "json";
       public const string JSONFiles = "json+files";
       public const string Void = "void";

@@ -14,7 +14,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class JsonActionViewModel : ActionViewModel
   {
-    #region UI properties
+    public override string NavigationTypeTitle { get { return "JSON action"; } }
+
 
     private string _jsonText;
     public string JsonText
@@ -29,11 +30,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         }
       }
     }
-
-    #endregion
-
-
-    protected virtual string ActionType { get { return MasonProperties.ActionTypes.JSON; } }
 
 
     public JsonActionViewModel(ViewModel parent, JProperty action, BuilderContext context)
@@ -55,13 +51,13 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     #region Commands
 
-    protected override void OpenAction(object sender)
+    protected override void ActivateNavigation(object sender)
     {
-      Publish(new MasonViewModel.SourceChangedEventArgs { Source = JsonValue.ToString() });
+      Publish(new MasonViewModel.SourceChangedEventArgs { Source = OriginalJsonValue.ToString() });
 
-      JToken templateJson = JsonValue["template"];
+      JToken templateJson = OriginalJsonValue["template"];
 
-      JToken schemaUrlJson = JsonValue["schemaUrl"];
+      JToken schemaUrlJson = OriginalJsonValue["schemaUrl"];
       string schemaUrl = (schemaUrlJson != null ? schemaUrlJson.Value<string>() : null);
 
       if (templateJson != null)
@@ -88,7 +84,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Window w = Window.GetWindow(sender as DependencyObject);
       string title = (string.IsNullOrWhiteSpace(Title) ? "JSON Action" : Title);
-      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, JsonText, actionType: ActionType, description: Description, modifier: ModifyComposerWindow, focus: ComposerWindow.StartFocus.Body);
+      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, JsonText, actionType: MasonProperties.NavigationTypes.JSON, description: Description, modifier: ModifyComposerWindow, focus: ComposerWindow.StartFocus.Body);
     }
 
     #endregion

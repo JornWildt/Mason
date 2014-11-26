@@ -12,23 +12,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
   {
     #region UI properties
 
-    public ObservableCollection<LinkViewModel> Links { get; private set; }
+    public ObservableCollection<NavigationViewModel> Navigation { get; private set; }
 
-    public bool HasLinks { get { return Links != null && Links.Count > 0; } }
+    public bool HasNavigation { get { return Navigation != null && Navigation.Count > 0; } }
 
-    public JToken LinksJsonValue { get; private set; }
-
-    public ObservableCollection<LinkTemplateViewModel> LinkTemplates { get; private set; }
-
-    public bool HasLinkTemplates { get { return LinkTemplates != null && LinkTemplates.Count > 0; } }
-
-    public JToken LinkTemplatesJsonValue { get; private set; }
-
-    public ObservableCollection<ActionViewModel> Actions { get; private set; }
-
-    public bool HasActions { get { return Actions != null && Actions.Count > 0; } }
-
-    public JToken ActionsJsonValue { get; private set; }
+    public JToken NavigationJsonValue { get; private set; }
 
     public ObservableCollection<ViewModel> Properties { get; private set; }
 
@@ -63,29 +51,17 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         {
           BuildNamespaces((JObject)pair.Value, context);
         }
-        else if (pair.Key == MasonProperties.Links && pair.Value is JObject)
+        else if (pair.Key == MasonProperties.Navigation && pair.Value is JObject)
         {
-          LinksJsonValue = pair.Value;
-          Links = new ObservableCollection<LinkViewModel>(
-            pair.Value.Children().OfType<JProperty>().Select(l => new LinkViewModel(this, l, context)));
-        }
-        else if (pair.Key == MasonProperties.LinkTemplates && pair.Value is JObject)
-        {
-          LinkTemplatesJsonValue = pair.Value;
-          LinkTemplates = new ObservableCollection<LinkTemplateViewModel>(
-            pair.Value.Children().OfType<JProperty>().Select(l => new LinkTemplateViewModel(this, l, context)));
-        }
-        else if (pair.Key == MasonProperties.Actions && pair.Value is JObject)
-        {
-          ActionsJsonValue = pair.Value;
-          Actions = new ObservableCollection<ActionViewModel>(
-            pair.Value.Children().OfType<JProperty>().Select(a => ActionViewModel.CreateAction(this, a, context)));
+          NavigationJsonValue = pair.Value;
+          Navigation = new ObservableCollection<NavigationViewModel>(
+            pair.Value.Children().OfType<JProperty>().Select(n => BuildNavigationElement(this, n, context)).Where(n => n != null));
         }
         else if (pair.Key == MasonProperties.Meta && pair.Value is JObject)
         {
           MetaJsonValue = pair.Value;
           Description = GetValue<string>(pair.Value, MasonProperties.MetaProperties.Description);
-          JToken metaLinksProperty = pair.Value[MasonProperties.Links];
+          JToken metaLinksProperty = pair.Value[MasonProperties.Navigation];
           if (metaLinksProperty is JObject)
           {
             MetaLinksJsonValue = metaLinksProperty;
@@ -105,8 +81,24 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         }
       }
 
-      if (Links == null)
-        Links = new ObservableCollection<LinkViewModel>();
+      if (Navigation == null)
+        Navigation = new ObservableCollection<NavigationViewModel>();
+    }
+
+    
+    private NavigationViewModel BuildNavigationElement(ResourceViewModel parent, JProperty n, BuilderContext context)
+    {
+      string type = GetValue<string>(n.Value, "type");
+      if (type == MasonProperties.NavigationTypes.Link)
+        return new LinkViewModel(parent, n, context);
+      else if (type == MasonProperties.NavigationTypes.LinkTemplate)
+        return new LinkTemplateViewModel(parent, n, context);
+      else if (type == MasonProperties.NavigationTypes.JSON)
+        return new JsonActionViewModel(parent, n, context);
+      //else if (type == MasonProperties.NavigationTypes.JSONFiles)
+      //  return new JsonFilesActionViewModel(parent, n, context);
+
+      return null;
     }
 
 

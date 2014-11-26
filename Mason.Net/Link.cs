@@ -5,16 +5,10 @@ using System.Collections.Generic;
 
 namespace Mason.Net
 {
-  public class Link
+  public class Link : Navigation
   {
-    [JsonIgnore]
-    public string rel { get; set; }
+    public override string type { get { return "link"; } }
 
-    public string href { get; set; }
-
-    public string title { get; set; }
-
-    public string type { get; set; }
 
     public List<Link> alt { get; set; }
 
@@ -24,22 +18,19 @@ namespace Mason.Net
     }
 
 
-    public Link(string rel, Uri href, string title = null, string type = null)
-      : this(rel, (href == null ? null : href.AbsoluteUri), title, type)
+    public Link(string name, Uri href, string title = null)
+      : this(name, (href == null ? null : href.AbsoluteUri), title)
     {
     }
 
 
-    public Link(string rel, string href, string title = null, string type = null)
+    public Link(string name, string href, string title = null)
+      : base(name, href, title)
     {
-      this.rel = rel;
-      this.href = href;
-      this.title = title;
-      this.type = type;
     }
 
 
-    public void AddAltLink(Link l)
+    public void AddAlternateLink(Link l)
     {
       if (alt == null)
         alt = new List<Link>();

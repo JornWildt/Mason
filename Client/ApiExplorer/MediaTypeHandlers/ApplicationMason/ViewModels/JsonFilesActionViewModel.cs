@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public class MultipartJsonActionViewModel : JsonActionViewModel
+  public class JsonFilesActionViewModel : JsonActionViewModel
   {
-    protected override string ActionType { get { return MasonProperties.ActionTypes.JSONFiles; } }
+    public override string NavigationTypeTitle { get { return "JSON+Files action"; } }
 
 
-    public MultipartJsonActionViewModel(ViewModel parent, JProperty json, BuilderContext context)
+    public JsonFilesActionViewModel(ViewModel parent, JProperty json, BuilderContext context)
       : base(parent, json, context)
     {
     }
@@ -23,11 +23,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       vm.WindowTitle = title;
       vm.Description = Description;
 
-      JToken jsonFile = JsonValue[MasonProperties.ActionProperties.JsonFile];
+      JToken jsonFile = OriginalJsonValue[MasonProperties.ActionProperties.JsonFile];
       if (jsonFile != null)
         vm.JsonFilename = jsonFile.Value<string>();
 
-      JArray files = JsonValue[MasonProperties.ActionProperties.Files] as JArray;
+      JArray files = OriginalJsonValue[MasonProperties.ActionProperties.Files] as JArray;
       if (files != null)
       {
         foreach (JObject file in files.OfType<JObject>())

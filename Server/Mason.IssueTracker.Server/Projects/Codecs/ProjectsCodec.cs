@@ -14,7 +14,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
   {
     protected override Net.Resource ConvertToIssueTracker(ProjectCollectionResource projects)
     {
-      dynamic pcol = new Resource();
+      Resource pcol = new Resource();
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
@@ -22,7 +22,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
         pcol.Meta.Description = "List of all projects.";
       }
 
-      pcol.Projects = new List<SubResource>(
+      ((dynamic)pcol).Projects = new List<SubResource>(
         projects.Projects.Select(p => BuildProjectSubResource(p)));
 
       return pcol;
@@ -35,7 +35,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
 
       Uri selfUri = typeof(ProjectResource).CreateUri(new { id = p.Id });
       Link selfLink = CommunicationContext.NewLink("self", selfUri, "Project details");
-      sp.AddLink(selfLink);
+      sp.AddNavigation(selfLink);
 
       dynamic dp = sp;
       dp.Id = p.Id;

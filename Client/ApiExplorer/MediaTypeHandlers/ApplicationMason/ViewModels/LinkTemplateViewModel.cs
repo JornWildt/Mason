@@ -13,23 +13,10 @@ using System.Windows;
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public class LinkTemplateViewModel : ElementViewModel
+  public class LinkTemplateViewModel : NavigationViewModel
   {
-    #region UI properties
+    public override string NavigationTypeTitle { get { return "Link template"; } }
 
-    public string Name { get; set; }
-    
-    public string Template { get { return GetValue<string>("template"); } }
-
-    public string Title { get { return GetValue<string>("title"); } }
-
-    public string Description { get { return GetValue<string>("description"); } }
-
-    public string ToolTip { get; set; }
-
-    public string DisplayTitle1 { get; set; }
-
-    public string DisplayTitle2 { get; set; }
 
     public string WindowTitle { get; set; }
 
@@ -48,12 +35,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       }
     }
 
-    #endregion
-
 
     #region Commands
-
-    public DelegateCommand<object> OpenLinkTemplateCommand { get; private set; }
 
     public DelegateCommand<object> SubmitCommand { get; private set; }
 
@@ -63,16 +46,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
 
     public LinkTemplateViewModel(ViewModel parent, JProperty template, BuilderContext context)
-      : base(parent, template.Value)
+      : base(parent, template.Value as JObject, template.Name, context)
     {
-      RegisterCommand(OpenLinkTemplateCommand = new DelegateCommand<object>(OpenLinkTemplate));
       RegisterCommand(SubmitCommand = new DelegateCommand<object>(Submit));
       RegisterCommand(CancelCommand = new DelegateCommand<object>(Cancel));
-
-      if (template == null)
-        throw new ArgumentNullException("json");
-      if (!(template.Value is JObject))
-        throw new InvalidOperationException("Expected JSON object for link template");
 
       string prefix;
       string reference;
@@ -81,7 +58,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       Name = context.Namespaces.Expand(template.Name, out prefix, out reference, out nsname);
 
       ToolTip = (string.IsNullOrWhiteSpace(Title) ? "" : Title + "\n");
-      ToolTip += "Links to " + Template;
+      ToolTip += "Links to " + HRef;
 
       if (reference != null && nsname != null)
       {
@@ -109,7 +86,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     {
       try
       {
-        UriTemplate template = new UriTemplate(Template);
+        UriTemplate template = new UriTemplate(HRef);
         foreach (string name in template.QueryValueVariableNames)
         {
           bool existsInParameters = Parameters.Any(p => name.Equals(p.Name, StringComparison.InvariantCultureIgnoreCase));
@@ -129,9 +106,9 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     #region Commands
 
-    private void OpenLinkTemplate(object arg)
+    protected override void ActivateNavigation(object arg)
     {
-      Publish(new MasonViewModel.SourceChangedEventArgs { Source = JsonValue.ToString() });
+      Publish(new MasonViewModel.SourceChangedEventArgs { Source = OriginalJsonValue.ToString() });
       UrlTemplatePopupDialog d = new UrlTemplatePopupDialog(this);
       if (Parameters.Count > 0)
         Parameters[0].IsFocused = true;
@@ -148,7 +125,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       ISession session = RamoneServiceManager.Session;
 
-      Request req = session.Bind(Template, values).Method("GET");
+      Request req = session.Bind(HRef, values).Method("GET");
 
       Window w = Window.GetWindow(sender as DependencyObject);
 

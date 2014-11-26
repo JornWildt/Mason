@@ -146,13 +146,13 @@ namespace ApiExplorer.ViewModels
 
     public bool ShowTextEditor
     {
-      get { return SelectedType == MasonProperties.ActionTypes.JSON && MethodAllowsContent; }
+      get { return SelectedType == MasonProperties.NavigationTypes.JSON && MethodAllowsContent; }
     }
 
 
     public bool ShowTextEditorWithFiles
     {
-      get { return SelectedType == MasonProperties.ActionTypes.JSONFiles && MethodAllowsContent; }
+      get { return SelectedType == MasonProperties.NavigationTypes.JSONFiles && MethodAllowsContent; }
     }
 
 
@@ -185,10 +185,10 @@ namespace ApiExplorer.ViewModels
         new MethodDefinition { Name = "PATCH", AllowContent = true }
       };
       Types = new ObservableCollection<string>();
-      Types.Add(MasonProperties.ActionTypes.JSON);
-      Types.Add(MasonProperties.ActionTypes.JSONFiles);
-      Types.Add(MasonProperties.ActionTypes.Void);
-      SelectedType = MasonProperties.ActionTypes.JSON;
+      Types.Add(MasonProperties.NavigationTypes.JSON);
+      Types.Add(MasonProperties.NavigationTypes.JSONFiles);
+      Types.Add(MasonProperties.NavigationTypes.Void);
+      SelectedType = MasonProperties.NavigationTypes.JSON;
       Files = new ObservableCollection<ComposerFileViewModel>();
     }
 
@@ -235,12 +235,12 @@ namespace ApiExplorer.ViewModels
         }
       }
 
-      if (SelectedType == MasonProperties.ActionTypes.JSON && Body != null)
+      if (SelectedType == MasonProperties.NavigationTypes.JSON && Body != null)
       {
         req.AsJson();
         req.Body(Body);
       }
-      else if (SelectedType == MasonProperties.ActionTypes.JSONFiles)
+      else if (SelectedType == MasonProperties.NavigationTypes.JSONFiles)
       {
         req.AsMultipartFormData();
         Hashtable files = new Hashtable();

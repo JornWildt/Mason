@@ -13,21 +13,21 @@ namespace Mason.IssueTracker.Server
     }
 
 
-    public static Link NewLink(this ICommunicationContext contex, string rel, Uri href, string title = null, string type = null)
+    public static Link NewLink(this ICommunicationContext contex, string name, Uri href, string title = null, string contentType = null)
     {
-      return contex.NewLink(rel, (href == null ? null : href.AbsoluteUri), title, type);
+      return contex.NewLink(name, href.AbsoluteUriNullable(), title);
     }
 
 
-    public static Link NewLink(this ICommunicationContext contex, string rel, string href, string title = null, string type = null)
+    public static Link NewLink(this ICommunicationContext contex, string name, string href, string title = null, string contentType = null)
     {
       if (contex.PreferMinimalResponse())
       {
-        return new Link(rel, href, null, type);
+        return new Link(name, href, null) { target_type = contentType };
       }
       else
       {
-        return new Link(rel, href, title, type);
+        return new Link(name, href, title) { target_type = contentType };
       }
     }
 
@@ -36,25 +36,68 @@ namespace Mason.IssueTracker.Server
     {
       if (context.PreferMinimalResponse())
       {
-        return new LinkTemplate(name, template, null, null);
+        return new LinkTemplate(name, template, null) { description = description };
       }
       else
       {
-        return new LinkTemplate(name, template, title, description);
+        return new LinkTemplate(name, template, title) { description = description };
       }
     }
 
 
-    public static Net.Action NewAction(this ICommunicationContext contex, string name, string type, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
+    public static Net.JsonAction NewJsonAction(this ICommunicationContext contex, string name, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
     {
       if (contex.PreferMinimalResponse())
       {
-        return new Net.Action(name, type, href, null, null, null, null, null, method);
+        return new Net.JsonAction(name, href.AbsoluteUriNullable(), null, method)
+        {
+          description = description,
+          schema = schema,
+          schemaUrl = (schemaUrl != null ? schemaUrl.AbsoluteUri : null),
+          template = template
+        };
       }
       else
       {
-        return new Net.Action(name, type, href, title, description, schema, schemaUrl, template, method);
+        return new Net.JsonAction(name, href.AbsoluteUriNullable(), title, method)
+        {
+          description = description,
+          schema = schema,
+          schemaUrl = (schemaUrl != null ? schemaUrl.AbsoluteUri : null),
+          template = template
+        };
       }
+    }
+
+
+    public static Net.JsonFilesAction NewJsonFilesAction(this ICommunicationContext contex, string name, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
+    {
+      if (contex.PreferMinimalResponse())
+      {
+        return new Net.JsonFilesAction(name, href.AbsoluteUriNullable(), null, method)
+        {
+          description = description,
+          schema = schema,
+          schemaUrl = (schemaUrl != null ? schemaUrl.AbsoluteUri : null),
+          template = template
+        };
+      }
+      else
+      {
+        return new Net.JsonFilesAction(name, href.AbsoluteUriNullable(), title, method)
+        {
+          description = description,
+          schema = schema,
+          schemaUrl = (schemaUrl != null ? schemaUrl.AbsoluteUri : null),
+          template = template
+        };
+      }
+    }
+
+
+    public static string AbsoluteUriNullable(this Uri url)
+    {
+      return url == null ? null : url.AbsoluteUri;
     }
   }
 }

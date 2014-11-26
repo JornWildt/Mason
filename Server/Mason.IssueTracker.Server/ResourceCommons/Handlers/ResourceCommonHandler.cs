@@ -15,21 +15,21 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
   {
     public object Get()
     {
-      dynamic common = new Resource();
-      common.Title = Settings.OriginName;
-      common.Description = "Example of an IssueTracker service using Mason media type.";
+      Resource common = new Resource();
+      ((dynamic)common).Title = Settings.OriginName;
+      ((dynamic)common).Description = "Example of an IssueTracker service using Mason media type.";
 
       Uri selfUri = typeof(ResourceCommonResource).CreateUri();
       Link selfLink = CommunicationContext.NewLink("self", selfUri);
-      common.AddLink(selfLink);
+      common.AddNavigation(selfLink);
 
       Uri contactUri = typeof(ContactResource).CreateUri();
       Link contactLink = CommunicationContext.NewLink(RelTypes.Contact, contactUri, "Complete contact information in standard formats such as vCard and jCard");
-      common.AddLink(contactLink);
+      common.AddNavigation(contactLink);
 
       Uri logoUri = new Uri(CommunicationContext.ApplicationBaseUri.EnsureHasTrailingSlash(), "Origins/JoeHacker/logo.png");
       Link logoLink = CommunicationContext.NewLink(RelTypes.Logo, logoUri);
-      common.AddLink(logoLink);
+      common.AddNavigation(logoLink);
 
       if (!CommunicationContext.PreferMinimalResponse())
       {
@@ -39,14 +39,14 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
 
       Uri projectsUri = typeof(ProjectCollectionResource).CreateUri();
       Link projectsLink = CommunicationContext.NewLink(RelTypes.Projects, projectsUri, "List all projects");
-      common.AddLink(projectsLink);
+      common.AddNavigation(projectsLink);
 
-      common.AddLinkTemplate(CommunicationContext.BuildIssueQueryTemplate());
+      common.AddNavigation(CommunicationContext.BuildIssueQueryTemplate());
 
       Uri projectsUrl = typeof(ProjectCollectionResource).CreateUri();
       Uri createProjectSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-project" });
-      Net.Action addProjectAction = CommunicationContext.NewAction(RelTypes.ProjectAdd, "json", projectsUrl, "Create new project", schemaUrl: createProjectSchemaUrl);
-      common.AddAction(addProjectAction);
+      Net.JsonAction addProjectAction = CommunicationContext.NewJsonAction(RelTypes.ProjectAdd, projectsUrl, "Create new project", schemaUrl: createProjectSchemaUrl);
+      common.AddNavigation(addProjectAction);
 
       return new ResourceCommonResource { Value = common };
     }

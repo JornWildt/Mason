@@ -5,20 +5,20 @@ namespace ApiExplorer.ViewModels
 {
   public class JsonViewModel : ViewModel
   {
-    public JToken JsonValue { get; protected set; }
+    public JToken OriginalJsonValue { get; protected set; }
 
 
     public JsonViewModel(ViewModel parent, JToken jsonValue)
       : base(parent)
     {
-      JsonValue = jsonValue;
+      OriginalJsonValue = jsonValue;
     }
 
 
     protected T GetValue<T>(string name)
       where T : class
     {
-      return GetValue<T>(JsonValue, name);
+      return GetValue<T>(OriginalJsonValue, name);
     }
 
 

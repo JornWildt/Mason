@@ -4,26 +4,17 @@ using System.Collections.Generic;
 
 namespace Mason.Net
 {
-  public class LinkTemplate
+  public class LinkTemplate : Navigation
   {
-    [JsonIgnore]
-    public string name { get; set; }
+    public override string type { get { return "link-template"; } }
 
-    public string template { get; set; }
-
-    public string title { get; set; }
-
-    public string description { get; set; }
 
     public List<LinkTemplateParameter> parameters { get; private set; }
 
 
-    public LinkTemplate(string name, string template, string title = null, string description = null)
+    public LinkTemplate(string name, string template, string title = null)
+      : base(name, template, title)
     {
-      this.name = name;
-      this.template = template;
-      this.title = title;
-      this.description = description;
     }
 
 
@@ -40,12 +31,15 @@ namespace Mason.Net
   {
     public string name { get; set; }
 
+    public string title { get; set; }
+
     public string description { get; set; }
 
 
-    public LinkTemplateParameter(string name, string description = null)
+    public LinkTemplateParameter(string name, string title = null, string description = null)
     {
       this.name = name;
+      this.title = title;
       this.description = description;
     }
   }
