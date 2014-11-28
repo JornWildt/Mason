@@ -1,5 +1,6 @@
 ﻿using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
+using Mason.Net;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Newtonsoft.Json.Linq;
 using Ramone;
@@ -10,7 +11,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class LinkViewModel : NavigationViewModel
   {
-    public override string NavigationTypeTitle { get { return "Link"; } }
+    public override string NavigationType { get { return MasonProperties.NavigationTypes.Link; } }
 
 
     public ObservableCollection<LinkViewModel> AlternateLinks { get; set; }

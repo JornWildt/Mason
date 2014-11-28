@@ -1,6 +1,7 @@
 ﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.Dialogs;
 using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
+using Mason.Net;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Newtonsoft.Json.Linq;
 using Ramone;
@@ -15,7 +16,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class LinkTemplateViewModel : NavigationViewModel
   {
-    public override string NavigationTypeTitle { get { return "Link template"; } }
+    public override string NavigationType { get { return MasonProperties.NavigationTypes.LinkTemplate; } }
 
 
     public string WindowTitle { get; set; }
@@ -59,13 +60,13 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       if (reference != null && nsname != null)
       {
-        DisplayTitle1 = nsname;
-        DisplayTitle2 = reference;
+        NamePart1 = nsname;
+        NamePart2 = reference;
       }
       else
       {
-        DisplayTitle1 = "";
-        DisplayTitle2 = Name;
+        NamePart1 = "";
+        NamePart2 = Name;
       }
 
       WindowTitle = (string.IsNullOrWhiteSpace(Title) ? "Link template editor" : Title);

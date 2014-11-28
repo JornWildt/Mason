@@ -9,7 +9,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class VoidActionViewModel : ActionViewModel
   {
-    public override string NavigationTypeTitle { get { return "Void action"; } }
+    public override string NavigationType { get { return MasonProperties.NavigationTypes.Void; } }
 
 
     public VoidActionViewModel(ViewModel parent, JProperty json, BuilderContext context)

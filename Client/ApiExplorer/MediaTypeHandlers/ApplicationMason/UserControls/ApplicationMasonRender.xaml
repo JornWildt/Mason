@@ -73,6 +73,7 @@
       </Expander>
     </DataTemplate>
 
+    <!-- Template for displaying navigation elements -->
     <DataTemplate DataType="{x:Type mavm:NavigationViewModel}">
       <StackPanel>
         <StackPanel Orientation="Horizontal">
@@ -92,12 +93,12 @@
                 </i:EventTrigger>
               </i:Interaction.Triggers>
               <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding DisplayTitle1}" FontWeight="Light"/>
-                <TextBlock Text="{Binding DisplayTitle2}"/>
+                <TextBlock Text="{Binding NamePart1}" FontWeight="Light"/>
+                <TextBlock Text="{Binding NamePart2}"/>
               </StackPanel>
             </Hyperlink>
           </TextBlock>
-          <TextBlock Text="{Binding NavigationTypeTitle, StringFormat=' ({0})'}" FontSize="12" VerticalAlignment="Center"/>
+          <TextBlock Text="{Binding NavigationType, StringFormat=' ({0})'}" FontSize="12" VerticalAlignment="Center"/>
         </StackPanel>
         <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1,0,0,0" Margin="8 4 0 4" Padding="8 0 0 0">
           <StackPanel>

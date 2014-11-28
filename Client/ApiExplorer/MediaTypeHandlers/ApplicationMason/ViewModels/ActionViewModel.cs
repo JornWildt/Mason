@@ -14,8 +14,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     {
       string method = GetValue<string>("method");
       Method = method ?? "POST";
-
-      DisplayTitle2 += " (JSON," + Method + ")";
     }
   }
 }

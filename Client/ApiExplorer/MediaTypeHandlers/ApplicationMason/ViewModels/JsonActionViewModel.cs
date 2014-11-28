@@ -14,7 +14,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class JsonActionViewModel : ActionViewModel
   {
-    public override string NavigationTypeTitle { get { return "JSON action"; } }
+    public override string NavigationType { get { return MasonProperties.NavigationTypes.JSON; } }
 
 
     private string _jsonText;
@@ -84,7 +84,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Window w = Window.GetWindow(sender as DependencyObject);
       string title = (string.IsNullOrWhiteSpace(Title) ? "JSON Action" : Title);
-      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, JsonText, actionType: MasonProperties.NavigationTypes.JSON, description: Description, modifier: ModifyComposerWindow, focus: ComposerWindow.StartFocus.Body);
+      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, JsonText, actionType: NavigationType, description: Description, modifier: ModifyComposerWindow, focus: ComposerWindow.StartFocus.Body);
     }
 
     #endregion

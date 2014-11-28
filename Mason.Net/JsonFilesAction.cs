@@ -13,6 +13,8 @@ namespace Mason.Net
 
   public class JsonFilesAction : JsonAction
   {
+    public override string type { get { return "json+files"; } }
+
     public List<ActionFile> files { get; set; }
 
     public string jsonFile { get; set; }

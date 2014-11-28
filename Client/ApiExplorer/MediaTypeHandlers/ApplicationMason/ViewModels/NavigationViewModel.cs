@@ -19,17 +19,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public string Description { get { return GetValue<string>("description"); } }
 
-    public string DisplayTitle1 { get; set; }
+    public string NamePart1 { get; set; }
 
-    public string DisplayTitle2 { get; set; }
+    public string NamePart2 { get; set; }
 
-    //public string ToolTip { get; set; }
-
-    //public string ToolTip1 { get; set; }
-
-    //public string ToolTip2 { get; set; }
-
-    public abstract string NavigationTypeTitle { get; }
+    public abstract string NavigationType { get; }
 
 
     #region Commands
@@ -44,7 +38,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       : base(parent, nav)
     {
       if (nav == null)
-        throw new InvalidOperationException("Expected JSON object for " + NavigationTypeTitle);
+        throw new InvalidOperationException("Expected JSON object for " + NavigationType);
 
       string prefix;
       string reference;
@@ -59,18 +53,18 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       if (reference != null && nsname != null)
       {
-        DisplayTitle1 = nsname;
-        DisplayTitle2 = reference;
+        NamePart1 = nsname;
+        NamePart2 = reference;
       }
       else
       {
-        DisplayTitle1 = "";
-        DisplayTitle2 = Name;
+        NamePart1 = "";
+        NamePart2 = Name;
       }
 
       string target_type = GetValue<string>("target_type");
       if (!string.IsNullOrWhiteSpace(target_type))
-        DisplayTitle2 += " (" + target_type + ")";
+        NamePart2 += " (" + target_type + ")";
     }
 
 
