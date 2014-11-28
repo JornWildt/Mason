@@ -72,92 +72,44 @@
         </Grid>
       </Expander>
     </DataTemplate>
-    
-    <!-- Template for displaying single link -->
-    <DataTemplate DataType="{x:Type mavm:LinkViewModel}">
+
+    <DataTemplate DataType="{x:Type mavm:NavigationViewModel}">
       <StackPanel>
-        <TextBlock>
-          <Hyperlink Command="{Binding ActivateNavigationCommand}"
-                     ToolTip="{Binding ToolTip}">
-            <!-- Updates status line -->
-            <i:Interaction.Triggers>
-              <i:EventTrigger EventName="MouseEnter">
-                <mcmd:EventToCommand Command="{Binding SetStatusCommand}" CommandParameter="{Binding HRef}"/>
-              </i:EventTrigger>
-              <i:EventTrigger EventName="MouseLeave">
-                <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
-              </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="{Binding DisplayTitle1}" FontWeight="Light"/><TextBlock Text="{Binding DisplayTitle2}"/>
-            </StackPanel>
-          </Hyperlink>
-        </TextBlock>
-        <!-- Use styling to render links -->
+        <StackPanel Orientation="Horizontal">
+          <TextBlock VerticalAlignment="Center">
+            <Hyperlink Command="{Binding ActivateNavigationCommand}"
+                       CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+              <Hyperlink.ToolTip>
+                <TextBlock Text="{Binding HRef}" FontStyle="Italic"/>
+              </Hyperlink.ToolTip>
+              <!-- Updates status line -->
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseEnter">
+                  <mcmd:EventToCommand Command="{Binding SetStatusCommand}" CommandParameter="{Binding HRef}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseLeave">
+                  <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding DisplayTitle1}" FontWeight="Light"/>
+                <TextBlock Text="{Binding DisplayTitle2}"/>
+              </StackPanel>
+            </Hyperlink>
+          </TextBlock>
+          <TextBlock Text="{Binding NavigationTypeTitle, StringFormat=' ({0})'}" FontSize="12" VerticalAlignment="Center"/>
+        </StackPanel>
+        <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1,0,0,0" Margin="8 4 0 4" Padding="8 0 0 0">
+          <StackPanel>
+            <TextBlock Text="{Binding Title}" Visibility="{Binding Title, Converter={axv:EmptyStringToVisibility}}"/>
+            <TextBlock Text="{Binding Description}" 
+                       Style="{StaticResource ResourceKey=Description}"
+                       Visibility="{Binding Description, Converter={axv:EmptyStringToVisibility}}"/>
+          </StackPanel>
+        </Border>
+        <!-- Use styling to render alternate links -->
         <ItemsControl ItemsSource="{Binding AlternateLinks}" Margin="10 0 0 0"/>
       </StackPanel>
-    </DataTemplate>
-
-    <!-- Template for displaying single link template -->
-    <DataTemplate DataType="{x:Type mavm:LinkTemplateViewModel}">
-      <TextBlock>
-        <TextBlock.Resources>
-          <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-            <Style.Triggers>
-              <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Cursor" Value="Hand" />
-              </Trigger>
-            </Style.Triggers>
-          </Style>
-        </TextBlock.Resources>
-        <Hyperlink Command="{Binding ActivateNavigationCommand}"
-                   CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                   ToolTip="{Binding ToolTip}">
-          <!-- Updates status line -->
-          <i:Interaction.Triggers>
-            <i:EventTrigger EventName="MouseEnter">
-              <mcmd:EventToCommand Command="{Binding SetStatusCommand}" CommandParameter="{Binding Template}"/>
-            </i:EventTrigger>
-            <i:EventTrigger EventName="MouseLeave">
-              <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
-            </i:EventTrigger>
-          </i:Interaction.Triggers>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding DisplayTitle1}" FontWeight="Light"/><TextBlock Text="{Binding DisplayTitle2}"/>
-          </StackPanel>
-        </Hyperlink>
-      </TextBlock>
-    </DataTemplate>
-
-    <!-- Template for rendring single action -->
-    <DataTemplate DataType="{x:Type mavm:ActionViewModel}">
-      <TextBlock>
-        <TextBlock.Resources>
-          <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-            <Style.Triggers>
-              <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Cursor" Value="Hand" />
-              </Trigger>
-            </Style.Triggers>
-          </Style>
-        </TextBlock.Resources>
-        <Hyperlink Command="{Binding ActivateNavigationCommand}"
-                   CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                   ToolTip="{Binding ToolTip}">
-          <!-- Updates status line -->
-          <i:Interaction.Triggers>
-            <i:EventTrigger EventName="MouseEnter">
-              <mcmd:EventToCommand Command="{Binding SetStatusCommand}" CommandParameter="{Binding HRef}"/>
-            </i:EventTrigger>
-            <i:EventTrigger EventName="MouseLeave">
-              <mcmd:EventToCommand Command="{Binding ResetStatusCommand}"/>
-            </i:EventTrigger>
-          </i:Interaction.Triggers>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding DisplayTitle1}" FontWeight="Light"/><TextBlock Text="{Binding DisplayTitle2}"/>
-          </StackPanel>
-        </Hyperlink>
-      </TextBlock>
     </DataTemplate>
 
     <!-- Template for displaying array (recursively) -->

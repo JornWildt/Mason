@@ -24,7 +24,8 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
       common.AddNavigation(selfLink);
 
       Uri contactUri = typeof(ContactResource).CreateUri();
-      Link contactLink = CommunicationContext.NewLink(RelTypes.Contact, contactUri, "Complete contact information in standard formats such as vCard and jCard");
+      Link contactLink = CommunicationContext.NewLink(RelTypes.Contact, contactUri, "Contact information");
+      contactLink.description = "Complete contact information in standard formats such as vCard and jCard.";
       common.AddNavigation(contactLink);
 
       Uri logoUri = new Uri(CommunicationContext.ApplicationBaseUri.EnsureHasTrailingSlash(), "Origins/JoeHacker/logo.png");

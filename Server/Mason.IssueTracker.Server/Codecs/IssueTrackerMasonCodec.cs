@@ -22,7 +22,7 @@ namespace Mason.IssueTracker.Server.Codecs
           r.Meta.Description = msg;
         else
           r.Meta.Description += " [" + msg + "]";
-        r.Meta.AddNavigation(CommunicationContext.NewLink("documentation", "https://github.com/JornWildt/Mason", "Documentation (GitHub)"));
+        r.Meta.AddNavigation(CommunicationContext.NewLink("documentation", "https://github.com/JornWildt/Mason", "Documentation of Mason media type (hosted on GitHub)."));
       }
 
       Uri resourceCommonUri = typeof(ResourceCommonResource).CreateUri();

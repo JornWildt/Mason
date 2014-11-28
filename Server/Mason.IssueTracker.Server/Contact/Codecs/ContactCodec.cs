@@ -33,7 +33,7 @@ namespace Mason.IssueTracker.Server.Contact.Codecs
 
       string cardBaseUrl = typeof(ContactResource).CreateUri().AbsoluteUri;
 
-      Link selfLink = CommunicationContext.NewLink("self", cardBaseUrl, "Default contact information");
+      Link selfLink = CommunicationContext.NewLink("self", cardBaseUrl);
       contact.AddNavigation(selfLink);
 
       Uri vCardUri = new Uri(cardBaseUrl + ".vcard");

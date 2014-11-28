@@ -57,9 +57,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Name = context.Namespaces.Expand(template.Name, out prefix, out reference, out nsname);
 
-      ToolTip = (string.IsNullOrWhiteSpace(Title) ? "" : Title + "\n");
-      ToolTip += "Links to " + HRef;
-
       if (reference != null && nsname != null)
       {
         DisplayTitle1 = nsname;

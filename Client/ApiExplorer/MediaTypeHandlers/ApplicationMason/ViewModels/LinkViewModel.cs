@@ -23,11 +23,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       if (alt != null)
       {
         AlternateLinks = new ObservableCollection<LinkViewModel>();
-        foreach (var l1 in alt)
+        for (int i=0; i<alt.Count; ++i)
         {
-          JObject l = l1 as JObject;
+          JObject l = alt[i] as JObject;
           if (l != null)
-            AlternateLinks.Add(new LinkViewModel(this, l, link.Name, context));
+            AlternateLinks.Add(new LinkViewModel(this, l, string.Format("alt[{0}]",i), context));
         }
       }
     }

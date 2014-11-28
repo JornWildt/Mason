@@ -23,7 +23,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public string DisplayTitle2 { get; set; }
 
-    public string ToolTip { get; set; }
+    //public string ToolTip { get; set; }
+
+    //public string ToolTip1 { get; set; }
+
+    //public string ToolTip2 { get; set; }
 
     public abstract string NavigationTypeTitle { get; }
 
@@ -50,8 +54,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       RegisterCommand(ActivateNavigationCommand = new DelegateCommand<object>(ActivateNavigation));
 
-      ToolTip = (string.IsNullOrWhiteSpace(Title) ? "" : Title + "\n");
-      ToolTip += "Refers to " + HRef;
+      //ToolTip1 = Title;
+      //ToolTip2 += HRef;
 
       if (reference != null && nsname != null)
       {
