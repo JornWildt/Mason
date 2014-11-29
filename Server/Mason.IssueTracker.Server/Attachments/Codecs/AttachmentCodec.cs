@@ -14,24 +14,24 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
     {
       Resource a = new Resource();
 
-      if (!CommunicationContext.PreferMinimalResponse())
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         a.Meta.Title = "Attachment";
         a.Meta.Description = "This resource represents a single attachment with its data and related actions.";
       }
 
       Uri selfUrl = typeof(AttachmentResource).CreateUri(new { id = attachment.Attachment.Id });
-      Link selfLink = CommunicationContext.NewLink("self", selfUrl);
+      Link selfLink = MasonBuilderContext.NewLink("self", selfUrl);
       a.AddNavigation(selfLink);
 
       Uri issueUrl = typeof(IssueResource).CreateUri(new { id = attachment.Attachment.OwnerIssue.Id });
-      Link issueLink = CommunicationContext.NewLink("up", issueUrl, "Containing issue");
+      Link issueLink = MasonBuilderContext.NewLink("up", issueUrl, "Containing issue");
       a.AddNavigation(issueLink);
 
       if (attachment.Attachment.ContentType != null)
       {
         Uri contentUrl = typeof(AttachmentContentResource).CreateUri(new { id = attachment.Attachment.Id });
-        Link contentLink = CommunicationContext.NewLink(RelTypes.AttachmentContent, contentUrl, "Download content", attachment.Attachment.ContentType);
+        Link contentLink = MasonBuilderContext.NewLink(RelTypes.AttachmentContent, contentUrl, "Download content", attachment.Attachment.ContentType);
         a.AddNavigation(contentLink);
       }
 
@@ -39,15 +39,15 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       updateTemplate.Title = attachment.Attachment.Title;
       updateTemplate.Description = attachment.Attachment.Description;
 
-      JsonFilesAction updateAction = CommunicationContext.NewJsonFilesAction(RelTypes.AttachmentUpdate, selfUrl, "Update attachment details", description: "Update title and description of attachment", template: (DynamicDictionary)updateTemplate);
-      if (!CommunicationContext.PreferMinimalResponse())
+      JsonFilesAction updateAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.AttachmentUpdate, selfUrl, "Update attachment details", description: "Update title and description of attachment", template: (DynamicDictionary)updateTemplate);
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         updateAction.jsonFile = "args";
         updateAction.AddFile("attachment", "Attachment content");
       }
       a.AddNavigation(updateAction);
 
-      JsonAction deleteAction = CommunicationContext.NewJsonAction(RelTypes.AttachmentDelete, selfUrl, "Delete attachment", method: "DELETE");
+      JsonAction deleteAction = MasonBuilderContext.NewJsonAction(RelTypes.AttachmentDelete, selfUrl, "Delete attachment", method: "DELETE");
       a.AddNavigation(deleteAction);
 
       dynamic da = a;

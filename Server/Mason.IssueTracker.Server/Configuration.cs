@@ -38,6 +38,7 @@ namespace Mason.IssueTracker.Server
         {
           ResourceSpace.Uses.UriDecorator<ContentTypeExtensionUriDecorator>();
           ResourceSpace.Uses.CustomDependency<IOperationInterceptor, OperationInterceptor>(DependencyLifetime.PerRequest);
+          ResourceSpace.Uses.CustomDependency<IMasonBuilderContext, MasonBuilderContext>(DependencyLifetime.PerRequest);
           Projects.ApplicationStarter.Start();
           Issues.ApplicationStarter.Start();
           Attachments.ApplicationStarter.Start();

@@ -19,22 +19,22 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
     {
       Resource i = new Resource();
 
-      if (!CommunicationContext.PreferMinimalResponse())
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         i.Meta.Title = "Issue";
         i.Meta.Description = "This resource represents a single issue with its data and related actions.";
       }
 
       Uri selfUrl = typeof(IssueResource).CreateUri(new { id = issue.Issue.Id });
-      Link selfLink = CommunicationContext.NewLink("self", selfUrl);
+      Link selfLink = MasonBuilderContext.NewLink("self", selfUrl);
       i.AddNavigation(selfLink);
 
       Uri projectUrl = typeof(ProjectResource).CreateUri(new { id = issue.Issue.OwnerProject.Id });
-      Link projectLink = CommunicationContext.NewLink("up", projectUrl, "Containing project");
+      Link projectLink = MasonBuilderContext.NewLink("up", projectUrl, "Containing project");
       i.AddNavigation(projectLink);
 
       Uri attachmentsUrl = typeof(IssueAttachmentsResource).CreateUri(new { id = issue.Issue.Id });
-      Link attachmentsLink = CommunicationContext.NewLink(RelTypes.Attachments, attachmentsUrl, "All attachments for this issue");
+      Link attachmentsLink = MasonBuilderContext.NewLink(RelTypes.Attachments, attachmentsUrl, "All attachments for this issue");
       i.AddNavigation(attachmentsLink);
 
       dynamic updateTemplate = new DynamicDictionary();
@@ -42,15 +42,15 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       updateTemplate.Description = issue.Issue.Description;
       updateTemplate.Severity = issue.Issue.Severity;
 
-      JsonAction updateAction = CommunicationContext.NewJsonAction(RelTypes.IssueUpdate, selfUrl, "Update issue details", template: (DynamicDictionary)updateTemplate);
+      JsonAction updateAction = MasonBuilderContext.NewJsonAction(RelTypes.IssueUpdate, selfUrl, "Update issue details", template: (DynamicDictionary)updateTemplate);
       i.AddNavigation(updateAction);
 
-      JsonAction deleteAction = CommunicationContext.NewJsonAction(RelTypes.IssueDelete, selfUrl, "Delete issue", method: "DELETE");
+      JsonAction deleteAction = MasonBuilderContext.NewJsonAction(RelTypes.IssueDelete, selfUrl, "Delete issue", method: "DELETE");
       i.AddNavigation(deleteAction);
 
       Uri addAttachmentSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-attachment" });
-      JsonFilesAction addAttachmentAction = CommunicationContext.NewJsonFilesAction(RelTypes.IssueAddAttachment, attachmentsUrl, "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
-      if (!CommunicationContext.PreferMinimalResponse())
+      JsonFilesAction addAttachmentAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.IssueAddAttachment, attachmentsUrl, "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         addAttachmentAction.jsonFile = "args";
         addAttachmentAction.AddFile("attachment", "Attachment for issue");
@@ -70,7 +70,7 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
         a.Title = att.Title;
 
         Uri attachmentUrl = typeof(AttachmentResource).CreateUri(new { id = att.Id });
-        Link attachmentLink = CommunicationContext.NewLink("self", attachmentUrl);
+        Link attachmentLink = MasonBuilderContext.NewLink("self", attachmentUrl);
         a.AddNavigation(attachmentLink);
 
         attachments.Add(a);

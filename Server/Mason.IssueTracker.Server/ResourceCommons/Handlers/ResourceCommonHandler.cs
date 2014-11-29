@@ -20,33 +20,33 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
       ((dynamic)common).Description = "Example of an IssueTracker service using Mason media type.";
 
       Uri selfUri = typeof(ResourceCommonResource).CreateUri();
-      Link selfLink = CommunicationContext.NewLink("self", selfUri);
+      Link selfLink = MasonBuilderContext.NewLink("self", selfUri);
       common.AddNavigation(selfLink);
 
       Uri contactUri = typeof(ContactResource).CreateUri();
-      Link contactLink = CommunicationContext.NewLink(RelTypes.Contact, contactUri, "Contact information");
+      Link contactLink = MasonBuilderContext.NewLink(RelTypes.Contact, contactUri, "Contact information");
       contactLink.description = "Complete contact information in standard formats such as vCard and jCard.";
       common.AddNavigation(contactLink);
 
       Uri logoUri = new Uri(CommunicationContext.ApplicationBaseUri.EnsureHasTrailingSlash(), "Origins/JoeHacker/logo.png");
-      Link logoLink = CommunicationContext.NewLink(RelTypes.Logo, logoUri);
+      Link logoLink = MasonBuilderContext.NewLink(RelTypes.Logo, logoUri);
       common.AddNavigation(logoLink);
 
-      if (!CommunicationContext.PreferMinimalResponse())
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         common.Meta.Title = "Common resource data for " + Settings.OriginName;
         common.Meta.Description = "This resource contains common information for all resources (such as common links, implementation and owner details).";
       }
 
       Uri projectsUri = typeof(ProjectCollectionResource).CreateUri();
-      Link projectsLink = CommunicationContext.NewLink(RelTypes.Projects, projectsUri, "List all projects");
+      Link projectsLink = MasonBuilderContext.NewLink(RelTypes.Projects, projectsUri, "List all projects");
       common.AddNavigation(projectsLink);
 
-      common.AddNavigation(CommunicationContext.BuildIssueQueryTemplate());
+      common.AddNavigation(MasonBuilderContext.BuildIssueQueryTemplate(CommunicationContext));
 
       Uri projectsUrl = typeof(ProjectCollectionResource).CreateUri();
       Uri createProjectSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-project" });
-      JsonAction addProjectAction = CommunicationContext.NewJsonAction(RelTypes.ProjectAdd, projectsUrl, "Create new project", schemaUrl: createProjectSchemaUrl);
+      JsonAction addProjectAction = MasonBuilderContext.NewJsonAction(RelTypes.ProjectAdd, projectsUrl, "Create new project", schemaUrl: createProjectSchemaUrl);
       common.AddNavigation(addProjectAction);
 
       return new ResourceCommonResource { Value = common };

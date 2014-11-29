@@ -15,7 +15,7 @@ namespace Mason.IssueTracker.Server.Contact.Codecs
     {
       Resource contact = new Resource();
 
-      if (!CommunicationContext.PreferMinimalResponse())
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         contact.Meta.Title = "Contact information for " + Settings.OriginName;
         contact.Meta.Description = "This resource contains the contact information for " + Settings.OriginName + ". Use either content negotiation or links for different formats.";
@@ -33,15 +33,15 @@ namespace Mason.IssueTracker.Server.Contact.Codecs
 
       string cardBaseUrl = typeof(ContactResource).CreateUri().AbsoluteUri;
 
-      Link selfLink = CommunicationContext.NewLink("self", cardBaseUrl);
+      Link selfLink = MasonBuilderContext.NewLink("self", cardBaseUrl);
       contact.AddNavigation(selfLink);
 
       Uri vCardUri = new Uri(cardBaseUrl + ".vcard");
-      Link vCardLink = CommunicationContext.NewLink("alternate", vCardUri, "Contact information as vCard", "text/vcard");
+      Link vCardLink = MasonBuilderContext.NewLink("alternate", vCardUri, "Contact information as vCard", "text/vcard");
       contact.AddNavigation(vCardLink);
 
       Uri jCardUri = new Uri(cardBaseUrl + ".jcard");
-      Link jCardLink = CommunicationContext.NewLink("alternate", jCardUri, "Contact information as jCard", "application/json");
+      Link jCardLink = MasonBuilderContext.NewLink("alternate", jCardUri, "Contact information as jCard", "application/json");
       vCardLink.AddAlternateLink(jCardLink);
 
       return c;

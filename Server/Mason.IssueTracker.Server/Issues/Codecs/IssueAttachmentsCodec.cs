@@ -18,18 +18,18 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
     {
       Resource i = new Resource();
 
-      if (!CommunicationContext.PreferMinimalResponse())
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         i.Meta.Title = "Issue attachments";
         i.Meta.Description = "This is the list of attachments for a single issue.";
       }
 
       Uri selfUrl = typeof(IssueAttachmentsResource).CreateUri(new { id = issue.Issue.Id });
-      Link selfLink = CommunicationContext.NewLink("self", selfUrl);
+      Link selfLink = MasonBuilderContext.NewLink("self", selfUrl);
       i.AddNavigation(selfLink);
 
       Uri issueUrl = typeof(IssueResource).CreateUri(new { id = issue.Issue.Id });
-      Link issueLink = CommunicationContext.NewLink("up", issueUrl);
+      Link issueLink = MasonBuilderContext.NewLink("up", issueUrl);
       i.AddNavigation(issueLink);
 
       ((dynamic)i).Id = issue.Issue.Id;
@@ -44,7 +44,7 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
         ((dynamic)item).Title = a.Title;
 
         Uri itemSelfUri = typeof(AttachmentResource).CreateUri(new { id = a.Id });
-        Link itemSelfLink = CommunicationContext.NewLink("self", itemSelfUri);
+        Link itemSelfLink = MasonBuilderContext.NewLink("self", itemSelfUri);
         item.AddNavigation(itemSelfLink);
 
         ((dynamic)i).Attachments.Add(item);

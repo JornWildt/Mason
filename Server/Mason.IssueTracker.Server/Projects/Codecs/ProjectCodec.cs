@@ -15,18 +15,18 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
     {
       Resource p = new Resource();
 
-      if (!CommunicationContext.PreferMinimalResponse())
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         p.Meta.Title = "Project";
         p.Meta.Description = "This resource represents a single project with its data and related actions.";
       }
 
       Uri selfUrl = typeof(ProjectResource).CreateUri(new { id = project.Project.Id });
-      Link selfLink = CommunicationContext.NewLink("self", selfUrl, "Project details");
+      Link selfLink = MasonBuilderContext.NewLink("self", selfUrl, "Project details");
       p.AddNavigation(selfLink);
 
       Uri issuesUrl = typeof(ProjectIssuesResource).CreateUri(new { id = project.Project.Id });
-      Link issuesLink = CommunicationContext.NewLink(RelTypes.Issues, issuesUrl, "All issues in project");
+      Link issuesLink = MasonBuilderContext.NewLink(RelTypes.Issues, issuesUrl, "All issues in project");
       p.AddNavigation(issuesLink);
 
       dynamic updateTemplate = new DynamicDictionary();
@@ -34,19 +34,19 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       updateTemplate.Title = project.Project.Title;
       updateTemplate.Description = project.Project.Description;
 
-      JsonAction updateAction = CommunicationContext.NewJsonAction(RelTypes.ProjectUpdate, selfUrl, "Update project details", template: (DynamicDictionary)updateTemplate);
+      JsonAction updateAction = MasonBuilderContext.NewJsonAction(RelTypes.ProjectUpdate, selfUrl, "Update project details", template: (DynamicDictionary)updateTemplate);
       p.AddNavigation(updateAction);
 
       Uri addIssueSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-issue" });
-      JsonFilesAction addIssueAction = CommunicationContext.NewJsonFilesAction(RelTypes.ProjectAddIssue, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
-      if (!CommunicationContext.PreferMinimalResponse())
+      JsonFilesAction addIssueAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.ProjectAddIssue, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         addIssueAction.jsonFile = "args";
         addIssueAction.AddFile("attachment", "Attachment for issue");
       }
       p.AddNavigation(addIssueAction);
 
-      JsonAction deleteAction = CommunicationContext.NewJsonAction(RelTypes.ProjectDelete, selfUrl, "Delete project", method: "DELETE");
+      JsonAction deleteAction = MasonBuilderContext.NewJsonAction(RelTypes.ProjectDelete, selfUrl, "Delete project", method: "DELETE");
       p.AddNavigation(deleteAction);
 
       ((dynamic)p).Id = project.Project.Id;

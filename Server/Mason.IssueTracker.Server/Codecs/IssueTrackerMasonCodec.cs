@@ -15,18 +15,18 @@ namespace Mason.IssueTracker.Server.Codecs
 
       r.AddNamespace(new Namespace(RelTypes.NSPrefix, RelTypes.NSName));
 
-      if (!CommunicationContext.PreferMinimalResponse())
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         string msg = string.Format("This application restarts in {0:m\\:ss} minutes", ApplicationLifeTimeManager.NextRestart - DateTime.Now);
         if (r.Meta.Description == null)
           r.Meta.Description = msg;
         else
           r.Meta.Description += " [" + msg + "]";
-        r.Meta.AddNavigation(CommunicationContext.NewLink("documentation", "https://github.com/JornWildt/Mason", "Documentation of Mason media type (hosted on GitHub)."));
+        r.Meta.AddNavigation(MasonBuilderContext.NewLink("documentation", "https://github.com/JornWildt/Mason", "Documentation of Mason media type (hosted on GitHub)."));
       }
 
       Uri resourceCommonUri = typeof(ResourceCommonResource).CreateUri();
-      Link resourceCommonLink = CommunicationContext.NewLink(RelTypes.ResourceCommon, resourceCommonUri, "Common information shared by all resources");
+      Link resourceCommonLink = MasonBuilderContext.NewLink(RelTypes.ResourceCommon, resourceCommonUri, "Common information shared by all resources");
       r.AddNavigation(resourceCommonLink);
 
       return r;

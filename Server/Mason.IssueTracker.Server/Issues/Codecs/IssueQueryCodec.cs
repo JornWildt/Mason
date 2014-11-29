@@ -15,13 +15,13 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
     {
       Resource result = new Resource();
 
-      if (!CommunicationContext.PreferMinimalResponse())
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         result.Meta.Title = "Query result";
         result.Meta.Description = "This is the result of a query for issues. Follow issues 'self' link to get more information about individual issues.";
       }
 
-      result.AddNavigation(CommunicationContext.BuildIssueQueryTemplate());
+      result.AddNavigation(MasonBuilderContext.BuildIssueQueryTemplate(CommunicationContext));
 
       ((dynamic)result).Issues = new List<SubResource>();
 
@@ -32,13 +32,13 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
         item.Title = i.Title;
 
         Uri itemSelfUri = typeof(IssueResource).CreateUri(new { id = i.Id });
-        Link itemSelfLink = CommunicationContext.NewLink("self", itemSelfUri);
+        Link itemSelfLink = MasonBuilderContext.NewLink("self", itemSelfUri);
         item.AddNavigation(itemSelfLink);
 
         ((dynamic)result).Issues.Add(item);
       }
 
-      Link selfLink = CommunicationContext.NewLink("self", resource.SelfUri);
+      Link selfLink = MasonBuilderContext.NewLink("self", resource.SelfUri);
       result.AddNavigation(selfLink);
 
       return result;

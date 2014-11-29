@@ -15,6 +15,8 @@ namespace Mason.IssueTracker.Server.Codecs
 
     public ICommunicationContext CommunicationContext { get; set; }
 
+    public IMasonBuilderContext MasonBuilderContext { get; set; }
+
     #endregion
 
 

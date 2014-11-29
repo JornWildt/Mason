@@ -16,7 +16,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
     {
       Resource pcol = new Resource();
 
-      if (!CommunicationContext.PreferMinimalResponse())
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         pcol.Meta.Title = "Project list";
         pcol.Meta.Description = "List of all projects.";
@@ -34,7 +34,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       SubResource sp = new SubResource();
 
       Uri selfUri = typeof(ProjectResource).CreateUri(new { id = p.Id });
-      Link selfLink = CommunicationContext.NewLink("self", selfUri, "Project details");
+      Link selfLink = MasonBuilderContext.NewLink("self", selfUri, "Project details");
       sp.AddNavigation(selfLink);
 
       dynamic dp = sp;

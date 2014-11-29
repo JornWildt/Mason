@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DynamicDictionary.cs" />
+    <Compile Include="ElementBuilderExtensions.cs" />
     <Compile Include="ErrorElement.cs" />
+    <Compile Include="IMasonBuilderContext.cs" />
     <Compile Include="JsonAction.cs" />
     <Compile Include="JsonFilesAction.cs" />
     <Compile Include="Link.cs" />

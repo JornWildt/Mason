@@ -157,7 +157,6 @@
     <Compile Include="ResourceCommons\Codecs\ResourceCommonCodec.cs" />
     <Compile Include="ResourceCommons\Handlers\ResourceCommonHandler.cs" />
     <Compile Include="ResourceCommons\Resources\ResourceCommonResource.cs" />
-    <Compile Include="ResponseBuilderExtensions.cs" />
     <Compile Include="UrlPaths.cs" />
     <Compile Include="Utility\ApplicationLifeTimeManager.cs" />
     <Compile Include="Utility\ContactInformation.cs" />
@@ -165,6 +164,7 @@
     <Compile Include="Utility\JsonPatchDocumentVisitorWithErrorHandling.cs" />
     <Compile Include="Utility\Log4NetTraceListener.cs" />
     <Compile Include="Codecs\MasonCodec.cs" />
+    <Compile Include="Utility\MasonBuilderContext.cs" />
     <Compile Include="Utility\Settings.cs" />
     <Compile Include="Utility\StreamExtensions.cs" />
   </ItemGroup>

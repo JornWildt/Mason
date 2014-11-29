@@ -1,27 +1,27 @@
-﻿using MasonBuilder.Net;
-using OpenRasta.Web;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-
-namespace Mason.IssueTracker.Server
+namespace MasonBuilder.Net
 {
-  public static class ResponseBuilderExtensions
+  public static class ElementBuilderExtensions
   {
-    public static bool PreferMinimalResponse(this ICommunicationContext contex)
-    {
-      return contex.Request.Headers.ContainsKey("Prefer") && contex.Request.Headers["Prefer"].Contains("return=minimal");
-    }
+    //public static bool PreferMinimalResponse(this IMasonBuilderContext contex)
+    //{
+    //  return contex.Request.Headers.ContainsKey("Prefer") && contex.Request.Headers["Prefer"].Contains("return=minimal");
+    //}
 
 
-    public static Link NewLink(this ICommunicationContext contex, string name, Uri href, string title = null, string contentType = null)
+    public static Link NewLink(this IMasonBuilderContext contex, string name, Uri href, string title = null, string contentType = null)
     {
       return contex.NewLink(name, href.AbsoluteUriNullable(), title);
     }
 
 
-    public static Link NewLink(this ICommunicationContext contex, string name, string href, string title = null, string contentType = null)
+    public static Link NewLink(this IMasonBuilderContext contex, string name, string href, string title = null, string contentType = null)
     {
-      if (contex.PreferMinimalResponse())
+      if (contex.PreferMinimalResponse)
       {
         return new Link(name, href, null) { target_type = contentType };
       }
@@ -32,9 +32,9 @@ namespace Mason.IssueTracker.Server
     }
 
 
-    public static LinkTemplate NewLinkTemplate(this ICommunicationContext context, string name, string template, string title = null, string description = null)
+    public static LinkTemplate NewLinkTemplate(this IMasonBuilderContext context, string name, string template, string title = null, string description = null)
     {
-      if (context.PreferMinimalResponse())
+      if (context.PreferMinimalResponse)
       {
         return new LinkTemplate(name, template, null) { description = description };
       }
@@ -45,9 +45,9 @@ namespace Mason.IssueTracker.Server
     }
 
 
-    public static JsonAction NewJsonAction(this ICommunicationContext contex, string name, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
+    public static JsonAction NewJsonAction(this IMasonBuilderContext contex, string name, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
     {
-      if (contex.PreferMinimalResponse())
+      if (contex.PreferMinimalResponse)
       {
         return new JsonAction(name, href.AbsoluteUriNullable(), null, method)
         {
@@ -70,9 +70,9 @@ namespace Mason.IssueTracker.Server
     }
 
 
-    public static JsonFilesAction NewJsonFilesAction(this ICommunicationContext contex, string name, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
+    public static JsonFilesAction NewJsonFilesAction(this IMasonBuilderContext contex, string name, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
     {
-      if (contex.PreferMinimalResponse())
+      if (contex.PreferMinimalResponse)
       {
         return new JsonFilesAction(name, href.AbsoluteUriNullable(), null, method)
         {

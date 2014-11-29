@@ -18,18 +18,18 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
     {
       Resource p = new Resource();
 
-      if (!CommunicationContext.PreferMinimalResponse())
+      if (!MasonBuilderContext.PreferMinimalResponse)
       {
         p.Meta.Title = "Project issues";
         p.Meta.Description = "This is the list of issues for a single project.";
       }
 
       Uri selfUrl = typeof(ProjectIssuesResource).CreateUri(new { id = project.Project.Id });
-      Link selfLink = CommunicationContext.NewLink("self", selfUrl);
+      Link selfLink = MasonBuilderContext.NewLink("self", selfUrl);
       p.AddNavigation(selfLink);
 
       Uri projectUrl = typeof(ProjectResource).CreateUri(new { id = project.Project.Id });
-      Link projectLink = CommunicationContext.NewLink("up", projectUrl);
+      Link projectLink = MasonBuilderContext.NewLink("up", projectUrl);
       p.AddNavigation(projectLink);
 
       ((dynamic)p).Id = project.Project.Id;
@@ -44,7 +44,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
         item.Title = i.Title;
 
         Uri itemSelfUri = typeof(IssueResource).CreateUri(new { id = i.Id });
-        Link itemSelfLink = CommunicationContext.NewLink("self", itemSelfUri);
+        Link itemSelfLink = MasonBuilderContext.NewLink("self", itemSelfUri);
         item.AddNavigation(itemSelfLink);
 
         ((dynamic)p).Issues.Add(item);

@@ -18,6 +18,8 @@ namespace Mason.IssueTracker.Server
 
     public ICommunicationContext CommunicationContext { get; set; }
 
+    public IMasonBuilderContext MasonBuilderContext { get; set; }
+
     #endregion
 
 
