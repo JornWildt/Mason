@@ -52,23 +52,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
       RegisterCommand(SubmitCommand = new DelegateCommand<object>(Submit));
       RegisterCommand(CancelCommand = new DelegateCommand<object>(Cancel));
 
-      string prefix;
-      string reference;
-      string nsname;
-
-      Name = context.Namespaces.Expand(template.Name, out prefix, out reference, out nsname);
-
-      if (reference != null && nsname != null)
-      {
-        NamePart1 = nsname;
-        NamePart2 = reference;
-      }
-      else
-      {
-        NamePart1 = "";
-        NamePart2 = Name;
-      }
-
       WindowTitle = (string.IsNullOrWhiteSpace(Title) ? "Link template editor" : Title);
 
       JArray parameters = GetValue<JArray>(template.Value, "parameters");
@@ -76,11 +59,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         Parameters = new ObservableCollection<KeyValueParameterViewModel>(parameters.Select(p => new KeyValueParameterViewModel(this, p)));
       else
         Parameters = new ObservableCollection<KeyValueParameterViewModel>();
-      MergeParametersFromTemplate();
+      MergeParametersFromUrlTemplate();
     }
 
 
-    private void MergeParametersFromTemplate()
+    private void MergeParametersFromUrlTemplate()
     {
       try
       {

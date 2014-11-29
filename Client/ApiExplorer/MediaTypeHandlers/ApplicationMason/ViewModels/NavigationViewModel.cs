@@ -48,9 +48,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       RegisterCommand(ActivateNavigationCommand = new DelegateCommand<object>(ActivateNavigation));
 
-      //ToolTip1 = Title;
-      //ToolTip2 += HRef;
-
       if (reference != null && nsname != null)
       {
         NamePart1 = nsname;

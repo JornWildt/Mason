@@ -21,7 +21,7 @@
     <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
 
     <TextBlock Grid.Row="1" Grid.Column="0" Text="Template:" Style="{StaticResource ResourceKey=Label}"/>
-    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Template, Mode=OneTime}" IsReadOnly="True" Style="{StaticResource ResourceKey=Readonly}"/>
+    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding HRef, Mode=OneTime}" IsReadOnly="True" Style="{StaticResource ResourceKey=Readonly}"/>
 
     <TextBlock Grid.Row="2" Grid.ColumnSpan="2" 
                Text="{Binding Description}" Style="{StaticResource ResourceKey=Description}" TextWrapping="Wrap"
