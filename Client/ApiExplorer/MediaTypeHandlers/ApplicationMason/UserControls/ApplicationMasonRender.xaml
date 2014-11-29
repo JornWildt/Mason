@@ -120,11 +120,14 @@
           <RowDefinition Height="Auto"/>
           <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{Binding Name, StringFormat='{}{0}: '}" FontWeight="Bold">
-          <i:Interaction.Behaviors>
-            <axu:ShowSourceBehavior Prefix="{Binding Name}"/>
-          </i:Interaction.Behaviors>
-        </TextBlock>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+          <TextBlock Text="{Binding Name, StringFormat='{}{0}: '}" FontWeight="Bold">
+            <i:Interaction.Behaviors>
+              <axu:ShowSourceBehavior Prefix="{Binding Name}"/>
+            </i:Interaction.Behaviors>
+          </TextBlock>
+          <TextBlock Text="{Binding Count, StringFormat='{}({0} items)'}"/>
+        </StackPanel>
         <ItemsControl Grid.Row="1" ItemsSource="{Binding Value}" Margin="20 0 0 0"/>
       </Grid>
     </DataTemplate>

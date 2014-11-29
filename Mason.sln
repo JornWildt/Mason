@@ -12,13 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		Documentation\reltypes.html = Documentation\reltypes.html
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DE462232-F389-4341-ACF0-30DFF389E560}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiExplorer", "Client\ApiExplorer\ApiExplorer.csproj", "{EDBAA853-053A-40E6-A03C-0161D3ED4968}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mason.IssueTracker.Server.Domain", "Server\Mason.IssueTracker.Server.Domain\Mason.IssueTracker.Server.Domain.csproj", "{7982AD31-0DE8-481F-B1BB-FE3B906B8DDE}"
