@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Mason.Net
+
+namespace MasonBuilder.Net
 {
   public class ErrorElement : SubResource
   {

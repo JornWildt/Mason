@@ -4,7 +4,7 @@ using Mason.IssueTracker.Server.Domain.Attachments;
 using Mason.IssueTracker.Server.Issues.Resources;
 using Mason.IssueTracker.Server.JsonSchemas.Resources;
 using Mason.IssueTracker.Server.Projects.Resources;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Web;
 using System;
 using System.Collections.Generic;
@@ -42,14 +42,14 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       updateTemplate.Description = issue.Issue.Description;
       updateTemplate.Severity = issue.Issue.Severity;
 
-      Net.JsonAction updateAction = CommunicationContext.NewJsonAction(RelTypes.IssueUpdate, selfUrl, "Update issue details", template: (DynamicDictionary)updateTemplate);
+      JsonAction updateAction = CommunicationContext.NewJsonAction(RelTypes.IssueUpdate, selfUrl, "Update issue details", template: (DynamicDictionary)updateTemplate);
       i.AddNavigation(updateAction);
 
-      Net.JsonAction deleteAction = CommunicationContext.NewJsonAction(RelTypes.IssueDelete, selfUrl, "Delete issue", method: "DELETE");
+      JsonAction deleteAction = CommunicationContext.NewJsonAction(RelTypes.IssueDelete, selfUrl, "Delete issue", method: "DELETE");
       i.AddNavigation(deleteAction);
 
       Uri addAttachmentSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-attachment" });
-      Net.JsonFilesAction addAttachmentAction = CommunicationContext.NewJsonFilesAction(RelTypes.IssueAddAttachment, attachmentsUrl, "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
+      JsonFilesAction addAttachmentAction = CommunicationContext.NewJsonFilesAction(RelTypes.IssueAddAttachment, attachmentsUrl, "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
       if (!CommunicationContext.PreferMinimalResponse())
       {
         addAttachmentAction.jsonFile = "args";

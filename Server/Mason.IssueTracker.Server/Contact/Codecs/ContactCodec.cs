@@ -1,7 +1,7 @@
 ﻿using Mason.IssueTracker.Server.Codecs;
 using Mason.IssueTracker.Server.Contact.Resources;
 using Mason.IssueTracker.Server.Utility;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Codecs;
 using OpenRasta.Web;
 using System;

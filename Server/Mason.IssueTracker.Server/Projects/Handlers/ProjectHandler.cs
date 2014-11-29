@@ -1,6 +1,6 @@
 ﻿using Mason.IssueTracker.Server.Domain.Projects;
 using Mason.IssueTracker.Server.Projects.Resources;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Web;
 using System;
 

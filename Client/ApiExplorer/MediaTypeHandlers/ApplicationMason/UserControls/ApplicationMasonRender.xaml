@@ -6,7 +6,7 @@
              xmlns:axv="clr-namespace:ApiExplorer.ValueConverters"
              xmlns:axu="clr-namespace:ApiExplorer.Utilities"
              xmlns:mavm="clr-namespace:ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels"
-             xmlns:mn="clr-namespace:Mason.Net;assembly=Mason.Net">
+             xmlns:mn="clr-namespace:MasonBuilder.Net;assembly=MasonBuilder.Net">
   <UserControl.Resources>
     <!-- Template for displaying resource (recursively) -->
     <DataTemplate DataType="{x:Type mavm:ResourcePropertyViewModel}">

@@ -1,7 +1,7 @@
 ﻿using Mason.IssueTracker.Server.Attachments.Resources;
 using Mason.IssueTracker.Server.Codecs;
 using Mason.IssueTracker.Server.Issues.Resources;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Web;
 using System;
 
@@ -39,7 +39,7 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       updateTemplate.Title = attachment.Attachment.Title;
       updateTemplate.Description = attachment.Attachment.Description;
 
-      Net.JsonFilesAction updateAction = CommunicationContext.NewJsonFilesAction(RelTypes.AttachmentUpdate, selfUrl, "Update attachment details", description: "Update title and description of attachment", template: (DynamicDictionary)updateTemplate);
+      JsonFilesAction updateAction = CommunicationContext.NewJsonFilesAction(RelTypes.AttachmentUpdate, selfUrl, "Update attachment details", description: "Update title and description of attachment", template: (DynamicDictionary)updateTemplate);
       if (!CommunicationContext.PreferMinimalResponse())
       {
         updateAction.jsonFile = "args";
@@ -47,7 +47,7 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       }
       a.AddNavigation(updateAction);
 
-      Net.JsonAction deleteAction = CommunicationContext.NewJsonAction(RelTypes.AttachmentDelete, selfUrl, "Delete attachment", method: "DELETE");
+      JsonAction deleteAction = CommunicationContext.NewJsonAction(RelTypes.AttachmentDelete, selfUrl, "Delete attachment", method: "DELETE");
       a.AddNavigation(deleteAction);
 
       dynamic da = a;

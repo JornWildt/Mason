@@ -2,7 +2,7 @@
 using System.Dynamic;
 
 
-namespace Mason.Net
+namespace MasonBuilder.Net
 {
   public class DynamicDictionary : DynamicObject
   {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 
 
-namespace Mason.Net
+namespace MasonBuilder.Net
 {
   public class Resource : SubResource
   {

@@ -2,7 +2,7 @@
 using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
 using ApiExplorer.Windows;
-using Mason.Net;
+using MasonBuilder.Net;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Ramone;

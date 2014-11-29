@@ -19,8 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DE4622
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mason.Net", "Mason.Net\Mason.Net.csproj", "{942BF912-7D72-40E6-AF86-1F28B240A0C8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiExplorer", "Client\ApiExplorer\ApiExplorer.csproj", "{EDBAA853-053A-40E6-A03C-0161D3ED4968}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mason.IssueTracker.Server.Domain", "Server\Mason.IssueTracker.Server.Domain\Mason.IssueTracker.Server.Domain.csproj", "{7982AD31-0DE8-481F-B1BB-FE3B906B8DDE}"
@@ -33,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mason.IssueTracker.Server.D
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "ApiExplorerInstaller", "ApiExplorerInstaller\ApiExplorerInstaller.wixproj", "{2C383012-2B63-4766-899A-40DF7CF724B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasonBuilder.Net", "MasonBuilder.Net\MasonBuilder.Net.csproj", "{F28F9BC9-A5FC-47B4-A3C5-27A5E9D0BCBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,16 +43,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{942BF912-7D72-40E6-AF86-1F28B240A0C8}.Release|x86.ActiveCfg = Release|Any CPU
 		{EDBAA853-053A-40E6-A03C-0161D3ED4968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EDBAA853-053A-40E6-A03C-0161D3ED4968}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDBAA853-053A-40E6-A03C-0161D3ED4968}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -113,6 +103,16 @@ Global
 		{2C383012-2B63-4766-899A-40DF7CF724B3}.Release|Mixed Platforms.Build.0 = Release|x86
 		{2C383012-2B63-4766-899A-40DF7CF724B3}.Release|x86.ActiveCfg = Release|x86
 		{2C383012-2B63-4766-899A-40DF7CF724B3}.Release|x86.Build.0 = Release|x86
+		{F28F9BC9-A5FC-47B4-A3C5-27A5E9D0BCBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F28F9BC9-A5FC-47B4-A3C5-27A5E9D0BCBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F28F9BC9-A5FC-47B4-A3C5-27A5E9D0BCBD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F28F9BC9-A5FC-47B4-A3C5-27A5E9D0BCBD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F28F9BC9-A5FC-47B4-A3C5-27A5E9D0BCBD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F28F9BC9-A5FC-47B4-A3C5-27A5E9D0BCBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F28F9BC9-A5FC-47B4-A3C5-27A5E9D0BCBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F28F9BC9-A5FC-47B4-A3C5-27A5E9D0BCBD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F28F9BC9-A5FC-47B4-A3C5-27A5E9D0BCBD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F28F9BC9-A5FC-47B4-A3C5-27A5E9D0BCBD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,7 +122,6 @@ Global
 		{E91EAD7E-6ADC-42D2-8D19-EA144174EA78} = {305705AD-BBCA-42F1-B607-DA1158D0B042}
 		{65C2C002-8973-48D9-86D3-C688BD2F5C5B} = {305705AD-BBCA-42F1-B607-DA1158D0B042}
 		{63A1FD80-F0F5-4961-A744-1C9D6F71F7A3} = {305705AD-BBCA-42F1-B607-DA1158D0B042}
-		{942BF912-7D72-40E6-AF86-1F28B240A0C8} = {305705AD-BBCA-42F1-B607-DA1158D0B042}
 		{EDBAA853-053A-40E6-A03C-0161D3ED4968} = {4EA73291-C6D2-483F-80EB-57F5AF3B6B17}
 	EndGlobalSection
 EndGlobal

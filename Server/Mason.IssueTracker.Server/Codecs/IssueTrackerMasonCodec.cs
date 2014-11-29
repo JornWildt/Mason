@@ -1,5 +1,5 @@
 ﻿using Mason.IssueTracker.Server.ResourceCommons.Resources;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Web;
 using System;
 using Mason.IssueTracker.Server.Utility;
@@ -9,7 +9,7 @@ namespace Mason.IssueTracker.Server.Codecs
 {
   public abstract class IssueTrackerMasonCodec<T> : MasonCodec<T>
   {
-    protected override Net.Resource ConvertToMason(T resource)
+    protected override Resource ConvertToMason(T resource)
     {
       Resource r = ConvertToIssueTracker(resource);
 
@@ -33,7 +33,7 @@ namespace Mason.IssueTracker.Server.Codecs
     }
 
 
-    protected abstract Mason.Net.Resource ConvertToIssueTracker(T resource);
+    protected abstract Resource ConvertToIssueTracker(T resource);
   }
 
 

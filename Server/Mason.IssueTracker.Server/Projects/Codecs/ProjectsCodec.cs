@@ -1,7 +1,7 @@
 ﻿using Mason.IssueTracker.Server.Codecs;
 using Mason.IssueTracker.Server.Domain.Projects;
 using Mason.IssueTracker.Server.Projects.Resources;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Web;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
 {
   public class ProjectsCodec : IssueTrackerMasonCodec<ProjectCollectionResource>
   {
-    protected override Net.Resource ConvertToIssueTracker(ProjectCollectionResource projects)
+    protected override Resource ConvertToIssueTracker(ProjectCollectionResource projects)
     {
       Resource pcol = new Resource();
 

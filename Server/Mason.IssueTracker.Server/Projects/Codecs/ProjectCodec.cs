@@ -2,7 +2,7 @@
 using Mason.IssueTracker.Server.Issues.Resources;
 using Mason.IssueTracker.Server.JsonSchemas.Resources;
 using Mason.IssueTracker.Server.Projects.Resources;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Web;
 using System;
 
@@ -34,11 +34,11 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       updateTemplate.Title = project.Project.Title;
       updateTemplate.Description = project.Project.Description;
 
-      Net.JsonAction updateAction = CommunicationContext.NewJsonAction(RelTypes.ProjectUpdate, selfUrl, "Update project details", template: (DynamicDictionary)updateTemplate);
+      JsonAction updateAction = CommunicationContext.NewJsonAction(RelTypes.ProjectUpdate, selfUrl, "Update project details", template: (DynamicDictionary)updateTemplate);
       p.AddNavigation(updateAction);
 
       Uri addIssueSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-issue" });
-      Net.JsonFilesAction addIssueAction = CommunicationContext.NewJsonFilesAction(RelTypes.ProjectAddIssue, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
+      JsonFilesAction addIssueAction = CommunicationContext.NewJsonFilesAction(RelTypes.ProjectAddIssue, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
       if (!CommunicationContext.PreferMinimalResponse())
       {
         addIssueAction.jsonFile = "args";
@@ -46,7 +46,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       }
       p.AddNavigation(addIssueAction);
 
-      Net.JsonAction deleteAction = CommunicationContext.NewJsonAction(RelTypes.ProjectDelete, selfUrl, "Delete project", method: "DELETE");
+      JsonAction deleteAction = CommunicationContext.NewJsonAction(RelTypes.ProjectDelete, selfUrl, "Delete project", method: "DELETE");
       p.AddNavigation(deleteAction);
 
       ((dynamic)p).Id = project.Project.Id;

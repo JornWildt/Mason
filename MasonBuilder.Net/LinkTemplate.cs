@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Mason.Net
+namespace MasonBuilder.Net
 {
   public class LinkTemplate : Navigation
   {

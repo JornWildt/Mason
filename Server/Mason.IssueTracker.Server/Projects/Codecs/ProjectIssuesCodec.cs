@@ -2,7 +2,7 @@
 using Mason.IssueTracker.Server.Domain.Issues;
 using Mason.IssueTracker.Server.Issues.Resources;
 using Mason.IssueTracker.Server.Projects.Resources;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Web;
 using System;
 using System.Collections.Generic;

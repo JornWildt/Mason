@@ -1,7 +1,7 @@
 ﻿using log4net;
 using Mason.IssueTracker.Server.Domain;
 using Mason.IssueTracker.Server.Domain.Exceptions;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.OperationModel;
 using OpenRasta.OperationModel.Interceptors;
 using OpenRasta.Web;

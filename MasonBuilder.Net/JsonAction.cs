@@ -1,4 +1,4 @@
-﻿namespace Mason.Net
+﻿namespace MasonBuilder.Net
 {
   public class JsonAction : Navigation
   {

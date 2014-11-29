@@ -1,4 +1,4 @@
-﻿using Mason.Net;
+﻿using MasonBuilder.Net;
 using OpenRasta.Web;
 using System;
 
@@ -45,11 +45,11 @@ namespace Mason.IssueTracker.Server
     }
 
 
-    public static Net.JsonAction NewJsonAction(this ICommunicationContext contex, string name, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
+    public static JsonAction NewJsonAction(this ICommunicationContext contex, string name, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
     {
       if (contex.PreferMinimalResponse())
       {
-        return new Net.JsonAction(name, href.AbsoluteUriNullable(), null, method)
+        return new JsonAction(name, href.AbsoluteUriNullable(), null, method)
         {
           description = description,
           schema = schema,
@@ -59,7 +59,7 @@ namespace Mason.IssueTracker.Server
       }
       else
       {
-        return new Net.JsonAction(name, href.AbsoluteUriNullable(), title, method)
+        return new JsonAction(name, href.AbsoluteUriNullable(), title, method)
         {
           description = description,
           schema = schema,
@@ -70,11 +70,11 @@ namespace Mason.IssueTracker.Server
     }
 
 
-    public static Net.JsonFilesAction NewJsonFilesAction(this ICommunicationContext contex, string name, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
+    public static JsonFilesAction NewJsonFilesAction(this ICommunicationContext contex, string name, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = null)
     {
       if (contex.PreferMinimalResponse())
       {
-        return new Net.JsonFilesAction(name, href.AbsoluteUriNullable(), null, method)
+        return new JsonFilesAction(name, href.AbsoluteUriNullable(), null, method)
         {
           description = description,
           schema = schema,
@@ -84,7 +84,7 @@ namespace Mason.IssueTracker.Server
       }
       else
       {
-        return new Net.JsonFilesAction(name, href.AbsoluteUriNullable(), title, method)
+        return new JsonFilesAction(name, href.AbsoluteUriNullable(), title, method)
         {
           description = description,
           schema = schema,

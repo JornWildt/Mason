@@ -1,6 +1,6 @@
 ﻿using log4net;
 using Mason.IssueTracker.Server.Domain;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Web;
 using System;
 

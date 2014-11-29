@@ -5,7 +5,7 @@ using Mason.IssueTracker.Server.Domain.Attachments;
 using Mason.IssueTracker.Server.Domain.Issues;
 using Mason.IssueTracker.Server.Domain.NHibernate;
 using Mason.IssueTracker.Server.Domain.Projects;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Configuration;
 using OpenRasta.DI;
 using OpenRasta.OperationModel.Interceptors;

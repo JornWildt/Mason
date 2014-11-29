@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 
-namespace Mason.Net
+namespace MasonBuilder.Net
 {
   public class Namespace
   {

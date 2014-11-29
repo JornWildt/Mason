@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Mason.Net
+namespace MasonBuilder.Net
 {
   public class Link : Navigation
   {

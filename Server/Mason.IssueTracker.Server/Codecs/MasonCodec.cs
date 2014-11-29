@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MasonBuilder.Net;
+using Newtonsoft.Json;
 using OpenRasta.Codecs;
 using OpenRasta.Web;
 using System.IO;
@@ -25,7 +26,7 @@ namespace Mason.IssueTracker.Server.Codecs
       if (resource == null)
         return;
 
-      Mason.Net.Resource representation = ConvertToMason((T)resource);
+      Resource representation = ConvertToMason((T)resource);
 
       JsonSerializer serializer = new JsonSerializer();
       serializer.NullValueHandling = NullValueHandling.Ignore;
@@ -37,6 +38,6 @@ namespace Mason.IssueTracker.Server.Codecs
     }
 
 
-    protected abstract Mason.Net.Resource ConvertToMason(T resource);
+    protected abstract MasonBuilder.Net.Resource ConvertToMason(T resource);
   }
 }

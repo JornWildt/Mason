@@ -42,13 +42,24 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Castle.Windsor.3.2.1\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="CuttingEdge.Conditions, Version=1.2.0.11174, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CuttingEdge.Conditions.1.2.0.0\lib\NET35\CuttingEdge.Conditions.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate, Version=1.4.0.0, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\HtmlAgilityPack.1.4.9\lib\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="jose-jwt">
+      <HintPath>..\..\packages\jose-jwt.1.7.0\lib\4.0\jose-jwt.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -56,7 +67,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -70,6 +81,9 @@
     </Reference>
     <Reference Include="OpenRasta.Hosting.AspNet">
       <HintPath>..\Libraries\OpenRasta.Hosting.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Ramone">
+      <HintPath>..\..\packages\Ramone.2.0.0.0\lib\net40\Ramone.dll</HintPath>
     </Reference>
     <Reference Include="Ramone.Core">
       <HintPath>..\..\..\Ramone\Ramone\bin\Debug\Ramone.Core.dll</HintPath>
@@ -155,12 +169,13 @@
     <Compile Include="Utility\StreamExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LICENSE" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Mason.Net\Mason.Net.csproj">
-      <Project>{942bf912-7d72-40e6-af86-1f28b240a0c8}</Project>
-      <Name>Mason.Net</Name>
+    <ProjectReference Include="..\..\MasonBuilder.Net\MasonBuilder.Net.csproj">
+      <Project>{f28f9bc9-a5fc-47b4-a3c5-27a5e9d0bcbd}</Project>
+      <Name>MasonBuilder.Net</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mason.IssueTracker.Server.Domain.NHibernate\Mason.IssueTracker.Server.Domain.NHibernate.csproj">
       <Project>{63a1fd80-f0f5-4961-a744-1c9d6f71f7a3}</Project>

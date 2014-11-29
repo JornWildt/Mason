@@ -63,8 +63,8 @@
       <Component Id="log4net.dll" Guid="{8ACE14A0-1D55-4480-9141-BBF8480718FD}">
         <File Id="log4net.dll" Source="$(var.ApiExplorer.TargetDir)\log4net.dll"/>
       </Component>
-      <Component Id="Mason.Net.dll" Guid="{1AAF9128-AA99-4B25-8831-7143B5B9F5B8}">
-        <File Id="Mason.Net.dll" Source="$(var.ApiExplorer.TargetDir)\Mason.Net.dll"/>
+      <Component Id="MasonBuilder.Net.dll" Guid="{1AAF9128-AA99-4B25-8831-7143B5B9F5B8}">
+        <File Id="MasonBuilder.Net.dll" Source="$(var.ApiExplorer.TargetDir)\MasonBuilder.Net.dll"/>
       </Component>
       <Component Id="Microsoft.Practices.Composite.dll" Guid="{BC33DC26-42A0-46E9-95D1-D1EA69E4A88F}">
         <File Id="Microsoft.Practices.Composite.dll" Source="$(var.ApiExplorer.TargetDir)\Microsoft.Practices.Composite.dll"/>
@@ -76,7 +76,7 @@
         <File Id="Microsoft.Practices.Composite.Presentation.dll" Source="$(var.ApiExplorer.TargetDir)\Microsoft.Practices.Composite.Presentation.dll"/>
       </Component>
       <Component Id="Ramone.dll" Guid="{C3111273-C0D6-415C-BDA7-2198EBA84BEA}">
-        <File Id="Ramone.Core.dll" Source="$(var.ApiExplorer.TargetDir)\Ramone.Core.dll"/>
+        <File Id="Ramone.dll" Source="$(var.ApiExplorer.TargetDir)\Ramone.dll"/>
       </Component>
       <Component Id="System.Windows.Interactivity.dll" Guid="{31935662-75DE-437E-909F-4BCB662B2E61}">
         <File Id="System.Windows.Interactivity.dll" Source="$(var.ApiExplorer.TargetDir)\System.Windows.Interactivity.dll"/>

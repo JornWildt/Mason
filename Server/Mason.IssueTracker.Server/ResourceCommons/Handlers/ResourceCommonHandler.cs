@@ -4,7 +4,7 @@ using Mason.IssueTracker.Server.JsonSchemas.Resources;
 using Mason.IssueTracker.Server.Projects.Resources;
 using Mason.IssueTracker.Server.ResourceCommons.Resources;
 using Mason.IssueTracker.Server.Utility;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Web;
 using System;
 
@@ -46,7 +46,7 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
 
       Uri projectsUrl = typeof(ProjectCollectionResource).CreateUri();
       Uri createProjectSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-project" });
-      Net.JsonAction addProjectAction = CommunicationContext.NewJsonAction(RelTypes.ProjectAdd, projectsUrl, "Create new project", schemaUrl: createProjectSchemaUrl);
+      JsonAction addProjectAction = CommunicationContext.NewJsonAction(RelTypes.ProjectAdd, projectsUrl, "Create new project", schemaUrl: createProjectSchemaUrl);
       common.AddNavigation(addProjectAction);
 
       return new ResourceCommonResource { Value = common };

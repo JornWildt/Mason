@@ -2,7 +2,7 @@
 using Mason.IssueTracker.Server.Codecs;
 using Mason.IssueTracker.Server.Domain.Attachments;
 using Mason.IssueTracker.Server.Issues.Resources;
-using Mason.Net;
+using MasonBuilder.Net;
 using OpenRasta.Web;
 using System;
 using System.Collections.Generic;
