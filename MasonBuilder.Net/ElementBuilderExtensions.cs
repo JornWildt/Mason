@@ -36,11 +36,27 @@ namespace MasonBuilder.Net
     {
       if (context.PreferMinimalResponse)
       {
-        return new LinkTemplate(name, template, null) { description = description };
+        return new LinkTemplate(name, template, null);
       }
       else
       {
         return new LinkTemplate(name, template, title) { description = description };
+      }
+    }
+
+
+    public static VoidAction NewVoidAction(this IMasonBuilderContext contex, string name, Uri href, string title = null, string description = null, string method = null)
+    {
+      if (contex.PreferMinimalResponse)
+      {
+        return new VoidAction(name, href.AbsoluteUriNullable(), null, method);
+      }
+      else
+      {
+        return new VoidAction(name, href.AbsoluteUriNullable(), title, method)
+        {
+          description = description
+        };
       }
     }
 
@@ -51,9 +67,6 @@ namespace MasonBuilder.Net
       {
         return new JsonAction(name, href.AbsoluteUriNullable(), null, method)
         {
-          description = description,
-          schema = schema,
-          schemaUrl = (schemaUrl != null ? schemaUrl.AbsoluteUri : null),
           template = template
         };
       }
@@ -76,9 +89,6 @@ namespace MasonBuilder.Net
       {
         return new JsonFilesAction(name, href.AbsoluteUriNullable(), null, method)
         {
-          description = description,
-          schema = schema,
-          schemaUrl = (schemaUrl != null ? schemaUrl.AbsoluteUri : null),
           template = template
         };
       }

@@ -1,4 +1,5 @@
-﻿namespace ApiExplorer.ViewModels
+﻿using ApiExplorer.Utilities;
+namespace ApiExplorer.ViewModels
 {
   public class SettingsViewModel : ViewModel
   {
@@ -7,12 +8,12 @@
 
     public bool PreferMinimalResponseSize
     {
-      get { return ApiExplorer.Properties.Settings.Default.PreferMinimalResponseSize; }
+      get { return SettingsReader.Get(() => ApiExplorer.Properties.Settings.Default.PreferMinimalResponseSize, false); }
       set
       {
-        if (value != ApiExplorer.Properties.Settings.Default.PreferMinimalResponseSize)
+        if (value != SettingsReader.Get(() => ApiExplorer.Properties.Settings.Default.PreferMinimalResponseSize, false))
         {
-          ApiExplorer.Properties.Settings.Default.PreferMinimalResponseSize = value;
+          SettingsReader.Set(() => ApiExplorer.Properties.Settings.Default.PreferMinimalResponseSize = value);
           OnPropertyChanged("PreferMinimalResponseSize");
         }
       }
@@ -21,12 +22,12 @@
 
     public bool UseMethodOverride
     {
-      get { return ApiExplorer.Properties.Settings.Default.UseMethodOverride; }
+      get { return SettingsReader.Get(() => ApiExplorer.Properties.Settings.Default.UseMethodOverride, false); }
       set
       {
-        if (value != ApiExplorer.Properties.Settings.Default.UseMethodOverride)
+        if (value != SettingsReader.Get(() => ApiExplorer.Properties.Settings.Default.UseMethodOverride, false))
         {
-          ApiExplorer.Properties.Settings.Default.UseMethodOverride = value;
+          SettingsReader.Set(() => ApiExplorer.Properties.Settings.Default.UseMethodOverride = value);
           OnPropertyChanged("UseMethodOverride");
         }
       }

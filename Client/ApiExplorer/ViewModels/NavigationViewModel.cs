@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Composite.Presentation.Commands;
+using ApiExplorer.Utilities;
 
 namespace ApiExplorer.ViewModels
 {
@@ -53,7 +54,7 @@ namespace ApiExplorer.ViewModels
       PreviousUrls = new Stack<string>();
       RegisterCommand(BackCommand = new DelegateCommand<object>(Back));
 
-      CurrentUrl = Properties.Settings.Default.LastAccessedUrl;
+      CurrentUrl = SettingsReader.Get(() => Properties.Settings.Default.LastAccessedUrl, null);
       if (string.IsNullOrEmpty(CurrentUrl))
         CurrentUrl = "http://mason-issue-tracker.cbrain.net/issues/1";
     }
@@ -64,7 +65,7 @@ namespace ApiExplorer.ViewModels
       if (PreviousUrls.Count == 0 || PreviousUrls.Peek() != CurrentUrl)
       {
         PreviousUrls.Push(CurrentUrl);
-        Properties.Settings.Default.LastAccessedUrl = CurrentUrl;
+        SettingsReader.Set(() => Properties.Settings.Default.LastAccessedUrl = CurrentUrl);
       }
     }
 

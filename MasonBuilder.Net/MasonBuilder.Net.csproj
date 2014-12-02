@@ -61,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="SubResource.cs" />
+    <Compile Include="VoidAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

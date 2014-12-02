@@ -176,10 +176,10 @@ namespace ApiExplorer.ViewModels
 
       try
       {
-        if (Properties.Settings.Default.PreferMinimalResponseSize)
+        if (SettingsReader.Get(() => Properties.Settings.Default.PreferMinimalResponseSize, false))
           args.Request.Header("Prefer", "return=minimal");
 
-        if (Properties.Settings.Default.UseMethodOverride && args.Session.RequestInterceptors.Find("MethodOverrideInterceptor") == null)
+        if (SettingsReader.Get(() => Properties.Settings.Default.UseMethodOverride,false) && args.Session.RequestInterceptors.Find("MethodOverrideInterceptor") == null)
           args.Session.RequestInterceptors.Add("MethodOverrideInterceptor", new MethodOverrideInterceptor());
 
         args.Request
@@ -195,6 +195,7 @@ namespace ApiExplorer.ViewModels
       catch (Exception ex)
       {
         IsExecutingRequest = false;
+        Logger.Error(ex);
         MessageBox.Show(GetOwnerWindow(), ex.Message, "Failed to setup request");
       }
     }

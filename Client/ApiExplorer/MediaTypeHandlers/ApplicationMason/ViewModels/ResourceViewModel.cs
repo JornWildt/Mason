@@ -93,6 +93,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         return new LinkViewModel(parent, n, context);
       else if (type == MasonProperties.NavigationTypes.LinkTemplate)
         return new LinkTemplateViewModel(parent, n, context);
+      else if (type == MasonProperties.NavigationTypes.Void)
+        return new VoidActionViewModel(parent, n, context);
       else if (type == MasonProperties.NavigationTypes.JSON)
         return new JsonActionViewModel(parent, n, context);
       else if (type == MasonProperties.NavigationTypes.JSONFiles)

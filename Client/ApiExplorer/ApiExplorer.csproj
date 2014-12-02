@@ -173,6 +173,7 @@
     <Compile Include="Utilities\JsonNetCodec.cs" />
     <Compile Include="Utilities\MediaTypeDispatcher.cs" />
     <Compile Include="Utilities\RamoneServiceManager.cs" />
+    <Compile Include="Utilities\SettingsReader.cs" />
     <Compile Include="Utilities\ShowSourceAdorner.cs" />
     <Compile Include="Utilities\ShowSourceBehavior.cs" />
     <Compile Include="Utilities\WatermarkAdorner.cs" />
