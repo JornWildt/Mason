@@ -2,17 +2,35 @@
 
 ## Introduction
 
-Mason is a JSON format for adding hypermedia elements, standardized error handling and additional meta data to classic JSON representations. It is a generic format and imposes very little restrictions on the data it is integrated with.
-
 > Note: The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
+
+Mason is a JSON based format for adding hypermedia elements, standardized error handling and additional meta data to classic JSON representations. It is a generic format and imposes very little restrictions on the data it is integrated with.
 
 A Mason document is constructed by taking a "classic" JSON object and then merging hypermedia elements and other Mason features into it. Mason properties are prefixed with `@` to avoid collisions with existing property names.
 
-Here is a simple example to introduce the format. It represents a single issue from an issue tracker application:
+Here is a simple example to introduce the format. Suppose we have an existing payload representing a single issue from an issue tracker. It could look as shown below without any Mason specific elements:
 
 ```json
 {
-  // Classic API data
+  "ID": 1,
+  "Title": "Program crashes when pressing ctrl-p",
+  "Description": "I pressed ctrl-p and, boom, it crashed.",
+  "Severity": 5,
+  "Attachments": [
+    {
+      "Id": 15,
+      "Title": "Error report"
+    }
+  ]
+}
+```
+
+Now we can add a few links to the issue: a link to the issue itself (a "self" link), a link to the issue's containing project (an "up" link) and a link to the attachment (another "self" link in a different context).
+
+Links (and other hypermedia elements) are added as object properties in a special "@navigation" element:
+
+```json
+{
   "ID": 1,
   "Title": "Program crashes when pressing ctrl-p",
   "Description": "I pressed ctrl-p and, boom, it crashed.",
@@ -21,7 +39,6 @@ Here is a simple example to introduce the format. It represents a single issue f
     {
       "Id": 1,
       "Title": "Error report",
-      // Hypermedia linking to attachment
       "@navigation": {
         "self": {
           "href": "http://issue-tracker.org/attachments/1"
@@ -29,13 +46,10 @@ Here is a simple example to introduce the format. It represents a single issue f
       }
     }
   ],
-  // Additional hypermedia elements
   "@navigation": {
-    // Hypermedia linking to self
     "self": {
       "href": "http://issue-tracker.org/issues/1"
     },
-    // Hypermedia linking to containing project
     "up": {
       "href": "http://issue-tracker.org/projects/1",
       "title": "Containing project"
@@ -48,14 +62,14 @@ Here is a simple example to introduce the format. It represents a single issue f
 
 Mason is based on JSON and follows as such all the syntax rules for valid JSON documents. Mason reserves the character '@' as a prefix for Mason property names.
 
-The prefix character is not used for all Mason properties, only for those that co-exists with properties from the underlying resource data - for instance '@meta' and '@actions'. Other property names like "template" and "parameters" are used only in contexts where it is not allowed to mix data so these properties do not use the '@' prefix.
+The prefix character is not used for all Mason properties, only for those that co-exists with other properties from the underlying resource data - for instance '@meta' and '@actions'. Other property names like "template" and "parameters" are used only in contexts where it is not allowed to mix data so these properties do not use the '@' prefix.
 
 
 ## Curies
 
-Curie is an abbreviation for "Compact URI" and is a way to define short scoped names that map to URIs. Mason uses namespace declarations to declare prefixes for use in Curies. A Curie is expanded to a URI by replacing the namespace prefix with the corresponding name declared in the `@namespaces` object.
+The word "Curie" is an abbreviation for "Compact URI" and is a way to define short scoped names that map to URIs. Mason uses namespace declarations to declare prefixes for use in Curies. A Curie is expanded to a URI by replacing the namespace prefix with the corresponding name declared in the `@namespaces` object.
 
-Curies are only expanded in link relation types - not in target URLs of links, link templates and other elements.
+Curies are only expanded in navigation identifiers - not in target URLs of links and other elements.
 
 See [CURIE Syntax 1.0](http://www.w3.org/TR/2009/CR-curie-20090116/) for further information.
 
@@ -160,26 +174,44 @@ A link object is not extendable and thus its property names need not be prefixed
 
 **Example usage of `@links`**
 
+**Standard IANA link**
+
 ```json
 "@links": {
-  // Standard IANA link
   "self": {
     "href": "..."
-  },
+  }
+}
+```
 
-  // Non standard link identified by a curie
+**Non standard link identified by a curie**
+
+```json
+"@links": {
   "is:contact": {
     "href": "...",
     "title": "Complete contact information in standard formats such as vCard and jCard"
-  },
+  }
+}
+```
 
+**Non standard link identified by a complete URI**
+
+```json
+"@links": {
   // Non standard link identified by a complete URI
   "http://issue-tracker-reltypes.org/rels#logo": {
     "href": "...",
     "title": "Image of the logo for this instance of issue tracker.",
     "type": "image/png"
-  },
+  }
+}
+```
 
+**Link with alternate URLs for other types**
+
+```json
+"@links": {
   // Link with alternate URLs for other types
   "is:contact": {
     "href": "...",
