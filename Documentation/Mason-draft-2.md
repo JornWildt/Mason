@@ -158,26 +158,18 @@ This property is REQUIRED and MUST be a string value. It contains the URI for th
 
 The `@navigation` property is OPTIONAL. If present it MUST be an object value. It is not restricted to the root object and may occur in any nested data object.
 
-The `@navigation` property represents different ways of navigating and modifying resources. The simples possible navigation element is the "link" which represents a named link from the containing resource to another target resource. Other navigation elements are "link templates", "void" actions, "json" actions and "json+files" actions. The following sections describes each of these elements.
+The `@navigation` property represents different ways of navigating and modifying resources. The simplest possible navigation element is the "link" which represents a named link from the containing resource to another target resource. Other navigation elements are link templates, "void" actions, "json" actions, "json+files" actions and "any" actions. The type of navigational element is indicated with the property `type`.
 
-The `@navigation` object contains a set of navigational elements indexed by their respective identifiers.
+The set of navigational elements in `@navigation` is indexed by their respective identifiers. These identifiers are sometimes called "relationship types" when refering to a link, but in the following sections we will simply refer to the identifiers as "name".
 
-#### Links
+The name of a navigational element can either be a simple predefined token from the [IANA relationship registry](http://www.iana.org/assignments/link-relations/link-relations.xhtml), a curie or a complete URI. The use of URIs (and curies) as a namespace mechanism makes it easy to declare names without colliding with similar names from other systems.
 
-Links represents a relationship between one resource and another as described in [RFC 5988 Web Linking](http://tools.ietf.org/search/rfc5988). The relationship between the two resources is assigned a name (relationship type) which is used by the client to locate the link in the set of navigation elements.
-
-The link object contains a set of link objects indexed by their relationship type. The relationship type can either be a simple predefined token from the [IANA relationship registry](http://www.iana.org/assignments/link-relations/link-relations.xhtml), a curie or a complete URI.
-
-One single link relation may have multiple links with different types. In this case the additional links are stored in the `alt` property as an array of additional link objects. The singular "top" link should be the link expected to be used most - the additional links can be seen as alternative links. This makes it simple for clients to access the most used link and if they are aware of possible alternatives then they can search the `alt` links for media type hints that fit their task at hand better.
-
-A link object is not extendable and thus its property names need not be prefixed with '@'.
-
-**Example usage of `@links`**
+Here a few examples of different ways to name a navigational element:
 
 **Standard IANA link**
 
 ```json
-"@links": {
+"@navigation": {
   "self": {
     "href": "..."
   }
@@ -187,7 +179,7 @@ A link object is not extendable and thus its property names need not be prefixed
 **Non standard link identified by a curie**
 
 ```json
-"@links": {
+"@navigation": {
   "is:contact": {
     "href": "...",
     "title": "Complete contact information in standard formats such as vCard and jCard"
@@ -198,87 +190,141 @@ A link object is not extendable and thus its property names need not be prefixed
 **Non standard link identified by a complete URI**
 
 ```json
-"@links": {
-  // Non standard link identified by a complete URI
+"@navigation": {
   "http://issue-tracker-reltypes.org/rels#logo": {
     "href": "...",
     "title": "Image of the logo for this instance of issue tracker.",
-    "type": "image/png"
+    "content_type": "image/png"
   }
 }
 ```
 
-**Link with alternate URLs for other types**
+**Non standard link with alternate URLs for other types**
 
 ```json
-"@links": {
-  // Link with alternate URLs for other types
+"@navigation": {
   "is:contact": {
     "href": "...",
     "title": "Contact information as vCard",
-    "type": "text/vcard",
+    "content_type": "text/vcard",
     "alt": [
       {
         "href": "...",
         "title": "Contact information as jCard",
-        "type": "application/vcard+json"
+        "content_type": "application/vcard+json"
       }
     ]
   }
 }
 ```
 
-The links object itself cannot be removed in minimized representations. Some of the link properties may although be removed as described below.
+#### Common properties for `@navigation`
 
-#### Properties for `@links`
+The following sections describe the properties that are common for all types of navigational elements.
 
-##### `<rel-type>` (property name)
+##### `<name>` (property name)
 Property names define the link relationship type.
 
 ##### `href`
-This property is REQUIRED and MUST be a string value representing a valid URI. It contains the target URI of the link.
+This property is REQUIRED and MUST be a string value representing a valid URI. It contains the target URI of the navigational element.
+
+##### `type`
+This property is REQUIRED and MUST be a string value. The `type` value specifies what type of navigational element this is.
 
 ##### `title` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains a short descriptive title for the action.
+This property is OPTIONAL. If present it MUST be a string value. It contains a short descriptive title.
 
 This property can safely be removed in minimized representations.
 
-##### `type` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains the expected media type of the target resource.
+##### `description` (optional)
+This property is OPTIONAL. If present it MUST be a string value. It contains a long descriptive text.
+
+This property can safely be removed in minimized representations.
+
+##### `content_type` (optional)
+This property is OPTIONAL. If present it MUST be a string value. It specifies the expected content type of the target resource.
 
 ##### `alt` (optional)
-This property is OPTIONAL. If present it MUST be an array of link objects. It contains additional links for the same relation ship types. These links must have different `type` values.
+This property is OPTIONAL. If present it MUST be an array of navigational elements.
 
 
-### `@link-templates`
+#### Alternative navigational elements
 
-The `@link-templates` property is OPTIONAL. If present it MUST be an object. It is not restricted to the root object and may occur in any nested data object.
+All navigational elements may have one primary element and many alternative variations (or none). The alternative elements are stored in the `alt` property of the primary element. The `alt` property MUST be an array of navigational elements which are supposed to be equivalent to the primary navigational element but differ on for instance expected content type of the response or payload encoding. This makes it simple for clients to access the most used navigational element and if they are aware of possible alternatives then they can search the alternative elements for better hits.
 
-The link-templates object contains a set of link-template objects indexed by their name.
+Alternative elements are mostly known to represent links to different representations of the same resource.
 
-A link template object is not extendable and thus its property names need not be prefixed with '@'.
-
-
-**Example usage of `@link-templates`**
+Here is an example of a link to the contact details for the author of a certain piece of data. The primary version is expected to return a Mason response whereas the alternative version returns a vCard representation of the contact details:
 
 ```json
-"@link-templates": {
+"@navigation": {
+  "author": {
+    "title": "Link to contact details for author.",
+    "href": "...",
+    "content_type": "application/vnd.mason+json"
+    "alt":
+    [
+      {
+        "title": "Link to contact details for author (as vCard).",
+        "href": "...",
+        "content_type": "text/vcard"
+      }
+    ]
+  }
+}
+```
+
+Alternative elements should differ from the primary element in either "type", "content_type", or "method".
+
+
+#### Links
+
+Links represents a relationship between one resource and another as described in [RFC 5988 Web Linking](http://tools.ietf.org/search/rfc5988). The relationship between the two resources is assigned a name (the relationship type) which is used by the client to locate the link in the set of navigation elements.
+
+A link object is not extendable and thus its property names need not be prefixed with '@'.
+
+Here is an example of a link:
+
+```json
+"@navigation": {
+  "self": {
+    "title": "Links to this resource",
+    "href": "...",
+    "content_type": "application/vnd.mason+json"
+  }
+}
+```
+
+Links does not have any properties in addition to the common navigational properties.
+
+
+#### Link templates
+
+A link template represents an set of links with different URLs available through variable expansion as described in [RFC 6570 - URI Template](https://tools.ietf.org/html/rfc6570).
+
+**Example usage of a link template**
+
+```json
+"@navigation": {
   "is:issue-query": {
-    "template": "http://.../issues-query?text={text}&severity={severity}&project={pid}",
+    "type": "link-template",
+    "href": "http://.../issues-query?text={text}&severity={severity}&project={pid}",
     "title": "Search for issues",
     "description": "This is a simple search that does not check attachments.",
     "parameters": [
       {
         "name": "text",
+        "title": "Query text",
         "description": "Substring search for text in title and description"
       },
       {
         "name": "severity",
+        "title": "Severity",
         "description": "Issue severity (exact value, 1..5)"
       },
       {
         "name": "pid",
-        "description": "Project ID"
+        "title": "Project ID"
       }
     ]
   }
@@ -287,7 +333,7 @@ A link template object is not extendable and thus its property names need not be
 
 The link-templates object itself cannot be removed in minimized representations. Some of the link-template properties may although be removed as described below.
 
-#### Properties for `@link-templates`
+##### Properties for `@link-templates`
 
 ##### `<name>` (property name)
 Property names define the link template name.
