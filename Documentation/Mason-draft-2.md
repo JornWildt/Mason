@@ -1,6 +1,6 @@
 ** THIS IS WORK IN PROGRESS **
 
-## Introduction
+# Introduction
 
 > Note: The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
 
@@ -58,14 +58,14 @@ Links (and other hypermedia elements) are added as object properties in a specia
 }
 ```
 
-## Syntax
+# Syntax
 
 Mason is based on JSON and follows as such all the syntax rules for valid JSON documents. Mason reserves the character '@' as a prefix for Mason property names.
 
 The prefix character is not used for all Mason properties, only for those that co-exists with other properties from the underlying resource data - for instance '@meta' and '@actions'. Other property names like "template" and "parameters" are used only in contexts where it is not allowed to mix data so these properties do not use the '@' prefix.
 
 
-## Curies
+# Curies
 
 The word "Curie" is an abbreviation for "Compact URI" and is a way to define short scoped names that map to URIs. Mason uses namespace declarations to declare prefixes for use in Curies. A Curie is expanded to a URI by replacing the namespace prefix with the corresponding name declared in the `@namespaces` object.
 
@@ -74,19 +74,19 @@ Curies are only expanded in navigation identifiers - not in target URLs of links
 See [CURIE Syntax 1.0](http://www.w3.org/TR/2009/CR-curie-20090116/) for further information.
 
 
-## Minimized responses
+# Minimized responses
 
 Some of the Mason elements are only needed for client developers exploring the API - for instance the @meta element and "title" property of links. These elements can be removed by the server at runtime to reduce the size of the payload and thus save some bandwith.
 
 The recommended way of instructing the server to return a minimal response is to pass the value "representation=minimal" in the ["Prefer" header](http://tools.ietf.org/html/draft-snell-http-prefer-18).
 
 
-## Reserved property names
+# Reserved property names
 
 This is the complete list of reserved property names and their semantics. Mason may add new properties prefixed with `@` in future versions and clients must be prepared for this. Unknown Mason properties should be ignored by clients.
 
 
-### `@meta`
+## `@meta`
 
 The `@meta` property is OPTIONAL. If present it MUST be an object value. It can only be present in the root object.
 
@@ -111,19 +111,19 @@ The meta object can be extended with additional application specific properties 
 
 The meta object can safely be removed in minimized representations. Clients can safely ignore it if present.
 
-#### Properties for `@meta`
+### Properties for `@meta`
 
-##### `@title` (optional)
+#### `@title` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It contains a descriptive title.
 
-##### `@description` (optional)
+#### `@description` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It contains descriptive text.
 
-##### `@navigation` (optional)
+#### `@navigation` (optional)
 This property is OPTIONAL. If present it MUST be an object with links. It defines links to other resources that are relevant for client developers - for instance API documentation or terms of service. This property may also contain other navigational elements than links if necessary (but it is not recommended).
 
 
-### `@namespaces`
+## `@namespaces`
 
 The `@namespaces` property is OPTIONAL. If present it MUST be an object value. It can only occur in the root object (Mason does not support nested namespace declarations).
 
@@ -145,16 +145,16 @@ The namespace object is not extendable and thus its property names need not be p
 
 The namespace object must not be removed in minimized representations. Clients must respect the rules for managing namespaces and curies.
 
-#### Properties for `@namespaces`
+### Properties for `@namespaces`
 
-##### `<prefix>` (property name)
+#### `<prefix>` (property name)
 Property names define namespace prefix.
 
-##### `name`
+#### `name`
 This property is REQUIRED and MUST be a string value. It contains the URI for the namespace.
 
 
-### `@navigation`
+## `@navigation`
 
 The `@navigation` property is OPTIONAL. If present it MUST be an object value. It is not restricted to the root object and may occur in any nested data object.
 
@@ -218,37 +218,37 @@ Here a few examples of different ways to name a navigational element:
 }
 ```
 
-#### Common properties for `@navigation`
+### Common properties for `@navigation`
 
 The following sections describe the properties that are common for all types of navigational elements.
 
-##### `<name>` (property name)
+#### `<name>` (property name)
 Property names define the link relationship type.
 
-##### `href`
+#### `href`
 This property is REQUIRED and MUST be a string value representing a valid URI. It contains the target URI of the navigational element.
 
-##### `type`
+#### `type`
 This property is REQUIRED and MUST be a string value. The `type` value specifies what type of navigational element this is.
 
-##### `title` (optional)
+#### `title` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It contains a short descriptive title.
 
 This property can safely be removed in minimized representations.
 
-##### `description` (optional)
+#### `description` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It contains a long descriptive text.
 
 This property can safely be removed in minimized representations.
 
-##### `content_type` (optional)
+#### `content_type` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It specifies the expected content type of the target resource.
 
-##### `alt` (optional)
+#### `alt` (optional)
 This property is OPTIONAL. If present it MUST be an array of navigational elements.
 
 
-#### Alternative navigational elements
+### Alternative navigational elements
 
 All navigational elements may have one primary element and many alternative variations (or none). The alternative elements are stored in the `alt` property of the primary element. The `alt` property MUST be an array of navigational elements which are supposed to be equivalent to the primary navigational element but differ on for instance expected content type of the response or payload encoding. This makes it simple for clients to access the most used navigational element and if they are aware of possible alternatives then they can search the alternative elements for better hits.
 
@@ -277,7 +277,7 @@ Here is an example of a link to the contact details for the author of a certain 
 Alternative elements should differ from the primary element in either "type", "content_type", or "method".
 
 
-#### Links
+### Links
 
 Links represents a relationship between one resource and another as described in [RFC 5988 Web Linking](http://tools.ietf.org/search/rfc5988). The relationship between the two resources is assigned a name (the relationship type) which is used by the client to locate the link in the set of navigation elements.
 
@@ -298,7 +298,7 @@ Here is an example of a link:
 Links does not have any properties in addition to the common navigational properties.
 
 
-#### Link templates
+### Link templates
 
 A link template represents an set of links with different URLs available through variable expansion as described in [RFC 6570 - URI Template](https://tools.ietf.org/html/rfc6570).
 
@@ -332,19 +332,19 @@ A link template represents an set of links with different URLs available through
 ```
 
 
-##### Properties for link templates
+#### Properties for link templates
 
 Link templates share all the common navigational element properties.
 
-###### `href`
+##### `href`
 This property is REQUIRED and MUST be a string value representing a valid URL template according to [RFC 6570](http://tools.ietf.org/html/rfc6570).
 
-####### `parameters` (optional)
+##### `parameters` (optional)
 This property is OPTIONAL. If present it MUST be an array of parameter definition objects as described below.
 
 It can safely be removed in minimized representations.
 
-###### Template parameters
+#### Template parameters
 
 Each entry in the `parameters` property defines a parameter variable for the template.
 
@@ -362,7 +362,7 @@ This property is OPTIONAL. If present it MUST be a string value. It contains des
 This property can safely be removed in minimized representations.
 
 
-#### Void Actions
+### Void Actions
 
 Void actions are for use with HTTP methods that carries no payload - for instance DELETE or POST (but not restricted to these).
 
