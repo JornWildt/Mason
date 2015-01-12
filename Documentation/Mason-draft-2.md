@@ -158,15 +158,15 @@ This property is REQUIRED and MUST be a string value. It contains the URI for th
 
 The `@navigation` property is OPTIONAL. If present it MUST be an object value. It is not restricted to the root object and may occur in any nested data object.
 
-The `@navigation` property represents different ways of navigating and modifying resources. The simplest possible navigation element is the "link" which represents a named link from the containing resource to another target resource. Other navigation elements are link templates, "void" actions, "json" actions, "json+files" actions and "any" actions. The type of navigational element is indicated with the property `type`.
+The `@navigation` property represents different ways of navigating and modifying resources. The simplest possible navigation element is a link which represents a named link from the containing resource to another target resource. Other navigation elements are link templates, "void" actions, "json" actions, "json+files" actions and "generic" actions. The type of navigational element is indicated with the property `type` included in each navigational element.
 
-The set of navigational elements in `@navigation` is indexed by their respective identifiers. These identifiers are sometimes called "relationship types" when refering to a link, but in the following sections we will simply refer to the identifiers as "name".
+The set of navigational elements in the `@navigation` object is indexed by their respective identifiers. These identifiers are sometimes called "relationship types" when refering to a link, but in the following sections we will simply refer to the identifiers as "name".
 
 The name of a navigational element can either be a simple predefined token from the [IANA relationship registry](http://www.iana.org/assignments/link-relations/link-relations.xhtml), a curie or a complete URI. The use of URIs (and curies) as a namespace mechanism makes it easy to declare names without colliding with similar names from other systems.
 
 Here a few examples of different ways to name a navigational element:
 
-**Standard IANA link**
+**Standard IANA *self* link**
 
 ```json
 "@navigation": {
@@ -178,11 +178,19 @@ Here a few examples of different ways to name a navigational element:
 
 **Non standard link identified by a curie**
 
+This is equivalent to a link name "http://issue-tracker-reltypes.org/rels#contact".
+
 ```json
+"@namespaces" :
+{
+  "is": { 
+    "name": "http://issue-tracker-reltypes.org/rels#" 
+  }
+},
 "@navigation": {
   "is:contact": {
     "href": "...",
-    "title": "Complete contact information in standard formats such as vCard and jCard"
+    "title": "Complete contact information."
   }
 }
 ```
@@ -220,16 +228,29 @@ Here a few examples of different ways to name a navigational element:
 
 ### Common properties for `@navigation`
 
-The following sections describe the properties that are common for all types of navigational elements.
+These are the properties that are common for all types of navigational elements (links, link templates and the various types of actions).
+
+Navigational elements are not extendable and thus their property names need not be prefixed with '@'.
 
 #### `<name>` (property name)
-Property names define the link relationship type.
+Property names define the navigational element name. In this way the `@navigation` object is indexed by the navgational element names.
 
 #### `href`
-This property is REQUIRED and MUST be a string value representing a valid URI. It contains the target URI of the navigational element.
+This property is REQUIRED and MUST be a string value representing a valid URI. It contains the target URI of the navigational element - or a URL template to be completed thorugh variable expansion.
+
+The `href` URI SHOULD be an absolute URL but clients should be prepared to handle relative URLs. At the time of writing there is no rules for how to resolve relative URLs so it will have to depend on an agreement between the client and server.
 
 #### `type`
-This property is REQUIRED and MUST be a string value. The `type` value specifies what type of navigational element this is.
+This property is OPTIONAL. If present it MUST be a string value representing the type of navigational element. The possible values for `type`are:
+
+  * `link`: a link.
+  * `link-template`: a link template.
+  * `void`: an action with no payload.
+  * `json`: a JSON action.
+  * `json+files`: a JSON action with file attachments.
+  * `any`: a generic action.
+  
+If `type` is not present it is assumed to be `link`.
 
 #### `title` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It contains a short descriptive title.
@@ -245,12 +266,32 @@ This property can safely be removed in minimized representations.
 This property is OPTIONAL. If present it MUST be a string value. It specifies the expected content type of the target resource.
 
 #### `alt` (optional)
-This property is OPTIONAL. If present it MUST be an array of navigational elements.
+This property is OPTIONAL. If present it MUST be an array of navigational elements each of which represents alternatives to the primary navigational element (see next section).
+
+Example:
+
+```json
+"@navigation": {
+  "author": {
+    "title": "Link to contact details for author (represented in Mason).",
+    "href": "...",
+    "content_type": "application/vnd.mason+json"
+    "alt":
+    [
+      {
+        "title": "Link to contact details for author (represented as a vCard).",
+        "href": "...",
+        "content_type": "text/vcard"
+      }
+    ]
+  }
+}
+```
 
 
 ### Alternative navigational elements
 
-All navigational elements may have one primary element and many alternative variations (or none). The alternative elements are stored in the `alt` property of the primary element. The `alt` property MUST be an array of navigational elements which are supposed to be equivalent to the primary navigational element but differ on for instance expected content type of the response or payload encoding. This makes it simple for clients to access the most used navigational element and if they are aware of possible alternatives then they can search the alternative elements for better hits.
+All navigational elements may have one primary element and many alternative variations (or no variations). The alternative elements are stored in the `alt` property of the primary element. The `alt` property MUST be an array of navigational elements which are supposed to be equivalent to the primary navigational element but differ on for instance expected content type of the response or payload encoding. This makes it simple for clients to access the most used navigational element and if they are aware of possible alternatives then they can search the alternative elements for better ways of interacting with the server.
 
 Alternative elements are mostly known to represent links to different representations of the same resource.
 
@@ -281,14 +322,13 @@ Alternative elements should differ from the primary element in either "type", "c
 
 Links represents a relationship between one resource and another as described in [RFC 5988 Web Linking](http://tools.ietf.org/search/rfc5988). The relationship between the two resources is assigned a name (the relationship type) which is used by the client to locate the link in the set of navigation elements.
 
-A link object is not extendable and thus its property names need not be prefixed with '@'.
-
-Here is an example of a link:
+Example:
 
 ```json
 "@navigation": {
   "self": {
     "title": "Links to this resource",
+    "description": "Follow this link to get the representation of this resource",
     "href": "...",
     "content_type": "application/vnd.mason+json"
   }
@@ -301,6 +341,10 @@ Links does not have any properties in addition to the common navigational proper
 ### Link templates
 
 A link template represents an set of links with different URLs available through variable expansion as described in [RFC 6570 - URI Template](https://tools.ietf.org/html/rfc6570).
+
+The URL template itself is stored in the `href` property just link links does - except that the `href` value will be a URL template instead of a complete URL.
+
+The simplest templates consists of placeholdes for variable values. The placeholders are identified by curly braces as for instance "{severity}".
 
 **Example usage of a link template**
 
@@ -342,7 +386,7 @@ This property is REQUIRED and MUST be a string value representing a valid URL te
 ##### `parameters` (optional)
 This property is OPTIONAL. If present it MUST be an array of parameter definition objects as described below.
 
-It can safely be removed in minimized representations.
+It can be removed in minimized representations assuming the clients are hard coded with the knowledge if they request a minimized response.
 
 #### Template parameters
 
@@ -362,9 +406,9 @@ This property is OPTIONAL. If present it MUST be a string value. It contains des
 This property can safely be removed in minimized representations.
 
 
-### Void Actions
+### Void actions
 
-Void actions are for use with HTTP methods that carries no payload - for instance DELETE or POST (but not restricted to these).
+Void actions are for use with requests that carries no payload - for instance when issuing an HTTP DELETE operation.
 
 **Example usage of `void` action**
 
@@ -386,16 +430,16 @@ Void actions share all the common navigational element properties.
 ##### `method` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
 
-Default method is POST if no `method`is specified.
+Default method is POST if no `method` is specified.
 
 
 ### JSON Actions
 
 JSON actions are for sending structured JSON data when performing an action. The HTTP request MUST be of type "application/json".
 
-The `schemaUrl`property is a reference to a schema which the client may use to validate the JSON data. The schema may also be used to create default data from when no `template` property is present. The schema may be [JSON-Schema](http://json-schema.org/) but can be any kind of schema language for JSON and clients should check the content type of the schema resource before blindly assuming it is JSON schema.
+The `schemaUrl` property is a reference to a schema which the client may use to validate the JSON data. The schema may also be used to create default data from when no `template` property is present. The schema may be [JSON-Schema](http://json-schema.org/) but can be any kind of schema language for JSON and clients should check the content type of the schema resource before blindly assuming it is JSON schema.
 
-The server may supply a `template` property which can contain any kind of JSON value. The client is expected to use this as a building block when creating a request. To do so the client first reads the template value and then modifies it to reflect the changes the clients want to happend. Any unexpected data in the template object MUST be left unmodified and sendt back in the request.
+The server may supply a `template` property which can contain any kind of JSON value. The client is expected to use this as a building block when creating a request. To do so the client first reads the template value and then modifies it to reflect the changes the clients want to happen. Any unrecognized data in the template object MUST be left unmodified and sendt back in the request.
 
 The purpose of the template value is:
 
@@ -442,7 +486,7 @@ JSON actions share all the common navigational element properties.
 ##### `method` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
 
-Default method is POST if no `method`is specified.
+Default method is POST if no `method` is specified.
 
 ##### `schemaUrl` (optional)
 This property is OPTIONAL. If present it MUST be a string value representing a valid URL. The URL must reference a schema for JSON objects.
@@ -452,13 +496,13 @@ This property is OPTIONAL. If present it can be any JSON value.
 
 
 
-### JSON action with binary file data
+### JSON+Files action with binary file data
 
 JSON+Files actions are for sending binary files together with structured JSON data when performing an action. The HTTP request MUST be of type [`multipart/form-data`](http://www.ietf.org/rfc/rfc2388.txt).
 
 The media type `multipart/form-data` is an efficient format for combining multiple files into one single message. It consists of parts where each part has a name and associate content type.
 
-With JSON+Files clients are expected to send a JSON document as a part of the message which name is defined by the `jsonFile` property. Additional files must be named according to the `name`property in the `files` array.
+With JSON+Files clients are expected to send a JSON document as a part of the message. The name of this part is defined by the `jsonFile` property. Additional files must be named according to the `name`property in the `files` array.
 
 The `schemaUrl` and `template` properties are interpreted in the same way as for plain "json" actions and applies to the JSON part of the multipart message.
 
@@ -484,6 +528,30 @@ This example instructs the client to send the JSON document in the part `args` a
 }
 ```
 
+The resulting request could look like this:
+
+```text
+POST /projects/1/issues HTTP/1.1
+Content-Type: multipart/form-data; boundary=04149776-d03d-4eac-941c-dafffececb28
+Content-Length: 33816
+
+
+--04149776-d03d-4eac-941c-dafffececb28
+Content-Disposition: form-data; name="attachment"; filename="screendump.png"
+... image data not included ...
+
+--04149776-d03d-4eac-941c-dafffececb28
+Content-Disposition: form-data; name="args"; filename="args"
+Content-Type: application/json
+
+{
+  "Title": "...",
+  "Description": "..."
+}
+
+```
+
+
 #### Properties for JSON+Files actions
 
 JSON+Files actions share all the common navigational element properties.
@@ -491,7 +559,7 @@ JSON+Files actions share all the common navigational element properties.
 ##### `method` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
 
-Default method is POST if no `method`is specified.
+Default method is POST if no `method` is specified.
 
 ##### `schemaUrl` (optional)
 This property is OPTIONAL. If present it MUST be a string value representing a valid URL. The URL must reference a schema for JSON objects.
@@ -501,6 +569,8 @@ This property is OPTIONAL. If present it can be any JSON value.
 
 ##### `jsonFile` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the name of the part containing JSON data when using JSON+Files actions.
+
+If no `jsonFile` property is specified then the client may choose to send JSON data anyway in a part with a name chosen by the client. The server's reaction to this is unspecified.
 
 ##### `files` (optional)
 This property is OPTIONAL. If present it MUST be an array of file definition objects as described below.
@@ -512,6 +582,9 @@ Each entry in the `files` property defines a file to be send in the multipart me
 ##### `files[].name`
 This property is REQUIRED and MUST be a string. It defines the name of the part for sending the file.
 
+##### `files[].title` (optional)
+This property is OPTIONAL. If present it MUST be a string value. It contains a short title for the file.
+
 ##### `files[].description` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It contains descriptive text for the file.
 
@@ -520,7 +593,7 @@ This property can safely be removed in minimized representations.
 
 ### Generic actions with any kind of payload
 
-The action type `any` is a "catch all" for sending any kind of data in an action.
+The action type `any` is a catch all for sending any kind of data in an action.
 
 **Example usage of `any` action**
 
@@ -542,7 +615,7 @@ Generic actions share all the common navigational element properties.
 ##### `method` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
 
-Default method is POST if no `method`is specified.
+Default method is POST if no `method` is specified.
 
 
 ## `@error`
