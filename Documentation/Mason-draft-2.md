@@ -379,6 +379,16 @@ Void actions are for use with HTTP methods that carries no payload - for instanc
 }
 ```
 
+#### Properties for void actions
+
+Void actions share all the common navigational element properties.
+
+##### `method` (optional)
+This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
+
+Default method is POST if no `method`is specified.
+
+
 ### JSON Actions
 
 JSON actions are for sending structured JSON data when performing an action. The HTTP request MUST be of type "application/json".
@@ -425,6 +435,23 @@ Complex JSON action with schema reference and template containing default values
 }
 ```
 
+#### Properties for JSON actions
+
+JSON actions share all the common navigational element properties.
+
+##### `method` (optional)
+This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
+
+Default method is POST if no `method`is specified.
+
+##### `schemaUrl` (optional)
+This property is OPTIONAL. If present it MUST be a string value representing a valid URL. The URL must reference a schema for JSON objects.
+
+##### `template` (optional)
+This property is OPTIONAL. If present it can be any JSON value.
+
+
+
 ### JSON action with binary file data
 
 JSON+Files actions are for sending binary files together with structured JSON data when performing an action. The HTTP request MUST be of type [`multipart/form-data`](http://www.ietf.org/rfc/rfc2388.txt).
@@ -457,48 +484,14 @@ This example instructs the client to send the JSON document in the part `args` a
 }
 ```
 
-### Actions with any kind of payload
+#### Properties for JSON+Files actions
 
-The action type `any` is a "catch all" for sending any kind of data in an action.
-
-**Example usage of `any` action**
-
-```json
-"@actions": {
-  "is:update-attachment": {
-    "type": "any",
-    "href": "...",
-    "method": "PUT",
-    "title": "Update content of attachment."
-  }
-}
-```
-
-#### Properties for `@actions`
-
-##### `<name>` (property name)
-Property names define the action name.
-
-##### `type`
-This property is REQUIRED and MUST be a string value of either `void`, `json`, `json+files` or `any`.
-
-##### `href`
-This property is REQUIRED and MUST be a string value representing a valid URI. It defines the target of the action.
+JSON+Files actions share all the common navigational element properties.
 
 ##### `method` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
 
 Default method is POST if no `method`is specified.
-
-##### `title` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains a short descriptive title for the action.
-
-This property can safely be removed in minimized representations.
-
-##### `description` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains some descriptive text for the action.
-
-This property can safely be removed in minimized representations.
 
 ##### `schemaUrl` (optional)
 This property is OPTIONAL. If present it MUST be a string value representing a valid URL. The URL must reference a schema for JSON objects.
@@ -523,6 +516,33 @@ This property is REQUIRED and MUST be a string. It defines the name of the part 
 This property is OPTIONAL. If present it MUST be a string value. It contains descriptive text for the file.
 
 This property can safely be removed in minimized representations.
+
+
+### Generic actions with any kind of payload
+
+The action type `any` is a "catch all" for sending any kind of data in an action.
+
+**Example usage of `any` action**
+
+```json
+"@actions": {
+  "is:update-attachment": {
+    "type": "any",
+    "href": "...",
+    "method": "PUT",
+    "title": "Update content of attachment."
+  }
+}
+```
+
+#### Properties for generic actions with any kind of payload
+
+Generic actions share all the common navigational element properties.
+
+##### `method` (optional)
+This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
+
+Default method is POST if no `method`is specified.
 
 
 ## `@error`
