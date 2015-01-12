@@ -379,7 +379,8 @@ Void actions are for use with HTTP methods that carries no payload - for instanc
 }
 ```
 
-#### JSON Actions
+### JSON Actions
+
 JSON actions are for sending structured JSON data when performing an action. The HTTP request MUST be of type "application/json".
 
 The `schemaUrl`property is a reference to a schema which the client may use to validate the JSON data. The schema may also be used to create default data from when no `template` property is present. The schema may be [JSON-Schema](http://json-schema.org/) but can be any kind of schema language for JSON and clients should check the content type of the schema resource before blindly assuming it is JSON schema.
@@ -424,7 +425,8 @@ Complex JSON action with schema reference and template containing default values
 }
 ```
 
-##### JSON action with binary file data
+### JSON action with binary file data
+
 JSON+Files actions are for sending binary files together with structured JSON data when performing an action. The HTTP request MUST be of type [`multipart/form-data`](http://www.ietf.org/rfc/rfc2388.txt).
 
 The media type `multipart/form-data` is an efficient format for combining multiple files into one single message. It consists of parts where each part has a name and associate content type.
@@ -455,7 +457,7 @@ This example instructs the client to send the JSON document in the part `args` a
 }
 ```
 
-##### Action type `any`
+### Actions with any kind of payload
 
 The action type `any` is a "catch all" for sending any kind of data in an action.
 
@@ -523,7 +525,7 @@ This property is OPTIONAL. If present it MUST be a string value. It contains des
 This property can safely be removed in minimized representations.
 
 
-### `@error`
+## `@error`
 
 The `@error` property is OPTIONAL. If present it MUST be an object. It can only be present in the root object.
 
@@ -544,29 +546,29 @@ The error object can be extended with additional application specific properties
 }
 ```
 
-#### Properties for `@error`
+### Properties for `@error`
 
-##### `@message`
+#### `@message`
 This property is REQUIRED and MUST be a string value. It should be a human readable error message directed at the end users.
 
-##### `@id` (optional)
+#### `@id` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It should contain a unique identifier for later reference to the situation that resulted in a error condition (for instance when looking up a log entry).
 
-##### `@code` (optional)
+#### `@code` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It should contain a code describing the error condition in general. 
 
-##### `@messages` (optional)
+#### `@messages` (optional)
 This property is OPTIONAL. If present it MUST be an array of strings. It should contain an array of additional human readable error messages directed at the end user.
 
-##### `@details` (optional)
+#### `@details` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It should contain an extensive human readable message to the client developer.
 
-##### `@httpStatusCode` (optional)
+#### `@httpStatusCode` (optional)
 This property is OPTIONAL. If present it MUST be a an integer value. It should contain the HTTP status code from the latest response.
 
-##### `@links` (optional)
+#### `@links` (optional)
 This property is OPTIONAL. If present it MUST be an object adhering to the same rules as the top `@links` object. It should contain links to resources that are relevant for the error condition. It can be links for both end users as well as client developers. A generic client won't know the difference but specific implementations can decide to use certain link relations for either of the audiences.
 
-##### `@time` (optional)
+#### `@time` (optional)
 This property is OPTIONAL. If present it MUST be a string value representing a date in the format defined by [RFC 3339](http://tools.ietf.org/html/rfc3339). Example: "1985-04-12T23:20:50.52Z". It should contain a timestamp of when the error condition occured.
 
