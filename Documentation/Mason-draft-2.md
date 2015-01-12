@@ -331,40 +331,30 @@ A link template represents an set of links with different URLs available through
 }
 ```
 
-The link-templates object itself cannot be removed in minimized representations. Some of the link-template properties may although be removed as described below.
 
-##### Properties for `@link-templates`
+##### Properties for link templates
 
-##### `<name>` (property name)
-Property names define the link template name.
+Link templates share all the common navigational element properties.
 
-##### `template`
+###### `href`
 This property is REQUIRED and MUST be a string value representing a valid URL template according to [RFC 6570](http://tools.ietf.org/html/rfc6570).
 
-##### `title` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains a short descriptive title for the action.
-
-This property can safely be removed in minimized representations.
-
-##### `description` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains some descriptive text for the action.
-
-This property can safely be removed in minimized representations.
-
-##### `type` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains the expected media type of the target resource.
-
-##### `parameters` (optional)
+####### `parameters` (optional)
 This property is OPTIONAL. If present it MUST be an array of parameter definition objects as described below.
 
 It can safely be removed in minimized representations.
 
-#### Template parameters
+###### Template parameters
 
-Each entry in the `parameters` property defines a parameter variable of the template.
+Each entry in the `parameters` property defines a parameter variable for the template.
 
 ##### `parameters[].name`
 This property is REQUIRED and MUST be a string. It defines the name of the parameter.
+
+##### `parameters[].title` (optional)
+This property is OPTIONAL. If present it MUST be a string value. It contains a short title for the parameter.
+
+This property can safely be removed in minimized representations.
 
 ##### `parameters[].description` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It contains descriptive text for the parameter.
@@ -372,25 +362,14 @@ This property is OPTIONAL. If present it MUST be a string value. It contains des
 This property can safely be removed in minimized representations.
 
 
-### `@actions`
+#### Void Actions
 
-The `@actions` property is OPTIONAL. If present it MUST be an object. It is not restricted to the root object and may occur in any nested data object.
-
-Mason features a set of different action types with different payloads. It has "void" for actions without a payload, "json" for structured JSON data, "json+files" for upload of files plus structured JSON data and "any" for a payload of any media type.
-
-An action object is not extendable and thus its property names need not be prefixed with '@'.
-
-The actions object itself cannot be removed in minimized representations. Some of the action properties may although be removed as described below.
-
-#### Action types
-
-##### Action type `void`
 Void actions are for use with HTTP methods that carries no payload - for instance DELETE or POST (but not restricted to these).
 
 **Example usage of `void` action**
 
 ```json
-"@actions": {
+"@navigation": {
   "is:delete-issue": {
     "type": "void",
     "href": "...",
@@ -400,29 +379,42 @@ Void actions are for use with HTTP methods that carries no payload - for instanc
 }
 ```
 
-##### Action type `json`
+#### JSON Actions
 JSON actions are for sending structured JSON data when performing an action. The HTTP request MUST be of type "application/json".
 
-The `template` property may contain any JSON value and the client is expected to use this template as the default value for its action request. **TODO**: MUST the client use the template or SHOULD the client use it? See GitHub issue #1.
+The `schemaUrl`property is a reference to a schema which the client may use to validate the JSON data. The schema may also be used to create default data from when no `template` property is present. The schema may be [JSON-Schema](http://json-schema.org/) but can be any kind of schema language for JSON and clients should check the content type of the schema resource before blindly assuming it is JSON schema.
 
-The `schemaUrl`property is a reference to a schema which the client may use to validate the JSON data before sending or create default data from when no `template` property is present. The schema may be [JSON-Schema](http://json-schema.org/) but can be any kind of schema language for JSON objects and clients should check the content type of the schema resource before blindly assuming it is JSON schema.
+The server may supply a `template` property which can contain any kind of JSON value. The client is expected to use this as a building block when creating a request. To do so the client first reads the template value and then modifies it to reflect the changes the clients want to happend. Any unexpected data in the template object MUST be left unmodified and sendt back in the request.
+
+The purpose of the template value is:
+
+  1. Make it possible to supply useful default data to display before modifying.
+  2. Make it possible to supply default values for data that older clients are unaware of.
+  3. Make it possible to supply "hidden" values for authorization, logging and other sorts of internal book keeping.
 
 **Example usage of `json` action**
 
+Simple JSON action:
+
 ```json
-"@actions": {
-  // JSON action with schema reference
+"@navigation": {
   "is:project-create": {
     "type": "json",
     "href": "...",
-    "title": "Create new project",
-    "schemaUrl": "..."
-  },
-  // JSON action with default template
+    "title": "Create new project"
+  }
+}
+```
+
+Complex JSON action with schema reference and template containing default values for the action:
+
+```json
+"@navigation": {
   "is:update-project": {
     "type": "json",
     "href": "...",
     "title": "Update project details",
+    "schemaUrl": "...",
     "template": {
         "Code": "SHOP",
         "Title": "Webshop",
@@ -432,7 +424,7 @@ The `schemaUrl`property is a reference to a schema which the client may use to v
 }
 ```
 
-##### Action type `json-files`
+##### JSON action with binary file data
 JSON+Files actions are for sending binary files together with structured JSON data when performing an action. The HTTP request MUST be of type [`multipart/form-data`](http://www.ietf.org/rfc/rfc2388.txt).
 
 The media type `multipart/form-data` is an efficient format for combining multiple files into one single message. It consists of parts where each part has a name and associate content type.
