@@ -74,6 +74,35 @@ Curies are only expanded in navigation identifiers - not in target URLs of links
 See [CURIE Syntax 1.0](http://www.w3.org/TR/2009/CR-curie-20090116/) for further information.
 
 
+# Expected client processing rules
+
+When a client requests a Mason document it may be looking for some specific data, trying to discover a specific link or invoking some kind of action on the server. To perform any of these operations the client should process the Mason document in a standardized way as described here:
+
+  1. Register all namespace declarations. These are key/value pairs that map namespace names into URI prefixes.
+  
+  2. Iterate recursively through all `@navigation` elements and expand navigational element names (curies) using the namespace declarations.
+  
+  3. Read whatever JSON data the client is looking for.
+  
+  4. If the client tries to invoke any navigational element it SHOULD be prepared to handle any kind of navigational element - it SHOULD NOT assume a fixed type of navigational element. This allows the server to use the type of navigational element that fits best at any given time - without breaking clients.
+  
+## Processing of navigational elements
+
+A client trying to invoke a navigational element should follow the instructions described below.
+
+  1. Prepare a JSON object with the data expected to be necessary to invoke the navigational element. If there is no data available then use an empty JSON object (this could for instance be the case when the client expects to follow a link). This is the *argument object*.
+  
+  2. If the navigational element is a link then simply follow it.
+  
+  3. If the navigational element is a URL template then expand the template using the argument object as a dictionary containing variables for the expansion.
+  
+  4. If the navigational element is a void action then ignore the argument object and invoke the action.
+  
+  5. If the navigational element is a JSON or JSON+Files action then use the argument object as input values to the action and invoke it.
+  
+  6. If the navigational element is a generic action then the behavior is undefined and must depend on some prior agreement with the server.
+
+
 # Minimized responses
 
 Some of the Mason elements are only needed for client developers exploring the API - for instance the @meta element and "title" property of links. These elements can be removed by the server at runtime to reduce the size of the payload and thus save some bandwith.
