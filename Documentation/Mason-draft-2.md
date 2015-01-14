@@ -84,7 +84,7 @@ When a client requests a Mason document it may be looking for some specific data
   
   3. Read whatever JSON data the client is looking for.
   
-  4. If the client tries to invoke any navigational element it SHOULD be prepared to handle any kind of navigational element - it SHOULD NOT assume a fixed type of navigational element. This allows the server to use the type of navigational element that fits best at any given time - without breaking clients.
+  4. If the client tries to invoke a navigational element it SHOULD be prepared to handle any kind of navigational element - it SHOULD NOT assume a fixed type of navigation. This allows the server to use the type of navigation that fits best at any given time - without breaking clients.
   
 ## Processing of navigational elements
 
@@ -98,7 +98,7 @@ A client trying to invoke a navigational element should follow the instructions 
   
   4. If the navigational element is a void action then ignore the argument object and invoke the action.
   
-  5. If the navigational element is a JSON or JSON+Files action then use the argument object as input values to the action and invoke it.
+  5. If the navigational element is a JSON or JSON+Files action then use the argument object as input to the action and invoke it.
   
   6. If the navigational element is a generic action then the behavior is undefined and must depend on some prior agreement with the server.
 
@@ -115,7 +115,7 @@ The recommended way of instructing the server to return a minimal response is to
 This is the complete list of reserved property names and their semantics. Mason may add new properties prefixed with `@` in future versions and clients must be prepared for this. Unknown Mason properties should be ignored by clients.
 
 
-## `@meta`
+## Property name `@meta`
 
 The `@meta` property is OPTIONAL. If present it MUST be an object value. It can only be present in the root object.
 
@@ -152,7 +152,7 @@ This property is OPTIONAL. If present it MUST be a string value. It contains des
 This property is OPTIONAL. If present it MUST be an object with links. It defines links to other resources that are relevant for client developers - for instance API documentation or terms of service. This property may also contain other navigational elements than links if necessary (but it is not recommended).
 
 
-## `@namespaces`
+## Property name `@namespaces`
 
 The `@namespaces` property is OPTIONAL. If present it MUST be an object value. It can only occur in the root object (Mason does not support nested namespace declarations).
 
@@ -183,7 +183,7 @@ Property names define namespace prefix.
 This property is REQUIRED and MUST be a string value. It contains the URI for the namespace.
 
 
-## `@navigation`
+## Property name `@navigation`
 
 The `@navigation` property is OPTIONAL. If present it MUST be an object value. It is not restricted to the root object and may occur in any nested data object.
 
@@ -525,7 +525,7 @@ This property is OPTIONAL. If present it can be any JSON value.
 
 
 
-### JSON+Files action with binary file data
+### JSON+Files actions with binary file data
 
 JSON+Files actions are for sending binary files together with structured JSON data when performing an action. The HTTP request MUST be of type [`multipart/form-data`](http://www.ietf.org/rfc/rfc2388.txt).
 
@@ -622,12 +622,14 @@ This property can safely be removed in minimized representations.
 
 ### Generic actions with any kind of payload
 
-The action type `any` is a catch all for sending any kind of data in an action.
+The action type `any` is a catch all for sending any kind of data in an action. This can for instance be used for upload of binary files without associated JSON data, but it is also useful for handling HTTP PATCH operations for modification of existing resources.
 
 **Example usage of `any` action**
 
+This action represents a direct PUT of data to a specific URL.
+
 ```json
-"@actions": {
+"@navigation": {
   "is:update-attachment": {
     "type": "any",
     "href": "...",
@@ -636,6 +638,22 @@ The action type `any` is a catch all for sending any kind of data in an action.
   }
 }
 ```
+
+This action represents a PATCH operation with a JSON-Patch payload:
+
+```json
+"@navigation": {
+  "is:modify-item": {
+    "type": "any",
+    "href": "...",
+    "method": "PATCH",
+    "title": "Modify item using PATCH.",
+    "content_type": "application/json-patch+json"
+  }
+}
+```
+
+**FIXME**: above content_type is supposed to be target content tyep, not request content type.
 
 #### Properties for generic actions with any kind of payload
 
@@ -647,7 +665,7 @@ This property is OPTIONAL. If present it MUST be a string value. It defines the 
 Default method is POST if no `method` is specified.
 
 
-## `@error`
+## Property name `@error`
 
 The `@error` property is OPTIONAL. If present it MUST be an object. It can only be present in the root object.
 
