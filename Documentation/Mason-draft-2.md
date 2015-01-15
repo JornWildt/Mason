@@ -2,11 +2,21 @@
 
 # Introduction
 
-> Note: The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
-
 Mason is a JSON based format for adding hypermedia elements, standardized error handling and additional meta data to classic JSON representations. It is a generic format and imposes very little restrictions on the data it is integrated with.
 
 A Mason document is constructed by taking a "classic" JSON object and then merging hypermedia elements and other Mason features into it. Mason properties are prefixed with `@` to avoid collisions with existing property names.
+
+A Mason document consists of these types of elements:
+
+  * Core bussiness data (such as the title of an item, identifiers and so on).
+  
+  * Meta data about the resource, targeted at the client developer.
+  
+  * Various kinds of navigational elements such as links, link templates and actions.
+  
+  * Namespace declarations for expansion of compact URIs (Curies) in navigational elements.
+  
+  * Error details.
 
 Here is a simple example to introduce the format. Suppose we have an existing payload representing a single issue from an issue tracker. It could look as shown below without any Mason specific elements:
 
@@ -57,6 +67,8 @@ Links (and other hypermedia elements) are added as object properties in a specia
   }
 }
 ```
+
+> Note: The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
 
 # Syntax
 
@@ -472,9 +484,9 @@ The server may supply a `template` property which can contain any kind of JSON v
 
 The purpose of the template value is:
 
-  1. Make it possible to supply useful default data to display before modifying.
-  2. Make it possible to supply default values for data that older clients are unaware of.
-  3. Make it possible to supply "hidden" values for authorization, logging and other sorts of internal book keeping.
+  1. To supply useful default data to display before modifying.
+  2. To supply default values for data that older clients are unaware of.
+  3. To supply "hidden" values for authorization, logging, "ETag" like values and other sorts of data for internal book keeping.
 
 **Example usage of `json` action**
 
