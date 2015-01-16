@@ -632,13 +632,13 @@ This property is OPTIONAL. If present it MUST be a string value. It contains des
 This property can safely be removed in minimized representations.
 
 
-### Generic actions with any kind of payload
+### Generic actions
 
-The action type `any` is a catch all for sending any kind of data in an action. This can for instance be used for upload of binary files without associated JSON data, but it is also useful for handling HTTP PATCH operations for modification of existing resources.
+The action type `any` is a catch all for sending all kinds of data in an action. This can for instance be used for upload of binary files without associated JSON data, but it is also useful for handling HTTP PATCH operations for modification of existing resources.
 
 **Example usage of `any` action**
 
-This action represents a direct PUT of data to a specific URL.
+This action represents a direct PUT of data to a specific URL. The "accept" property indicates the types of documents accepted by the target.
 
 ```json
 "@navigation": {
@@ -646,7 +646,8 @@ This action represents a direct PUT of data to a specific URL.
     "type": "any",
     "href": "...",
     "method": "PUT",
-    "title": "Update content of attachment."
+    "title": "Update content of attachment.",
+    "accept": ["application/pdf", "image/jpeg"],
   }
 }
 ```
@@ -660,14 +661,13 @@ This action represents a PATCH operation with a JSON-Patch payload:
     "href": "...",
     "method": "PATCH",
     "title": "Modify item using PATCH.",
-    "content_type": "application/json-patch+json"
+    "accept": "application/json-patch+json"
   }
 }
 ```
 
-**FIXME**: above content_type is supposed to be target content tyep, not request content type.
 
-#### Properties for generic actions with any kind of payload
+#### Properties for generic actions
 
 Generic actions share all the common navigational element properties.
 
@@ -675,6 +675,11 @@ Generic actions share all the common navigational element properties.
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
 
 Default method is POST if no `method` is specified.
+
+##### `accept`
+This property is OPTIONAL. If present it MUST be an array of strings. It defines the range of accepted media types in the payload.
+
+If no `accept` value is specified (or the array is empty) then there are no restrictions on the media types in the payload.
 
 
 ## Property name `@error`
