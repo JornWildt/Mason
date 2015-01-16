@@ -243,7 +243,7 @@ This is equivalent to a link name "http://issue-tracker-reltypes.org/rels#contac
   "http://issue-tracker-reltypes.org/rels#logo": {
     "href": "...",
     "title": "Image of the logo for this instance of issue tracker.",
-    "content_type": "image/png"
+    "formats": ["image/png"]
   }
 }
 ```
@@ -255,12 +255,12 @@ This is equivalent to a link name "http://issue-tracker-reltypes.org/rels#contac
   "is:contact": {
     "href": "...",
     "title": "Contact information as vCard",
-    "content_type": "text/vcard",
+    "formats": ["text/vcard"],
     "alt": [
       {
         "href": "...",
         "title": "Contact information as jCard",
-        "content_type": "application/vcard+json"
+        "formats": ["application/vcard+json"]
       }
     ]
   }
@@ -303,8 +303,8 @@ This property is OPTIONAL. If present it MUST be a string value. It contains a l
 
 This property can safely be removed in minimized representations.
 
-#### `content_type` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It specifies the expected content type of the target resource.
+#### `formats` (optional)
+This property is OPTIONAL. If present it MUST be an array of string values. It specifies the expected media type formats of the target resource. 
 
 #### `alt` (optional)
 This property is OPTIONAL. If present it MUST be an array of navigational elements each of which represents alternatives to the primary navigational element (see next section).
@@ -316,13 +316,13 @@ Example:
   "author": {
     "title": "Link to contact details for author (represented in Mason).",
     "href": "...",
-    "content_type": "application/vnd.mason+json"
+    "formats": ["application/vnd.mason+json"]
     "alt":
     [
       {
         "title": "Link to contact details for author (represented as a vCard).",
         "href": "...",
-        "content_type": "text/vcard"
+        "formats": ["text/vcard"]
       }
     ]
   }
@@ -343,20 +343,20 @@ Here is an example of a link to the contact details for the author of a certain 
   "author": {
     "title": "Link to contact details for author.",
     "href": "...",
-    "content_type": "application/vnd.mason+json"
+    "formats": ["application/vnd.mason+json"]
     "alt":
     [
       {
         "title": "Link to contact details for author (as vCard).",
         "href": "...",
-        "content_type": "text/vcard"
+        "formats": ["text/vcard"]
       }
     ]
   }
 }
 ```
 
-Alternative elements should differ from the primary element in either "type", "content_type", or "method".
+Alternative elements should differ from the primary element in either "type", "formats", or "method".
 
 
 ### Links
@@ -371,7 +371,7 @@ Example:
     "title": "Links to this resource",
     "description": "Follow this link to get the representation of this resource",
     "href": "...",
-    "content_type": "application/vnd.mason+json"
+    "formats": ["application/vnd.mason+json"]
   }
 }
 ```
