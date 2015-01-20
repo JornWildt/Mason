@@ -6,7 +6,7 @@ Mason is a JSON based format for adding hypermedia elements, standardized error 
 
 A Mason document is constructed by taking a "classic" JSON object and then merging hypermedia elements and other Mason features into it. Mason properties are prefixed with `@` to avoid collisions with existing property names.
 
-A Mason document consists of these types of elements:
+A Mason document consists of the following types of elements:
 
   * Core bussiness data (such as the title of an item, identifiers and so on).
   
@@ -68,6 +68,48 @@ Links (and other hypermedia elements) are added as object properties in a specia
 }
 ```
 
+We can also add a few actions for modification of the issue. Below we have added a "is:add-issue" for adding a new issue and "is:delete-issue" for deleting the issue (the prefix "is:" is for compact URI expansion - a shorthand notation for URIs):
+
+```json
+{
+  "ID": 1,
+  "Title": "Program crashes when pressing ctrl-p",
+  "Description": "I pressed ctrl-p and, boom, it crashed.",
+  "Severity": 5,
+  "Attachments": [
+    {
+      "Id": 1,
+      "Title": "Error report",
+      "@navigation": {
+        "self": {
+          "href": "http://issue-tracker.org/attachments/1"
+        }
+      }
+    }
+  ],
+  "@navigation": {
+    "self": {
+      "href": "http://issue-tracker.org/issues/1"
+    },
+    "up": {
+      "href": "http://issue-tracker.org/projects/1",
+      "title": "Containing project"
+    },
+    "is:add-issue": {
+      "type": "json",
+      "href": "http://issue-tracker.org/issues",
+      "schemaUrl: "http://...",
+    },
+    "is:delete-issue": {
+      "type": "void",
+      "href": "http://issue-tracker.org/issues/1",
+      "method": "DELETE"
+    }
+  }
+}
+```
+
+
 > Note: The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
 
 # Syntax
@@ -82,6 +124,37 @@ The prefix character is not used for all Mason properties, only for those that c
 The word "Curie" is an abbreviation for "Compact URI" and is a way to define short scoped names that map to URIs. Mason uses namespace declarations to declare prefixes for use in Curies. A Curie is expanded to a URI by replacing the namespace prefix with the corresponding name declared in the `@namespaces` object.
 
 Curies are only expanded in navigation identifiers - not in target URLs of links and other elements.
+
+This means the following two examples are considered equivalent:
+
+```json
+{
+  "@navigation": {
+    "http://soabits.dk/mason/issue-tracker/reltypes.html#add-issue": {
+      "type": "json",
+      "href": "http://issue-tracker.org/issues"
+    }
+  }
+}
+```
+
+```json
+{
+  "@namespaces": {
+    "is": {
+      "name": "http://soabits.dk/mason/issue-tracker/reltypes.html#"
+    }
+  },  
+  "@navigation": {
+    "is:add-issue": {
+      "type": "json",
+      "href": "http://issue-tracker.org/issues"
+    }
+  }
+}
+```
+
+
 
 See [CURIE Syntax 1.0](http://www.w3.org/TR/2009/CR-curie-20090116/) for further information.
 

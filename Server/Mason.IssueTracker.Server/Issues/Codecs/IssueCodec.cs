@@ -45,7 +45,7 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       JsonAction updateAction = MasonBuilderContext.NewJsonAction(RelTypes.IssueUpdate, selfUrl, "Update issue details", template: (DynamicDictionary)updateTemplate);
       i.AddNavigation(updateAction);
 
-      JsonAction deleteAction = MasonBuilderContext.NewJsonAction(RelTypes.IssueDelete, selfUrl, "Delete issue", method: "DELETE");
+      VoidAction deleteAction = MasonBuilderContext.NewVoidAction(RelTypes.IssueDelete, selfUrl, "Delete issue", method: "DELETE");
       i.AddNavigation(deleteAction);
 
       Uri addAttachmentSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-attachment" });

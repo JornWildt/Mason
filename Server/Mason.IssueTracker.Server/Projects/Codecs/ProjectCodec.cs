@@ -46,7 +46,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       }
       p.AddNavigation(addIssueAction);
 
-      JsonAction deleteAction = MasonBuilderContext.NewJsonAction(RelTypes.ProjectDelete, selfUrl, "Delete project", method: "DELETE");
+      VoidAction deleteAction = MasonBuilderContext.NewVoidAction(RelTypes.ProjectDelete, selfUrl, "Delete project", method: "DELETE");
       p.AddNavigation(deleteAction);
 
       ((dynamic)p).Id = project.Project.Id;

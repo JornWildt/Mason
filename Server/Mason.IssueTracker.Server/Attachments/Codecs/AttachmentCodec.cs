@@ -47,7 +47,7 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       }
       a.AddNavigation(updateAction);
 
-      JsonAction deleteAction = MasonBuilderContext.NewJsonAction(RelTypes.AttachmentDelete, selfUrl, "Delete attachment", method: "DELETE");
+      VoidAction deleteAction = MasonBuilderContext.NewVoidAction(RelTypes.AttachmentDelete, selfUrl, "Delete attachment", method: "DELETE");
       a.AddNavigation(deleteAction);
 
       dynamic da = a;
