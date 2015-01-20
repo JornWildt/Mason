@@ -707,7 +707,7 @@ This property can safely be removed in minimized representations.
 
 ### Generic actions
 
-The action type `any` is a catch all for sending all kinds of data in an action. This can for instance be used for upload of binary files without associated JSON data, but it is also useful for handling HTTP PATCH operations for modification of existing resources.
+The action type `any` is a catch all for sending any kind of data in an action. This can for instance be used for upload of binary files without associated JSON data, but it is also useful for handling HTTP PATCH operations for modification of existing resources.
 
 **Example usage of `any` action**
 
@@ -734,7 +734,7 @@ This action represents a PATCH operation with a JSON-Patch payload:
     "href": "...",
     "method": "PATCH",
     "title": "Modify item using PATCH.",
-    "accept": "application/json-patch+json"
+    "accept": ["application/json-patch+json"]
   }
 }
 ```
@@ -778,6 +778,21 @@ The error object can be extended with additional application specific properties
 
 ### Properties for `@error`
 
+The `@error` property contains detailed error information. When a client receivers an HTTP error status code (such as 4xx or 5xx) together with a Mason document it should look for error details in the `@error` property.
+
+Here is an example of a validation error where the end user entered a wrong value:
+
+```json
+"@error": {
+  "@id": "4c4d7b1d-c76c-480e-9829-f94afed8020e",
+  "@message": "There was a problem with one or more input values.",
+  "@code": "INVALIDINPUT",
+  "@messages": [
+    "severity should be between 1 and 5. The actual value is 30. Parameternavn: severity"
+  ]
+}
+```
+
 #### `@message`
 This property is REQUIRED and MUST be a string value. It should be a human readable error message directed at the end users.
 
@@ -791,13 +806,13 @@ This property is OPTIONAL. If present it MUST be a string value. It should conta
 This property is OPTIONAL. If present it MUST be an array of strings. It should contain an array of additional human readable error messages directed at the end user.
 
 #### `@details` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It should contain an extensive human readable message to the client developer.
+This property is OPTIONAL. If present it MUST be a string value. It should contain an extensive human readable message directed at the *client* developer.
 
 #### `@httpStatusCode` (optional)
 This property is OPTIONAL. If present it MUST be a an integer value. It should contain the HTTP status code from the latest response.
 
-#### `@links` (optional)
-This property is OPTIONAL. If present it MUST be an object adhering to the same rules as the top `@links` object. It should contain links to resources that are relevant for the error condition. It can be links for both end users as well as client developers. A generic client won't know the difference but specific implementations can decide to use certain link relations for either of the audiences.
+#### `@navigation` (optional)
+This property is OPTIONAL. If present it MUST be an object adhering to the same rules as the top `@navigation` object. It may contain links to resources that are relevant for the error condition. It can be links for both end users as well as client developers. A generic client won't know the difference but specific implementations can decide to use certain link relations for either of the audiences.
 
 #### `@time` (optional)
 This property is OPTIONAL. If present it MUST be a string value representing a date in the format defined by [RFC 3339](http://tools.ietf.org/html/rfc3339). Example: "1985-04-12T23:20:50.52Z". It should contain a timestamp of when the error condition occured.
