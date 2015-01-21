@@ -12,9 +12,9 @@ A Mason document consists of the following types of elements:
   
   * Meta data about the resource, targeted at the client developer.
   
-  * Various kinds of navigational elements such as links, link templates and actions.
+  * Various kinds of hypermedia elements such as links, link templates and actions. These are generally referred to as *control elements*.
   
-  * Namespace declarations for expansion of compact URIs (Curies) in navigational elements.
+  * Namespace declarations for expansion of compact URIs (Curies) in control elements.
   
   * Error details.
 
@@ -37,7 +37,7 @@ Here is a simple example to introduce the format. Suppose we have an existing pa
 
 Now we can add a few links to the issue: a link to the issue itself (a "self" link), a link to the issue's containing project (an "up" link) and a link to the attachment (another "self" link in a different context).
 
-Links (and other hypermedia elements) are added as object properties in a special "@navigation" element:
+Links (and other hypermedia elements) are added as object properties in a special "@controls" element:
 
 ```json
 {
@@ -49,14 +49,14 @@ Links (and other hypermedia elements) are added as object properties in a specia
     {
       "Id": 1,
       "Title": "Error report",
-      "@navigation": {
+      "@controls": {
         "self": {
           "href": "http://issue-tracker.org/attachments/1"
         }
       }
     }
   ],
-  "@navigation": {
+  "@controls": {
     "self": {
       "href": "http://issue-tracker.org/issues/1"
     },
@@ -80,14 +80,14 @@ We can also add a few actions for modification of the issue. Below we have added
     {
       "Id": 1,
       "Title": "Error report",
-      "@navigation": {
+      "@controls": {
         "self": {
           "href": "http://issue-tracker.org/attachments/1"
         }
       }
     }
   ],
-  "@navigation": {
+  "@controls": {
     "self": {
       "href": "http://issue-tracker.org/issues/1"
     },
@@ -123,13 +123,13 @@ The prefix character is not used for all Mason properties, only for those that c
 
 The word "Curie" is an abbreviation for "Compact URI" and is a way to define short scoped names that map to URIs. Mason uses namespace declarations to declare prefixes for use in Curies. A Curie is expanded to a URI by replacing the namespace prefix with the corresponding name declared in the `@namespaces` object.
 
-Curies are only expanded in navigation identifiers - not in target URLs of links and other elements.
+Curies are only expanded in control element identifiers - not in target URLs of links and other elements.
 
 This means the following two examples are considered equivalent:
 
 ```json
 {
-  "@navigation": {
+  "@controls": {
     "http://soabits.dk/mason/issue-tracker/reltypes.html#add-issue": {
       "type": "json",
       "href": "http://issue-tracker.org/issues"
@@ -145,7 +145,7 @@ This means the following two examples are considered equivalent:
       "name": "http://soabits.dk/mason/issue-tracker/reltypes.html#"
     }
   },  
-  "@navigation": {
+  "@controls": {
     "is:add-issue": {
       "type": "json",
       "href": "http://issue-tracker.org/issues"
@@ -154,7 +154,7 @@ This means the following two examples are considered equivalent:
 }
 ```
 
-
+The purpose of curies is to improve readability of the raw JSON data. It does save a few bytes in the Mason document but that is not the primary focus as compression will do a much better job.
 
 See [CURIE Syntax 1.0](http://www.w3.org/TR/2009/CR-curie-20090116/) for further information.
 
@@ -165,27 +165,27 @@ When a client requests a Mason document it may be looking for some specific data
 
   1. Register all namespace declarations. These are key/value pairs that map namespace names into URI prefixes.
   
-  2. Iterate recursively through all `@navigation` elements and expand navigational element names (curies) using the namespace declarations.
+  2. Iterate recursively through all control elements and expand control element names (curies) using the namespace declarations.
   
   3. Read whatever JSON data the client is looking for.
   
-  4. If the client tries to invoke a navigational element it SHOULD be prepared to handle any kind of navigational element - it SHOULD NOT assume a fixed type of navigation. This allows the server to use the type of navigation that fits best at any given time - without breaking clients.
+  4. If the client tries to invoke a control it SHOULD be prepared to handle any kind of control type - it SHOULD NOT assume a fixed type of control. This allows the server to use the type of controls that fits best at any given time - without breaking clients.
   
-## Processing of navigational elements
+## Processing of control elements
 
-A client trying to invoke a navigational element should follow the instructions described below.
+A client trying to invoke a control element should follow the instructions described below.
 
-  1. Prepare a JSON object with the data expected to be necessary to invoke the navigational element. If there is no data available then use an empty JSON object (this could for instance be the case when the client expects to follow a link). This is the *argument object*.
+  1. Prepare a JSON object with the data expected to be necessary to invoke the control. If there is no data available then use an empty JSON object (this could for instance be the case when the client expects to follow a link). This is the *argument object*.
   
-  2. If the navigational element is a link then simply follow it.
+  2. If the control is a link then simply follow it.
   
-  3. If the navigational element is a URL template then expand the template using the argument object as a dictionary containing variables for the expansion.
+  3. If the control is a URL template then expand the `href` template string using the argument object as a dictionary containing variables for the expansion.
   
-  4. If the navigational element is a void action then ignore the argument object and invoke the action.
+  4. If the control is a void action then ignore the argument object and invoke the action.
   
-  5. If the navigational element is a JSON or JSON+Files action then use the argument object as input to the action and invoke it.
+  5. If the control is a JSON or JSON+Files action then use the argument object as input to the action and invoke it.
   
-  6. If the navigational element is a generic action then the behavior is undefined and must depend on some prior agreement with the server.
+  6. If the control is a generic action then invoke it, but any detailed processing is outside the scope of Mason.
 
 
 # Minimized responses
@@ -214,7 +214,7 @@ The meta object can be extended with additional application specific properties 
 "@meta": {
     "@title": "Issue",
     "@description": "This resource represents a single issue with its data and related actions.",
-    "@navigation": {
+    "@controls": {
         "terms-of-service": {
             "href": "...",
             "title": "Terms of service"
@@ -233,8 +233,8 @@ This property is OPTIONAL. If present it MUST be a string value. It contains a d
 #### `@description` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It contains descriptive text.
 
-#### `@navigation` (optional)
-This property is OPTIONAL. If present it MUST be an object with links. It defines links to other resources that are relevant for client developers - for instance API documentation or terms of service. This property may also contain other navigational elements than links if necessary (but it is not recommended).
+#### `@controls` (optional)
+This property is OPTIONAL. If present it MUST be an object adhering to the same rules as the top `@controls` object. It can for instance contain links to other resources that are relevant for client developers such as API documentation or terms of service. This property may also contain other control elements than links.
 
 
 ## Property name `@namespaces`
@@ -243,7 +243,7 @@ The `@namespaces` property is OPTIONAL. If present it MUST be an object value. I
 
 The namespaces object contains a set of namespace objects indexed by their namespace prefix. Each namespace object defines the namespace URI using the property `name`.
 
-Namespaces are used to expand curies in navigational names.
+Namespaces are used to expand curies in control element names.
 
 The namespace object is not extendable and thus its property names need not be prefixed with '@'.
 
@@ -268,22 +268,22 @@ Property names define namespace prefix.
 This property is REQUIRED and MUST be a string value. It contains the URI for the namespace.
 
 
-## Property name `@navigation`
+## Property name `@controls`
 
-The `@navigation` property is OPTIONAL. If present it MUST be an object value. It is not restricted to the root object and may occur in any nested data object.
+The `@controls` property is OPTIONAL. If present it MUST be an object value. It is not restricted to the root object and may occur in any nested data object.
 
-The `@navigation` property represents different ways of navigating and modifying resources. The simplest possible navigation element is a link which represents a named link from the containing resource to another target resource. Other navigation elements are link templates, "void" actions, "json" actions, "json+files" actions and "generic" actions. The type of navigational element is indicated with the property `type` included in each navigational element.
+The `@controls` property represents different ways of controlling the application. The simplest possible control element is a link which represents a named link from the containing resource to a target resource. Other control types are link templates, "void" actions, "json" actions, "json+files" actions and "generic" actions. The type of control is indicated with the property `type` included in each control element.
 
-The set of navigational elements in the `@navigation` object is indexed by their respective identifiers. These identifiers are sometimes called "relationship types" when refering to a link, but in the following sections we will simply refer to the identifiers as "name".
+The set of controls in the `@controls` object is indexed by their respective identifiers. These identifiers are sometimes called "relationship types" when refering to a link, but in the following sections we will simply refer to the identifiers as "name".
 
-The name of a navigational element can either be a simple predefined token from the [IANA relationship registry](http://www.iana.org/assignments/link-relations/link-relations.xhtml), a curie or a complete URI. The use of URIs (and curies) as a namespace mechanism makes it easy to declare names without colliding with similar names from other systems.
+The name of a control can either be a simple predefined token from the [IANA relationship registry](http://www.iana.org/assignments/link-relations/link-relations.xhtml), a curie or a complete URI. The use of URIs (and curies) as a namespace mechanism makes it easy to declare names without colliding with similar names from other systems.
 
-Here a few examples of different ways to name a navigational element:
+Here a few examples of different ways to name a control:
 
 **Standard IANA *self* link**
 
 ```json
-"@navigation": {
+"@controls": {
   "self": {
     "href": "..."
   }
@@ -301,7 +301,7 @@ This is equivalent to a link name "http://issue-tracker-reltypes.org/rels#contac
     "name": "http://issue-tracker-reltypes.org/rels#" 
   }
 },
-"@navigation": {
+"@controls": {
   "is:contact": {
     "href": "...",
     "title": "Complete contact information."
@@ -312,7 +312,7 @@ This is equivalent to a link name "http://issue-tracker-reltypes.org/rels#contac
 **Non standard link identified by a complete URI**
 
 ```json
-"@navigation": {
+"@controls": {
   "http://issue-tracker-reltypes.org/rels#logo": {
     "href": "...",
     "title": "Image of the logo for this instance of issue tracker.",
@@ -324,7 +324,7 @@ This is equivalent to a link name "http://issue-tracker-reltypes.org/rels#contac
 **Non standard link with alternate URLs for other types**
 
 ```json
-"@navigation": {
+"@controls": {
   "is:contact": {
     "href": "...",
     "title": "Contact information as vCard",
@@ -340,14 +340,14 @@ This is equivalent to a link name "http://issue-tracker-reltypes.org/rels#contac
 }
 ```
 
-### Common properties for `@navigation`
+### Common properties for `@controls`
 
-These are the properties that are common for all types of navigational elements (links, link templates and the various types of actions).
+These are the properties that are common for all types of controls (links, link templates and the various types of actions).
 
 Navigational elements are not extendable and thus their property names need not be prefixed with '@'.
 
 #### `<name>` (property name)
-Property names define the navigational element name. In this way the `@navigation` object is indexed by the navgational element names.
+Property names define the navigational element name. In this way the `@controls` object is indexed by the navgational element names.
 
 #### `href`
 This property is REQUIRED and MUST be a string value representing a valid URI. It contains the target URI of the navigational element - or a URL template to be completed thorugh variable expansion.
@@ -385,7 +385,7 @@ This property is OPTIONAL. If present it MUST be an array of navigational elemen
 Example:
 
 ```json
-"@navigation": {
+"@controls": {
   "author": {
     "title": "Link to contact details for author (represented in Mason).",
     "href": "...",
@@ -412,7 +412,7 @@ Alternative elements are mostly known to represent links to different representa
 Here is an example of a link to the contact details for the author of a certain piece of data. The primary version is expected to return a Mason response whereas the alternative version returns a vCard representation of the contact details:
 
 ```json
-"@navigation": {
+"@controls": {
   "author": {
     "title": "Link to contact details for author.",
     "href": "...",
@@ -439,7 +439,7 @@ Links represents a relationship between one resource and another as described in
 Example:
 
 ```json
-"@navigation": {
+"@controls": {
   "self": {
     "title": "Links to this resource",
     "description": "Follow this link to get the representation of this resource",
@@ -463,7 +463,7 @@ The simplest templates consists of placeholdes for variable values. The placehol
 **Example usage of a link template**
 
 ```json
-"@navigation": {
+"@controls": {
   "is:issue-query": {
     "type": "link-template",
     "href": "http://.../issues-query?text={text}&severity={severity}&project={pid}",
@@ -527,7 +527,7 @@ Void actions are for use with requests that carries no payload - for instance wh
 **Example usage of `void` action**
 
 ```json
-"@navigation": {
+"@controls": {
   "is:delete-issue": {
     "type": "void",
     "href": "...",
@@ -566,7 +566,7 @@ The purpose of the template value is:
 Simple JSON action:
 
 ```json
-"@navigation": {
+"@controls": {
   "is:project-create": {
     "type": "json",
     "href": "...",
@@ -578,7 +578,7 @@ Simple JSON action:
 Complex JSON action with schema reference and template containing default values for the action:
 
 ```json
-"@navigation": {
+"@controls": {
   "is:update-project": {
     "type": "json",
     "href": "...",
@@ -714,7 +714,7 @@ The action type `any` is a catch all for sending any kind of data in an action. 
 This action represents a direct PUT of data to a specific URL. The "accept" property indicates the types of documents accepted by the target.
 
 ```json
-"@navigation": {
+"@controls": {
   "is:update-attachment": {
     "type": "any",
     "href": "...",
@@ -728,7 +728,7 @@ This action represents a direct PUT of data to a specific URL. The "accept" prop
 This action represents a PATCH operation with a JSON-Patch payload:
 
 ```json
-"@navigation": {
+"@controls": {
   "is:modify-item": {
     "type": "any",
     "href": "...",
@@ -788,13 +788,13 @@ Here is an example of a validation error where the end user entered a wrong valu
   "@message": "There was a problem with one or more input values.",
   "@code": "INVALIDINPUT",
   "@messages": [
-    "severity should be between 1 and 5. The actual value is 30. Parameternavn: severity"
+    "Severity should be between 1 and 5. The actual value is 30. Parameternavn: severity"
   ]
 }
 ```
 
 #### `@message`
-This property is REQUIRED and MUST be a string value. It should be a human readable error message directed at the end users.
+This property is REQUIRED and MUST be a string value. It should be a human readable error message directed at the end user.
 
 #### `@id` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It should contain a unique identifier for later reference to the situation that resulted in a error condition (for instance when looking up a log entry).
@@ -806,13 +806,13 @@ This property is OPTIONAL. If present it MUST be a string value. It should conta
 This property is OPTIONAL. If present it MUST be an array of strings. It should contain an array of additional human readable error messages directed at the end user.
 
 #### `@details` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It should contain an extensive human readable message directed at the *client* developer.
+This property is OPTIONAL. If present it MUST be a string value. It should contain an extensive human readable message directed at the client developer.
 
 #### `@httpStatusCode` (optional)
 This property is OPTIONAL. If present it MUST be a an integer value. It should contain the HTTP status code from the latest response.
 
-#### `@navigation` (optional)
-This property is OPTIONAL. If present it MUST be an object adhering to the same rules as the top `@navigation` object. It may contain links to resources that are relevant for the error condition. It can be links for both end users as well as client developers. A generic client won't know the difference but specific implementations can decide to use certain link relations for either of the audiences.
+#### `@controls` (optional)
+This property is OPTIONAL. If present it MUST be an object adhering to the same rules as the top `@controls` object. It may contain links to resources that are relevant for the error condition. It can be links for both end users as well as client developers. A generic client won't know the difference but specific implementations can decide to use certain link relations for either of the audiences.
 
 #### `@time` (optional)
 This property is OPTIONAL. If present it MUST be a string value representing a date in the format defined by [RFC 3339](http://tools.ietf.org/html/rfc3339). Example: "1985-04-12T23:20:50.52Z". It should contain a timestamp of when the error condition occured.
