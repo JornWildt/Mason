@@ -344,18 +344,18 @@ This is equivalent to a link name "http://issue-tracker-reltypes.org/rels#contac
 
 These are the properties that are common for all types of controls (links, link templates and the various types of actions).
 
-Navigational elements are not extendable and thus their property names need not be prefixed with '@'.
+Control elements are not extendable and thus their property names need not be prefixed with '@'.
 
 #### `<name>` (property name)
-Property names define the navigational element name. In this way the `@controls` object is indexed by the navgational element names.
+Property name define the control name. In this way the `@controls` object is indexed by the control names.
 
 #### `href`
-This property is REQUIRED and MUST be a string value representing a valid URI. It contains the target URI of the navigational element - or a URL template to be completed thorugh variable expansion.
+This property is REQUIRED and MUST be a string value representing a valid URI. It contains the target URI of the control - or a URL template to be completed thorugh variable expansion.
 
 The `href` URI SHOULD be an absolute URL but clients should be prepared to handle relative URLs. At the time of writing there is no rules for how to resolve relative URLs so it will have to depend on an agreement between the client and server.
 
 #### `type`
-This property is OPTIONAL. If present it MUST be a string value representing the type of navigational element. The possible values for `type`are:
+This property is OPTIONAL. If present it MUST be a string value representing the type of control. The possible values for `type`are:
 
   * `link`: a link.
   * `link-template`: a link template.
@@ -380,7 +380,7 @@ This property can safely be removed in minimized representations.
 This property is OPTIONAL. If present it MUST be an array of string values. It specifies the expected media type formats of the target resource. 
 
 #### `alt` (optional)
-This property is OPTIONAL. If present it MUST be an array of navigational elements each of which represents alternatives to the primary navigational element (see next section).
+This property is OPTIONAL. If present it MUST be an array of control elements each of which represents alternatives to the primary control element (see next section).
 
 Example:
 
@@ -403,9 +403,9 @@ Example:
 ```
 
 
-### Alternative navigational elements
+### Alternative control elements
 
-All navigational elements may have one primary element and many alternative variations (or no variations). The alternative elements are stored in the `alt` property of the primary element. The `alt` property MUST be an array of navigational elements which are supposed to be equivalent to the primary navigational element but differ on for instance expected content type of the response or payload encoding. This makes it simple for clients to access the most used navigational element and if they are aware of possible alternatives then they can search the alternative elements for better ways of interacting with the server.
+All controls may have one primary element and many alternative variations (or no variations). The alternative elements are stored in the `alt` property of the primary element. The `alt` property MUST be an array of control elements which are supposed to be equivalent to the primary control element but differ on for instance expected content type of the response or payload encoding. This makes it simple for clients to access the most used control element and if they are aware of possible alternatives then they can search the alternative elements for better ways of interacting with the server.
 
 Alternative elements are mostly known to represent links to different representations of the same resource.
 
@@ -434,7 +434,7 @@ Alternative elements should differ from the primary element in either "type", "f
 
 ### Links
 
-Links represents a relationship between one resource and another as described in [RFC 5988 Web Linking](http://tools.ietf.org/search/rfc5988). The relationship between the two resources is assigned a name (the relationship type) which is used by the client to locate the link in the set of navigation elements.
+Links represents a relationship between one resource and another as described in [RFC 5988 Web Linking](http://tools.ietf.org/search/rfc5988). The relationship between the two resources is assigned a name (the relationship type) which is used by the client to locate the link in the set of control elements.
 
 Example:
 
@@ -449,7 +449,7 @@ Example:
 }
 ```
 
-Links does not have any properties in addition to the common navigational properties.
+Links does not have any properties in addition to the common control properties.
 
 
 ### Link templates
@@ -492,7 +492,7 @@ The simplest templates consists of placeholdes for variable values. The placehol
 
 #### Properties for link templates
 
-Link templates share all the common navigational element properties.
+Link templates share all the common control element properties.
 
 ##### `href`
 This property is REQUIRED and MUST be a string value representing a valid URL template according to [RFC 6570](http://tools.ietf.org/html/rfc6570).
@@ -539,7 +539,7 @@ Void actions are for use with requests that carries no payload - for instance wh
 
 #### Properties for void actions
 
-Void actions share all the common navigational element properties.
+Void actions share all the common control element properties.
 
 ##### `method` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
@@ -595,7 +595,7 @@ Complex JSON action with schema reference and template containing default values
 
 #### Properties for JSON actions
 
-JSON actions share all the common navigational element properties.
+JSON actions share all the common control element properties.
 
 ##### `method` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
@@ -668,7 +668,7 @@ Content-Type: application/json
 
 #### Properties for JSON+Files actions
 
-JSON+Files actions share all the common navigational element properties.
+JSON+Files actions share all the common control element properties.
 
 ##### `method` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
@@ -742,7 +742,7 @@ This action represents a PATCH operation with a JSON-Patch payload:
 
 #### Properties for generic actions
 
-Generic actions share all the common navigational element properties.
+Generic actions share all the common control element properties.
 
 ##### `method` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
