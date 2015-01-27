@@ -23,11 +23,11 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
 
       Uri selfUrl = typeof(ProjectResource).CreateUri(new { id = project.Project.Id });
       Link selfLink = MasonBuilderContext.NewLink("self", selfUrl, "Project details");
-      p.AddNavigation(selfLink);
+      p.AddControl(selfLink);
 
       Uri issuesUrl = typeof(ProjectIssuesResource).CreateUri(new { id = project.Project.Id });
       Link issuesLink = MasonBuilderContext.NewLink(RelTypes.Issues, issuesUrl, "All issues in project");
-      p.AddNavigation(issuesLink);
+      p.AddControl(issuesLink);
 
       dynamic updateTemplate = new DynamicDictionary();
       updateTemplate.Code = project.Project.Code;
@@ -35,7 +35,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       updateTemplate.Description = project.Project.Description;
 
       JsonAction updateAction = MasonBuilderContext.NewJsonAction(RelTypes.ProjectUpdate, selfUrl, "Update project details", template: (DynamicDictionary)updateTemplate);
-      p.AddNavigation(updateAction);
+      p.AddControl(updateAction);
 
       Uri addIssueSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-issue" });
       JsonFilesAction addIssueAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.ProjectAddIssue, issuesUrl, "Add new issue to project", schemaUrl: addIssueSchemaUrl);
@@ -44,10 +44,10 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
         addIssueAction.jsonFile = "args";
         addIssueAction.AddFile("attachment", "Attachment for issue");
       }
-      p.AddNavigation(addIssueAction);
+      p.AddControl(addIssueAction);
 
       VoidAction deleteAction = MasonBuilderContext.NewVoidAction(RelTypes.ProjectDelete, selfUrl, "Delete project", method: "DELETE");
-      p.AddNavigation(deleteAction);
+      p.AddControl(deleteAction);
 
       ((dynamic)p).Id = project.Project.Id;
       ((dynamic)p).Code = project.Project.Code;

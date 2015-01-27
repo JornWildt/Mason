@@ -125,7 +125,7 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\LinkViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\MasonViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\JsonFilesActionViewModel.cs" />
-    <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\NavigationViewModel.cs" />
+    <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ControlViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\PropertyViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ResourcePropertyViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ResourceViewModel.cs" />

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace MasonBuilder.Net
 {
-  public class Link : Navigation
+  public class Link : Control
   {
-    public override string type { get { return "link"; } }
+    public override string type { get { return null; } } // Default type is "link"
 
 
     public List<Link> alt { get; set; }

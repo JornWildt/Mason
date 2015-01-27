@@ -22,17 +22,17 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
 
       Uri selfUrl = typeof(AttachmentResource).CreateUri(new { id = attachment.Attachment.Id });
       Link selfLink = MasonBuilderContext.NewLink("self", selfUrl);
-      a.AddNavigation(selfLink);
+      a.AddControl(selfLink);
 
       Uri issueUrl = typeof(IssueResource).CreateUri(new { id = attachment.Attachment.OwnerIssue.Id });
       Link issueLink = MasonBuilderContext.NewLink("up", issueUrl, "Containing issue");
-      a.AddNavigation(issueLink);
+      a.AddControl(issueLink);
 
       if (attachment.Attachment.ContentType != null)
       {
         Uri contentUrl = typeof(AttachmentContentResource).CreateUri(new { id = attachment.Attachment.Id });
         Link contentLink = MasonBuilderContext.NewLink(RelTypes.AttachmentContent, contentUrl, "Download content", attachment.Attachment.ContentType);
-        a.AddNavigation(contentLink);
+        a.AddControl(contentLink);
       }
 
       dynamic updateTemplate = new DynamicDictionary();
@@ -45,10 +45,10 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
         updateAction.jsonFile = "args";
         updateAction.AddFile("attachment", "Attachment content");
       }
-      a.AddNavigation(updateAction);
+      a.AddControl(updateAction);
 
       VoidAction deleteAction = MasonBuilderContext.NewVoidAction(RelTypes.AttachmentDelete, selfUrl, "Delete attachment", method: "DELETE");
-      a.AddNavigation(deleteAction);
+      a.AddControl(deleteAction);
 
       dynamic da = a;
       da.ID = attachment.Attachment.Id;

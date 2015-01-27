@@ -12,11 +12,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
   {
     #region UI properties
 
-    public ObservableCollection<NavigationViewModel> Navigation { get; private set; }
+    public ObservableCollection<ControlViewModel> Controls { get; private set; }
 
-    public bool HasNavigation { get { return Navigation != null && Navigation.Count > 0; } }
+    public bool HasControls { get { return Controls != null && Controls.Count > 0; } }
 
-    public JToken NavigationJsonValue { get; private set; }
+    public JToken ControlsJsonValue { get; private set; }
 
     public ObservableCollection<ViewModel> Properties { get; private set; }
 
@@ -51,17 +51,17 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         {
           BuildNamespaces((JObject)pair.Value, context);
         }
-        else if (pair.Key == MasonProperties.Navigation && pair.Value is JObject)
+        else if (pair.Key == MasonProperties.Control && pair.Value is JObject)
         {
-          NavigationJsonValue = pair.Value;
-          Navigation = new ObservableCollection<NavigationViewModel>(
-            pair.Value.Children().OfType<JProperty>().Select(n => BuildNavigationElement(this, n, context)).Where(n => n != null));
+          ControlsJsonValue = pair.Value;
+          Controls = new ObservableCollection<ControlViewModel>(
+            pair.Value.Children().OfType<JProperty>().Select(n => BuildControlElement(this, n, context)).Where(n => n != null));
         }
         else if (pair.Key == MasonProperties.Meta && pair.Value is JObject)
         {
           MetaJsonValue = pair.Value;
           Description = GetValue<string>(pair.Value, MasonProperties.MetaProperties.Description);
-          JToken metaLinksProperty = pair.Value[MasonProperties.Navigation];
+          JToken metaLinksProperty = pair.Value[MasonProperties.Control];
           if (metaLinksProperty is JObject)
           {
             MetaLinksJsonValue = metaLinksProperty;
@@ -81,23 +81,23 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         }
       }
 
-      if (Navigation == null)
-        Navigation = new ObservableCollection<NavigationViewModel>();
+      if (Controls == null)
+        Controls = new ObservableCollection<ControlViewModel>();
     }
 
     
-    private NavigationViewModel BuildNavigationElement(ResourceViewModel parent, JProperty n, BuilderContext context)
+    private ControlViewModel BuildControlElement(ResourceViewModel parent, JProperty n, BuilderContext context)
     {
       string type = GetValue<string>(n.Value, "type");
-      if (type == MasonProperties.NavigationTypes.Link)
+      if (type == MasonProperties.ControlTypes.Link)
         return new LinkViewModel(parent, n, context);
-      else if (type == MasonProperties.NavigationTypes.LinkTemplate)
+      else if (type == MasonProperties.ControlTypes.LinkTemplate)
         return new LinkTemplateViewModel(parent, n, context);
-      else if (type == MasonProperties.NavigationTypes.Void)
+      else if (type == MasonProperties.ControlTypes.Void)
         return new VoidActionViewModel(parent, n, context);
-      else if (type == MasonProperties.NavigationTypes.JSON)
+      else if (type == MasonProperties.ControlTypes.JSON)
         return new JsonActionViewModel(parent, n, context);
-      else if (type == MasonProperties.NavigationTypes.JSONFiles)
+      else if (type == MasonProperties.ControlTypes.JSONFiles)
         return new JsonFilesActionViewModel(parent, n, context);
 
       return null;

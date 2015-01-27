@@ -21,16 +21,16 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
 
       Uri selfUri = typeof(ResourceCommonResource).CreateUri();
       Link selfLink = MasonBuilderContext.NewLink("self", selfUri);
-      common.AddNavigation(selfLink);
+      common.AddControl(selfLink);
 
       Uri contactUri = typeof(ContactResource).CreateUri();
       Link contactLink = MasonBuilderContext.NewLink(RelTypes.Contact, contactUri, "Contact information");
       contactLink.description = "Complete contact information in standard formats such as vCard and jCard.";
-      common.AddNavigation(contactLink);
+      common.AddControl(contactLink);
 
       Uri logoUri = new Uri(CommunicationContext.ApplicationBaseUri.EnsureHasTrailingSlash(), "Origins/JoeHacker/logo.png");
       Link logoLink = MasonBuilderContext.NewLink(RelTypes.Logo, logoUri);
-      common.AddNavigation(logoLink);
+      common.AddControl(logoLink);
 
       if (!MasonBuilderContext.PreferMinimalResponse)
       {
@@ -40,14 +40,14 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
 
       Uri projectsUri = typeof(ProjectCollectionResource).CreateUri();
       Link projectsLink = MasonBuilderContext.NewLink(RelTypes.Projects, projectsUri, "List all projects");
-      common.AddNavigation(projectsLink);
+      common.AddControl(projectsLink);
 
-      common.AddNavigation(MasonBuilderContext.BuildIssueQueryTemplate(CommunicationContext));
+      common.AddControl(MasonBuilderContext.BuildIssueQueryTemplate(CommunicationContext));
 
       Uri projectsUrl = typeof(ProjectCollectionResource).CreateUri();
       Uri createProjectSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-project" });
       JsonAction addProjectAction = MasonBuilderContext.NewJsonAction(RelTypes.ProjectAdd, projectsUrl, "Create new project", schemaUrl: createProjectSchemaUrl);
-      common.AddNavigation(addProjectAction);
+      common.AddControl(addProjectAction);
 
       return new ResourceCommonResource { Value = common };
     }

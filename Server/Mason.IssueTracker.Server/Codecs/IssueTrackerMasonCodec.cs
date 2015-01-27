@@ -22,12 +22,12 @@ namespace Mason.IssueTracker.Server.Codecs
           r.Meta.Description = msg;
         else
           r.Meta.Description += " [" + msg + "]";
-        r.Meta.AddNavigation(MasonBuilderContext.NewLink("documentation", "https://github.com/JornWildt/Mason", "Documentation of Mason media type (hosted on GitHub)."));
+        r.Meta.AddControl(MasonBuilderContext.NewLink("documentation", "https://github.com/JornWildt/Mason", "Documentation of Mason media type (hosted on GitHub)."));
       }
 
       Uri resourceCommonUri = typeof(ResourceCommonResource).CreateUri();
       Link resourceCommonLink = MasonBuilderContext.NewLink(RelTypes.ResourceCommon, resourceCommonUri, "Common information shared by all resources");
-      r.AddNavigation(resourceCommonLink);
+      r.AddControl(resourceCommonLink);
 
       return r;
     }

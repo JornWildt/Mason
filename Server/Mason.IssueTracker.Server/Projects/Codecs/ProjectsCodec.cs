@@ -35,7 +35,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
 
       Uri selfUri = typeof(ProjectResource).CreateUri(new { id = p.Id });
       Link selfLink = MasonBuilderContext.NewLink("self", selfUri, "Project details");
-      sp.AddNavigation(selfLink);
+      sp.AddControl(selfLink);
 
       dynamic dp = sp;
       dp.Id = p.Id;

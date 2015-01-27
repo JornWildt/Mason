@@ -26,11 +26,11 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
 
       Uri selfUrl = typeof(ProjectIssuesResource).CreateUri(new { id = project.Project.Id });
       Link selfLink = MasonBuilderContext.NewLink("self", selfUrl);
-      p.AddNavigation(selfLink);
+      p.AddControl(selfLink);
 
       Uri projectUrl = typeof(ProjectResource).CreateUri(new { id = project.Project.Id });
       Link projectLink = MasonBuilderContext.NewLink("up", projectUrl);
-      p.AddNavigation(projectLink);
+      p.AddControl(projectLink);
 
       ((dynamic)p).Id = project.Project.Id;
       ((dynamic)p).Title = project.Project.Title;

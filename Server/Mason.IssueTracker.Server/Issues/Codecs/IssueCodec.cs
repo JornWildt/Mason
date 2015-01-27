@@ -27,15 +27,15 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
 
       Uri selfUrl = typeof(IssueResource).CreateUri(new { id = issue.Issue.Id });
       Link selfLink = MasonBuilderContext.NewLink("self", selfUrl);
-      i.AddNavigation(selfLink);
+      i.AddControl(selfLink);
 
       Uri projectUrl = typeof(ProjectResource).CreateUri(new { id = issue.Issue.OwnerProject.Id });
       Link projectLink = MasonBuilderContext.NewLink("up", projectUrl, "Containing project");
-      i.AddNavigation(projectLink);
+      i.AddControl(projectLink);
 
       Uri attachmentsUrl = typeof(IssueAttachmentsResource).CreateUri(new { id = issue.Issue.Id });
       Link attachmentsLink = MasonBuilderContext.NewLink(RelTypes.Attachments, attachmentsUrl, "All attachments for this issue");
-      i.AddNavigation(attachmentsLink);
+      i.AddControl(attachmentsLink);
 
       dynamic updateTemplate = new DynamicDictionary();
       updateTemplate.Title = issue.Issue.Title;
@@ -43,10 +43,10 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       updateTemplate.Severity = issue.Issue.Severity;
 
       JsonAction updateAction = MasonBuilderContext.NewJsonAction(RelTypes.IssueUpdate, selfUrl, "Update issue details", template: (DynamicDictionary)updateTemplate);
-      i.AddNavigation(updateAction);
+      i.AddControl(updateAction);
 
       VoidAction deleteAction = MasonBuilderContext.NewVoidAction(RelTypes.IssueDelete, selfUrl, "Delete issue", method: "DELETE");
-      i.AddNavigation(deleteAction);
+      i.AddControl(deleteAction);
 
       Uri addAttachmentSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-attachment" });
       JsonFilesAction addAttachmentAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.IssueAddAttachment, attachmentsUrl, "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
@@ -55,7 +55,7 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
         addAttachmentAction.jsonFile = "args";
         addAttachmentAction.AddFile("attachment", "Attachment for issue");
       }
-      i.AddNavigation(addAttachmentAction);
+      i.AddControl(addAttachmentAction);
 
       ((dynamic)i).ID = issue.Issue.Id;
       ((dynamic)i).Title = issue.Issue.Title;

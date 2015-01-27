@@ -6,15 +6,15 @@ namespace MasonBuilder.Net
 {
   public class SubResource : DynamicDictionary
   {
-    [JsonProperty(MasonProperties.Prefix + "navigation")]
-    public Dictionary<string,Navigation> Navigation { get; set; }
+    [JsonProperty(MasonProperties.Prefix + "controls")]
+    public Dictionary<string,Control> Controls { get; set; }
 
 
-    public void AddNavigation(Navigation nav)
+    public void AddControl(Control nav)
     {
-      if (Navigation == null)
-        Navigation = new Dictionary<string, Navigation>();
-      Navigation[nav.name] = nav;
+      if (Controls == null)
+        Controls = new Dictionary<string, Control>();
+      Controls[nav.name] = nav;
     }
   }
 }

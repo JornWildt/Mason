@@ -21,7 +21,7 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
         result.Meta.Description = "This is the result of a query for issues. Follow issues 'self' link to get more information about individual issues.";
       }
 
-      result.AddNavigation(MasonBuilderContext.BuildIssueQueryTemplate(CommunicationContext));
+      result.AddControl(MasonBuilderContext.BuildIssueQueryTemplate(CommunicationContext));
 
       ((dynamic)result).Issues = new List<SubResource>();
 
@@ -39,7 +39,7 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
       }
 
       Link selfLink = MasonBuilderContext.NewLink("self", resource.SelfUri);
-      result.AddNavigation(selfLink);
+      result.AddControl(selfLink);
 
       return result;
     }

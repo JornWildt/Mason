@@ -57,7 +57,7 @@
     <Compile Include="MasonProperties.cs" />
     <Compile Include="MetaElement.cs" />
     <Compile Include="Namespace.cs" />
-    <Compile Include="Navigation.cs" />
+    <Compile Include="Control.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="SubResource.cs" />

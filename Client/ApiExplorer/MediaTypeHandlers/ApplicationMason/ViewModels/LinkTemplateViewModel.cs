@@ -14,9 +14,9 @@ using System.Windows;
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public class LinkTemplateViewModel : NavigationViewModel
+  public class LinkTemplateViewModel : ControlViewModel
   {
-    public override string NavigationType { get { return MasonProperties.NavigationTypes.LinkTemplate; } }
+    public override string ControlType { get { return MasonProperties.ControlTypes.LinkTemplate; } }
 
 
     public string WindowTitle { get; set; }
@@ -87,7 +87,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     #region Commands
 
-    protected override void ActivateNavigation(object arg)
+    protected override void ActivateControl(object arg)
     {
       Publish(new MasonViewModel.SourceChangedEventArgs { Source = OriginalJsonValue.ToString() });
       UrlTemplatePopupDialog d = new UrlTemplatePopupDialog(this);

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public abstract class NavigationViewModel : ElementViewModel
+  public abstract class ControlViewModel : ElementViewModel
   {
     public string Name { get; set; }
 
@@ -23,22 +23,22 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public string NamePart2 { get; set; }
 
-    public abstract string NavigationType { get; }
+    public abstract string ControlType { get; }
 
 
     #region Commands
 
-    public DelegateCommand<object> ActivateNavigationCommand { get; private set; }
+    public DelegateCommand<object> ActivateControlCommand { get; private set; }
 
     #endregion
 
 
 
-    public NavigationViewModel(ViewModel parent, JObject nav, string name, BuilderContext context)
+    public ControlViewModel(ViewModel parent, JObject nav, string name, BuilderContext context)
       : base(parent, nav)
     {
       if (nav == null)
-        throw new InvalidOperationException("Expected JSON object for " + NavigationType);
+        throw new InvalidOperationException("Expected JSON object for " + ControlType);
 
       string prefix;
       string reference;
@@ -46,7 +46,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       Name = context.Namespaces.Expand(name, out prefix, out reference, out nsname);
 
-      RegisterCommand(ActivateNavigationCommand = new DelegateCommand<object>(ActivateNavigation));
+      RegisterCommand(ActivateControlCommand = new DelegateCommand<object>(ActivateControl));
 
       if (reference != null && nsname != null)
       {
@@ -65,6 +65,6 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     }
 
 
-    protected abstract void ActivateNavigation(object args);
+    protected abstract void ActivateControl(object args);
   }
 }

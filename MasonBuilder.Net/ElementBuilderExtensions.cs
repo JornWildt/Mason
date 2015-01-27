@@ -23,11 +23,11 @@ namespace MasonBuilder.Net
     {
       if (context.PreferMinimalResponse)
       {
-        return new Link(name, href, null) { target_type = contentType };
+        return new Link(name, href, null) { formats = (contentType != null ? new string[] { contentType } : null) };
       }
       else
       {
-        return new Link(name, href, title) { target_type = contentType };
+        return new Link(name, href, title) { formats = (contentType != null ? new string[] { contentType } : null) };
       }
     }
 

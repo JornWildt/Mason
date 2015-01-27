@@ -1,6 +1,6 @@
 ﻿namespace MasonBuilder.Net
 {
-  public class VoidAction : Navigation
+  public class VoidAction : Control
   {
     public override string type { get { return "void"; } }
 

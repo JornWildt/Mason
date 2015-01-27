@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public abstract class ActionViewModel : NavigationViewModel
+  public abstract class ActionViewModel : ControlViewModel
   {
     public string Method { get; set; }
 

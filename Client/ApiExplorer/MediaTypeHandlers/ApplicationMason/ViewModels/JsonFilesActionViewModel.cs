@@ -8,7 +8,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class JsonFilesActionViewModel : JsonActionViewModel
   {
-    public override string NavigationType { get { return MasonProperties.NavigationTypes.JSONFiles; } }
+    public override string ControlType { get { return MasonProperties.ControlTypes.JSONFiles; } }
 
 
     public JsonFilesActionViewModel(ViewModel parent, JProperty json, BuilderContext context)

@@ -50,22 +50,22 @@
             <TextBlock Text="Meta-links" FontStyle="Italic" FontWeight="Bold">
               <!-- Show source for links -->
               <i:Interaction.Behaviors>
-                <axu:ShowSourceBehavior Source="{Binding Value.MetaLinksJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Navigation}}"/>
+                <axu:ShowSourceBehavior Source="{Binding Value.MetaLinksJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Control}}"/>
               </i:Interaction.Behaviors>
             </TextBlock>
             <!-- Use styling to render links -->
             <ItemsControl ItemsSource="{Binding Value.MetaLinks}" Margin="10 0 0 0"/>
           </StackPanel>
-          <!-- Navigation elements -->
-          <StackPanel Grid.Row="2" Visibility="{Binding Value.HasNavigation, Converter={axv:BoolToVisibilityConverter}}">
-            <TextBlock Text="Navigation" FontStyle="Italic" FontWeight="Bold">
+          <!-- Control elements -->
+          <StackPanel Grid.Row="2" Visibility="{Binding Value.HasControls, Converter={axv:BoolToVisibilityConverter}}">
+            <TextBlock Text="Controls" FontStyle="Italic" FontWeight="Bold">
               <!-- Show source for links -->
               <i:Interaction.Behaviors>
-                <axu:ShowSourceBehavior Source="{Binding Value.NavigationJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Navigation}}"/>
+                <axu:ShowSourceBehavior Source="{Binding Value.ControlJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Control}}"/>
               </i:Interaction.Behaviors>
             </TextBlock>
-            <!-- Use styling to render navigation elements -->
-            <ItemsControl ItemsSource="{Binding Value.Navigation}" Margin="10 0 0 0"/>
+            <!-- Use styling to render control elements -->
+            <ItemsControl ItemsSource="{Binding Value.Controls}" Margin="10 0 0 0"/>
           </StackPanel>
           <!-- Properties (recursion) -->
           <ItemsControl Grid.Row="5" DockPanel.Dock="Top" ItemsSource="{Binding Value.Properties}"/>
@@ -73,12 +73,12 @@
       </Expander>
     </DataTemplate>
 
-    <!-- Template for displaying navigation elements -->
-    <DataTemplate DataType="{x:Type mavm:NavigationViewModel}">
+    <!-- Template for displaying control elements -->
+    <DataTemplate DataType="{x:Type mavm:ControlViewModel}">
       <StackPanel>
         <StackPanel Orientation="Horizontal">
           <TextBlock VerticalAlignment="Center">
-            <Hyperlink Command="{Binding ActivateNavigationCommand}"
+            <Hyperlink Command="{Binding ActivateControlCommand}"
                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
               <Hyperlink.ToolTip>
                 <TextBlock Text="{Binding HRef}" FontStyle="Italic"/>
@@ -98,7 +98,7 @@
               </StackPanel>
             </Hyperlink>
           </TextBlock>
-          <TextBlock Text="{Binding NavigationType, StringFormat=' ({0})'}" FontSize="12" VerticalAlignment="Center"/>
+          <TextBlock Text="{Binding ControlType, StringFormat=' ({0})'}" FontSize="12" VerticalAlignment="Center"/>
         </StackPanel>
         <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1,0,0,0" Margin="8 4 0 4" Padding="8 0 0 0">
           <StackPanel>

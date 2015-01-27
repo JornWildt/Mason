@@ -1,6 +1,6 @@
 ﻿namespace MasonBuilder.Net
 {
-  public class JsonAction : Navigation
+  public class JsonAction : Control
   {
     public override string type { get { return "json"; } }
 

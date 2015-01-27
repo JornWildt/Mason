@@ -9,7 +9,7 @@
     public const string Namespaces = Prefix + "namespaces";
     public const string Meta = Prefix + "meta";
     public const string Profile = Prefix + "profile";
-    public const string Navigation = Prefix + "navigation";
+    public const string Control = Prefix + "controls";
     public const string Error = Prefix + "error";
 
     public static class NamespaceProperties
@@ -23,7 +23,7 @@
       public const string Description = Prefix + "description";
     }
 
-    public static class NavigationTypes
+    public static class ControlTypes
     {
       public const string Link = "link";
       public const string LinkTemplate = "link-template";

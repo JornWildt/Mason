@@ -9,9 +9,9 @@ using System.Collections.ObjectModel;
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public class LinkViewModel : NavigationViewModel
+  public class LinkViewModel : ControlViewModel
   {
-    public override string NavigationType { get { return MasonProperties.NavigationTypes.Link; } }
+    public override string ControlType { get { return MasonProperties.ControlTypes.Link; } }
 
 
     public ObservableCollection<LinkViewModel> AlternateLinks { get; set; }
@@ -42,7 +42,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     #region Commands
 
-    protected override void ActivateNavigation(object args)
+    protected override void ActivateControl(object args)
     {
       ISession session = RamoneServiceManager.Session;
 

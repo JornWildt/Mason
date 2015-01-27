@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MasonBuilder.Net
 {
-  public class LinkTemplate : Navigation
+  public class LinkTemplate : Control
   {
     public override string type { get { return "link-template"; } }
 

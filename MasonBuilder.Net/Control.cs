@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MasonBuilder.Net
 {
-  public abstract class Navigation
+  public abstract class Control
   {
     [JsonIgnore]
     public string name { get; set; }
@@ -17,15 +17,15 @@ namespace MasonBuilder.Net
 
     public string description { get; set; }
 
-    public string target_type { get; set; } // FIXME
+    public string[] formats { get; set; }
 
 
-    public Navigation()
+    public Control()
     {
     }
 
 
-    public Navigation(string name, string href, string title = null)
+    public Control(string name, string href, string title = null)
     {
       this.name = name;
       this.href = href;
