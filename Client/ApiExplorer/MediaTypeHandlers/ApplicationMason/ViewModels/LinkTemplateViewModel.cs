@@ -1,4 +1,6 @@
-﻿using ApiExplorer.MediaTypeHandlers.ApplicationMason.Dialogs;
+﻿// UNUSED
+#if false
+using ApiExplorer.MediaTypeHandlers.ApplicationMason.Dialogs;
 using ApiExplorer.Utilities;
 using ApiExplorer.ViewModels;
 using MasonBuilder.Net;
@@ -129,3 +131,4 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     #endregion
   }
 }
+#endif
