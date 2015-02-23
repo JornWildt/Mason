@@ -8,12 +8,12 @@ using System.Windows;
 
 namespace ApiExplorer.ValueConverters
 {
-  public class EmptyStringToVisibility : ValueConverterBase
+  public class EmptyStringToVisibilityConverter : ValueConverterBase
   {
     private bool Invert = false;
 
 
-    public EmptyStringToVisibility()
+    public EmptyStringToVisibilityConverter()
     {
     }
 

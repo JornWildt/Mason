@@ -32,13 +32,13 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
         item.Title = i.Title;
 
         Uri itemSelfUri = typeof(IssueResource).CreateUri(new { id = i.Id });
-        Link itemSelfLink = MasonBuilderContext.NewLink("self", itemSelfUri);
-        item.AddNavigation(itemSelfLink);
+        Control itemSelfLink = MasonBuilderContext.NewLink("self", itemSelfUri);
+        item.AddControl(itemSelfLink);
 
         ((dynamic)result).Issues.Add(item);
       }
 
-      Link selfLink = MasonBuilderContext.NewLink("self", resource.SelfUri);
+      Control selfLink = MasonBuilderContext.NewLink("self", resource.SelfUri);
       result.AddControl(selfLink);
 
       return result;

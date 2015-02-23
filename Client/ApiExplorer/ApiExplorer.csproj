@@ -80,6 +80,9 @@
     <Reference Include="Ramone">
       <HintPath>..\..\packages\Ramone.2.0.0.0\lib\net40\Ramone.dll</HintPath>
     </Reference>
+    <Reference Include="Resta.UriTemplates">
+      <HintPath>..\..\packages\Resta.UriTemplates.1.1.0\lib\net35-client\Resta.UriTemplates.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -115,13 +118,11 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\UserControls\MultipartJsonActionRender.xaml.cs">
       <DependentUpon>MultipartJsonActionRender.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ActionViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ArrayPropertyViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\BuilderContext.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\JsonActionViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ElementViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\KeyValueParameterViewModel.cs" />
-    <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\LinkTemplateViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\LinkViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\MasonViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\JsonFilesActionViewModel.cs" />
@@ -129,13 +130,7 @@
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\PropertyViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ResourcePropertyViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ResourceViewModel.cs" />
-    <Compile Include="MediaTypeHandlers\ApplicationMason\UserControls\UrlTemplateRender.xaml.cs">
-      <DependentUpon>UrlTemplateRender.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\VoidActionViewModel.cs" />
-    <Compile Include="MediaTypeHandlers\ApplicationMason\Dialogs\UrlTemplatePopupDialog.xaml.cs">
-      <DependentUpon>UrlTemplatePopupDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MediaTypeHandlers\Html\HtmlMediaTypeHandler.cs" />
     <Compile Include="MediaTypeHandlers\Html\UserControls\HtmlRender.xaml.cs">
       <DependentUpon>HtmlRender.xaml</DependentUpon>
@@ -165,6 +160,7 @@
     <Compile Include="UserControls\RequestEditors\TextWithFilesEditor.xaml.cs">
       <DependentUpon>TextWithFilesEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\JsonObjectDictionary.cs" />
     <Compile Include="Utilities\MethodOverrideInterceptor.cs" />
     <Compile Include="Utilities\NamespaceManager.cs" />
     <Compile Include="Utilities\FocusBehavior.cs" />
@@ -180,7 +176,7 @@
     <Compile Include="Utilities\WatermarkService.cs" />
     <Compile Include="Utilities\WebBrowserUtility.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
-    <Compile Include="ValueConverters\EmptyStringToVisibility.cs" />
+    <Compile Include="ValueConverters\EmptyStringToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\PathToImageConverter.cs" />
     <Compile Include="ValueConverters\ValueConverterBase.cs" />
     <Compile Include="ViewModels\BasicAuthorizationSetupViewModel.cs" />
@@ -219,14 +215,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MediaTypeHandlers\ApplicationMason\UserControls\MultipartJsonActionRender.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MediaTypeHandlers\ApplicationMason\UserControls\UrlTemplateRender.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MediaTypeHandlers\ApplicationMason\Dialogs\UrlTemplatePopupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -307,6 +295,9 @@
       <Project>{f28f9bc9-a5fc-47b4-a3c5-27a5e9d0bcbd}</Project>
       <Name>MasonBuilder.Net</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MediaTypeHandlers\ApplicationMason\Dialogs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

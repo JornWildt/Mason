@@ -21,17 +21,17 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       }
 
       Uri selfUrl = typeof(AttachmentResource).CreateUri(new { id = attachment.Attachment.Id });
-      Link selfLink = MasonBuilderContext.NewLink("self", selfUrl);
+      Control selfLink = MasonBuilderContext.NewLink("self", selfUrl);
       a.AddControl(selfLink);
 
       Uri issueUrl = typeof(IssueResource).CreateUri(new { id = attachment.Attachment.OwnerIssue.Id });
-      Link issueLink = MasonBuilderContext.NewLink("up", issueUrl, "Containing issue");
+      Control issueLink = MasonBuilderContext.NewLink("up", issueUrl, "Containing issue");
       a.AddControl(issueLink);
 
       if (attachment.Attachment.ContentType != null)
       {
         Uri contentUrl = typeof(AttachmentContentResource).CreateUri(new { id = attachment.Attachment.Id });
-        Link contentLink = MasonBuilderContext.NewLink(RelTypes.AttachmentContent, contentUrl, "Download content", attachment.Attachment.ContentType);
+        Control contentLink = MasonBuilderContext.NewLink(RelTypes.AttachmentContent, contentUrl, "Download content", attachment.Attachment.ContentType);
         a.AddControl(contentLink);
       }
 
@@ -39,15 +39,14 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       updateTemplate.Title = attachment.Attachment.Title;
       updateTemplate.Description = attachment.Attachment.Description;
 
-      JsonFilesAction updateAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.AttachmentUpdate, selfUrl, "Update attachment details", description: "Update title and description of attachment", template: (DynamicDictionary)updateTemplate);
+      Control updateAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.AttachmentUpdate, selfUrl, "Update attachment details", description: "Update title and description of attachment", template: (DynamicDictionary)updateTemplate);
       if (!MasonBuilderContext.PreferMinimalResponse)
       {
-        updateAction.jsonFile = "args";
-        updateAction.AddFile("attachment", "Attachment content");
+        updateAction.AddFile(new FileDefinition { name = "attachment", title = "Attachment content" });
       }
       a.AddControl(updateAction);
 
-      VoidAction deleteAction = MasonBuilderContext.NewVoidAction(RelTypes.AttachmentDelete, selfUrl, "Delete attachment", method: "DELETE");
+      Control deleteAction = MasonBuilderContext.NewVoidAction(RelTypes.AttachmentDelete, selfUrl, "Delete attachment", method: "DELETE");
       a.AddControl(deleteAction);
 
       dynamic da = a;

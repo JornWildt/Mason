@@ -7,9 +7,9 @@ using System.Windows;
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public class VoidActionViewModel : ActionViewModel
+  public class VoidActionViewModel : ControlViewModel
   {
-    public override string ControlType { get { return MasonProperties.ControlTypes.Void; } }
+    public override string ControlType { get { return IsHRefTemplate ? "Link template" : "Action"; } }
 
 
     public VoidActionViewModel(ViewModel parent, JProperty json, BuilderContext context)
@@ -21,9 +21,10 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     {
       Publish(new MasonViewModel.SourceChangedEventArgs { Source = OriginalJsonValue.ToString() });
 
+      string jsonText = CalculateJsonPayload();
+
       Window w = Window.GetWindow(sender as DependencyObject);
-      string title = (string.IsNullOrWhiteSpace(Title) ? "Void Action" : Title);
-      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, title, description: Description, actionType: MasonProperties.ControlTypes.Void);
+      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, IsHRefTemplate, body: jsonText, title: Title, description: Description, actionType: Serialization);
     }
   }
 }

@@ -25,11 +25,11 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
       }
 
       Uri selfUrl = typeof(IssueAttachmentsResource).CreateUri(new { id = issue.Issue.Id });
-      Link selfLink = MasonBuilderContext.NewLink("self", selfUrl);
+      Control selfLink = MasonBuilderContext.NewLink("self", selfUrl);
       i.AddControl(selfLink);
 
       Uri issueUrl = typeof(IssueResource).CreateUri(new { id = issue.Issue.Id });
-      Link issueLink = MasonBuilderContext.NewLink("up", issueUrl);
+      Control issueLink = MasonBuilderContext.NewLink("up", issueUrl);
       i.AddControl(issueLink);
 
       ((dynamic)i).Id = issue.Issue.Id;
@@ -44,7 +44,7 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
         ((dynamic)item).Title = a.Title;
 
         Uri itemSelfUri = typeof(AttachmentResource).CreateUri(new { id = a.Id });
-        Link itemSelfLink = MasonBuilderContext.NewLink("self", itemSelfUri);
+        Control itemSelfLink = MasonBuilderContext.NewLink("self", itemSelfUri);
         item.AddControl(itemSelfLink);
 
         ((dynamic)i).Attachments.Add(item);

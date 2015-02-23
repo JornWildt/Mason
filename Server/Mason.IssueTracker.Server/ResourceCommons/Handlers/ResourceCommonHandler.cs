@@ -20,16 +20,16 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
       ((dynamic)common).Description = "Example of an IssueTracker service using Mason media type.";
 
       Uri selfUri = typeof(ResourceCommonResource).CreateUri();
-      Link selfLink = MasonBuilderContext.NewLink("self", selfUri);
+      Control selfLink = MasonBuilderContext.NewLink("self", selfUri);
       common.AddControl(selfLink);
 
       Uri contactUri = typeof(ContactResource).CreateUri();
-      Link contactLink = MasonBuilderContext.NewLink(RelTypes.Contact, contactUri, "Contact information");
+      Control contactLink = MasonBuilderContext.NewLink(RelTypes.Contact, contactUri, "Contact information");
       contactLink.description = "Complete contact information in standard formats such as vCard and jCard.";
       common.AddControl(contactLink);
 
       Uri logoUri = new Uri(CommunicationContext.ApplicationBaseUri.EnsureHasTrailingSlash(), "Origins/JoeHacker/logo.png");
-      Link logoLink = MasonBuilderContext.NewLink(RelTypes.Logo, logoUri);
+      Control logoLink = MasonBuilderContext.NewLink(RelTypes.Logo, logoUri);
       common.AddControl(logoLink);
 
       if (!MasonBuilderContext.PreferMinimalResponse)
@@ -39,14 +39,14 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
       }
 
       Uri projectsUri = typeof(ProjectCollectionResource).CreateUri();
-      Link projectsLink = MasonBuilderContext.NewLink(RelTypes.Projects, projectsUri, "List all projects");
+      Control projectsLink = MasonBuilderContext.NewLink(RelTypes.Projects, projectsUri, "List all projects");
       common.AddControl(projectsLink);
 
       common.AddControl(MasonBuilderContext.BuildIssueQueryTemplate(CommunicationContext));
 
       Uri projectsUrl = typeof(ProjectCollectionResource).CreateUri();
       Uri createProjectSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-project" });
-      JsonAction addProjectAction = MasonBuilderContext.NewJsonAction(RelTypes.ProjectAdd, projectsUrl, "Create new project", schemaUrl: createProjectSchemaUrl);
+      Control addProjectAction = MasonBuilderContext.NewJsonAction(RelTypes.ProjectAdd, projectsUrl, "Create new project", schemaUrl: createProjectSchemaUrl);
       common.AddControl(addProjectAction);
 
       return new ResourceCommonResource { Value = common };

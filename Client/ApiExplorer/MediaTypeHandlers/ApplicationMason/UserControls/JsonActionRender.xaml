@@ -25,7 +25,7 @@
 
     <TextBlock Grid.Row="2" Grid.ColumnSpan="2" 
                Text="{Binding Description}" Style="{StaticResource ResourceKey=Description}" TextWrapping="Wrap"
-               Visibility="{Binding Description, Converter={axv:EmptyStringToVisibility}}"
+               Visibility="{Binding Description, Converter={axv:EmptyStringToVisibilityConverter}}"
                Margin="0 0 0 10"/>
 
     <Label Grid.Row="3" Grid.ColumnSpan="2" Target="{Binding ElementName=JsonInput}" Content="JSON data:"/>

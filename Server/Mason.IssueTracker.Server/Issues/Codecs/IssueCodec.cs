@@ -26,15 +26,15 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       }
 
       Uri selfUrl = typeof(IssueResource).CreateUri(new { id = issue.Issue.Id });
-      Link selfLink = MasonBuilderContext.NewLink("self", selfUrl);
+      Control selfLink = MasonBuilderContext.NewLink("self", selfUrl);
       i.AddControl(selfLink);
 
       Uri projectUrl = typeof(ProjectResource).CreateUri(new { id = issue.Issue.OwnerProject.Id });
-      Link projectLink = MasonBuilderContext.NewLink("up", projectUrl, "Containing project");
+      Control projectLink = MasonBuilderContext.NewLink("up", projectUrl, "Containing project");
       i.AddControl(projectLink);
 
       Uri attachmentsUrl = typeof(IssueAttachmentsResource).CreateUri(new { id = issue.Issue.Id });
-      Link attachmentsLink = MasonBuilderContext.NewLink(RelTypes.Attachments, attachmentsUrl, "All attachments for this issue");
+      Control attachmentsLink = MasonBuilderContext.NewLink(RelTypes.Attachments, attachmentsUrl, "All attachments for this issue");
       i.AddControl(attachmentsLink);
 
       dynamic updateTemplate = new DynamicDictionary();
@@ -42,18 +42,17 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       updateTemplate.Description = issue.Issue.Description;
       updateTemplate.Severity = issue.Issue.Severity;
 
-      JsonAction updateAction = MasonBuilderContext.NewJsonAction(RelTypes.IssueUpdate, selfUrl, "Update issue details", template: (DynamicDictionary)updateTemplate);
+      Control updateAction = MasonBuilderContext.NewJsonAction(RelTypes.IssueUpdate, selfUrl, "Update issue details", template: (DynamicDictionary)updateTemplate);
       i.AddControl(updateAction);
 
-      VoidAction deleteAction = MasonBuilderContext.NewVoidAction(RelTypes.IssueDelete, selfUrl, "Delete issue", method: "DELETE");
+      Control deleteAction = MasonBuilderContext.NewVoidAction(RelTypes.IssueDelete, selfUrl, "Delete issue", method: "DELETE");
       i.AddControl(deleteAction);
 
       Uri addAttachmentSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-attachment" });
-      JsonFilesAction addAttachmentAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.IssueAddAttachment, attachmentsUrl, "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
+      Control addAttachmentAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.IssueAddAttachment, attachmentsUrl, "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
       if (!MasonBuilderContext.PreferMinimalResponse)
       {
-        addAttachmentAction.jsonFile = "args";
-        addAttachmentAction.AddFile("attachment", "Attachment for issue");
+        addAttachmentAction.AddFile(new FileDefinition { name = "attachment", title = "Attachment for issue" });
       }
       i.AddControl(addAttachmentAction);
 
@@ -70,8 +69,8 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
         a.Title = att.Title;
 
         Uri attachmentUrl = typeof(AttachmentResource).CreateUri(new { id = att.Id });
-        Link attachmentLink = MasonBuilderContext.NewLink("self", attachmentUrl);
-        a.AddNavigation(attachmentLink);
+        Control attachmentLink = MasonBuilderContext.NewLink("self", attachmentUrl);
+        a.AddControl(attachmentLink);
 
         attachments.Add(a);
       }

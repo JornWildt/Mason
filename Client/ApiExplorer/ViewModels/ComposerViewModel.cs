@@ -2,7 +2,6 @@
 using MasonBuilder.Net;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Ramone;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Resta.UriTemplates;
+using Newtonsoft.Json;
+using System;
+using Newtonsoft.Json.Linq;
+
 
 namespace ApiExplorer.ViewModels
 {
@@ -56,12 +60,12 @@ namespace ApiExplorer.ViewModels
     }
 
 
-    public bool MethodAllowsContent
+    public bool ContentRequired
     {
       get
       {
         MethodDefinition def = Methods.Where(m => m.Name == Method).FirstOrDefault();
-        return def == null || def.AllowContent;
+        return IsHRefTemplate || def != null && def.AllowContent;
       }
     }
 
@@ -91,6 +95,21 @@ namespace ApiExplorer.ViewModels
         {
           _headers = value;
           OnPropertyChanged("Headers");
+        }
+      }
+    }
+
+
+    private string _title;
+    public string Title
+    {
+      get { return _title; }
+      set
+      {
+        if (value != _title)
+        {
+          _title = value;
+          OnPropertyChanged("Title");
         }
       }
     }
@@ -146,13 +165,13 @@ namespace ApiExplorer.ViewModels
 
     public bool ShowTextEditor
     {
-      get { return SelectedType == MasonProperties.ControlTypes.JSON && MethodAllowsContent; }
+      get { return (SelectedType == MasonProperties.SerializationTypes.JSON || IsHRefTemplate) && ContentRequired; }
     }
 
 
     public bool ShowTextEditorWithFiles
     {
-      get { return SelectedType == MasonProperties.ControlTypes.JSONFiles && MethodAllowsContent; }
+      get { return SelectedType == MasonProperties.SerializationTypes.JSONFiles && ContentRequired; }
     }
 
 
@@ -168,7 +187,10 @@ namespace ApiExplorer.ViewModels
 
     #endregion
 
-    public string JsonFilename { get; set; }
+    
+    public string JsonPartName { get; set; }
+
+    public bool IsHRefTemplate { get; set; }
 
 
     public ComposerViewModel(ViewModel parent)
@@ -185,19 +207,40 @@ namespace ApiExplorer.ViewModels
         new MethodDefinition { Name = "PATCH", AllowContent = true }
       };
       Types = new ObservableCollection<string>();
-      Types.Add(MasonProperties.ControlTypes.JSON);
-      Types.Add(MasonProperties.ControlTypes.JSONFiles);
-      Types.Add(MasonProperties.ControlTypes.Void);
-      SelectedType = MasonProperties.ControlTypes.JSON;
+      Types.Add(MasonProperties.SerializationTypes.None);
+      Types.Add(MasonProperties.SerializationTypes.JSON);
+      Types.Add(MasonProperties.SerializationTypes.JSONFiles);
+      Types.Add(MasonProperties.SerializationTypes.Raw);
+      SelectedType = MasonProperties.SerializationTypes.JSON;
       Files = new ObservableCollection<ComposerFileViewModel>();
     }
 
 
     private void Execute(FrameworkElement sender)
     {
+      string url = Url;
+      if (IsHRefTemplate)
+      {
+        try
+        {
+          JObject json = JsonConvert.DeserializeObject(Body) as JObject;
+          if (json != null)
+          {
+            Resta.UriTemplates.UriTemplate t = new Resta.UriTemplates.UriTemplate(Url);
+            IDictionary<string, object> parameters = new JsonObjectDictionary(json);
+            url = t.Resolve(parameters);
+          }
+        }
+        catch (Exception)
+        {
+          MessageBox.Show(GetOwnerWindow(), "Invalid URL template or template values");
+          return;
+        }
+      }
+
       try
       {
-        Uri url = new Uri(Url);
+        Uri tmp = new Uri(Url);
       }
       catch (Exception)
       {
@@ -213,7 +256,7 @@ namespace ApiExplorer.ViewModels
 
       ISession session = RamoneServiceManager.Session;
 
-      Request req = session.Bind(Url).Method(Method);
+      Request req = session.Bind(url).Method(Method);
 
       if (Headers != null)
       {
@@ -235,17 +278,17 @@ namespace ApiExplorer.ViewModels
         }
       }
 
-      if (SelectedType == MasonProperties.ControlTypes.JSON && Body != null)
+      if (SelectedType == MasonProperties.SerializationTypes.JSON && Body != null)
       {
         req.AsJson();
         req.Body(Body);
       }
-      else if (SelectedType == MasonProperties.ControlTypes.JSONFiles)
+      else if (SelectedType == MasonProperties.SerializationTypes.JSONFiles)
       {
         req.AsMultipartFormData();
         Hashtable files = new Hashtable();
-        if (Body != null && !string.IsNullOrEmpty(JsonFilename))
-          files[JsonFilename] = new Ramone.IO.StringFile { Filename = JsonFilename, ContentType = "application/json", Data = Body };
+        if (Body != null && !string.IsNullOrEmpty(JsonPartName))
+          files[JsonPartName] = new Ramone.IO.StringFile { Filename = JsonPartName, ContentType = "application/json", Data = Body };
         foreach (ComposerFileViewModel file in Files)
         {
           if (!string.IsNullOrEmpty(file.Name) && !string.IsNullOrEmpty(file.Filename) && System.IO.File.Exists(file.Filename))

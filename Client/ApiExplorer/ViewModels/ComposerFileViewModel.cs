@@ -27,6 +27,22 @@ namespace ApiExplorer.ViewModels
       }
     }
 
+    
+    private string _title;
+    public string Title
+    {
+      get { return _title; }
+      set
+      {
+        if (value != _title)
+        {
+          _title = value;
+          OnPropertyChanged("Title");
+        }
+      }
+    }
+
+    
     private string _description;
     public string Description
     {

@@ -10,14 +10,14 @@
     <TextBox Grid.Row="0" x:Name="TextBoxInput" Text="{Binding Body}"
              TextWrapping="NoWrap" AcceptsReturn="True"
              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
-             Visibility="{Binding MethodAllowsContent, Converter={vc:BoolToVisibilityConverter}}"/>
-    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
-                  Visibility="{Binding MethodAllowsContent, Converter={vc:BoolToVisibilityConverter}}">
+             Visibility="{Binding ContentRequired, Converter={vc:BoolToVisibilityConverter}}"/>
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
       <ItemsControl ItemsSource="{Binding Files}">
         <ItemsControl.ItemTemplate>
           <DataTemplate>
             <DockPanel LastChildFill="True" Margin="0 4 0 0">
-              <TextBlock DockPanel.Dock="Top" Text="{Binding Description}" Style="{StaticResource ResourceKey=Description}"/>
+              <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" Visibility="{Binding Title, Converter={vc:EmptyStringToVisibilityConverter}}"/>
+              <TextBlock DockPanel.Dock="Top" Text="{Binding Description}" Visibility="{Binding Description, Converter={vc:EmptyStringToVisibilityConverter}}" Style="{StaticResource ResourceKey=Description}"/>
               <Button DockPanel.Dock="Left" Content="Choose file" Margin="0 0 4 0"
                       Command="{Binding SelectFileCommand}"
                       CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>

@@ -25,11 +25,11 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       }
 
       Uri selfUrl = typeof(ProjectIssuesResource).CreateUri(new { id = project.Project.Id });
-      Link selfLink = MasonBuilderContext.NewLink("self", selfUrl);
+      Control selfLink = MasonBuilderContext.NewLink("self", selfUrl);
       p.AddControl(selfLink);
 
       Uri projectUrl = typeof(ProjectResource).CreateUri(new { id = project.Project.Id });
-      Link projectLink = MasonBuilderContext.NewLink("up", projectUrl);
+      Control projectLink = MasonBuilderContext.NewLink("up", projectUrl);
       p.AddControl(projectLink);
 
       ((dynamic)p).Id = project.Project.Id;
@@ -44,8 +44,8 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
         item.Title = i.Title;
 
         Uri itemSelfUri = typeof(IssueResource).CreateUri(new { id = i.Id });
-        Link itemSelfLink = MasonBuilderContext.NewLink("self", itemSelfUri);
-        item.AddNavigation(itemSelfLink);
+        Control itemSelfLink = MasonBuilderContext.NewLink("self", itemSelfUri);
+        item.AddControl(itemSelfLink);
 
         ((dynamic)p).Issues.Add(item);
       }

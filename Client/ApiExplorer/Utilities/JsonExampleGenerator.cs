@@ -24,7 +24,7 @@ namespace ApiExplorer.Utilities
         return Indent(indent) + "[\n" + string.Join(",\n", items) + Indent(indent) + "]\n";
       }
 
-      if (schema.Type == JsonSchemaType.Object)
+      if (schema.Type == JsonSchemaType.Object || schema.Type == null)
       {
         var properties = schema.Properties != null
           ? schema.Properties.Select(i => CreateInstanceFromProperty(i, indent+1))

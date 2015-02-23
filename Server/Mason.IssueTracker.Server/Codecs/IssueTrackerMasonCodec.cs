@@ -26,7 +26,7 @@ namespace Mason.IssueTracker.Server.Codecs
       }
 
       Uri resourceCommonUri = typeof(ResourceCommonResource).CreateUri();
-      Link resourceCommonLink = MasonBuilderContext.NewLink(RelTypes.ResourceCommon, resourceCommonUri, "Common information shared by all resources");
+      Control resourceCommonLink = MasonBuilderContext.NewLink(RelTypes.ResourceCommon, resourceCommonUri, "Common information shared by all resources");
       r.AddControl(resourceCommonLink);
 
       return r;

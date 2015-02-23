@@ -23,21 +23,30 @@
       public const string Description = Prefix + "description";
     }
 
-    public static class ControlTypes
+    public static class ControlProperties
     {
-      public const string Link = "link";
-      public const string LinkTemplate = "link-template";
-      public const string JSON = "json";
-      public const string JSONFiles = "json+files";
-      public const string Void = "void";
+      public const string HRef = "href";
+      public const string Title = "title";
+      public const string Description = "description";
+      public const string Method = "method";
+      public const string Files = "files";
+      public const string JsonFile = "jsonFile";
     }
 
-    public static class ActionProperties
+    public static class ControlPartProperties
     {
-      public const string JsonFile = "jsonFile";
-      public const string Files = "files";
-      public const string Files_Name = "name";
-      public const string Files_Description = "description";
+      public const string Name = "name";
+      public const string Title = "title";
+      public const string Description = "description";
+      public const string Accept = "accept";
+    }
+
+    public static class SerializationTypes
+    {
+      public const string None = "none";
+      public const string JSON = "json";
+      public const string JSONFiles = "json+files";
+      public const string Raw = "raw";
     }
 
     public static class ErrorProperties

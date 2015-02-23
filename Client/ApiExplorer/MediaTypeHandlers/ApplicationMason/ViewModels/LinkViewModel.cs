@@ -11,31 +11,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class LinkViewModel : ControlViewModel
   {
-    public override string ControlType { get { return MasonProperties.ControlTypes.Link; } }
-
-
-    public ObservableCollection<LinkViewModel> AlternateLinks { get; set; }
+    public override string ControlType { get { return "Link"; } }
 
 
     public LinkViewModel(ViewModel parent, JProperty link, BuilderContext context)
-      : base(parent, link.Value as JObject, link.Name, context)
-    {
-      JArray alt = link.Value["alt"] as JArray;
-      if (alt != null)
-      {
-        AlternateLinks = new ObservableCollection<LinkViewModel>();
-        for (int i=0; i<alt.Count; ++i)
-        {
-          JObject l = alt[i] as JObject;
-          if (l != null)
-            AlternateLinks.Add(new LinkViewModel(this, l, string.Format("alt[{0}]",i), context));
-        }
-      }
-    }
-
-
-    public LinkViewModel(ViewModel parent, JObject link, string name, BuilderContext context)
-      : base(parent, link, name, context)
+      : base(parent, link, context)
     {
     }
 

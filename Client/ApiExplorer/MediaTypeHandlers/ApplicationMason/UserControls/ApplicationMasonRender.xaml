@@ -40,7 +40,7 @@
           <!-- Description -->
           <TextBlock Grid.Row="0" Text="{Binding Value.Description}" Style="{StaticResource ResourceKey=Description}"
                      TextWrapping="Wrap"
-                     Visibility="{Binding Value.Description, Converter={axv:EmptyStringToVisibility}}">
+                     Visibility="{Binding Value.Description, Converter={axv:EmptyStringToVisibilityConverter}}">
             <i:Interaction.Behaviors>
               <axu:ShowSourceBehavior Source="{Binding Value.MetaJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Meta}}"/>
             </i:Interaction.Behaviors>
@@ -102,10 +102,10 @@
         </StackPanel>
         <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1,0,0,0" Margin="8 4 0 4" Padding="8 0 0 0">
           <StackPanel>
-            <TextBlock Text="{Binding Title}" Visibility="{Binding Title, Converter={axv:EmptyStringToVisibility}}"/>
+            <TextBlock Text="{Binding Title}" Visibility="{Binding Title, Converter={axv:EmptyStringToVisibilityConverter}}"/>
             <TextBlock Text="{Binding Description}" 
                        Style="{StaticResource ResourceKey=Description}"
-                       Visibility="{Binding Description, Converter={axv:EmptyStringToVisibility}}"/>
+                       Visibility="{Binding Description, Converter={axv:EmptyStringToVisibilityConverter}}"/>
           </StackPanel>
         </Border>
         <!-- Use styling to render alternate links -->

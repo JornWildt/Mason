@@ -88,16 +88,22 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     
     private ControlViewModel BuildControlElement(ResourceViewModel parent, JProperty n, BuilderContext context)
     {
-      string type = GetValue<string>(n.Value, "type");
-      if (type == MasonProperties.ControlTypes.Link)
-        return new LinkViewModel(parent, n, context);
-      else if (type == MasonProperties.ControlTypes.LinkTemplate)
-        return new LinkTemplateViewModel(parent, n, context);
-      else if (type == MasonProperties.ControlTypes.Void)
+      string serialization = GetValue<string>(n.Value, "serialization", "none").ToLower();
+      string method = GetValue<string>(n.Value, "method", "GET").ToUpper();
+      bool isHrefTemplate = GetValue<bool?>(n.Value, "isHrefTemplate") ?? false;
+
+      if (method == "GET" && serialization == MasonProperties.SerializationTypes.None)
+      {
+        if (isHrefTemplate)
+          return new VoidActionViewModel(parent, n, context);
+        else
+          return new LinkViewModel(parent, n, context);
+      }
+      else if (serialization == MasonProperties.SerializationTypes.None)
         return new VoidActionViewModel(parent, n, context);
-      else if (type == MasonProperties.ControlTypes.JSON)
+      else if (serialization == MasonProperties.SerializationTypes.JSON)
         return new JsonActionViewModel(parent, n, context);
-      else if (type == MasonProperties.ControlTypes.JSONFiles)
+      else if (serialization == MasonProperties.SerializationTypes.JSONFiles)
         return new JsonFilesActionViewModel(parent, n, context);
 
       return null;

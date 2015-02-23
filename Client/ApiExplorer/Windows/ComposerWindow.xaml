@@ -12,6 +12,7 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
@@ -42,26 +43,29 @@
         <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-      <TextBlock Grid.Row="0" Grid.Column="0" Text="Type" Margin="0 0 4 0" Width="100" VerticalAlignment="Center"/>
+      <TextBlock Grid.Row="0" Grid.Column="0" Text="Serialization" Margin="0 0 4 0" Width="100" VerticalAlignment="Center"/>
       <ComboBox Grid.Row="0" Grid.Column="1" Name="TypeInput" Margin="0 4 0 0" VerticalAlignment="Center"
                 ItemsSource="{Binding Types}"
                 SelectedItem="{Binding SelectedType}"/>
     </Grid>
     
-    <!-- Description -->
-    <TextBlock Grid.Row="2" Margin="0 4 0 0" Text="{Binding Description}" 
+    <!-- Title and Description -->
+    <!--<TextBlock Grid.Row="2" Margin="0 4 0 0" Text="{Binding Title}" 
+               TextWrapping="Wrap"
+               Visibility="{Binding Title, Converter={axvc:EmptyStringToVisibilityConverter}}"/>-->
+    <TextBlock Grid.Row="3" Margin="0 4 0 0" Text="{Binding Description}" 
                Style="{StaticResource ResourceKey=Description}" TextWrapping="Wrap"
-               Visibility="{Binding Description, Converter={axvc:EmptyStringToVisibility}}"/>
+               Visibility="{Binding Description, Converter={axvc:EmptyStringToVisibilityConverter}}"/>
     
-    <TabControl Grid.Row="3" Margin="0 4 0 0">
+    <TabControl Grid.Row="4" Margin="0 4 0 0">
       <TabItem Header="Body">
         <!-- Body -->
         <Grid>
           <req:TextEditor Visibility="{Binding ShowTextEditor, Converter={axvc:BoolToVisibilityConverter}}" x:Name="TextEditorInput"/>
           <req:TextWithFilesEditor Visibility="{Binding ShowTextEditorWithFiles, Converter={axvc:BoolToVisibilityConverter}}" x:Name="TextWithFilesEditorInput"/>
-          <TextBlock Text="No content allowed for this method"
+          <TextBlock Text="No content required"
                      VerticalAlignment="Center" HorizontalAlignment="Center"
-                     Visibility="{Binding MethodAllowsContent, Converter={axvc:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>
+                     Visibility="{Binding ContentRequired, Converter={axvc:BoolToVisibilityConverter}, ConverterParameter=InverseVisibility}"/>
         </Grid>
       </TabItem>
       <TabItem Header="Headers">
@@ -73,7 +77,7 @@
     </TabControl>
     
     <!-- Buttons -->
-    <StackPanel Grid.Row="4" Orientation="Horizontal">
+    <StackPanel Grid.Row="5" Orientation="Horizontal">
       <Button Content="Execute" Command="{Binding ExecuteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource self}}"
               IsDefault="True" Margin="0 4 0 0"/>
       <Button Content="Cancel" IsCancel="True" Margin="6 4 0 0"/>

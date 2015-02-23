@@ -8,7 +8,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
   public class JsonFilesActionViewModel : JsonActionViewModel
   {
-    public override string ControlType { get { return MasonProperties.ControlTypes.JSONFiles; } }
+    public override string ControlType { get { return "JSON+Files"; } }
 
 
     public JsonFilesActionViewModel(ViewModel parent, JProperty json, BuilderContext context)
@@ -19,22 +19,19 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     protected override void ModifyComposerWindow(ComposerViewModel vm)
     {
-      string title = (string.IsNullOrWhiteSpace(Title) ? "JSON+Files Action" : Title);
-      vm.WindowTitle = title;
-      vm.Description = Description;
-
-      JToken jsonFile = OriginalJsonValue[MasonProperties.ActionProperties.JsonFile];
+      JToken jsonFile = OriginalJsonValue[MasonProperties.ControlProperties.JsonFile];
       if (jsonFile != null)
-        vm.JsonFilename = jsonFile.Value<string>();
+        vm.JsonPartName = jsonFile.Value<string>();
 
-      JArray files = OriginalJsonValue[MasonProperties.ActionProperties.Files] as JArray;
+      JArray files = OriginalJsonValue[MasonProperties.ControlProperties.Files] as JArray;
       if (files != null)
       {
         foreach (JObject file in files.OfType<JObject>())
         {
           ComposerFileViewModel fileVm = new ComposerFileViewModel(vm);
-          fileVm.Name = GetValue<string>(file, MasonProperties.ActionProperties.Files_Name);
-          fileVm.Description = GetValue<string>(file, MasonProperties.ActionProperties.Files_Description);
+          fileVm.Name = GetValue<string>(file, MasonProperties.ControlPartProperties.Name);
+          fileVm.Title = GetValue<string>(file, MasonProperties.ControlPartProperties.Title);
+          fileVm.Description = GetValue<string>(file, MasonProperties.ControlPartProperties.Description);
           vm.Files.Add(fileVm);
         }
       }

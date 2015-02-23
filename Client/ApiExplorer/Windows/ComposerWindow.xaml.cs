@@ -46,10 +46,11 @@ namespace ApiExplorer.Windows
       ViewModel parent, 
       string method, 
       string url, 
-      string windowTitle = null, 
+      bool? isHrefTemplate = null,
       string body = null,
       string actionType = null,
       string description = null,
+      string title = null,
       Action<ComposerViewModel> modifier = null,
       StartFocus focus = StartFocus.Method)
     {
@@ -58,14 +59,18 @@ namespace ApiExplorer.Windows
         vm.Method = method;
       if (url != null)
         vm.Url = url;
+      if (isHrefTemplate != null)
+        vm.IsHRefTemplate = isHrefTemplate.Value;
       if (body != null)
         vm.Body = body;
       if (actionType != null)
         vm.SelectedType = actionType;
       if (description != null)
         vm.Description = description;
+      if (title != null)
+        vm.Title = title;
 
-      vm.WindowTitle = windowTitle ?? "Request composer";
+      vm.WindowTitle = title ?? "Request composer";
 
       if (modifier != null)
         modifier(vm);

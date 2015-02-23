@@ -16,19 +16,29 @@ namespace ApiExplorer.ViewModels
 
 
     protected T GetValue<T>(string name)
-      where T : class
     {
       return GetValue<T>(OriginalJsonValue, name);
     }
 
 
+    protected T GetValue<T>(string name, T defaultValue)
+    {
+      return GetValue<T>(OriginalJsonValue, name, defaultValue);
+    }
+
+
     protected T GetValue<T>(JToken t, string name)
-      where T : class
+    {
+      return GetValue<T>(t, name, default(T));
+    }
+
+
+    protected T GetValue<T>(JToken t, string name, T defaultValue)
     {
       JToken value = t[name];
       if (value != null)
         return value.Value<T>();
-      return null;
+      return defaultValue;
     }
   }
 }
