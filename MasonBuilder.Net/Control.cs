@@ -31,7 +31,7 @@ namespace MasonBuilder.Net
 
     public string description { get; set; }
 
-    public string serialization { get; set; }
+    public string encoding { get; set; }
 
     public string href { get; set; }
 

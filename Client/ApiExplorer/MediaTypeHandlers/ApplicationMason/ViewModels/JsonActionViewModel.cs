@@ -25,7 +25,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
       string jsonText = CalculateJsonPayload();
       Window w = Window.GetWindow(sender as DependencyObject);
-      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, IsHRefTemplate, body: jsonText, actionType: Serialization, title: Title, description: Description, modifier: ModifyComposerWindow, focus: ComposerWindow.StartFocus.Body);
+      ComposerWindow.OpenComposerWindow(w, this, Method, HRef, IsHRefTemplate, body: jsonText, actionType: Encoding, title: Title, description: Description, modifier: ModifyComposerWindow, focus: ComposerWindow.StartFocus.Body);
     }
 
     #endregion

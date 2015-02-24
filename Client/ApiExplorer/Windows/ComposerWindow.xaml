@@ -43,7 +43,7 @@
         <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-      <TextBlock Grid.Row="0" Grid.Column="0" Text="Serialization" Margin="0 0 4 0" Width="100" VerticalAlignment="Center"/>
+      <TextBlock Grid.Row="0" Grid.Column="0" Text="Encoding" Margin="0 0 4 0" Width="100" VerticalAlignment="Center"/>
       <ComboBox Grid.Row="0" Grid.Column="1" Name="TypeInput" Margin="0 4 0 0" VerticalAlignment="Center"
                 ItemsSource="{Binding Types}"
                 SelectedItem="{Binding SelectedType}"/>

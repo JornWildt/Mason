@@ -165,13 +165,13 @@ namespace ApiExplorer.ViewModels
 
     public bool ShowTextEditor
     {
-      get { return (SelectedType == MasonProperties.SerializationTypes.JSON || IsHRefTemplate) && ContentRequired; }
+      get { return (SelectedType == MasonProperties.EncodingTypes.JSON || IsHRefTemplate) && ContentRequired; }
     }
 
 
     public bool ShowTextEditorWithFiles
     {
-      get { return SelectedType == MasonProperties.SerializationTypes.JSONFiles && ContentRequired; }
+      get { return SelectedType == MasonProperties.EncodingTypes.JSONFiles && ContentRequired; }
     }
 
 
@@ -207,11 +207,11 @@ namespace ApiExplorer.ViewModels
         new MethodDefinition { Name = "PATCH", AllowContent = true }
       };
       Types = new ObservableCollection<string>();
-      Types.Add(MasonProperties.SerializationTypes.None);
-      Types.Add(MasonProperties.SerializationTypes.JSON);
-      Types.Add(MasonProperties.SerializationTypes.JSONFiles);
-      Types.Add(MasonProperties.SerializationTypes.Raw);
-      SelectedType = MasonProperties.SerializationTypes.JSON;
+      Types.Add(MasonProperties.EncodingTypes.None);
+      Types.Add(MasonProperties.EncodingTypes.JSON);
+      Types.Add(MasonProperties.EncodingTypes.JSONFiles);
+      Types.Add(MasonProperties.EncodingTypes.Raw);
+      SelectedType = MasonProperties.EncodingTypes.JSON;
       Files = new ObservableCollection<ComposerFileViewModel>();
     }
 
@@ -278,12 +278,12 @@ namespace ApiExplorer.ViewModels
         }
       }
 
-      if (SelectedType == MasonProperties.SerializationTypes.JSON && Body != null)
+      if (SelectedType == MasonProperties.EncodingTypes.JSON && Body != null)
       {
         req.AsJson();
         req.Body(Body);
       }
-      else if (SelectedType == MasonProperties.SerializationTypes.JSONFiles)
+      else if (SelectedType == MasonProperties.EncodingTypes.JSONFiles)
       {
         req.AsMultipartFormData();
         Hashtable files = new Hashtable();

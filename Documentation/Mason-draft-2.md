@@ -159,7 +159,7 @@ The purpose of curies is to improve readability of the raw JSON data. It does sa
 See [CURIE Syntax 1.0](http://www.w3.org/TR/2009/CR-curie-20090116/) for further information.
 
 
-# Expected client processing rules
+# Client processing rules
 
 When a client requests a Mason document it may be looking for some specific data, trying to discover a specific link or invoking some kind of action on the server. To perform any of these operations the client should process the Mason document in a standardized way as described here:
 
@@ -170,6 +170,7 @@ When a client requests a Mason document it may be looking for some specific data
   3. Read whatever JSON data the client is looking for.
   
   4. If the client tries to invoke a control it SHOULD be prepared to handle any kind of control type - it SHOULD NOT assume a fixed type of control. This allows the server to use the type of controls that fits best at any given time - without breaking clients.
+  
   
 ## Processing of control elements
 
@@ -272,7 +273,11 @@ This property is REQUIRED and MUST be a string value. It contains the URI for th
 
 The `@controls` property is OPTIONAL. If present it MUST be an object value. It is not restricted to the root object and may occur in any nested data object.
 
-The `@controls` property represents different ways of controlling the application. The simplest possible control element is a link which represents a named link from the containing resource to a target resource. Other control types are link templates, "void" actions, "json" actions, "json+files" actions and "generic" actions. The type of control is indicated with the property `type` included in each control element.
+The `@controls` property is an object that represents various hypermedia elements for controlling the application. Each property in the object represents a single hypermedia control.
+
+Each control is represented by a set of properties that defines its behavior. By combining these properties Mason can represent links, link templates and more complex hypermedia controls that, among other things, allows for uploading of files and modifying existing resources.
+
+### Naming of controls
 
 The set of controls in the `@controls` object is indexed by their respective identifiers. These identifiers are sometimes called "relationship types" when refering to a link, but in the following sections we will simply refer to the identifiers as "name".
 
@@ -316,31 +321,60 @@ This is equivalent to a link name "http://issue-tracker-reltypes.org/rels#contac
   "http://issue-tracker-reltypes.org/rels#logo": {
     "href": "...",
     "title": "Image of the logo for this instance of issue tracker.",
-    "formats": ["image/png"]
+    "output": ["image/png"]
   }
 }
 ```
 
-**Non standard link with alternate URLs for other types**
+**Non standard link with alternate links for other formats**
 
 ```json
 "@controls": {
   "is:contact": {
     "href": "...",
     "title": "Contact information as vCard",
-    "formats": ["text/vcard"],
+    "output": ["text/vcard"],
     "alt": [
       {
         "href": "...",
         "title": "Contact information as jCard",
-        "formats": ["application/vcard+json"]
+        "output": ["application/vcard+json"]
       }
     ]
   }
 }
 ```
 
-### Common properties for `@controls`
+### Control properties
+
+A single hypermedia control element can be described by the following properties:
+
+* **href** [string, required]: Hypermedia reference - a URL or URL template.
+
+* **isHrefTemplate** [bool, optional, default is false]: Boolean indicating whether "href" is a URL template or concrete URL.
+
+* **title** [string, optional]: Title of the control.
+
+* **description** [string, optional]: Description of the control.
+
+* **method** [string, optional, default is "GET"]: HTTP method to use.
+
+* **encoding** [string, optional, default is "none"]: Required encoding of data in request body. Possible values are "none", "json", "json+files" and "raw".
+
+* **schema** [object, optional]: Embedded schema definition of request body and href template parameters.
+
+* **schemaUrl** [string, optional]: URL to referenced schema definition of request body and href template parameters.
+
+* **template** [object, optional]: Request template data.
+
+* **accept** [array of string, optional]: List of accepted media types.
+
+* **output** [array of string, optional]: List of possible returned media types.
+
+* **files** [optional, array of objects]: List of parts definition for multipart requests.
+
+* **alt** [array, optional]: list of alternative equivalent controls.
+
 
 These are the properties that are common for all types of controls (links, link templates and the various types of actions).
 
@@ -376,7 +410,7 @@ This property is OPTIONAL. If present it MUST be a string value. It contains a l
 
 This property can safely be removed in minimized representations.
 
-#### `formats` (optional)
+#### `output` (optional)
 This property is OPTIONAL. If present it MUST be an array of string values. It specifies the expected media type formats of the target resource. 
 
 #### `alt` (optional)
@@ -389,13 +423,13 @@ Example:
   "author": {
     "title": "Link to contact details for author (represented in Mason).",
     "href": "...",
-    "formats": ["application/vnd.mason+json"]
+    "output": ["application/vnd.mason+json"]
     "alt":
     [
       {
         "title": "Link to contact details for author (represented as a vCard).",
         "href": "...",
-        "formats": ["text/vcard"]
+        "output": ["text/vcard"]
       }
     ]
   }
@@ -416,20 +450,20 @@ Here is an example of a link to the contact details for the author of a certain 
   "author": {
     "title": "Link to contact details for author.",
     "href": "...",
-    "formats": ["application/vnd.mason+json"]
+    "output": ["application/vnd.mason+json"]
     "alt":
     [
       {
         "title": "Link to contact details for author (as vCard).",
         "href": "...",
-        "formats": ["text/vcard"]
+        "output": ["text/vcard"]
       }
     ]
   }
 }
 ```
 
-Alternative elements should differ from the primary element in either "type", "formats", or "method".
+Alternative elements should differ from the primary element in either "type", "output", or "method".
 
 
 ### Links
@@ -444,7 +478,7 @@ Example:
     "title": "Links to this resource",
     "description": "Follow this link to get the representation of this resource",
     "href": "...",
-    "formats": ["application/vnd.mason+json"]
+    "output": ["application/vnd.mason+json"]
   }
 }
 ```

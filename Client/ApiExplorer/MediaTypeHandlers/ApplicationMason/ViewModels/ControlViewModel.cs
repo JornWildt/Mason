@@ -17,7 +17,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public string Name { get; set; }
 
-    public string Serialization { get { return GetValue<string>("serialization", "none"); } }
+    public string Encoding { get { return GetValue<string>("encoding", "none"); } }
 
     public string Title { get { return GetValue<string>("title"); } }
 

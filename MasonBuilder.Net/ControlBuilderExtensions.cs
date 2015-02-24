@@ -74,7 +74,7 @@ namespace MasonBuilder.Net
         {
           method = method,
           template = template,
-          serialization = "json"
+          encoding = "json"
         };
       }
       else
@@ -86,7 +86,7 @@ namespace MasonBuilder.Net
           schema = schema,
           schemaUrl = (schemaUrl != null ? schemaUrl.AbsoluteUri : null),
           template = template,
-          serialization = "json"
+          encoding = "json"
         };
       }
     }
@@ -101,7 +101,7 @@ namespace MasonBuilder.Net
     public static Control NewJsonFilesAction(this IMasonBuilderContext context, string name, string href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = "POST")
     {
       Control c = NewJsonAction(context, name, href, title, description, schema, schemaUrl, template, method);
-      c.serialization = "json+files";
+      c.encoding = "json+files";
       return c;
     }
 

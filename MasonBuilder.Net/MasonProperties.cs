@@ -41,7 +41,7 @@
       public const string Accept = "accept";
     }
 
-    public static class SerializationTypes
+    public static class EncodingTypes
     {
       public const string None = "none";
       public const string JSON = "json";
