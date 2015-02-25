@@ -279,7 +279,7 @@ Each control is represented by a set of properties that defines its behavior. By
 
 ### Naming of controls
 
-The set of controls in the `@controls` object is indexed by their respective identifiers. These identifiers are sometimes called "relationship types" when refering to a link, but in the following sections we will simply refer to the identifiers as "name".
+The set of controls in the `@controls` object is indexed by their respective identifiers. These identifiers are sometimes called "relationship types" when refering to a link, but in the following sections we will simply refer to the identifiers as "names".
 
 The name of a control can either be a simple predefined token from the [IANA relationship registry](http://www.iana.org/assignments/link-relations/link-relations.xhtml), a curie or a complete URI. The use of URIs (and curies) as a namespace mechanism makes it easy to declare names without colliding with similar names from other systems.
 
@@ -326,24 +326,6 @@ This is equivalent to a link name "http://issue-tracker-reltypes.org/rels#contac
 }
 ```
 
-**Non standard link with alternate links for other formats**
-
-```json
-"@controls": {
-  "is:contact": {
-    "href": "...",
-    "title": "Contact information as vCard",
-    "output": ["text/vcard"],
-    "alt": [
-      {
-        "href": "...",
-        "title": "Contact information as jCard",
-        "output": ["application/vcard+json"]
-      }
-    ]
-  }
-}
-```
 
 ### Control properties
 
@@ -351,15 +333,15 @@ A single hypermedia control element can be described by the following properties
 
 * **href** [string, required]: Hypermedia reference - a URL or URL template.
 
-* **isHrefTemplate** [bool, optional, default is false]: Boolean indicating whether "href" is a URL template or concrete URL.
+* **isHrefTemplate** [bool, optional]: Boolean indicating whether "href" is a URL template or concrete URL (default values is false).
 
 * **title** [string, optional]: Title of the control.
 
 * **description** [string, optional]: Description of the control.
 
-* **method** [string, optional, default is "GET"]: HTTP method to use.
+* **method** [string, optional]: HTTP method to use (default value is "GET").
 
-* **encoding** [string, optional, default is "none"]: Required encoding of data in request body. Possible values are "none", "json", "json+files" and "raw".
+* **encoding** [string, optional]: Required encoding of data in request body. Possible values are "none", "json", "json+files" and "raw" (default value is "none").
 
 * **schema** [object, optional]: Embedded schema definition of request body and href template parameters.
 
@@ -375,45 +357,82 @@ A single hypermedia control element can be described by the following properties
 
 * **alt** [array, optional]: list of alternative equivalent controls.
 
-
-These are the properties that are common for all types of controls (links, link templates and the various types of actions).
-
 Control elements are not extendable and thus their property names need not be prefixed with '@'.
 
-#### `<name>` (property name)
-Property name define the control name. In this way the `@controls` object is indexed by the control names.
 
-#### `href`
+#### Control property `<name>` (property name)
+The property name (as used in the `@controls` object) defines the control name. In this way the `@controls` object is indexed by the control names.
+
+
+#### Control property `href`
 This property is REQUIRED and MUST be a string value representing a valid URI. It contains the target URI of the control - or a URL template to be completed thorugh variable expansion.
 
-The `href` URI SHOULD be an absolute URL but clients should be prepared to handle relative URLs. At the time of writing there is no rules for how to resolve relative URLs so it will have to depend on an agreement between the client and server.
+The `href` URI SHOULD be an absolute URL (or URL template) but clients should be prepared to handle relative URLs. At the time of writing there is no rules for how to resolve relative URLs so it will have to depend on an agreement between the client and server.
 
-#### `type`
-This property is OPTIONAL. If present it MUST be a string value representing the type of control. The possible values for `type`are:
+If `isHrefTemplate` is true then `href` must be interpreted as a URL template according to [RFC 6570 - URI Template](https://tools.ietf.org/html/rfc6570).
 
-  * `link`: a link.
-  * `link-template`: a link template.
-  * `void`: an action with no payload.
-  * `json`: a JSON action.
-  * `json+files`: a JSON action with file attachments.
-  * `any`: a generic action.
-  
-If `type` is not present it is assumed to be `link`.
 
-#### `title` (optional)
+#### Control property `isHrefTemplate`
+This property is OPTIONAL. If present it MUST be a boolean value indicating whether the `href` value is a URI or a URI template.
+
+
+#### Control property `title` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It contains a short descriptive title.
 
 This property can safely be removed in minimized representations.
 
-#### `description` (optional)
+
+#### Control property `description` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It contains a long descriptive text.
 
 This property can safely be removed in minimized representations.
 
-#### `output` (optional)
+
+##### Control property `method` (optional)
+This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the request.
+
+Default method is POST if no `method` is specified.
+
+
+#### Control property `encoding`
+This property is OPTIONAL. If present it MUST be a string value indicating the required encoding of the request body. The possible values for `encoding` are:
+
+  * `none`: No request body expected.
+  * `json`: Request body must be encoded as application/json.
+  * `json+files`: Request body must be encoded as multipart/form-data with JSON data represented in one of parts.
+  * `raw`: No special encoding is required for the request body.
+  
+If `encoding` is not present it is assumed to be `none`.
+
+
+##### Control property `schema` (optional)
+This property is OPTIONAL. If present it MUST be an object representing a schema definition describing the possible structure of the request body.
+
+If `encoding` is either "json" or "json+files" then the schema should be describe the JSON data.
+
+
+##### Control property `schemaUrl` (optional)
+This property is OPTIONAL. If present it MUST be a string value representing a valid URL. The URL must reference a schema file describing the possible structure of the request body.
+
+If `encoding` is either "json" or "json+files" then the schema should be describe the JSON data.
+
+
+##### Control property `template` (optional)
+This property is OPTIONAL. If present it can be any JSON value representing the default value of the request.
+
+Clients should read the `template` value (if present) and merge their calculated JSON request data into it before serializing the result into the request body.
+
+
+
+
+
+
+
+
+#### Control property `output` (optional)
 This property is OPTIONAL. If present it MUST be an array of string values. It specifies the expected media type formats of the target resource. 
 
-#### `alt` (optional)
+#### Control property `alt` (optional)
 This property is OPTIONAL. If present it MUST be an array of control elements each of which represents alternatives to the primary control element (see next section).
 
 Example:
@@ -575,7 +594,7 @@ Void actions are for use with requests that carries no payload - for instance wh
 
 Void actions share all the common control element properties.
 
-##### `method` (optional)
+##### Control property `method` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
 
 Default method is POST if no `method` is specified.
@@ -636,10 +655,10 @@ This property is OPTIONAL. If present it MUST be a string value. It defines the 
 
 Default method is POST if no `method` is specified.
 
-##### `schemaUrl` (optional)
+##### Control property `schemaUrl` (optional)
 This property is OPTIONAL. If present it MUST be a string value representing a valid URL. The URL must reference a schema for JSON objects.
 
-##### `template` (optional)
+##### Control property `template` (optional)
 This property is OPTIONAL. If present it can be any JSON value.
 
 
@@ -715,12 +734,12 @@ This property is OPTIONAL. If present it MUST be a string value representing a v
 ##### `template` (optional)
 This property is OPTIONAL. If present it can be any JSON value.
 
-##### `jsonFile` (optional)
+##### Control property `jsonFile` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the name of the part containing JSON data when using JSON+Files actions.
 
 If no `jsonFile` property is specified then the client may choose to send JSON data anyway in a part with a name chosen by the client. The server's reaction to this is unspecified.
 
-##### `files` (optional)
+##### Control property `files` (optional)
 This property is OPTIONAL. If present it MUST be an array of file definition objects as described below.
 
 #### Files
@@ -783,7 +802,7 @@ This property is OPTIONAL. If present it MUST be a string value. It defines the 
 
 Default method is POST if no `method` is specified.
 
-##### `accept`
+##### Control property `accept`
 This property is OPTIONAL. If present it MUST be an array of strings. It defines the range of accepted media types in the payload.
 
 If no `accept` value is specified (or the array is empty) then there are no restrictions on the media types in the payload.
