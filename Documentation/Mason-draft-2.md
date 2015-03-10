@@ -327,6 +327,33 @@ This is equivalent to a link name "http://issue-tracker-reltypes.org/rels#contac
 ```
 
 
+### Alternative control elements
+
+All controls may have one primary element and many alternative variations (or no variations). The alternative elements are stored in the `alt` property of the primary element. The `alt` property MUST be an array of control elements which are supposed to be equivalent to the primary control element but differ on for instance expected content type of the response or payload encoding. This makes it simple for clients to access the most used control element and if they are aware of possible alternatives then they can search the alternative elements for better ways of interacting with the server.
+
+Alternative elements are mostly known to represent links to different representations of the same resource.
+
+Here is an example of a link to the contact details for the author of a certain piece of data. The primary version is expected to return a Mason response whereas the alternative version returns a vCard representation of the contact details:
+
+```json
+"@controls": {
+  "author": {
+    "title": "Link to contact details for author.",
+    "href": "...",
+    "output": ["application/vnd.mason+json"]
+    "alt":
+    [
+      {
+        "title": "Link to contact details for author (as vCard).",
+        "href": "...",
+        "output": ["text/vcard"]
+      }
+    ]
+  }
+}
+```
+
+
 ### Control properties
 
 A single hypermedia control element can be described by the following properties:
@@ -365,11 +392,11 @@ The property name (as used in the `@controls` object) defines the control name. 
 
 
 #### Control property `href`
-This property is REQUIRED and MUST be a string value representing a valid URI. It contains the target URI of the control - or a URL template to be completed thorugh variable expansion.
+This property is REQUIRED and MUST be a string value representing a valid URI or URL template. It contains the target URI of the control or a URL template to be completed thorugh variable expansion.
 
 The `href` URI SHOULD be an absolute URL (or URL template) but clients should be prepared to handle relative URLs. At the time of writing there is no rules for how to resolve relative URLs so it will have to depend on an agreement between the client and server.
 
-If `isHrefTemplate` is true then `href` must be interpreted as a URL template according to [RFC 6570 - URI Template](https://tools.ietf.org/html/rfc6570).
+If `isHrefTemplate` is true then `href` must be interpreted as a URL template according to [RFC 6570 - URI Template](https://tools.ietf.org/html/rfc6570). The template parameters may be described by a schema definition in the `schema` property or through a referenced schema via the `schemaUrl` property.
 
 
 #### Control property `isHrefTemplate`
@@ -383,57 +410,89 @@ This property can safely be removed in minimized representations.
 
 
 #### Control property `description` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains a long descriptive text.
+This property is OPTIONAL. If present it MUST be a string value. It contains a descriptive text.
 
 This property can safely be removed in minimized representations.
 
 
-##### Control property `method` (optional)
+#### Control property `method` (optional)
 This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the request.
 
-Default method is POST if no `method` is specified.
+Default method is GET if no `method` is specified AND `encoding` is "none" (the default value). Otherwise the default method is POST if no `method` is specified AND `encoding` is anything else than "none". This means that controls without HTTP body default to GET whereas other controls default to POST.
 
 
 #### Control property `encoding`
-This property is OPTIONAL. If present it MUST be a string value indicating the required encoding of the request body. The possible values for `encoding` are:
+This property is OPTIONAL. If present it MUST be a string value indicating the required encoding of the request body.
+
+Encoding does not indicate a general content type specification. Instead it indicates which of a small set of rules to use for encoding the payload.
+
+The possible values for `encoding` are:
 
   * `none`: No request body expected.
   * `json`: Request body must be encoded as application/json.
-  * `json+files`: Request body must be encoded as multipart/form-data with JSON data represented in one of parts.
-  * `raw`: No special encoding is required for the request body.
+  * `json+files`: Request body must be encoded as multipart/form-data with JSON data represented in one of the parts. In this case the `jsonFile` property identifies the name of the part to embed the JSON data in.
+  * `raw`: No special encoding is required for the request body. In this case the `accept` property may be used to indicate expected content type of the request.
   
 If `encoding` is not present it is assumed to be `none`.
 
 
-##### Control property `schema` (optional)
+#### Control property `schema` (optional)
 This property is OPTIONAL. If present it MUST be an object representing a schema definition describing the possible structure of the request body.
 
-If `encoding` is either "json" or "json+files" then the schema should be describe the JSON data.
+If `encoding` is either "json" or "json+files" then the schema should describe the JSON data.
 
 
-##### Control property `schemaUrl` (optional)
+#### Control property `schemaUrl` (optional)
 This property is OPTIONAL. If present it MUST be a string value representing a valid URL. The URL must reference a schema file describing the possible structure of the request body.
 
-If `encoding` is either "json" or "json+files" then the schema should be describe the JSON data.
+If `encoding` is either "json" or "json+files" then the schema should describe the JSON data.
 
 
-##### Control property `template` (optional)
+#### Control property `template` (optional)
 This property is OPTIONAL. If present it can be any JSON value representing the default value of the request.
 
 Clients should read the `template` value (if present) and merge their calculated JSON request data into it before serializing the result into the request body.
 
+The purpose of the template value is:
+
+  1. To supply useful default data to display before modifying.
+  2. To supply default values for data that older clients are unaware of.
+  3. To supply "hidden" values for authorization, logging, "ETag" like values and other sorts of data for internal book keeping.
+
+Any unrecognized data in the template object MUST be left unmodified and sendt back in the request.
+
+**Example usage of template**
+
+This example contains a template with values for "Code", "Title", "Description" and some sort of authentication token known to the server only.
+
+```json
+"@controls": {
+  "is:update-project": {
+    "type": "json",
+    "href": "...",
+    "title": "Update project details",
+    "schemaUrl": "...",
+    "template": {
+        "Code": "SHOP",
+        "Title": "Webshop",
+        "Description": "All issues related to the webshop.",
+        "AuthToken": "jh987yfm16"
+    }
+  }
+}
+```
 
 
-
-
-
+#### Control property `accept` (optional)
+This property is OPTIONAL. If present it must be an array of strings representing the request content types accepted by the server.
 
 
 #### Control property `output` (optional)
-This property is OPTIONAL. If present it MUST be an array of string values. It specifies the expected media type formats of the target resource. 
+This property is OPTIONAL. If present it must be an array of strings representing the content types a client can expect to receive from the server.
+
 
 #### Control property `alt` (optional)
-This property is OPTIONAL. If present it MUST be an array of control elements each of which represents alternatives to the primary control element (see next section).
+This property is OPTIONAL. If present it MUST be an array of control elements each of which represents alternatives to the primary control element (see previous section).
 
 Example:
 
@@ -456,240 +515,42 @@ Example:
 ```
 
 
-### Alternative control elements
+#### Control property `files`
 
-All controls may have one primary element and many alternative variations (or no variations). The alternative elements are stored in the `alt` property of the primary element. The `alt` property MUST be an array of control elements which are supposed to be equivalent to the primary control element but differ on for instance expected content type of the response or payload encoding. This makes it simple for clients to access the most used control element and if they are aware of possible alternatives then they can search the alternative elements for better ways of interacting with the server.
+This property is OPTIONAL. If present it MUST be an array of objects each of which describes a single file to be included in the request.
 
-Alternative elements are mostly known to represent links to different representations of the same resource.
+The `files` property is only relevant for the encoding type `json+files` where the client is expected to send a "multipart/form-data" encoded request with a set of files embedded in the request. Each part in the request should represent one file upload and the purpose of the `files` property is to describe each of these files.
 
-Here is an example of a link to the contact details for the author of a certain piece of data. The primary version is expected to return a Mason response whereas the alternative version returns a vCard representation of the contact details:
+Each file descriptor may specify the following properties:
 
-```json
-"@controls": {
-  "author": {
-    "title": "Link to contact details for author.",
-    "href": "...",
-    "output": ["application/vnd.mason+json"]
-    "alt":
-    [
-      {
-        "title": "Link to contact details for author (as vCard).",
-        "href": "...",
-        "output": ["text/vcard"]
-      }
-    ]
-  }
-}
-```
+* **name** [string, required]: Name of the multipart element where the file data is embedded.
 
-Alternative elements should differ from the primary element in either "type", "output", or "method".
+* **title** [string, optional]: Title of the file.
 
+* **description** [string, optional]: Description of the file.
 
-### Links
+* **accept** [array of string, optional]: List of accepted media types.
 
-Links represents a relationship between one resource and another as described in [RFC 5988 Web Linking](http://tools.ietf.org/search/rfc5988). The relationship between the two resources is assigned a name (the relationship type) which is used by the client to locate the link in the set of control elements.
-
-Example:
-
-```json
-"@controls": {
-  "self": {
-    "title": "Links to this resource",
-    "description": "Follow this link to get the representation of this resource",
-    "href": "...",
-    "output": ["application/vnd.mason+json"]
-  }
-}
-```
-
-Links does not have any properties in addition to the common control properties.
-
-
-### Link templates
-
-A link template represents an set of links with different URLs available through variable expansion as described in [RFC 6570 - URI Template](https://tools.ietf.org/html/rfc6570).
-
-The URL template itself is stored in the `href` property just link links does - except that the `href` value will be a URL template instead of a complete URL.
-
-The simplest templates consists of placeholdes for variable values. The placeholders are identified by curly braces as for instance "{severity}".
-
-**Example usage of a link template**
-
-```json
-"@controls": {
-  "is:issue-query": {
-    "type": "link-template",
-    "href": "http://.../issues-query?text={text}&severity={severity}&project={pid}",
-    "title": "Search for issues",
-    "description": "This is a simple search that does not check attachments.",
-    "parameters": [
-      {
-        "name": "text",
-        "title": "Query text",
-        "description": "Substring search for text in title and description"
-      },
-      {
-        "name": "severity",
-        "title": "Severity",
-        "description": "Issue severity (exact value, 1..5)"
-      },
-      {
-        "name": "pid",
-        "title": "Project ID"
-      }
-    ]
-  }
-}
-```
-
-
-#### Properties for link templates
-
-Link templates share all the common control element properties.
-
-##### `href`
-This property is REQUIRED and MUST be a string value representing a valid URL template according to [RFC 6570](http://tools.ietf.org/html/rfc6570).
-
-##### `parameters` (optional)
-This property is OPTIONAL. If present it MUST be an array of parameter definition objects as described below.
-
-It can be removed in minimized representations assuming the clients are hard coded with the knowledge if they request a minimized response.
-
-#### Template parameters
-
-Each entry in the `parameters` property defines a parameter variable for the template.
-
-##### `parameters[].name`
-This property is REQUIRED and MUST be a string. It defines the name of the parameter.
-
-##### `parameters[].title` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains a short title for the parameter.
-
-This property can safely be removed in minimized representations.
-
-##### `parameters[].description` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains descriptive text for the parameter.
-
-This property can safely be removed in minimized representations.
-
-
-### Void actions
-
-Void actions are for use with requests that carries no payload - for instance when issuing an HTTP DELETE operation.
-
-**Example usage of `void` action**
-
-```json
-"@controls": {
-  "is:delete-issue": {
-    "type": "void",
-    "href": "...",
-    "method": "DELETE",
-    "title": "Delete issue"
-  }
-}
-```
-
-#### Properties for void actions
-
-Void actions share all the common control element properties.
-
-##### Control property `method` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
-
-Default method is POST if no `method` is specified.
-
-
-### JSON Actions
-
-JSON actions are for sending structured JSON data when performing an action. The HTTP request MUST be of type "application/json".
-
-The `schemaUrl` property is a reference to a schema which the client may use to validate the JSON data. The schema may also be used to create default data from when no `template` property is present. The schema may be [JSON-Schema](http://json-schema.org/) but can be any kind of schema language for JSON and clients should check the content type of the schema resource before blindly assuming it is JSON schema.
-
-The server may supply a `template` property which can contain any kind of JSON value. The client is expected to use this as a building block when creating a request. To do so the client first reads the template value and then modifies it to reflect the changes the clients want to happen. Any unrecognized data in the template object MUST be left unmodified and sendt back in the request.
-
-The purpose of the template value is:
-
-  1. To supply useful default data to display before modifying.
-  2. To supply default values for data that older clients are unaware of.
-  3. To supply "hidden" values for authorization, logging, "ETag" like values and other sorts of data for internal book keeping.
-
-**Example usage of `json` action**
-
-Simple JSON action:
-
-```json
-"@controls": {
-  "is:project-create": {
-    "type": "json",
-    "href": "...",
-    "title": "Create new project"
-  }
-}
-```
-
-Complex JSON action with schema reference and template containing default values for the action:
-
-```json
-"@controls": {
-  "is:update-project": {
-    "type": "json",
-    "href": "...",
-    "title": "Update project details",
-    "schemaUrl": "...",
-    "template": {
-        "Code": "SHOP",
-        "Title": "Webshop",
-        "Description": "All issues related to the webshop."
-    }
-  }
-}
-```
-
-#### Properties for JSON actions
-
-JSON actions share all the common control element properties.
-
-##### `method` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
-
-Default method is POST if no `method` is specified.
-
-##### Control property `schemaUrl` (optional)
-This property is OPTIONAL. If present it MUST be a string value representing a valid URL. The URL must reference a schema for JSON objects.
-
-##### Control property `template` (optional)
-This property is OPTIONAL. If present it can be any JSON value.
-
-
-
-### JSON+Files actions with binary file data
-
-JSON+Files actions are for sending binary files together with structured JSON data when performing an action. The HTTP request MUST be of type [`multipart/form-data`](http://www.ietf.org/rfc/rfc2388.txt).
-
-The media type `multipart/form-data` is an efficient format for combining multiple files into one single message. It consists of parts where each part has a name and associate content type.
-
-With JSON+Files clients are expected to send a JSON document as a part of the message. The name of this part is defined by the `jsonFile` property. Additional files must be named according to the `name`property in the `files` array.
-
-The `schemaUrl` and `template` properties are interpreted in the same way as for plain "json" actions and applies to the JSON part of the multipart message.
-
-**Example usage of `json+files` action**
+**Example**
 
 This example instructs the client to send the JSON document in the part `args` and one additional file in the part `attachment`.
 
-```json
-"@actions": {
-  "is:add-issue": {
-    "type": "json+files",
+```
+"@controls":
+{
+  "is:add-issue":
+  {
+    "title": "Add issue",
+    "encoding": "json+files",
     "href": "...",
-    "title": "Add new issue to project with optional attachment",
-    "schemaUrl": "...",
     "jsonFile": "args",
     "files": [
-        {
-            "name": "attachment",
-            "description": "Attachment for issue"
-        }
+      {
+        "name": "attachment",
+        "title": "Attachment",
+        "description": "Include attachment for new issue.",
+        "accept": ["image/jpeg"]
+      }
     ]
   }
 }
@@ -717,95 +578,6 @@ Content-Type: application/json
 }
 
 ```
-
-
-#### Properties for JSON+Files actions
-
-JSON+Files actions share all the common control element properties.
-
-##### `method` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
-
-Default method is POST if no `method` is specified.
-
-##### `schemaUrl` (optional)
-This property is OPTIONAL. If present it MUST be a string value representing a valid URL. The URL must reference a schema for JSON objects.
-
-##### `template` (optional)
-This property is OPTIONAL. If present it can be any JSON value.
-
-##### Control property `jsonFile` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It defines the name of the part containing JSON data when using JSON+Files actions.
-
-If no `jsonFile` property is specified then the client may choose to send JSON data anyway in a part with a name chosen by the client. The server's reaction to this is unspecified.
-
-##### Control property `files` (optional)
-This property is OPTIONAL. If present it MUST be an array of file definition objects as described below.
-
-#### Files
-
-Each entry in the `files` property defines a file to be send in the multipart message when using JSON+Files actions.
-
-##### `files[].name`
-This property is REQUIRED and MUST be a string. It defines the name of the part for sending the file.
-
-##### `files[].title` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains a short title for the file.
-
-##### `files[].description` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It contains descriptive text for the file.
-
-This property can safely be removed in minimized representations.
-
-
-### Generic actions
-
-The action type `any` is a catch all for sending any kind of data in an action. This can for instance be used for upload of binary files without associated JSON data, but it is also useful for handling HTTP PATCH operations for modification of existing resources.
-
-**Example usage of `any` action**
-
-This action represents a direct PUT of data to a specific URL. The "accept" property indicates the types of documents accepted by the target.
-
-```json
-"@controls": {
-  "is:update-attachment": {
-    "type": "any",
-    "href": "...",
-    "method": "PUT",
-    "title": "Update content of attachment.",
-    "accept": ["application/pdf", "image/jpeg"],
-  }
-}
-```
-
-This action represents a PATCH operation with a JSON-Patch payload:
-
-```json
-"@controls": {
-  "is:modify-item": {
-    "type": "any",
-    "href": "...",
-    "method": "PATCH",
-    "title": "Modify item using PATCH.",
-    "accept": ["application/json-patch+json"]
-  }
-}
-```
-
-
-#### Properties for generic actions
-
-Generic actions share all the common control element properties.
-
-##### `method` (optional)
-This property is OPTIONAL. If present it MUST be a string value. It defines the HTTP method to use in the action.
-
-Default method is POST if no `method` is specified.
-
-##### Control property `accept`
-This property is OPTIONAL. If present it MUST be an array of strings. It defines the range of accepted media types in the payload.
-
-If no `accept` value is specified (or the array is empty) then there are no restrictions on the media types in the payload.
 
 
 ## Property name `@error`
