@@ -126,7 +126,7 @@ The prefix character is not used for all Mason properties, only for those that c
 
 The word "Curie" is an abbreviation for "Compact URI" and is a way to define short scoped names that map to URIs. Mason uses namespace declarations to declare prefixes for use in Curies. A Curie is expanded to a URI by replacing the namespace prefix with the corresponding name declared in the `@namespaces` object.
 
-Curies are only expanded in control element identifiers - not in target URLs of links and other elements.
+Curies are only expanded in control element identifiers - not in target URIs of links and other elements.
 
 This means the following two control examples are considered equivalent:
 
@@ -177,11 +177,11 @@ When a client requests a Mason document it may be looking for some specific data
   
 ## Processing of control elements
 
-A client trying to invoke a control element should follow the instructions described below. By doing so the client will be able to handle various changes to the control without breaking. It will for instance be possible to change from a GET URL template to a JSON POST request without modifications to the client.
+A client trying to invoke a control element should follow the instructions described below. By doing so the client will be able to handle various changes to the control without breaking. It will for instance be possible to change from a GET URI template to a JSON POST request without modifications to the client.
 
   1. Prepare a JSON object with the data expected to be necessary to invoke the control. If there is no data available then use an empty JSON object (this could for instance be the case when the client expects to follow a link). This is the *arguments* object. The structure of the arguments object can either be hard coded into the client, discovered through a schema or by some other means.
   
-  1. If the control has a templated `href` URL (as indicated by the `isHrefTemplate` property) then do variable expansion on the template using the arguments object as input.
+  1. If the control has a templated `href` URI (as indicated by the `isHrefTemplate` property) then do variable expansion on the template using the arguments object as input.
   
   1. If `template` is set then merge the arguments object into the template object and replace *arguments* with the result. This will ensure that unknown properties in the template object is kept unchanged and sent back to the server.
   
@@ -395,11 +395,11 @@ The property name (as used in the `@controls` object) defines the control name. 
 
 
 #### Control property `href`
-This property is REQUIRED and MUST be a string value representing a valid URI or URI template. It contains the target URI of the control or a URL template to be completed thorugh variable expansion.
+This property is REQUIRED and MUST be a string value representing a valid URI or URI template. It contains the target URI of the control or a URI template to be completed thorugh variable expansion.
 
-The `href` URI SHOULD be an absolute URL (or URL template) but clients should be prepared to handle relative URLs. At the time of writing there is no rules for how to resolve relative URLs so it will have to depend on an agreement between the client and server.
+The `href` URI SHOULD be an absolute URI (or URI template) but clients should be prepared to handle relative URIs. At the time of writing there is no rules for how to resolve relative URIs so it will have to depend on an agreement between the client and server.
 
-If `isHrefTemplate` is true then `href` must be interpreted as a URL template according to [RFC 6570 - URI Template](https://tools.ietf.org/html/rfc6570). The template parameters may be described by a schema definition in the `schema` property or through a referenced schema via the `schemaUrl` property.
+If `isHrefTemplate` is true then `href` must be interpreted as a URI template according to [RFC 6570 - URI Template](https://tools.ietf.org/html/rfc6570). The template parameters may be described by a schema definition in the `schema` property or through a referenced schema via the `schemaUrl` property.
 
 
 #### Control property `isHrefTemplate`
