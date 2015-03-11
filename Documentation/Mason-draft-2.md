@@ -170,24 +170,24 @@ When a client requests a Mason document it may be looking for some specific data
   
   2. Iterate recursively through all JSON objects and locate @controls elements. For each of the controls expand control element names (curies) using the namespace declarations.
   
-  3. Read whatever JSON data the client is looking for.
+  3. Read whatever JSON data the client is looking for in the document.
   
   4. If the client tries to invoke a control it SHOULD be prepared to handle any kind of control type - it SHOULD NOT assume a fixed type of control. This allows the server to use the type of controls that fits best at any given time - without breaking clients.
   
   
 ## Processing of control elements
 
-A client trying to invoke a control element should follow the instructions described below.
+A client trying to invoke a control element should follow the instructions described below. By doing so the client will be able to handle various changes to the control without breaking. It will for instance be possible to change from a GET URL template to a JSON POST request without modifications to the client.
 
-  1. Prepare a JSON object with the data expected to be necessary to invoke the control. If there is no data available then use an empty JSON object (this could for instance be the case when the client expects to follow a link). This is the *argument object*.
+  1. Prepare a JSON object with the data expected to be necessary to invoke the control. If there is no data available then use an empty JSON object (this could for instance be the case when the client expects to follow a link). This is the *arguments* object. The structure of the arguments object can either be hard coded into the client, discovered through a schema or by some other means.
   
-  2. If the control has a templated `href` URL (as indicated by the `isHrefTemplate` property) then do variable expansion on the template using the *arguments* JSON object as input.
+  1. If the control has a templated `href` URL (as indicated by the `isHrefTemplate` property) then do variable expansion on the template using the arguments object as input.
   
-  1. If `template` is set then merge th *arguments* object into the template object and replace *arguments* with the result.
+  1. If `template` is set then merge the arguments object into the template object and replace *arguments* with the result. This will ensure that unknown properties in the template object is kept unchanged and sent back to the server.
   
-  1. If `encoding` is set to `json` serialize the *arguments* object into the request body.
+  1. If `encoding` is set to `json` then serialize the arguments object into the request body as a JSON string.
   
-  1. If `encoding` is set to `json+files` then create one multipart entry for each attached filed. Then serialize the *arguments* object into another multipart entry and name it according to the `jsonFile` property.
+  1. If `encoding` is set to `json+files` then create one multipart entry for each attached file. Then serialize the arguments object into another multipart entry and name it according to the `jsonFile` property. The set of files can either be hard coded into the client, discovered through the `files` definition or by some other means.
   
   1. If encoding is set to `raw` then the request body format must be coordinated with the server in some other way - for instance through written documentation. The `accept` property may indicate what kind of media types the server accepts.
 
@@ -238,7 +238,7 @@ This property is OPTIONAL. If present it MUST be a string value. It contains a d
 This property is OPTIONAL. If present it MUST be a string value. It contains descriptive text.
 
 #### `@controls` (optional)
-This property is OPTIONAL. If present it MUST be an object adhering to the same rules as the top `@controls` object. It can for instance contain links to other resources that are relevant for client developers such as API documentation or terms of service. This property may also contain other control elements than links.
+This property is OPTIONAL. If present it MUST be an object adhering to the same rules as the normal `@controls` object. It can for instance contain links to other resources that are relevant for client developers such as API documentation or terms of service. This property may also contain other control elements than links.
 
 
 ## Property name `@namespaces`
@@ -286,7 +286,7 @@ The set of controls in the `@controls` object is indexed by their respective ide
 
 The name of a control can either be a simple predefined token from the [IANA relationship registry](http://www.iana.org/assignments/link-relations/link-relations.xhtml), a curie or a complete URI. The use of URIs (and curies) as a namespace mechanism makes it easy to declare names without colliding with similar names from other systems.
 
-Here a few examples of different ways to name a control:
+Here are a few examples of different ways to name a control:
 
 **Standard IANA *self* link**
 
@@ -359,11 +359,11 @@ Here is an example of a link to the contact details for the author of a certain 
 
 ### Control properties
 
-A single hypermedia control element can be described by the following properties:
+A single hypermedia control element can be represented by the following properties:
 
-* **href** [string, required]: Hypermedia reference - a URL or URL template.
+* **href** [string, required]: Hypermedia reference - a URI or URI template.
 
-* **isHrefTemplate** [bool, optional]: Boolean indicating whether "href" is a URL template or concrete URL (default values is false).
+* **isHrefTemplate** [bool, optional]: Boolean indicating whether "href" is a URI template or concrete URI (default values is false).
 
 * **title** [string, optional]: Title of the control.
 
@@ -395,7 +395,7 @@ The property name (as used in the `@controls` object) defines the control name. 
 
 
 #### Control property `href`
-This property is REQUIRED and MUST be a string value representing a valid URI or URL template. It contains the target URI of the control or a URL template to be completed thorugh variable expansion.
+This property is REQUIRED and MUST be a string value representing a valid URI or URI template. It contains the target URI of the control or a URL template to be completed thorugh variable expansion.
 
 The `href` URI SHOULD be an absolute URL (or URL template) but clients should be prepared to handle relative URLs. At the time of writing there is no rules for how to resolve relative URLs so it will have to depend on an agreement between the client and server.
 
