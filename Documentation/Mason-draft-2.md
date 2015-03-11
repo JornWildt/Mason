@@ -2,6 +2,8 @@
 
 # Introduction
 
+> Note: The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
+
 Mason is a JSON based format for adding hypermedia elements, standardized error handling and additional meta data to classic JSON representations. It is a generic format and imposes very little restrictions on the data it is integrated with.
 
 A Mason document is constructed by taking a "classic" JSON object and then merging hypermedia elements and other Mason features into it. Mason properties are prefixed with `@` to avoid collisions with existing property names.
@@ -51,6 +53,7 @@ Links (and other hypermedia elements) are added as object properties in a specia
       "Title": "Error report",
       "@controls": {
         "self": {
+          "title": "Attachment details",
           "href": "http://issue-tracker.org/attachments/1"
         }
       }
@@ -61,14 +64,16 @@ Links (and other hypermedia elements) are added as object properties in a specia
       "href": "http://issue-tracker.org/issues/1"
     },
     "up": {
-      "href": "http://issue-tracker.org/projects/1",
-      "title": "Containing project"
+      "title": "Containing project",
+      "href": "http://issue-tracker.org/projects/1"
     },
   }
 }
 ```
 
-We can also add a few actions for modification of the issue. Below we have added a "is:add-issue" for adding a new issue and "is:delete-issue" for deleting the issue (the prefix "is:" is for compact URI expansion - a shorthand notation for URIs):
+We can also add a few controls that represents different ways of modifying the issue. Often we call such controls that modifies server state for *actions*.
+
+Below we have added the cntrols "is:add-issue" for adding a new issue and "is:delete-issue" for deleting the issue (the prefix "is:" is for compact URI expansion - a shorthand notation for URIs to be explained later):
 
 ```json
 {
@@ -98,7 +103,7 @@ We can also add a few actions for modification of the issue. Below we have added
     "is:add-issue": {
       "type": "json",
       "href": "http://issue-tracker.org/issues",
-      "schemaUrl: "http://...",
+      "schemaUrl: "http://..."
     },
     "is:delete-issue": {
       "type": "void",
@@ -110,13 +115,11 @@ We can also add a few actions for modification of the issue. Below we have added
 ```
 
 
-> Note: The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
-
 # Syntax
 
 Mason is based on JSON and follows as such all the syntax rules for valid JSON documents. Mason reserves the character '@' as a prefix for Mason property names.
 
-The prefix character is not used for all Mason properties, only for those that co-exists with other properties from the underlying resource data - for instance '@meta' and '@actions'. Other property names like "template" and "parameters" are used only in contexts where it is not allowed to mix data so these properties do not use the '@' prefix.
+The prefix character is not used for all Mason properties, only for those that co-exists with other properties from the underlying resource data - for instance '@meta' and '@actions'. Other property names like "href" and "title" are used only in contexts where it is not allowed to mix data so these properties do not use the '@' prefix.
 
 
 # Curies
@@ -125,7 +128,7 @@ The word "Curie" is an abbreviation for "Compact URI" and is a way to define sho
 
 Curies are only expanded in control element identifiers - not in target URLs of links and other elements.
 
-This means the following two examples are considered equivalent:
+This means the following two control examples are considered equivalent:
 
 ```json
 {
@@ -165,7 +168,7 @@ When a client requests a Mason document it may be looking for some specific data
 
   1. Register all namespace declarations. These are key/value pairs that map namespace names into URI prefixes.
   
-  2. Iterate recursively through all control elements and expand control element names (curies) using the namespace declarations.
+  2. Iterate recursively through all JSON objects and locate @controls elements. For each of the controls expand control element names (curies) using the namespace declarations.
   
   3. Read whatever JSON data the client is looking for.
   
@@ -178,15 +181,15 @@ A client trying to invoke a control element should follow the instructions descr
 
   1. Prepare a JSON object with the data expected to be necessary to invoke the control. If there is no data available then use an empty JSON object (this could for instance be the case when the client expects to follow a link). This is the *argument object*.
   
-  2. If the control is a link then simply follow it.
+  2. If the control has a templated `href` URL (as indicated by the `isHrefTemplate` property) then do variable expansion on the template using the *arguments* JSON object as input.
   
-  3. If the control is a URL template then expand the `href` template string using the argument object as a dictionary containing variables for the expansion.
+  1. If `template` is set then merge th *arguments* object into the template object and replace *arguments* with the result.
   
-  4. If the control is a void action then ignore the argument object and invoke the action.
+  1. If `encoding` is set to `json` serialize the *arguments* object into the request body.
   
-  5. If the control is a JSON or JSON+Files action then use the argument object as input to the action and invoke it.
+  1. If `encoding` is set to `json+files` then create one multipart entry for each attached filed. Then serialize the *arguments* object into another multipart entry and name it according to the `jsonFile` property.
   
-  6. If the control is a generic action then invoke it, but any detailed processing is outside the scope of Mason.
+  1. If encoding is set to `raw` then the request body format must be coordinated with the server in some other way - for instance through written documentation. The `accept` property may indicate what kind of media types the server accepts.
 
 
 # Minimized responses
@@ -340,7 +343,7 @@ Here is an example of a link to the contact details for the author of a certain 
   "author": {
     "title": "Link to contact details for author.",
     "href": "...",
-    "output": ["application/vnd.mason+json"]
+    "output": ["application/vnd.mason+json"],
     "alt":
     [
       {
