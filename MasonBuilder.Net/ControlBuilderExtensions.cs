@@ -92,16 +92,17 @@ namespace MasonBuilder.Net
     }
 
 
-    public static Control NewJsonFilesAction(this IMasonBuilderContext context, string name, Uri href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = "POST")
+    public static Control NewJsonFilesAction(this IMasonBuilderContext context, string name, Uri href, string jsonFile, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = "POST")
     {
-      return NewJsonFilesAction(context, name, href.AbsoluteUriNullable(), title, description, schema, schemaUrl, template, method);
+      return NewJsonFilesAction(context, name, href.AbsoluteUriNullable(), jsonFile, title, description, schema, schemaUrl, template, method);
     }
 
 
-    public static Control NewJsonFilesAction(this IMasonBuilderContext context, string name, string href, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = "POST")
+    public static Control NewJsonFilesAction(this IMasonBuilderContext context, string name, string href, string jsonFile, string title = null, string description = null, string schema = null, Uri schemaUrl = null, object template = null, string method = "POST")
     {
       Control c = NewJsonAction(context, name, href, title, description, schema, schemaUrl, template, method);
       c.encoding = "json+files";
+      c.jsonFile = jsonFile;
       return c;
     }
 

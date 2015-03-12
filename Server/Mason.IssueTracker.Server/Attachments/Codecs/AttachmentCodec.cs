@@ -39,7 +39,7 @@ namespace Mason.IssueTracker.Server.Attachments.Codecs
       updateTemplate.Title = attachment.Attachment.Title;
       updateTemplate.Description = attachment.Attachment.Description;
 
-      Control updateAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.AttachmentUpdate, selfUrl, "Update attachment details", description: "Update title and description of attachment", template: (DynamicDictionary)updateTemplate);
+      Control updateAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.AttachmentUpdate, selfUrl, "args", "Update attachment details", description: "Update title and description of attachment", template: (DynamicDictionary)updateTemplate);
       if (!MasonBuilderContext.PreferMinimalResponse)
       {
         updateAction.AddFile(new FileDefinition { name = "attachment", title = "Attachment content" });

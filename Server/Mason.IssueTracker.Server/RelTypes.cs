@@ -3,7 +3,7 @@
   public static class RelTypes
   {
     public const string NSPrefix = "is";
-    public const string NSName = "http://soabits.dk/mason/issue-tracker/reltypes.html#";
+    public const string NSName = "http://elfisk.dk/mason/issue-tracker/reltypes.html#";
 
     public const string ResourceCommon = NSPrefix + ":common";
     public const string Contact = NSPrefix + ":contact";

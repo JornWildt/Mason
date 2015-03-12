@@ -49,7 +49,7 @@ namespace Mason.IssueTracker.Server.IssueTracker.Codecs
       i.AddControl(deleteAction);
 
       Uri addAttachmentSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-attachment" });
-      Control addAttachmentAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.IssueAddAttachment, attachmentsUrl, "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
+      Control addAttachmentAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.IssueAddAttachment, attachmentsUrl, "args", "Add new attachment to issue", schemaUrl: addAttachmentSchemaUrl);
       if (!MasonBuilderContext.PreferMinimalResponse)
       {
         addAttachmentAction.AddFile(new FileDefinition { name = "attachment", title = "Attachment for issue" });
