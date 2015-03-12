@@ -7,7 +7,7 @@ namespace MasonBuilder.Net
   {
     public static Control NewLink(this IMasonBuilderContext context, string name, Uri href, string title = null, string contentType = null)
     {
-      return context.NewLink(name, href.AbsoluteUriNullable(), title);
+      return context.NewLink(name, href.AbsoluteUriNullable(), title, contentType);
     }
 
 
