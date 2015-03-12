@@ -45,11 +45,15 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     {
       Properties = new ObservableCollection<ViewModel>();
 
+      JObject namespaces = resource.SelectToken(MasonProperties.Namespaces) as JObject;
+      if (namespaces != null)
+        BuildNamespaces(namespaces, context);
+
       foreach (var pair in resource)
       {
         if (pair.Key == MasonProperties.Namespaces && pair.Value is JObject)
         {
-          BuildNamespaces((JObject)pair.Value, context);
+          // Ignore - it has been handled
         }
         else if (pair.Key == MasonProperties.Control && pair.Value is JObject)
         {
