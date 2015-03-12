@@ -16,8 +16,6 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
     public object Get()
     {
       Resource common = new Resource();
-      ((dynamic)common).Title = Settings.OriginName;
-      ((dynamic)common).Description = "Example of an IssueTracker service using Mason media type.";
 
       Uri selfUri = typeof(ResourceCommonResource).CreateUri();
       Control selfLink = MasonBuilderContext.NewLink("self", selfUri);
@@ -46,7 +44,7 @@ namespace Mason.IssueTracker.Server.ResourceCommons.Handlers
 
       Uri projectsUrl = typeof(ProjectCollectionResource).CreateUri();
       Uri createProjectSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-project" });
-      Control addProjectAction = MasonBuilderContext.NewJsonAction(RelTypes.ProjectAdd, projectsUrl, "Create new project", schemaUrl: createProjectSchemaUrl);
+      Control addProjectAction = MasonBuilderContext.NewJsonAction(RelTypes.ProjectAdd, projectsUrl, "Create project", "Add new project to issue tracker.", schemaUrl: createProjectSchemaUrl);
       common.AddControl(addProjectAction);
 
       return new ResourceCommonResource { Value = common };

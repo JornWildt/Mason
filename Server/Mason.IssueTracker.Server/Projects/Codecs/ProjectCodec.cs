@@ -22,7 +22,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
       }
 
       Uri selfUrl = typeof(ProjectResource).CreateUri(new { id = project.Project.Id });
-      Control selfLink = MasonBuilderContext.NewLink("self", selfUrl, "Project details");
+      Control selfLink = MasonBuilderContext.NewLink("self", selfUrl);
       p.AddControl(selfLink);
 
       Uri issuesUrl = typeof(ProjectIssuesResource).CreateUri(new { id = project.Project.Id });
@@ -39,6 +39,7 @@ namespace Mason.IssueTracker.Server.Projects.Codecs
 
       Uri addIssueSchemaUrl = typeof(SchemaTypeResource).CreateUri(new { name = "create-issue" });
       Control addIssueAction = MasonBuilderContext.NewJsonFilesAction(RelTypes.ProjectAddIssue, issuesUrl, "Add issue", "Add new issue to project", schemaUrl: addIssueSchemaUrl);
+      addIssueAction.jsonFile = "args";
       if (!MasonBuilderContext.PreferMinimalResponse)
       {
         addIssueAction.AddFile(new FileDefinition { name = "attachment", title = "Attachment", description = "Include attachment for new issue." });

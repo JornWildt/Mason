@@ -61,6 +61,8 @@ namespace MasonBuilder.Net
 
     public string[] output { get; set; }
 
+    public string jsonFile { get; set; }
+
     public List<FileDefinition> files { get; set; }
 
     public List<Control> alt { get; set; }

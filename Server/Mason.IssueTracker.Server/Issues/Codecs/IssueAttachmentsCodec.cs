@@ -47,6 +47,10 @@ namespace Mason.IssueTracker.Server.Issues.Codecs
         Control itemSelfLink = MasonBuilderContext.NewLink("self", itemSelfUri);
         item.AddControl(itemSelfLink);
 
+        Uri contentUrl = typeof(AttachmentContentResource).CreateUri(new { id = a.Id });
+        Control contentLink = MasonBuilderContext.NewLink(RelTypes.AttachmentContent, contentUrl, "Download content", a.ContentType);
+        item.AddControl(contentLink);
+
         ((dynamic)i).Attachments.Add(item);
       }
 
