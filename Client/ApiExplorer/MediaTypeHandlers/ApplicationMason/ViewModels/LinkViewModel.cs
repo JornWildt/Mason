@@ -14,8 +14,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     public override string ControlType { get { return "Link"; } }
 
 
-    public LinkViewModel(ViewModel parent, JProperty link, BuilderContext context)
-      : base(parent, link, context)
+    public LinkViewModel(ViewModel parent, string name, JObject json, BuilderContext context, IControlBuilder cb)
+      : base(parent, name, json, context, cb)
     {
     }
 

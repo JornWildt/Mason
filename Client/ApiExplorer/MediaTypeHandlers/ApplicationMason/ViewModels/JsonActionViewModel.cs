@@ -11,8 +11,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     public override string ControlType { get { return "JSON"; } }
 
 
-    public JsonActionViewModel(ViewModel parent, JProperty action, BuilderContext context)
-      : base(parent, action, context)
+    public JsonActionViewModel(ViewModel parent, string name, JObject json, BuilderContext context, IControlBuilder cb)
+      : base(parent, name, json, context, cb)
     {
     }
 

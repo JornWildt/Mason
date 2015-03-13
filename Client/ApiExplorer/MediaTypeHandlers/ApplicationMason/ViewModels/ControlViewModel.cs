@@ -45,13 +45,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
 
 
-    public ControlViewModel(ViewModel parent, JProperty json, BuilderContext context)
-      : base(parent, json.Value as JObject)
+    public ControlViewModel(ViewModel parent, string name, JObject json, BuilderContext context, IControlBuilder cb)
+      : base(parent, json)
     {
-      if (json.Value as JObject == null)
-        throw new InvalidOperationException("Expected JSON object for " + ControlType);
-      
-      string name = json.Name;
+      if (json == null)
+        throw new InvalidOperationException(string.Format("Expected JSON object for control {0}", name));
       
       string prefix;
       string reference;
@@ -72,22 +70,18 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         NamePart2 = Name;
       }
 
-      //string target_type = GetValue<string>("target_type");
-      //if (!string.IsNullOrWhiteSpace(target_type))
-      //  NamePart2 += " (" + target_type + ")";
-
-      // FIXME: "alt" contains controls, not links
-      //JArray alt = nav.Value["alt"] as JArray;
-      //if (alt != null)
-      //{
-      //  AlternateControls = new ObservableCollection<ControlViewModel>();
-      //  for (int i = 0; i < alt.Count; ++i)
-      //  {
-      //    JObject l = alt[i] as JObject;
-      //    if (l != null)
-      //      AlternateControls.Add(new LinkViewModel(this, l, string.Format("alt[{0}]", i), context));
-      //  }
-      //}
+      JArray alt = json["alt"] as JArray;
+      if (alt != null)
+      {
+        AlternateControls = new ObservableCollection<ControlViewModel>();
+        for (int i = 0; i < alt.Count; ++i)
+        {
+          JObject l = alt[i] as JObject;
+          if (l != null)
+            AlternateControls.Add(cb.BuildControlElement(this, name, l, context));
+              //LinkViewModel(this, l, string.Format("alt[{0}]", i), context));
+        }
+      }
     }
 
 

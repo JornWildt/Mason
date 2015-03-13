@@ -12,8 +12,8 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
     public override string ControlType { get { return IsHRefTemplate ? "Link template" : "Action"; } }
 
 
-    public VoidActionViewModel(ViewModel parent, JProperty json, BuilderContext context)
-      : base(parent, json, context)
+    public VoidActionViewModel(ViewModel parent, string name, JObject json, BuilderContext context, IControlBuilder cb)
+      : base(parent, name, json, context, cb)
     {
     }
 

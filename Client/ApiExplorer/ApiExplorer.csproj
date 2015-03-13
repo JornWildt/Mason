@@ -120,6 +120,7 @@
     </Compile>
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ArrayPropertyViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\BuilderContext.cs" />
+    <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\IControlBuilder.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\JsonActionViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\ElementViewModel.cs" />
     <Compile Include="MediaTypeHandlers\ApplicationMason\ViewModels\KeyValueParameterViewModel.cs" />

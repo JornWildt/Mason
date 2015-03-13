@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 {
-  public class ResourceViewModel : JsonViewModel
+  public class ResourceViewModel : JsonViewModel, IControlBuilder
   {
     #region UI properties
 
@@ -59,7 +59,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         {
           ControlsJsonValue = pair.Value;
           Controls = new ObservableCollection<ControlViewModel>(
-            pair.Value.Children().OfType<JProperty>().Select(n => BuildControlElement(this, n, context)).Where(n => n != null));
+            pair.Value.Children().OfType<JProperty>().Select(n => BuildControlElement(this, n.Name, n.Value as JObject, context)).Where(n => n != null));
         }
         else if (pair.Key == MasonProperties.Meta && pair.Value is JObject)
         {
@@ -70,7 +70,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
           {
             MetaLinksJsonValue = metaLinksProperty;
             MetaLinks = new ObservableCollection<LinkViewModel>(
-              metaLinksProperty.Children().OfType<JProperty>().Select(l => new LinkViewModel(this, l, context)));
+              metaLinksProperty.Children().OfType<JProperty>().Select(l => new LinkViewModel(this, l.Name, l.Value as JObject, context, this)));
           }
         }
         else if (pair.Key == MasonProperties.Error && pair.Value is JObject)
@@ -89,30 +89,33 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         Controls = new ObservableCollection<ControlViewModel>();
     }
 
-    
-    private ControlViewModel BuildControlElement(ResourceViewModel parent, JProperty n, BuilderContext context)
+
+    #region IControlBuilder
+
+    public ControlViewModel BuildControlElement(ViewModel parent, string name, JObject value, BuilderContext context)
     {
-      string encoding = GetValue<string>(n.Value, "encoding", "none").ToLower();
-      string method = GetValue<string>(n.Value, "method", "GET").ToUpper();
-      bool isHrefTemplate = GetValue<bool?>(n.Value, "isHrefTemplate") ?? false;
+      string encoding = GetValue<string>(value, "encoding", "none").ToLower();
+      string method = GetValue<string>(value, "method", "GET").ToUpper();
+      bool isHrefTemplate = GetValue<bool?>(value, "isHrefTemplate") ?? false;
 
       if (method == "GET" && encoding == MasonProperties.EncodingTypes.None)
       {
         if (isHrefTemplate)
-          return new VoidActionViewModel(parent, n, context);
+          return new VoidActionViewModel(parent, name, value, context, this);
         else
-          return new LinkViewModel(parent, n, context);
+          return new LinkViewModel(parent, name, value, context, this);
       }
       else if (encoding == MasonProperties.EncodingTypes.None)
-        return new VoidActionViewModel(parent, n, context);
+        return new VoidActionViewModel(parent, name, value, context, this);
       else if (encoding == MasonProperties.EncodingTypes.JSON)
-        return new JsonActionViewModel(parent, n, context);
+        return new JsonActionViewModel(parent, name, value, context, this);
       else if (encoding == MasonProperties.EncodingTypes.JSONFiles)
-        return new JsonFilesActionViewModel(parent, n, context);
+        return new JsonFilesActionViewModel(parent, name, value, context, this);
 
       return null;
     }
 
+    #endregion
 
     private PropertyViewModel CreatePropertiesRecursively(string name, JToken json, BuilderContext context)
     {

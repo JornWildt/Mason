@@ -106,10 +106,10 @@
             <TextBlock Text="{Binding Description}" 
                        Style="{StaticResource ResourceKey=Description}"
                        Visibility="{Binding Description, Converter={axv:EmptyStringToVisibilityConverter}}"/>
+            <!-- Use styling to render alternate links -->
+            <ItemsControl ItemsSource="{Binding AlternateControls}" Margin="30 0 0 0"/>
           </StackPanel>
         </Border>
-        <!-- Use styling to render alternate links -->
-        <ItemsControl ItemsSource="{Binding AlternateLinks}" Margin="10 0 0 0"/>
       </StackPanel>
     </DataTemplate>
 
