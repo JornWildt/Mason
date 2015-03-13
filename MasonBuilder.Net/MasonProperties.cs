@@ -9,7 +9,7 @@
     public const string Namespaces = Prefix + "namespaces";
     public const string Meta = Prefix + "meta";
     public const string Profile = Prefix + "profile";
-    public const string Control = Prefix + "controls";
+    public const string Controls = Prefix + "controls";
     public const string Error = Prefix + "error";
 
     public static class NamespaceProperties

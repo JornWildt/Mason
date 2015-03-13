@@ -24,11 +24,11 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
 
     public bool HasDescription { get { return !string.IsNullOrEmpty(Description); } }
 
-    public ObservableCollection<LinkViewModel> MetaLinks { get; private set; }
+    public ObservableCollection<ControlViewModel> MetaControls { get; private set; }
 
-    public bool HasMetaLinks { get { return MetaLinks != null && MetaLinks.Count > 0; } }
+    public bool HasMetaControls { get { return MetaControls != null && MetaControls.Count > 0; } }
 
-    public JToken MetaLinksJsonValue { get; private set; }
+    public JToken MetaControlsJsonValue { get; private set; }
 
     public JToken MetaJsonValue { get; private set; }
 
@@ -55,7 +55,7 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         {
           // Ignore - it has been handled
         }
-        else if (pair.Key == MasonProperties.Control && pair.Value is JObject)
+        else if (pair.Key == MasonProperties.Controls && pair.Value is JObject)
         {
           ControlsJsonValue = pair.Value;
           Controls = new ObservableCollection<ControlViewModel>(
@@ -65,12 +65,12 @@ namespace ApiExplorer.MediaTypeHandlers.ApplicationMason.ViewModels
         {
           MetaJsonValue = pair.Value;
           Description = GetValue<string>(pair.Value, MasonProperties.MetaProperties.Description);
-          JToken metaLinksProperty = pair.Value[MasonProperties.Control];
-          if (metaLinksProperty is JObject)
+          JToken metaControlsProperty = pair.Value[MasonProperties.Controls];
+          if (metaControlsProperty is JObject)
           {
-            MetaLinksJsonValue = metaLinksProperty;
-            MetaLinks = new ObservableCollection<LinkViewModel>(
-              metaLinksProperty.Children().OfType<JProperty>().Select(l => new LinkViewModel(this, l.Name, l.Value as JObject, context, this)));
+            MetaControlsJsonValue = metaControlsProperty;
+            MetaControls = new ObservableCollection<ControlViewModel>(
+              metaControlsProperty.Children().OfType<JProperty>().Select(l => BuildControlElement(this, l.Name, l.Value as JObject, context)));
           }
         }
         else if (pair.Key == MasonProperties.Error && pair.Value is JObject)

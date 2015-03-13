@@ -45,23 +45,23 @@
               <axu:ShowSourceBehavior Source="{Binding Value.MetaJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Meta}}"/>
             </i:Interaction.Behaviors>
           </TextBlock>
-          <!-- Meta links -->
-          <StackPanel Grid.Row="1" Visibility="{Binding Value.HasMetaLinks, Converter={axv:BoolToVisibilityConverter}}">
-            <TextBlock Text="Meta-links" FontStyle="Italic" FontWeight="Bold">
-              <!-- Show source for links -->
+          <!-- Meta controls -->
+          <StackPanel Grid.Row="1" Visibility="{Binding Value.HasMetaControls, Converter={axv:BoolToVisibilityConverter}}">
+            <TextBlock Text="Meta-controls" FontStyle="Italic" FontWeight="Bold">
+              <!-- Show source for controls -->
               <i:Interaction.Behaviors>
-                <axu:ShowSourceBehavior Source="{Binding Value.MetaLinksJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Control}}"/>
+                <axu:ShowSourceBehavior Source="{Binding Value.MetaControlsJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Controls}}"/>
               </i:Interaction.Behaviors>
             </TextBlock>
-            <!-- Use styling to render links -->
-            <ItemsControl ItemsSource="{Binding Value.MetaLinks}" Margin="10 0 0 0"/>
+            <!-- Use styling to render controls -->
+            <ItemsControl ItemsSource="{Binding Value.MetaControls}" Margin="10 0 0 0"/>
           </StackPanel>
           <!-- Control elements -->
           <StackPanel Grid.Row="2" Visibility="{Binding Value.HasControls, Converter={axv:BoolToVisibilityConverter}}">
             <TextBlock Text="Controls" FontStyle="Italic" FontWeight="Bold">
-              <!-- Show source for links -->
+              <!-- Show source for controls -->
               <i:Interaction.Behaviors>
-                <axu:ShowSourceBehavior Source="{Binding Value.ControlJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Control}}"/>
+                <axu:ShowSourceBehavior Source="{Binding Value.ControlJsonValue}" Prefix="{Binding Source={x:Static mn:MasonProperties.Controls}}"/>
               </i:Interaction.Behaviors>
             </TextBlock>
             <!-- Use styling to render control elements -->
@@ -106,7 +106,7 @@
             <TextBlock Text="{Binding Description}" 
                        Style="{StaticResource ResourceKey=Description}"
                        Visibility="{Binding Description, Converter={axv:EmptyStringToVisibilityConverter}}"/>
-            <!-- Use styling to render alternate links -->
+            <!-- Use styling to render alternate controls -->
             <ItemsControl ItemsSource="{Binding AlternateControls}" Margin="30 0 0 0"/>
           </StackPanel>
         </Border>
