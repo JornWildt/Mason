@@ -103,7 +103,7 @@ Below we have added the cntrols "is:add-issue" for adding a new issue and "is:de
     "is:add-issue": {
       "type": "json",
       "href": "http://issue-tracker.org/issues",
-      "schemaUrl: "http://..."
+      "schemaUrl": "http://..."
     },
     "is:delete-issue": {
       "type": "void",
