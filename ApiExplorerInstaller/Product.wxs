@@ -81,6 +81,15 @@
       <Component Id="System.Windows.Interactivity.dll" Guid="{31935662-75DE-437E-909F-4BCB662B2E61}">
         <File Id="System.Windows.Interactivity.dll" Source="$(var.ApiExplorer.TargetDir)\System.Windows.Interactivity.dll"/>
       </Component>
+      <Component Id="jose_jwt.dll" Guid="{6BD1D132-8408-43F5-AA1C-CF87370B25C7}">
+        <File Id="jose_jwt.dll" Source="$(var.ApiExplorer.TargetDir)\jose-jwt.dll"/>
+      </Component>
+      <Component Id="HtmlAgilityPack.dll" Guid="{7C3D61F8-F56D-4560-9F12-C49D3400B641}">
+        <File Id="HtmlAgilityPack.dll" Source="$(var.ApiExplorer.TargetDir)\HtmlAgilityPack.dll"/>
+      </Component>
+      <Component Id="CuttingEdge.Conditions.dll" Guid="{71290E33-3B06-4B35-98BD-B037E4F63756}">
+        <File Id="CuttingEdge.Conditions.dll" Source="$(var.ApiExplorer.TargetDir)\CuttingEdge.Conditions.dll"/>
+      </Component>
     </ComponentGroup>
     
     <Component Id="ApplicationShortcut" Directory="ApplicationStartMenuFolder" Guid="{80AB7ED0-319C-4A73-AD0E-A15065A61AFD}">
