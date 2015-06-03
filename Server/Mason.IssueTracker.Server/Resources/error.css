@@ -1,0 +1,18 @@
+﻿/* layout */
+html { border-style: solid;border-width: 0px;border-left-width: 40px; padding: 0px; margin: 0px; }
+body {padding: 10px; margin-left: 40px; }
+h1 {  }
+pre { border: solid 1px; }
+
+
+/* colors */
+pre { background-color: #FFB173; border-color: #ff5600; }
+h1 { color: #ff5600;text-shadow: 1px 1px 10px #FFB173; }
+body { background-color: White;  }
+html { border-color: #FF7100; }
+
+
+/* fonts */
+* { font-family: arial, Sans-Serif; }
+body { font-size: 10pt; }
+pre { font-family: Consolas, Courrier, Monospace, Courier; font-size: 10pt; overflow: auto; }

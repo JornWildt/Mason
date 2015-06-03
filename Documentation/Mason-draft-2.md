@@ -10,17 +10,17 @@ A Mason document is constructed by taking a "classic" JSON object and then mergi
 
 A Mason document consists of the following types of elements:
 
-  * Core bussiness data (such as the title of an item, identifiers and so on).
+  * Core bussiness data (such as the title of a book, number of new messages, identifiers and so on).
   
-  * Meta data about the resource, targeted at the client developer.
+  * Meta data about the resource targeted at the client developer.
   
-  * Various kinds of hypermedia elements such as links, link templates and actions. These are generally referred to as *control elements*.
+  * Various kinds of hypermedia elements such as links, link templates and actions. These are generally referred to as *hypermedia control elements*.
   
   * Namespace declarations for expansion of compact URIs (Curies) in control elements.
   
   * Error details.
 
-Here is a simple example to introduce the format. Suppose we have an existing payload representing a single issue from an issue tracker. It could look as shown below without any Mason specific elements:
+Here is a simple example to introduce the format: suppose we have an existing payload representing a single issue from an issue tracker. It could look as shown below without any Mason specific elements:
 
 ```json
 {
