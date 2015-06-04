@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="73C1F58B-EA03-4753-983E-2F33762E37C0" Name="API Explorer" Language="1033" Version="1.0.0.0" Codepage="windows-1252"
+  <Product Id="{58896CD0-BAD9-4F20-82CF-822D384573E3}" Name="API Explorer" Version="2.0.0.0" Language="1033" Codepage="windows-1252"
            Manufacturer="Jørn Wildt" UpgradeCode="B56816F4-C74D-482F-AFC8-422EE8003C79">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"  />
 
@@ -89,6 +89,9 @@
       </Component>
       <Component Id="CuttingEdge.Conditions.dll" Guid="{71290E33-3B06-4B35-98BD-B037E4F63756}">
         <File Id="CuttingEdge.Conditions.dll" Source="$(var.ApiExplorer.TargetDir)\CuttingEdge.Conditions.dll"/>
+      </Component>
+      <Component Id="Resta.UriTemplates.dll" Guid="{CAC7356F-4814-4035-9923-9A64A14F2E79}">
+        <File Id="Resta.UriTemplates.dll" Source="$(var.ApiExplorer.TargetDir)\Resta.UriTemplates.dll"/>
       </Component>
     </ComponentGroup>
     
