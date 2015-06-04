@@ -155,8 +155,18 @@ namespace ApiExplorer.ViewModels
     private void Go(object obj)
     {
       ISession session = RamoneServiceManager.Session;
+      Request req;
 
-      Request req = session.Bind(Navigation.CurrentUrl).Method("GET");
+      try
+      {
+        req = session.Bind(Navigation.CurrentUrl).Method("GET");
+      }
+      catch (Exception ex)
+      {
+        Logger.Error(ex);
+        MessageBox.Show(GetOwnerWindow(), ex.Message, "Failed to initialize request");
+        return;
+      }
 
       ExecuteWebRequest(new ExecuteWebRequestEventArgs(session, req));
     }
