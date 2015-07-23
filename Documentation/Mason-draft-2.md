@@ -175,13 +175,15 @@ When a client requests a Mason document it may be looking for some specific data
   4. If the client tries to invoke a control it SHOULD be prepared to handle any kind of control type - it SHOULD NOT assume a fixed type of control. This allows the server to use the type of controls that fits best at any given time - without breaking clients.
   
   
-## Processing of control elements
+## Invoking control elements
 
 A client trying to invoke a control element should follow the instructions described below. By doing so the client will be able to handle various changes to the control without breaking. It will for instance be possible to change from a GET URI template to a JSON POST request without modifications to the client.
 
   1. Prepare a JSON object with the data expected to be necessary to invoke the control. If there is no data available then use an empty JSON object (this could for instance be the case when the client expects to follow a link). This is the *arguments* object. The structure of the arguments object can either be hard coded into the client, discovered through a schema or by some other means.
   
   1. If the control has a templated `href` URI (as indicated by the `isHrefTemplate` property) then do variable expansion on the template using the arguments object as input.
+
+  1. Resolve relative `href` URLs as per [RFC 1808](https://tools.ietf.org/html/rfc1808). Mason does not have a feature for specifing the base URL within a Mason document so section 3.1 "Base URL within Document Content" does not apply.
   
   1. If `template` is set then merge the arguments object into the template object and replace *arguments* with the result. This will ensure that unknown properties in the template object is kept unchanged and sent back to the server.
   
