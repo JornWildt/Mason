@@ -401,8 +401,9 @@ This property is REQUIRED and MUST be a string value representing a valid URI or
 
 The `href` URI SHOULD be an absolute URI (or URI template) but clients should be prepared to handle relative URIs. At the time of writing there is no rules for how to resolve relative URIs so it will have to depend on an agreement between the client and server.
 
-If `isHrefTemplate` is true then `href` must be interpreted as a URI template according to [RFC 6570 - URI Template](https://tools.ietf.org/html/rfc6570). The template parameters may be described by a schema definition in the `schema` property or through a referenced schema via the `schemaUrl` property.
+If `isHrefTemplate` is true then `href` must be interpreted as a URI template according to [RFC 6570 - URI Template](https://tools.ietf.org/html/rfc6570). The template variables may be described by a schema definition in the `schema` property or through a referenced schema via the `schemaUrl` property.
 
+All the values for the template variables should be represented in a JSON object. Variable names are then supposed to be JSONPath expressions (without leading slashes) that refer to properties in the JSON object.
 
 #### Control property `isHrefTemplate`
 This property is OPTIONAL. If present it MUST be a boolean value indicating whether the `href` value is a URI or a URI template.
