@@ -448,11 +448,49 @@ This property is OPTIONAL. If present it MUST be an object representing a schema
 
 If `encoding` is either "json" or "json+files" then the schema should describe the JSON data.
 
+The default schema language is [JSON schema](http://json-schema.org/).
+
+Example:
+
+```
+{
+  "@namespaces": {
+    "is": {
+      "name": "http://elfisk.dk/mason/issue-tracker/reltypes.html#"
+    }
+  },
+  "@controls": {
+    "is:project-create": {
+      "title": "Create project",
+      "description": "Add new project to issue tracker.",
+      "encoding": "json",
+      "href": "...",
+      "method": "POST",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "Code": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "Description": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}```
+
 
 #### Control property `schemaUrl` (optional)
 This property is OPTIONAL. If present it MUST be a string value representing a valid URL. The URL must reference a schema file describing the possible structure of the request body.
 
 If `encoding` is either "json" or "json+files" then the schema should describe the JSON data.
+
+The default schema language is [JSON schema](http://json-schema.org/).
 
 
 #### Control property `template` (optional)
