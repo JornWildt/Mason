@@ -1,4 +1,6 @@
-** THIS IS WORK IN PROGRESS **
+# Mason format specification Draft 2
+
+This document replaces Draft 1 of the Mason format specification.
 
 # Introduction
 
