@@ -1,0 +1,175 @@
+{
+  "id": "#",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "JSON Schema for a Mason root document. See: https://github.com/JornWildt/Mason/blob/master/Documentation/Mason-draft-2.md",
+  "definitions": {
+    "controls": {
+      "type": "object",
+      "patternProperties": {
+        ".*": {
+          "type": "object",
+          "title": "Mason control",
+          "description": "Property name must be either a standard link relation (e.g. \"self\", \"up\", \"prev\", \"next\"), a fully-qualified URL pointing to documentation for the relation, or a Mason curie resolvable to a URL that points to such documentation.",
+          "properties": {
+            "href": {
+              "description": "Hypermedia reference - a URI or URI template.",
+              "type": "uri"
+            },
+            "isHrefTemplate": {
+              "type": "boolean",
+              "description": "Boolean indicating whether \"href\" is a URI template or concrete URI (default values is false)."
+            },
+            "title": {
+              "type": "string",
+              "description": "Title of the control"
+            },
+            "description": {
+              "type": "string",
+              "description": "Description of the control"
+            },
+            "method": {
+              "type": "string",
+              "description": "HTTP method to use, e.g. GET, POST",
+              "default": "GET"
+            },
+            "encoding": {
+              "type": "string",
+              "description": "Required encoding of data in request body.",
+              "enum": [
+                "none",
+                "json",
+                "json+files",
+                "raw"
+              ],
+              "default": "none"
+            },
+            "jsonFile": {
+              "type": "string",
+              "description": "Name of property that contains the JSON data (only applicable if encoding is 'json+files')"
+            },
+            "schema": {
+              "type": "object",
+              "description": "Embedded schema definition of request body and href template parameters."
+            },
+            "schemaUrl": {
+              "type": "uri",
+              "description": "URL to referenced schema definition of request body and href template parameters."
+            },
+            "template": {
+              "type": "object",
+              "description": "Request template data"
+            },
+            "accept": {
+              "type": "array",
+              "description": "List of accepted media types.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "output": {
+              "type": "array",
+              "description": "List of possible returned media types.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "files": {
+              "type": "array",
+              "description": "List of parts definition for multipart requests.",
+              "items": {
+                "type": "object"
+              }
+            },
+            "alt": {
+              "description": "list of alternative equivalent controls.",
+              "$ref": "#/definitions/controls"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "href"
+          ]
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "@meta": {
+      "type": "object",
+      "description": "Meta information about the response",
+      "properties": {
+        "@title": {
+          "type": "string",
+          "description": "Descriptive title"
+        },
+        "@description": {
+          "type": "string",
+          "description": "Descriptive text"
+        },
+        "@controls": {
+          "$ref": "#/definitions/controls"
+        }
+      }
+    },
+    "@namespaces": {
+      "type": "object",
+      "patternProperties": {
+        ".*": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "uri",
+              "description": "URL prefix where descriptions of link relations are found"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "@controls": {
+      "$ref": "#/definitions/controls"
+    },
+    "@error": {
+      "type": "object",
+      "description": "Error messages and descriptions",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "description": "Unique identifier for later reference to the situation that resulted in a error condition (for instance when looking up a log entry)."
+        },
+        "@code": {
+          "type": "string",
+          "description": "Code describing the error condition in general."
+        },
+        "@messages": {
+          "type": "array",
+          "description": "Array of additional human readable error messages.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "@details": {
+          "type": "string",
+          "description": "Extensive human readable message directed at the client developer."
+        },
+        "@httpStatusCode": {
+          "type": "integer",
+          "description": "HTTP status code from the latest response."
+        },
+        "@controls": {
+          "$ref": "#/definitions/controls"
+        },
+        "@time": {
+          "type": "date-time",
+          "description": "Date in the format defined by RFC 3339. Example: \"1985-04-12T23:20:50.52Z\". It should contain a timestamp of when the error occurred."
+        }
+      },
+      "required": [
+        "@message"
+      ]
+    }
+  },
+  "additionalProperties": true
+}
