@@ -383,7 +383,7 @@ A single hypermedia control element can be represented by the following properti
 
 * **template** [object, optional]: Request template data.
 
-* **accept** [array of string, optional]: List of accepted media types.
+* **accept** [array of string, optional]: List of accepted media types when using `raw` encoding.
 
 * **output** [array of string, optional]: List of possible returned media types.
 
@@ -447,7 +447,7 @@ If `encoding` is not present it is assumed to be `none`.
 #### Control property `schema` (optional)
 This property is OPTIONAL. If present it MUST be an object representing a schema definition describing the possible structure of the request body.
 
-If `encoding` is either "json" or "json+files" then the schema should describe the JSON data.
+If `encoding` is either "json" or "json+files" then the schema should describe the JSON data. `schema` handling is not defined for other encoding types.
 
 The default schema language is [JSON schema](http://json-schema.org/).
 
@@ -489,7 +489,7 @@ Example:
 #### Control property `schemaUrl` (optional)
 This property is OPTIONAL. If present it MUST be a string value representing a valid URL. The URL must reference a schema file describing the possible structure of the request body.
 
-If `encoding` is either "json" or "json+files" then the schema should describe the JSON data.
+If `encoding` is either "json" or "json+files" then the schema should describe the JSON data. `schemaUrl` handling is not defined for other encoding types.
 
 The default schema language is [JSON schema](http://json-schema.org/).
 
@@ -530,7 +530,7 @@ This example contains a template with values for "Code", "Title", "Description" 
 
 
 #### Control property `accept` (optional)
-This property is OPTIONAL. If present it must be an array of strings representing the request content types accepted by the server.
+This property is OPTIONAL. If present it must be an array of strings representing the request content types accepted by the server. `accept` is only valid for encoding type `raw`.
 
 
 #### Control property `output` (optional)
