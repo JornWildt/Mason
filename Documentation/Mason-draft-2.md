@@ -12,7 +12,7 @@ A Mason document is constructed by taking a "classic" JSON object and then mergi
 
 A Mason document consists of the following types of elements:
 
-  * Core bussiness data (such as the title of a book, number of new messages, identifiers and so on).
+  * Core business data (such as the title of a book, number of new messages, identifiers and so on).
   
   * Meta data about the resource targeted at the client developer.
   
@@ -121,7 +121,7 @@ Below we have added the cntrols "is:add-issue" for adding a new issue and "is:de
 
 Mason is based on JSON and follows as such all the syntax rules for valid JSON documents. Mason reserves the character '@' as a prefix for Mason property names.
 
-The prefix character is not used for all Mason properties, only for those that co-exists with other properties from the underlying resource data - for instance '@meta' and '@actions'. Other property names like "href" and "title" are used only in contexts where it is not allowed to mix data so these properties do not use the '@' prefix.
+The prefix character is not used for all Mason properties, only for those that co-exists with other properties from the underlying resource data - for instance '@meta' and '@controls'. Other property names like "href" and "title" are used only in contexts where it is not allowed to mix data so these properties do not use the '@' prefix.
 
 
 # Curies
@@ -483,7 +483,8 @@ Example:
       }
     }
   }
-}```
+}
+```
 
 
 #### Control property `schemaUrl` (optional)
