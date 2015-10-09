@@ -113,3 +113,5 @@ The major differentiators between Mason and the other formats are:
 - Mason uses JSON for sending data in actions (and defines a way to combine file uploads with JSON).
 - Mason defines a way to reduce the payload for machine-to-machine (M2M) communication.
 - Mason has a predefined set of properties for error handling.
+
+See also why phone.com chose Mason over the other types: https://www.phone.com/blog/learning/2015/10/08/selecting-data-type-for-restful-api/
