@@ -73,6 +73,11 @@ You should be using Mason because:
 - Sign up for the [discussion group](https://groups.google.com/d/forum/mason-media-type).
 - Check out the [Mason Cookbook](https://github.com/JornWildt/MasonCookBook).
 
+## Known implementations
+
+- PHP server side builder [Mason-PHP](https://github.com/Phone-com/mason-php)
+- .NET client [API Explorer](https://github.com/JornWildt/Mason/wiki/Generic-Mason-browser)
+- .NET service side builder [MasonBuilder.Net](https://github.com/JornWildt/Mason/tree/master/MasonBuilder.Net)
 
 ## Media type registration
 
