@@ -76,6 +76,7 @@ You should be using Mason because:
 ## Known implementations
 
 - PHP server side builder [Mason-PHP](https://github.com/Phone-com/mason-php)
+- WIP/Rails server side implementation [AMSA_Mason](https://github.com/mooreniemi/amsa-mason)
 - .NET client [API Explorer](https://github.com/JornWildt/Mason/wiki/Generic-Mason-browser)
 - .NET service side builder [MasonBuilder.Net](https://github.com/JornWildt/Mason/tree/master/MasonBuilder.Net)
 
