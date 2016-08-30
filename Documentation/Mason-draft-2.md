@@ -103,12 +103,12 @@ Below we have added the cntrols "is:add-issue" for adding a new issue and "is:de
       "title": "Containing project"
     },
     "is:add-issue": {
-      "type": "json",
+      "encoding": "json",
       "href": "http://issue-tracker.org/issues",
       "schemaUrl": "http://..."
     },
     "is:delete-issue": {
-      "type": "void",
+      "encoding": "none",
       "href": "http://issue-tracker.org/issues/1",
       "method": "DELETE"
     }
@@ -136,7 +136,7 @@ This means the following two control examples are considered equivalent:
 {
   "@controls": {
     "http://soabits.dk/mason/issue-tracker/reltypes.html#add-issue": {
-      "type": "json",
+      "encoding": "json",
       "href": "http://issue-tracker.org/issues"
     }
   }
@@ -152,7 +152,7 @@ This means the following two control examples are considered equivalent:
   },  
   "@controls": {
     "is:add-issue": {
-      "type": "json",
+      "encoding": "json",
       "href": "http://issue-tracker.org/issues"
     }
   }
@@ -515,7 +515,7 @@ This example contains a template with values for "Code", "Title", "Description" 
 ```json
 "@controls": {
   "is:update-project": {
-    "type": "json",
+    "encoding": "json",
     "href": "...",
     "title": "Update project details",
     "schemaUrl": "...",
