@@ -159,7 +159,7 @@ namespace ApiExplorer.ViewModels
 
       try
       {
-        req = session.Bind(Navigation.CurrentUrl).Method("GET");
+        req = new Request(session, Navigation.CurrentUrl).Method("GET");
       }
       catch (Exception ex)
       {
