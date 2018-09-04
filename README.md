@@ -101,7 +101,7 @@ You may also contact the author, Jørn Wildt, directly:
 
 ## Comparing to other hypermedia formats
 
-Mason is not the only format for hypermedia enabled APIs. Actually it is heavily inspired by existing formats such as HAL which it owns a lot to. Here is a short comparison to some of the other formats:
+Mason is not the only format for hypermedia enabled APIs. Actually it is heavily inspired by existing formats such as HAL which it owes a lot to. Here is a short comparison to some of the other formats:
 
 [HAL](http://tools.ietf.org/html/draft-kelly-json-hal-06): Mason builds on the ideas from HAL. Both formats works by merging raw API data with additional hypermedia elements. Mason adds complex hypermedia elements, error handling and more (see below).
 
